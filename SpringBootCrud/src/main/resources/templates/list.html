@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/font-awesom-css/all.css}">
+    <link rel="stylesheet" th:href="@{/font-awesom-css/fontawesome.css}">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="text-align: center">Student List</h2>
+            <table class="table">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Gender</th>
+                    <th>Country</th>
+                    <th>Hobbies</th>
+                    <th>Password</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+
+                <tr th:each="student : ${list}">
+                    <td th:text="${student.id}"></td>
+                    <td th:text="${student.name}"></td>
+                    <td th:text="${student.email}"></td>
+                    <td th:text="${student.username}"></td>
+                    <td th:text="${student.gender}"></td>
+                    <td th:text="${student.country}"></td>
+                    <td><span th:each="h : ${student.hobbies}" th:text="${h}+','" ></span></td>
+                    <td th:text="${student.password}"></td>
+                    <td th:href="@{/updat}"><a th:href="@{'/update/'+${student.id}}"><i class="fas fa-pencil"></i></a></td>
+                    <td th:href="@{/delete}"><a th:href="@{'/delete/'+${student.id}}">Delete</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<!--<table>-->
+<!--<tr>-->
+<!--<th>ID</th>-->
+<!--<th>Name</th>-->
+
+<!--</tr>-->
+<!--<tr th:each="student:${list}">-->
+<!--<td ><a th:href="@{'/students/'+${student.id}}" th:text="${student.id}"></a></td>-->
+<!--<td th:text="${student.name}"></td>-->
+<!--</tr>-->
+<!--</table>-->
+</body>
+</html>

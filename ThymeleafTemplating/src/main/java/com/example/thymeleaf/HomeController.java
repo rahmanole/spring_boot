@@ -1,4 +1,4 @@
-package com.minhaz.controller;
+package com.example.thymeleaf;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.css}">
+</head>
+<body>
+    <div class="container">
+
+        <div class="col-lg-6 mt-5">
+            <h2 style="text-align: center">Student Registration</h2>
+            <hr>
+            <form th:object="${student}" th:action="@{/save}" th:method="post">
+                <table class="table">
+                    <tr>
+                        <td>Name</td>
+                        <td><input class="form-control" type="text" th:field="*{id}"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td><input class="form-control" type="text" th:field="*{name}"></td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td>Email</td>
+                        <td><input class="form-control" type="text" th:field="*{email}"></td>
+                    </tr>
+                    <tr>
+                        <td>Username</td>
+                        <td> <input class="form-control" type="text" th:field="*{username}"></td>
+                    </tr>
+                    <tr>
+                        <td>Gender</td>
+                        <td>
+                            <input type="radio" th:field="*{gender}" th:value="Male" />
+                            <label>Male</label>
+                            <br>
+                            <input type="radio" th:field="*{gender}" th:value="Female" />
+                            <label>Female</label>
+                            <br>
+                            <input type="radio" th:field="*{gender}" th:value="Others" />
+                            <label>Male</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td>
+                            <select th:field="*{country}" class="form-control">
+                                <option th:value="Bangladesh">Bangladesh</option>
+                                <option th:value="USA">USA</option>
+                                <option th:value="Australia">Australia</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Hobbies</td>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" th:value="Football" th:field="*{hobbies}" />
+                                <label class="form-check-label"> Football</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" th:value="Tennis" th:field="*{hobbies}" />
+                                <label class="form-check-label"> Tennis</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" th:value="Coding" th:field="*{hobbies}" />
+                                <label class="form-check-label"> Coding</label>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td> <input class="form-control" type="text" th:field="*{password}"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td> <button type="submit" class="btn btn-primary">Update</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
