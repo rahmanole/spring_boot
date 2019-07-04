@@ -4,12 +4,14 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Entity(name="post")
+@Entity
+@Table(name="post")
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(unique = true,nullable = false)
     private String publisherGivenId;
     private String cat;
 

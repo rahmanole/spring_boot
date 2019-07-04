@@ -1,11 +1,9 @@
 package com.minhaz.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity(name="para")
+@Entity
+@Table(name="para")
 public class Para {
 
     @Id
@@ -13,6 +11,7 @@ public class Para {
     private long id;
     private String imgUrl;
     private String imgCaption;
+    @Column(length = 100000)
     private String description;
 
     public long getId() {

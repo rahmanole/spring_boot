@@ -22,7 +22,7 @@ public class ProthomAloServiceImp {
 		String publisher = "prothomAlo";
 		String newPaperUrl = "https://www.prothomalo.com";
 		HashSet<String> postId = findPostIds();
-		System.out.println("Number of posts:"+postId.size());
+//		System.out.println("Number of posts:"+postId.size());
 
 		for (String id : postId) {
 			Post post = new Post();
@@ -32,7 +32,8 @@ public class ProthomAloServiceImp {
 //			System.out.println("Category:"+findPostCat(id));
 //			System.out.println("Time:"+);
 //			System.out.println(completeArticleUrl);
-			
+
+			post.setPublisherGivenId(id);
 			post.setCat(findPostCat(id));
 			post.setDateTime(new Date());
 			post.setUrl(completeArticleUrl);
