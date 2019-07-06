@@ -1,17 +1,9 @@
-package com.minhaz.MyProject;
+package com.minhaz.myProject;
 
 import com.minhaz.dao.PostRepository;
-import com.minhaz.entity.Post;
-import com.minhaz.serviceImp.ProthomAloServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-
-import java.util.Date;
-import java.util.List;
 
 @Component
 public class Test {

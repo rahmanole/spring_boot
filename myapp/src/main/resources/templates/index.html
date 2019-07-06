@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{bootstrap.css}">
+    <link rel="stylesheet" th:href="@{style.css}">
+</head>
+<body>
+<div class="container-fluid mainBody">
+    <div class="row">
+        <nav class="navbar navbar-expand-sm bg-light">
+
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link 2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link 3</a>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <button class="btn btn-primary">Button</button>
+        </div>
+        <div class="col-lg-6">
+            <div class="card postCard" th:each="post:${postList}">
+                <div class="">
+                    <a th:href="${post.url}" target="_blank">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                            </div>
+                            <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                                <div class="row headLine">
+                                    <span th:text="${post.heading}">নেই বললেই চলে। একটা উদাহরণেই তা বুঝিয়ে দেওয়া যায়।</span>
+
+                                </div>
+
+                                <div class="row postInfo">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                        <span class="time" th:text="${func.show(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                        <img class="publisherLogo" src="https://paloimages.prothom-alo.com/contents/themes/public/style/images/Prothom-Alo.png"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            ads
+        </div>
+    </div>
+</div>
+</body>
+</html>
