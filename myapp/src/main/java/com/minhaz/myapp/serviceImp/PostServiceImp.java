@@ -64,7 +64,7 @@ public class PostServiceImp implements PostService {
 
     @Override
     public List<Post> findAllPosts() {
-        return postRepository.findAll();
+        return postRepository.findAllByOrderByDateTimeDesc();
     }
 
 //    @Scheduled(fixedDelay = 3000)
