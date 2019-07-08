@@ -4,6 +4,7 @@ import com.minhaz.myapp.dao.PostRepository;
 import com.minhaz.myapp.entity.Post;
 import com.minhaz.myapp.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -41,11 +42,13 @@ public class PostServiceImp implements PostService {
                             }
                         });
                         postRepository.save(post);
-                    } catch (Exception dataIntegrityViolationException) {
-                        dataIntegrityViolationException.printStackTrace();
+                    } catch (DataIntegrityViolationException dataIntegrityViolationException) {
+                        System.out.println("Post already exits!!");
+                        continue;
+                    } catch (Exception e) {
+                        e.printStackTrace();
                         continue;
                     }
-
 
                 }
                 break;
@@ -63,7 +66,7 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public List<Post> findAllPosts() {
+    public List<Post> findAllAndOrderByDateTimeDesc() {
         return postRepository.findAllByOrderByDateTimeDesc();
     }
 

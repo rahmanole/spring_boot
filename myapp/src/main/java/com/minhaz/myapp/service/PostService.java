@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface PostService {
     void savePosts();
-    List<Post> findAllPosts();
+    List<Post> findAllAndOrderByDateTimeDesc();
     long show(Date date);
+
 }

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.css}"/>
+</head>
+<body>
+private Set<Role> role;
+    private String password;
+    private String firstName;
+    private String lastName;
+    @Column(unique = true)
+    private String email;
+    @Column(unique = true)
+    private String mobile;
+    private Date joinDate;
+    private boolean isActive;
+    private String activationKey;
+    private String resetPasswordKey;
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <form th:object="${user}" th:action="@{/role/save}" th:method="post">
+                <tbale>
+                    <div class="form_group">
+                        <label class="label">Role name</label>
+                        <input type="text" class="form-control" th:field="*{userName}"/>
+                    </div>
+                    <div class="form_group">
+                        <label class="label">Role name</label>
+                        <select>
+                            <option th:each="role : ${roleList}" th:value="${role.getRoleName()}"><span th:text="${role.getRoleName()}"></span></option>
+                        </select>
+                    </div>
+                    <div class="form_group">
+                        <label class="label">Password</label>
+                        <input type="password" class="form-control" th:field="*{password}"/>
+                    </div>
+                    <div class="form_group">
+                        <label class="label">First Name</label>
+                        <input type="text" class="form-control" th:field="*{firstName}"/>
+                    </div>
+                    <div class="form_group">
+                        <label class="label">Last Name</label>
+                        <input type="text" class="form-control" th:field="*{lastName}"/>
+                    </div>
+                    <div class="form_group">
+                        <label class="label">Email</label>
+                        <input type="email" class="form-control" th:field="*{email}"/>
+                    </div>
+                    <div class="form_group">
+                        <label class="label">Mobile</label>
+                        <input type="email" class="form-control" th:field="*{mobile}"/>
+                    </div>
+                    <div class="form_group">
+                        <label class="label">Joining Date</label>
+                        <input type="date" class="form-control" th:field="*{joinDate}"/>
+                    </div>
+                    <div class="form_group">
+                        <label class="label">Status</label>
+                        <select>
+                            <option value="active" th:value="true">Actice</option>
+                            <option value="inActive" th:value="false">InActive</option>
+                        </select>
+                    </div>
+                </tbale>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
