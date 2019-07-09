@@ -1,48 +1,46 @@
-package rc.bootsecurity.security;
+package com.security.bootsecurity.securityConfig;
 
+import com.security.bootsecurity.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import rc.bootsecurity.model.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class UserPrincipal implements UserDetails {
-    private User user;
+public class UserPrinciple implements UserDetails {
 
-    public UserPrincipal(User user){
+    User user;
+
+    public UserPrinciple(User user) {
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
+        user.getRoles().forEach(r->{
+            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + r);
+            authorities.add(authority);
+        });
 
-//        // Extract list of permissions (name)
-//        this.user.getPermissionList().forEach(p -> {
-//            GrantedAuthority authority = new SimpleGrantedAuthority(p);
-//            authorities.add(authority);
-//        });
-//
-//        // Extract list of roles (ROLE_name)
-//        this.user.getRoleList().forEach(r -> {
-//            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + r);
-//            authorities.add(authority);
-//        });
-
+        user.getPermissions().forEach(p->{
+            GrantedAuthority authority = new SimpleGrantedAuthority(p);
+            authorities.add(authority);
+        });
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return this.user.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.user.getUsername();
+        return user.getUsername();
     }
 
     @Override
@@ -57,11 +55,11 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return user.isActive();
     }
 
     @Override
     public boolean isEnabled() {
-        return this.user.getActive() == 1;
+        return false;
     }
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="row">
+                <div class="col-md-8">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a th:href="@{~/profile}" class="nav-link">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{~/admin}" class="nav-link">Admin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{~/manager}" class="nav-link">Manager</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a th:href="@{~/signUp}" class="btn btn-primary">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{~/login}" class="btn btn-primary">Log In</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
