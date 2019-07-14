@@ -25,11 +25,6 @@ public class UserPrinciple implements UserDetails {
             GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + r);
             authorities.add(authority);
         });
-
-        user.getPermissions().forEach(p->{
-            GrantedAuthority authority = new SimpleGrantedAuthority(p);
-            authorities.add(authority);
-        });
         return authorities;
     }
 
@@ -60,6 +55,6 @@ public class UserPrinciple implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

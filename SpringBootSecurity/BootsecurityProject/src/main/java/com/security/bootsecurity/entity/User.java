@@ -3,6 +3,8 @@ package com.security.bootsecurity.entity;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -19,22 +21,26 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
-    private List<String> roles;
-    @Column(nullable = false)
-    private List<String> permissions;
+
+    @ManyToMany()
+    @JoinTable(
+            joinColumns = @JoinColumn(name="user_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name="role_id",referencedColumnName = "id")
+    )
+    private List<Role> roles;
+
     private boolean active=true;
 
     public User() {
+
     }
 
-    public User(String username, String name, String email, String password, List<String> roles, List<String> permissions, boolean active) {
+    public User(String username, String name, String email, String password, List<Role> roles,boolean active) {
         this.username = username;
         this.name = name;
         this.email = email;
         this.password = password;
         this.roles = roles;
-        this.permissions = permissions;
         this.active = active;
     }
 
@@ -78,20 +84,12 @@ public class User {
         this.password = password;
     }
 
-    public List<String> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<String> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
-    }
-
-    public List<String> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<String> permissions) {
-        this.permissions = permissions;
     }
 
     public boolean isActive() {

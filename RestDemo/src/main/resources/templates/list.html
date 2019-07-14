@@ -6,15 +6,48 @@
     <link rel="stylesheet" th:href="@{/bootstrap.css}">
 </head>
 <body>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-        </tr>
-        <tr th:each="student:${list}">
-           <td ><a th:href="@{'/students/'+${student.id}}" th:text="${student.id}"></a></td>
-           <td th:text="${student.name}"></td>
-        </tr>
-    </table>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="text-align: center">Student List</h2>
+            <table class="table">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Gender</th>
+                    <th>Country</th>
+                    <th>Password</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+
+                <tr th:each="student:${list}">
+                    <td th:text="${student.id}"></td>
+                    <td th:text="${student.name}"></td>
+                    <td th:text="${student.email}"></td>
+                    <td th:text="${student.username}"></td>
+                    <td th:text="${student.gender}"></td>
+                    <td th:text="${student.country}"></td>
+                    <td th:text="${student.password}"></td>
+                    <td th:href="@{/updat}"><a th:href="@{'/update/'+${student.id}}">Update</a></td>
+                    <td th:href="@{/delete}"><a th:href="@{'/delete/'+${student.id}}">Delete</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<!--<table>-->
+<!--<tr>-->
+<!--<th>ID</th>-->
+<!--<th>Name</th>-->
+
+<!--</tr>-->
+<!--<tr th:each="student:${list}">-->
+<!--<td ><a th:href="@{'/students/'+${student.id}}" th:text="${student.id}"></a></td>-->
+<!--<td th:text="${student.name}"></td>-->
+<!--</tr>-->
+<!--</table>-->
 </body>
 </html>

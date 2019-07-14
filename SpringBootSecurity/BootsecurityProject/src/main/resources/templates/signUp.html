@@ -10,7 +10,25 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-
+            <form th:object="${user}" th:action="@{/save}" th:method="post">
+                <div class="form-gorup">
+                    <lable>Username</lable>
+                    <input type="text" class="form-control" th:field="*{username}">
+                </div>
+                <div class="form-gorup">
+                    <lable>Name</lable>
+                    <input type="text" class="form-control" th:field="*{name}">
+                </div>
+                <div class="form-gorup">
+                    <lable>Email</lable>
+                    <input type="email" class="form-control" th:field="*{email}">
+                </div>
+                <div class="form-gorup">
+                    <lable>Password</lable>
+                    <input type="password" class="form-control" th:field="*{password}">
+                </div>
+                <button type="submit" class="btn btn-primary" >Save</button>
+            </form>
         </div>
     </div>
 </div>

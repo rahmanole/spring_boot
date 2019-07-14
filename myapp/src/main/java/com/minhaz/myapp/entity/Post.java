@@ -1,19 +1,26 @@
 package com.minhaz.myapp.entity;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name="post")
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(unique = true,nullable = false,length = 100)
     private String publisherGivenId;
     private String cat;
+
+    @ManyToMany( cascade = {CascadeType.PERSIST},fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "post_tag",
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id")}
+    )
+    private Set<Tag> tags = new HashSet<>();
 
     @Column(nullable = false)
     private Date dateTime;
@@ -24,18 +31,11 @@ public class Post {
     private String ftrImg;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinTable(name = "post_para_table",joinColumns = @JoinColumn(name="post_id"),inverseJoinColumns = @JoinColumn(name="para_id"))
+    @JoinColumn(name="post_id",nullable = false)
     private List<Para> postBody;
     @Column(nullable = false)
     private String publisher;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getCat() {
         return cat;
@@ -99,5 +99,22 @@ public class Post {
 
     public void setPublisherGivenId(String publisherGivenId) {
         this.publisherGivenId = publisherGivenId;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 }

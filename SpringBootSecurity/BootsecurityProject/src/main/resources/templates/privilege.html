@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="row" style="margin-top: 50px">
+                <div class="col-md-3">
+                    <a th:href="@{/privilege/add/}" class="btn btn-block btn-info">Create Privilege</a>
+                    <a th:href="@{/role/add/}" class="btn btn-block btn-info">Create Role</a>
+                    <a class="btn btn-block btn-info">Assign Role</a>
+                    <a class="btn btn-block btn-info">View Reports</a>
+                </div>
+                <div class="col-md-9">
+                    <form th:object="${privilege}" th:action="@{/privilege/save}" th:method="post">
+                        <div class="form-group">
+                            <label>Privilege Name</label>
+                            <input type="text" th:field="*{privilegeName}" class="form-control"></input>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface PostService {
     void savePosts();
-    List<Post> findAllAndOrderByDateTimeDesc();
-    long show(Date date);
-
+    List<Post> findAllPosts();
+    String getPulisherLogo(String publisher);
 }

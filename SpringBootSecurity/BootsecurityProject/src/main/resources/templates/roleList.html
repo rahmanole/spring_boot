@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="row" style="margin-top: 50px">
+        <div class="col-md-8 offset-md-2">
+            <div class="row">
+                <div class="col-md-3">
+                    <a th:href="@{/privilege/add/}" class="btn btn-block btn-info">Create Privilege</a>
+                    <a th:href="@{/role/add/}" class="btn btn-block btn-info">Create Role</a>
+                    <a class="btn btn-block btn-info">Assign Role</a>
+                    <a class="btn btn-block btn-info">View Reports</a>
+                </div>
+                <div class="col-md-9">
+                    <table class="table table-bordered table-striped table-dark">
+                        <thead>
+                            <th>SL</th>
+                            <th>ROLE NAME</th>
+                            <th>UPDATE</th>
+                            <th>DELETE</th>
+                        </thead>
+                        <tbody>
+                            <tr th:each="unitRole:${allRoles}">
+                                <td th:text="${unitRole.id}"></td>
+                                <td th:text="${unitRole.roleName}"></td>
+                                <td ><a class="nav-link" th:href="@{/role/update/{id}(id=${unitRole.id})}">Update</a></td>
+                                <td ><a>Delete</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

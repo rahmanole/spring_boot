@@ -28,52 +28,50 @@
     </div>
     <div class="row">
         <div class="col-lg-3">
-
+            <button class="btn btn-primary">Button</button>
         </div>
         <div class="col-lg-6">
             <div class="row">
                 <div class="col">
-                    <div class="row">
-                        <div class="cat col">
-                            <p>আন্তর্জাতিক</p>
-                        </div>
 
+                    <div class="row">
+                        <div class="catName col">
+                            <p>বাংলাদেশ সংবাদ</p>
+                        </div>
                     </div>
                     <div class="card postCard" th:each="post:${postList}">
-                        <div class="">
-                            <a th:href="${post.url}" target="_blank">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-3 col-sm-4 col-4">
-                                        <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                        <a th:href="${post.url}" target="_blank">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                    <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                                </div>
+                                <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                                    <div class="row headLine">
+                                        <span th:text="${post.heading}">নেই বললেই চলে। একটা উদাহরণেই তা বুঝিয়ে দেওয়া যায়।</span>
+
                                     </div>
-                                    <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
-                                        <div class="row headLine">
-                                            <span th:text="${post.heading}">নেই বললেই চলে। একটা উদাহরণেই তা বুঝিয়ে দেওয়া যায়।</span>
 
+                                    <div class="row postInfo">
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
                                         </div>
-
-                                        <div class="row postInfo">
-                                            <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                                                <span class="time" > ০৬ জুলাই ২০১৯, ১৫:৪৬</span>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                                                <img class="publisherLogo"
-                                                     src="https://paloimages.prothom-alo.com/contents/themes/public/style/images/Prothom-Alo.png"/>
-                                            </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                            <img class="publisherLogo"
+                                                 th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                         </div>
                                     </div>
                                 </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <button class="btn ">আরও</button>
+                            </div>
+                        </a>
 
+                    </div>
+                    <div class="row justify-content-center" >
+<!--                        <button class="btn">আরও</button>-->
+                        <a th:href="@{/(page=${nextPage})}">আরও</a>
                     </div>
                 </div>
-
             </div>
-
         </div>
         <div class="col-lg-3">
 

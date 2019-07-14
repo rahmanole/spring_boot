@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class HomeController {
         return "student";
     }
 
-    @PostMapping("/registration")
+    @RequestMapping(value ="registration")
     public String regForm(Model model){
         model.addAttribute("student",new Student());
         return "reg-form";
@@ -45,6 +46,19 @@ public class HomeController {
 
        // model.addAttribute("student",new Student());
         this.repository.save(student);
+        return "redirect:/students";
+    }
+
+    @RequestMapping("/update/{id}")
+    public String getUpdateForm(Model model,@PathVariable Long id){
+        Student student = this.repository.getOne(id);
+        model.addAttribute("student",student);
+        return "update-form";
+    }
+
+    @RequestMapping("/delete/{id}")
+    public String deleteStudent(@PathVariable Long id){
+        this.repository.deleteById(id);
         return "redirect:/students";
     }
 }
