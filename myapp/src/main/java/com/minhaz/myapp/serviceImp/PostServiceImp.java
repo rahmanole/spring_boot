@@ -24,7 +24,7 @@ public class PostServiceImp implements PostService {
     TagService tagService;
 
     @Transactional
-//    @Scheduled(fixedDelay = 300000)
+    @Scheduled(fixedDelay = 300000)
     @Override
     public void savePosts() {
         for (; ; ) {
@@ -76,12 +76,12 @@ public class PostServiceImp implements PostService {
 
 //    @Autowired
 //    TagRepository tagRepository;
-    @Scheduled(fixedDelay = 3000)
-    public void show() {
-       postRepository.publisherGivenId().forEach(id->{
-           System.out.println(id);
-       });
-    }
+//    @Scheduled(fixedDelay = 3000)
+//    public void show() {
+//       postRepository.getPublisherGivenId().forEach(id->{
+//           System.out.println(id);
+//       });
+//    }
 
     @Override
     public String getPulisherLogo(String publisher) {

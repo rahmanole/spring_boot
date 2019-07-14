@@ -25,6 +25,9 @@ public class ProthomAloServiceImp implements ProthomAloService {
     @Autowired
     TagService tagService;
 
+    @Autowired
+    PostRepository postRepository;
+
     @Override
     public List<Post> createPsot() throws Exception {
         List<Post> postList = new ArrayList();

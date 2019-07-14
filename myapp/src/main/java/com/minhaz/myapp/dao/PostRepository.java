@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.HashSet;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post,Long> {
@@ -14,7 +15,7 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     List<Post> findByCat(String cat);
     List<Post> findAllByOrderByDateTimeDesc();
 //    List<String> findPub();
-    @Query(value = "select publisher_given_id from post p")
-    List<String> publisherGivenId();
+    @Query(value = "select p.publisherGivenId from Post p")
+    HashSet<String> getPublisherGivenId();
 
 }
