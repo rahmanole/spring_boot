@@ -4,6 +4,7 @@ import com.minhaz.myapp.dao.PostRepository;
 import com.minhaz.myapp.dao.TagRepository;
 import com.minhaz.myapp.entity.Post;
 import com.minhaz.myapp.service.PostService;
+import com.minhaz.myapp.service.ProthomAloService;
 import com.minhaz.myapp.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,14 +24,16 @@ public class PostServiceImp implements PostService {
     @Autowired
     TagService tagService;
 
+    @Autowired
+    ProthomAloService prothomAloService;
+
     @Transactional
     @Scheduled(fixedDelay = 300000)
     @Override
     public void savePosts() {
         for (; ; ) {
             try {
-                for (Post post : new ProthomAloServiceImp().createPsot()) {
-                    tagService.assignTag(post,post.getPublisherGivenId());
+                for (Post post : prothomAloService.createPsot()) {
                     try {
                         System.out.println(post.getCat());
                         System.out.println(post.getHeading());

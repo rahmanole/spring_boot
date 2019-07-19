@@ -33,8 +33,8 @@ public class ProthomAloServiceImp implements ProthomAloService {
         List<Post> postList = new ArrayList();
         String publisher = "prothom_alo";
         String newPaperUrl = "https://www.prothomalo.com";
-        HashSet<String> postId = findPostIds("https://www.prothomalo.com/bangladesh");
-
+        HashSet<String> postId = findPostIds();
+        postId.removeAll(postRepository.getPublisherGivenId());
 
         for (String id : postId) {
             Post post = new Post();
@@ -57,19 +57,18 @@ public class ProthomAloServiceImp implements ProthomAloService {
 
             // ---------end-------
 
-            String postFeatureImgUrl = featureImgUrl(body);
-            post.setFtrImg(postFeatureImgUrl);
+//            String postFeatureImgUrl = featureImgUrl(body);
+//            post.setFtrImg(postFeatureImgUrl);
 
             post.setPublisher(publisher);
             //This portion for article paras
             Elements articleParas = body.getElementsByTag("p");
             articleParas.outerHtml();
 
-            post.setPostBody(psotBody(articleParas));
+            post.setPostBody(psotBody(articleParas,body));
+            post.setFtrImg(post.getPostBody().get(0).getImgUrl());
 
-//			System.out.println("------------end------------------");
-            // break;
-//            tagService.assignTag(post, id);
+            tagService.assignTag(post, id);
             postList.add(post);
 
         }
@@ -79,7 +78,7 @@ public class ProthomAloServiceImp implements ProthomAloService {
     }
 
     //This for finding article body.It would be Map type
-    private List<Para> psotBody(Elements articleParas) {
+    private List<Para> psotBody(Elements articleParas,Element body) {
         List<Para> allParas = new ArrayList();
         for (int i = 0; i < articleParas.size() - 2; i++) {
             Para para = new Para();
@@ -91,8 +90,13 @@ public class ProthomAloServiceImp implements ProthomAloService {
                 para.setDescription(articleParas.get(i).text());
             }
 
+
             allParas.add(para);
 
+        }
+
+        if(allParas.get(0).getImgUrl() == null){
+            allParas.get(0).setImgUrl(featureImgUrl(body));
         }
         return allParas;
     }
@@ -134,17 +138,16 @@ public class ProthomAloServiceImp implements ProthomAloService {
     @Override
     public HashSet<String> findPostIds() throws IOException {
         HashSet<String> postId = new HashSet();
-        Document document = Jsoup.connect("https://www.prothomalo.com/archive").userAgent("Opera").get();
+        Document document = Jsoup.connect("https://www.prothomalo.com/bangladesh/article/").userAgent("Opera").get();
         Element body = document.body();
 
-        Element posts = body.getElementById("widget_56292");
+        Element posts = body.getElementsByClass("contents").first();
         Elements postUrls = posts.getElementsByTag("a");
         for (Element post : postUrls) {
             String link = post.attr("href");
             if (link.length() > 100)
                 postId.add(link.substring(0, link.indexOf('%')));
         }
-
         return postId;
     }
 
