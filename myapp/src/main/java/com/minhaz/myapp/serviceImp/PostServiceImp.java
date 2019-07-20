@@ -1,10 +1,9 @@
 package com.minhaz.myapp.serviceImp;
 
 import com.minhaz.myapp.dao.PostRepository;
-import com.minhaz.myapp.dao.TagRepository;
 import com.minhaz.myapp.entity.Post;
 import com.minhaz.myapp.service.PostService;
-import com.minhaz.myapp.service.ProthomAloService;
+import com.minhaz.myapp.service.NewsPaperService;
 import com.minhaz.myapp.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -25,12 +23,13 @@ public class PostServiceImp implements PostService {
     TagService tagService;
 
     @Autowired
-    ProthomAloService prothomAloService;
+    NewsPaperService prothomAloService;
 
     @Transactional
     @Scheduled(fixedDelay = 300000)
     @Override
     public void savePosts() {
+        long strtTime = System.currentTimeMillis();
         for (; ; ) {
             try {
                 for (Post post : prothomAloService.createPsot()) {
@@ -69,6 +68,8 @@ public class PostServiceImp implements PostService {
                 continue;
             }
         }
+
+        System.out.println("========="+(System.currentTimeMillis()-strtTime)+"===========");
 
     }
 

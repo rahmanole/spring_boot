@@ -1,28 +1,27 @@
-package com.minhaz.myapp.serviceImp;
+package com.minhaz.myapp.serviceImp.prothomalo;
 
 
 import com.minhaz.myapp.dao.PostRepository;
-import com.minhaz.myapp.dao.TagRepository;
 import com.minhaz.myapp.entity.Para;
 import com.minhaz.myapp.entity.Post;
-import com.minhaz.myapp.entity.Tag;
-import com.minhaz.myapp.service.ProthomAloService;
+import com.minhaz.myapp.service.NewsPaperService;
 import com.minhaz.myapp.service.TagService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.*;
 
 @Service
-public class ProthomAloServiceImp implements ProthomAloService {
+public class ProthomAloServiceImp implements NewsPaperService {
 
     @Autowired
+    @Qualifier("prothomAloTagServiceImp")
     TagService tagService;
 
     @Autowired
@@ -46,7 +45,7 @@ public class ProthomAloServiceImp implements ProthomAloService {
             post.setDateTime(new Date());
             post.setUrl(completeArticleUrl);
 
-            Document document = Jsoup.connect(completeArticleUrl).get();
+            Document document = Jsoup.connect(completeArticleUrl).userAgent("Opera").get();
             Element body = document.body();
 
 
@@ -68,13 +67,18 @@ public class ProthomAloServiceImp implements ProthomAloService {
             post.setPostBody(psotBody(articleParas,body));
             post.setFtrImg(post.getPostBody().get(0).getImgUrl());
 
-            tagService.assignTag(post, id);
+            String cat = getCat(body);
+            tagService.manageCatAndTags(cat,post, id);
             postList.add(post);
 
         }
-
-
         return postList;
+    }
+
+    //This method for finding category name from post details page
+    private String getCat(Element body) throws Exception{
+        String cat = body.getElementsByClass("category_name").first().attr("href").replace("/","");
+        return cat;
     }
 
     //This for finding article body.It would be Map type
@@ -138,10 +142,10 @@ public class ProthomAloServiceImp implements ProthomAloService {
     @Override
     public HashSet<String> findPostIds() throws IOException {
         HashSet<String> postId = new HashSet();
-        Document document = Jsoup.connect("https://www.prothomalo.com/bangladesh/article/").userAgent("Opera").get();
+        Document document = Jsoup.connect("https://www.prothomalo.com/archive").userAgent("Opera").get();
         Element body = document.body();
 
-        Element posts = body.getElementsByClass("contents").first();
+        Element posts = body.getElementsByClass("listing").first();
         Elements postUrls = posts.getElementsByTag("a");
         for (Element post : postUrls) {
             String link = post.attr("href");
