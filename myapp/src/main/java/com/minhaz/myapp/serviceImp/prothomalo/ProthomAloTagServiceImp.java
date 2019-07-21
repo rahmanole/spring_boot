@@ -251,6 +251,7 @@ public class ProthomAloTagServiceImp implements TagService {
         HashSet<String> opinion_others = newsPaperService.findPostIds("https://www.prothomalo.com/opinion-others");
 
         HashSet<Tag> tags = new HashSet<>();
+
         if (editorial.contains(id)) {
             tags.add(getTag("editorial"));
         }

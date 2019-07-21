@@ -34,6 +34,10 @@ public class ProthomAloServiceImp implements NewsPaperService {
         String newPaperUrl = "https://www.prothomalo.com";
         HashSet<String> postId = findPostIds();
         postId.removeAll(postRepository.getPublisherGivenId());
+        if(postId.size()<1){
+            return postList;
+        }
+        List<HashSet<String>> catWistIdSets = getCatWistPosIdList();
 
         for (String id : postId) {
             Post post = new Post();
@@ -41,7 +45,9 @@ public class ProthomAloServiceImp implements NewsPaperService {
             String completeArticleUrl = newPaperUrl + id;
 
             post.setPublisherGivenId(id);
-            post.setCat(findPostCat(id));
+
+            assignCategory(id,post,catWistIdSets);
+
             post.setDateTime(new Date());
             post.setUrl(completeArticleUrl);
 
@@ -67,8 +73,7 @@ public class ProthomAloServiceImp implements NewsPaperService {
             post.setPostBody(psotBody(articleParas,body));
             post.setFtrImg(post.getPostBody().get(0).getImgUrl());
 
-            String cat = getCat(body);
-            tagService.manageCatAndTags(cat,post, id);
+
             postList.add(post);
 
         }
@@ -168,6 +173,66 @@ public class ProthomAloServiceImp implements NewsPaperService {
                 postId.add(link.substring(0, link.indexOf('%')));
         }
         return postId;
+    }
+
+    public List<HashSet<String>> getCatWistPosIdList() throws Exception{
+
+        List<HashSet<String>> list = new ArrayList<>();
+        list.add(findPostIds("https://www.prothomalo.com/bangladesh-politics"));
+        list.add(findPostIds("https://www.prothomalo.com/bangladesh/article/"));
+        list.add(findPostIds("https://www.prothomalo.com/international/article/"));
+        list.add(findPostIds("https://www.prothomalo.com/economy/article"));
+        list.add(findPostIds("https://www.prothomalo.com/opinion/article/"));
+        list.add(findPostIds("https://www.prothomalo.com/sports/article/"));
+        list.add(findPostIds("https://www.prothomalo.com/entertainment/article/"));
+        list.add(findPostIds("https://www.prothomalo.com/technology/article/"));
+        list.add(findPostIds("https://www.prothomalo.com/durporobash"));
+        list.add(findPostIds("https://www.prothomalo.com/opinion-editorial"));
+        return list;
+
+    }
+
+    public void assignCategory(String id,Post post,List<HashSet<String>>  list){
+        if(list.get(0).contains(id)){
+            post.setCat("politics");
+            return;
+        }
+        if(list.get(1).contains(id)){
+            post.setCat("bangladesh");
+            return;
+        }
+        if(list.get(2).contains(id)){
+            post.setCat("international");
+            return;
+        }
+        if(list.get(3).contains(id)){
+            post.setCat("economy");
+            return;
+        }
+        if(list.get(4).contains(id)){
+            post.setCat("opinion");
+            return;
+        }
+        if(list.get(5).contains(id)){
+            post.setCat("sports");
+            return;
+        }
+        if(list.get(6).contains(id)){
+            post.setCat("entertainment");
+            return;
+        }
+        if(list.get(7).contains(id)){
+            post.setCat("sciTech");
+            return;
+        }
+        if(list.get(8).contains(id)){
+            post.setCat("aboard");
+            return;
+        }
+        if(list.get(9).contains(id)){
+            post.setCat("editorial");
+            return;
+        }
     }
 
     private String findPostCat(String id) {
