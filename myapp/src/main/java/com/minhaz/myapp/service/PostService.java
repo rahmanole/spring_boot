@@ -10,4 +10,5 @@ public interface PostService {
     void savePosts();
     List<Post> findAllPosts();
     String getPulisherLogo(String publisher);
+    Post getPost(long id);
 }

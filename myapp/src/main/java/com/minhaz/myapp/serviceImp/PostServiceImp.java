@@ -41,15 +41,15 @@ public class PostServiceImp implements PostService {
                         System.out.println(post.getDateTime());
                         System.out.println(post.getPublisher());
 
-                        post.getPostBody().forEach(para -> {
-                            if (para.getImgUrl() == null) {
-                                System.out.println(para.getDescription());
-                            } else {
-                                System.out.println(para.getImgUrl());
-                                System.out.println(para.getImgCaption());
-                                System.out.println(para.getDescription());
-                            }
-                        });
+//                        post.getPostBody().forEach(para -> {
+//                            if (para.getImgUrl() == null) {
+//                                System.out.println(para.getDescription());
+//                            } else {
+//                                System.out.println(para.getImgUrl());
+//                                System.out.println(para.getImgCaption());
+//                                System.out.println(para.getDescription());
+//                            }
+//                        });
                         post.getTags().forEach(tag-> System.out.print(tag.getTagName()+","));
                         postRepository.save(post);
                     } catch (Exception dataIntegrityViolationException) {
@@ -116,6 +116,11 @@ public class PostServiceImp implements PostService {
                 return "";
 
         }
+    }
+
+    @Override
+    public Post getPost(long id) {
+        return postRepository.getOne(id);
     }
 
 }

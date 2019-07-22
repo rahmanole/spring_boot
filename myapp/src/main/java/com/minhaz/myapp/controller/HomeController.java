@@ -21,6 +21,7 @@ public class HomeController {
 
     @Autowired
     DateTimeConverter dateTimeConverter;
+
     @GetMapping("/")
     public String home(Model model, @RequestParam(defaultValue = "0") int page ){
         model.addAttribute("postList",postRepository.findAll(PageRequest.of(page, 6, Sort.by(Sort.Direction.DESC, "dateTime"))));
@@ -29,5 +30,12 @@ public class HomeController {
         page++;
         model.addAttribute("nextPage",page);
         return "index";
+    }
+
+    @GetMapping("/post/{id}")
+    public String postDetails(Model model,@PathVariable long id){
+        Post post = postService.getPost(id);
+        model.addAttribute("postDetails",post);
+        return "post";
     }
 }

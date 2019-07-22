@@ -1,6 +1,9 @@
 package com.minhaz.myapp.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="para")
@@ -9,8 +12,15 @@ public class Para {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String imgUrl;
-    private String imgCaption;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "para_id")
+    private Set<Img> imgList;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "para_id")
+    private Set<Vdo> vdoList;
+
     @Column(length = 100000)
     private String description;
 
@@ -22,20 +32,20 @@ public class Para {
         this.id = id;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public Set<Img> getImgList() {
+        return imgList;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImgList(Set<Img> imgList) {
+        this.imgList = imgList;
     }
 
-    public String getImgCaption() {
-        return imgCaption;
+    public Set<Vdo> getVdoList() {
+        return vdoList;
     }
 
-    public void setImgCaption(String imgCaption) {
-        this.imgCaption = imgCaption;
+    public void setVdoList(Set<Vdo> vdoList) {
+        this.vdoList = vdoList;
     }
 
     public String getDescription() {

@@ -2,8 +2,10 @@ package com.minhaz.myapp.serviceImp.prothomalo;
 
 
 import com.minhaz.myapp.dao.PostRepository;
+import com.minhaz.myapp.entity.Img;
 import com.minhaz.myapp.entity.Para;
 import com.minhaz.myapp.entity.Post;
+import com.minhaz.myapp.entity.Vdo;
 import com.minhaz.myapp.service.NewsPaperService;
 import com.minhaz.myapp.service.TagService;
 import org.jsoup.Jsoup;
@@ -71,7 +73,7 @@ public class ProthomAloServiceImp implements NewsPaperService {
             articleParas.outerHtml();
 
             post.setPostBody(psotBody(articleParas,body));
-            post.setFtrImg(post.getPostBody().get(0).getImgUrl());
+            post.setFtrImg(featureImgUrl(body));
 
 
             postList.add(post);
@@ -91,21 +93,16 @@ public class ProthomAloServiceImp implements NewsPaperService {
         List<Para> allParas = new ArrayList();
         for (int i = 0; i < articleParas.size() - 2; i++) {
             Para para = new Para();
-            if (findImgUrl(articleParas.get(i)).equals("")) {
-                para.setDescription(articleParas.get(i).text());
-            } else {
-                para.setImgUrl(findImgUrl(articleParas.get(i)));
-                para.setImgCaption(findImgCaption(articleParas.get(i)));
-                para.setDescription(articleParas.get(i).text());
-            }
-
-
+            para.setDescription(articleParas.get(i).text());
+            findImgOrVdo(articleParas.get(i),para);
             allParas.add(para);
-
         }
 
-        if(allParas.get(0).getImgUrl() == null){
-            allParas.get(0).setImgUrl(featureImgUrl(body));
+        if(!(allParas.get(0).getImgList().isEmpty())){
+            for (Img img:allParas.get(0).getImgList()) {
+                img.setImgUrl(featureImgUrl(body));
+                break;
+            }
         }
         return allParas;
     }
@@ -120,14 +117,33 @@ public class ProthomAloServiceImp implements NewsPaperService {
 
 
     //---------------Finding image URL--------
-    private String findImgUrl(Element articleParas) {
-        HashMap<String, String> imgUrlAndCaptin = new HashMap<String, String>();
-        Element imgTag = articleParas.select("img").first();
-        if (imgTag != null) {
-            return imgTag.attr("src");
-        } else {
-            return "";
+    private HashSet<Img> findImgOrVdo(Element articlePara,Para para) {
+        HashSet<Img> imgList = new HashSet<>();
+        HashSet<Vdo> vdoList = new HashSet<>();
+
+        Elements imgTags = articlePara.select("img");
+        Elements vdoTags = articlePara.getElementsByTag("iframe");
+
+        if(imgTags != null){
+            for (Element imgTag:imgTags) {
+                Img img = new Img();
+                img.setImgUrl(imgTag.attr("src"));
+                img.setImgCaption(imgTag.attr("alt"));
+                imgList.add(img);
+            }
+            para.setImgList(imgList);
         }
+
+        if(vdoTags != null){
+            for (Element vdoTag:vdoTags) {
+                Vdo vdo = new Vdo();
+                vdo.setVdoUrl(vdoTag.attr("src"));
+                vdo.setVdoCaption(vdoTag.attr("src"));
+                vdoList.add(vdo);
+            }
+        }
+
+        return imgList;
     }
     //----------------end--------------
 
@@ -147,7 +163,7 @@ public class ProthomAloServiceImp implements NewsPaperService {
     @Override
     public HashSet<String> findPostIds() throws IOException {
         HashSet<String> postId = new HashSet();
-        Document document = Jsoup.connect("https://www.prothomalo.com/archive").userAgent("Opera").get();
+        Document document = Jsoup.connect("https://www.prothomalo.com/archive?page=2").userAgent("Opera").get();
         Element body = document.body();
 
         Element posts = body.getElementsByClass("listing").first();

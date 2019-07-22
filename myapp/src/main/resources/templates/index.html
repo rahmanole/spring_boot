@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="card postCard" th:each="post:${postList}">
-                        <a th:href="${post.url}" target="_blank">
+                        <a th:href="@{'/post/'+${post.id}}" target="_blank">
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-4 col-4">
                                     <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>

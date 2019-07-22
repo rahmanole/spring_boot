@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="navbar navbar-expand-sm bg-light">
+
+            <!-- Links -->
+            <ul class="navbar-nav">
+
+            </ul>
+
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+        </div>
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col">
+                    <h2 th:text="${postDetails.heading}"></h2>
+                    <span th:each="para:${postDetails.postBody}">
+                        <span th:if="${para.getImgList()}">
+                            <span th:each="img:${para.getImgList()}">
+                                <figure>
+                                    <img class="img-fluid" th:src="${img.getImgUrl()}"/>
+                                    <figcaption th:text="${img.getImgCaption()}"></figcaption>
+                                </figure>
+                            </span>
+                            <p th:text="${para.description}"></p>
+                        </span>
+
+                        <span th:unless="${para.getImgList()}">
+                            <span th:each="img:${para.getImgList()}">
+                                <figure>
+                                    <img class="img-fluid" th:src="${img.getImgUrl()}"/>
+                                    <figcaption th:text="${img.getImgCaption()}"></figcaption>
+                                </figure>
+                            </span>
+                            <p th:text="${para.description}"></p>
+                        </span>
+
+                        <!--<span th:if="${para.}">-->
+                        <!--<figure>-->
+                        <!--<img class="img-fluid" th:src="${para.imgUrl}"/>-->
+                        <!--<figcaption th:text="${para.imgCaption}"></figcaption>-->
+                        <!--</figure>-->
+                        <!--<p th:text="${para.description}"></p>-->
+                        <!--</span>-->
+                        <!--<span th:unless="${para.imgUrl}">-->
+                        <!--<p th:text="${para.description}"></p>-->
+                        <!--</span>-->
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
