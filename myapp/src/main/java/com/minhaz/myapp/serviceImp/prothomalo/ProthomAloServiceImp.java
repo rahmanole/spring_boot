@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.*;
 
 @Service
-public class ProthomAloServiceImp implements NewsPaperService {
+public class ProthomAloServiceImp  {
 
     @Autowired
     @Qualifier("prothomAloTagServiceImp")
@@ -158,6 +158,11 @@ public class ProthomAloServiceImp implements NewsPaperService {
         }
     }
     //----------------end--------------
+
+    @Override
+    public void savePosts() {
+
+    }
 
     // method for finding artcile url
     @Override

@@ -38,7 +38,7 @@ public class PostServiceImp implements PostService {
                                  HashSet<String> findPostIds) throws Exception {
         List<Post> postList = new ArrayList();
 
-        findPostIds.removeAll(postRepository.getPublisherGivenId());
+        findPostIds.removeAll(postRepository.getPublisherGivenId(publisher));
 
         if(findPostIds.size()<1){
             return postList;

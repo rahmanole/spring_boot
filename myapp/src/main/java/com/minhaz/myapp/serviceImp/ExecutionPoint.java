@@ -82,18 +82,9 @@ public class ExecutionPoint {
 
 
     @Transactional
-    @Scheduled(fixedDelay = 30000)
+    @Scheduled(fixedDelay = 300000)
     public void saveJugantorPosts() {
-        Long strtTime = System.currentTimeMillis();
-        try {
-            for (String id:jugantorServiceImp.findPostIds()) {
-                System.out.println(id);
-            }
-            System.out.println(jugantorServiceImp.findPostIds().size());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        System.out.println(System.currentTimeMillis()-strtTime);
+        jugantorServiceImp.savePosts();
 
     }
 

@@ -24,32 +24,28 @@ import java.util.*;
 public class JugantorServiceImp implements NewsPaperService {
 
     @Autowired
-    @Qualifier("prothomAloTagServiceImp")
-    TagService tagService;
-
-    @Autowired
     PostService postService;
 
     @Autowired
     PostRepository postRepository;
 
-    List<Post> postList = postService.createPsot("jugantor",
-            "https://www.jugantor.com/",
-            "h1",
-            "dtl_section",
-            "dtl_section",
-            findPostIds());
-
-    public JugantorServiceImp() throws Exception {
-
-    }
 
 
-    public void savePosts(){
+
+
+
+    public void savePosts() throws Exception{
+        List<Post> postList = postService.createPsot("jugantor",
+                "https://www.jugantor.com/",
+                "h1",
+                "dtl_section",
+                "dtl_section",
+                findPostIds());
         postList.forEach(post -> {
             try {
                 assignCategory(post.getPublisherGivenId(),post,getCatWistPosIdList());
                 postRepository.save(post);
+                System.out.println("saved");
             } catch (Exception e) {
                 e.printStackTrace();
             }
