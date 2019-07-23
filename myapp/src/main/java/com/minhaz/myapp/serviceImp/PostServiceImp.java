@@ -1,91 +1,149 @@
 package com.minhaz.myapp.serviceImp;
 
 import com.minhaz.myapp.dao.PostRepository;
+import com.minhaz.myapp.entity.Img;
+import com.minhaz.myapp.entity.Para;
 import com.minhaz.myapp.entity.Post;
+import com.minhaz.myapp.entity.Vdo;
 import com.minhaz.myapp.service.PostService;
 import com.minhaz.myapp.service.NewsPaperService;
 import com.minhaz.myapp.service.TagService;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
-@Component
 @Service
 public class PostServiceImp implements PostService {
     @Autowired
     PostRepository postRepository;
 
-    @Autowired
-    TagService tagService;
 
-    @Autowired
-    NewsPaperService prothomAloService;
-
-    @Transactional
-    @Scheduled(fixedDelay = 300000)
     @Override
-    public void savePosts() {
-        long strtTime = System.currentTimeMillis();
-        for (; ; ) {
-            try {
-                for (Post post : prothomAloService.createPsot()) {
-                    try {
-                        System.out.println(post.getCat());
-                        System.out.println(post.getHeading());
-                        System.out.println(post.getFtrImg());
-                        System.out.println(post.getUrl());
-                        System.out.println(post.getDateTime());
-                        System.out.println(post.getPublisher());
+    public List<Post> createPsot(String publisher,String newsPaperUrl,
+                                 String htmlTagForHeading,
+                                 String contentDetailsCssClass,
+                                 String cssClassForFeatuteImg,
+                                 HashSet<String> findPostIds) throws Exception {
+        List<Post> postList = new ArrayList();
 
-//                        post.getPostBody().forEach(para -> {
-//                            if (para.getImgUrl() == null) {
-//                                System.out.println(para.getDescription());
-//                            } else {
-//                                System.out.println(para.getImgUrl());
-//                                System.out.println(para.getImgCaption());
-//                                System.out.println(para.getDescription());
-//                            }
-//                        });
-                        post.getTags().forEach(tag-> System.out.print(tag.getTagName()+","));
-                        postRepository.save(post);
-                    } catch (Exception dataIntegrityViolationException) {
-                        System.out.println("Post already exists!1");
-                        continue;
-                    }
-                }
+        findPostIds.removeAll(postRepository.getPublisherGivenId());
+
+        if(findPostIds.size()<1){
+            return postList;
+        }
+
+        for (String id : findPostIds) {
+            Post post = new Post();
+
+            String completeArticleUrl = newsPaperUrl + id;
+
+            post.setPublisherGivenId(id);
+
+            post.setDateTime(new Date());
+            post.setUrl(completeArticleUrl);
+
+            Document document = Jsoup.connect(completeArticleUrl).userAgent("Opera").get();
+            Element body = document.body();
+
+
+            // Finding headline of the post
+            Elements heading = body.getElementsByTag(htmlTagForHeading);
+
+            post.setHeading(heading.text());
+
+            // ---------end-------
+
+//            String postFeatureImgUrl = featureImgUrl(body);
+//            post.setFtrImg(postFeatureImgUrl);
+
+            post.setPublisher(publisher);
+            //This portion for article paras
+            Elements articleParas = body.getElementsByClass(contentDetailsCssClass).first().getElementsByTag("p");
+            articleParas.outerHtml();
+
+            post.setPostBody(psotBody(articleParas,body,cssClassForFeatuteImg));
+            post.setFtrImg(featureImgUrl(body,cssClassForFeatuteImg));
+
+
+            postList.add(post);
+
+        }
+        return postList;
+    }
+
+    @Override
+    public List<Para> psotBody(Elements articleParas,Element body,String cssClassForFeatuteImg) {
+        List<Para> allParas = new ArrayList();
+        for (int i = 0; i < articleParas.size() - 2; i++) {
+            Para para = new Para();
+            para.setDescription(articleParas.get(i).text());
+            findImgOrVdo(articleParas.get(i),para);
+            allParas.add(para);
+        }
+
+        if(!(allParas.get(0).getImgList().isEmpty())){
+            for (Img img:allParas.get(0).getImgList()) {
+                img.setImgUrl(featureImgUrl(body,cssClassForFeatuteImg));
                 break;
-            } catch (Exception e) {
-                e.printStackTrace();
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-                continue;
+            }
+        }
+        return allParas;
+    }
+
+    @Override
+    public HashSet<Img> findImgOrVdo(Element articlePara,Para para) {
+        HashSet<Img> imgList = new HashSet<>();
+        HashSet<Vdo> vdoList = new HashSet<>();
+
+        Elements imgTags = articlePara.select("img");
+        Elements vdoTags = articlePara.getElementsByTag("iframe");
+
+        if(imgTags != null){
+            for (Element imgTag:imgTags) {
+                Img img = new Img();
+                img.setImgUrl(imgTag.attr("src"));
+                img.setImgCaption(imgTag.attr("alt"));
+                imgList.add(img);
+            }
+            para.setImgList(imgList);
+        }
+
+        if(vdoTags != null){
+            for (Element vdoTag:vdoTags) {
+                Vdo vdo = new Vdo();
+                vdo.setVdoUrl(vdoTag.attr("src"));
+                vdo.setVdoCaption(vdoTag.attr("src"));
+                vdoList.add(vdo);
             }
         }
 
-        System.out.println("========="+(System.currentTimeMillis()-strtTime)+"===========");
-
+        return imgList;
     }
+
+    @Override
+    public String featureImgUrl(Element body,String cssClassForFeatuteImg) {
+        Elements elements = body.getElementsByClass(cssClassForFeatuteImg);
+        String imgWithCaption = elements.select("img").first().attr("src");
+        return imgWithCaption;
+    }
+
 
     @Override
     public List<Post> findAllPosts() {
         return postRepository.findAllByOrderByDateTimeDesc();
     }
-
-//    @Autowired
-//    TagRepository tagRepository;
-//    @Scheduled(fixedDelay = 3000)
-//    public void show() {
-//       postRepository.getPublisherGivenId().forEach(id->{
-//           System.out.println(id);
-//       });
-//    }
 
     @Override
     public String getPulisherLogo(String publisher) {

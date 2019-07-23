@@ -69,7 +69,7 @@ public class ProthomAloServiceImp implements NewsPaperService {
 
             post.setPublisher(publisher);
             //This portion for article paras
-            Elements articleParas = body.getElementsByTag("p");
+            Elements articleParas = body.getElementsByClass("content_detail").first().getElementsByTag("p");
             articleParas.outerHtml();
 
             post.setPostBody(psotBody(articleParas,body));
