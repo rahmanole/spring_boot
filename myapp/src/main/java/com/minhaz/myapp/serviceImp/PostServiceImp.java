@@ -19,13 +19,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class PostServiceImp implements PostService {
+
     @Autowired
     PostRepository postRepository;
 
@@ -36,6 +34,7 @@ public class PostServiceImp implements PostService {
                                  String contentDetailsCssClass,
                                  String cssClassForFeatuteImg,
                                  HashSet<String> findPostIds) throws Exception {
+
         List<Post> postList = new ArrayList();
 
         findPostIds.removeAll(postRepository.getPublisherGivenId(publisher));
@@ -73,8 +72,8 @@ public class PostServiceImp implements PostService {
             Elements articleParas = body.getElementsByClass(contentDetailsCssClass).first().getElementsByTag("p");
             articleParas.outerHtml();
 
-            post.setPostBody(psotBody(articleParas,body,cssClassForFeatuteImg));
-            post.setFtrImg(featureImgUrl(body,cssClassForFeatuteImg));
+            post.setPostBody(psotBody(articleParas,body,cssClassForFeatuteImg,publisher));
+            post.setFtrImg(featureImgUrl(body,cssClassForFeatuteImg,publisher));
 
 
             postList.add(post);
@@ -84,26 +83,38 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public List<Para> psotBody(Elements articleParas,Element body,String cssClassForFeatuteImg) {
+    public List<Para> psotBody(Elements articleParas,
+                               Element body,
+                               String cssClassForFeatuteImg,
+                               String publisher) {
+
         List<Para> allParas = new ArrayList();
-        for (int i = 0; i < articleParas.size() - 2; i++) {
+        for (int i = 0; i < articleParas.size(); i++) {
             Para para = new Para();
             para.setDescription(articleParas.get(i).text());
-            findImgOrVdo(articleParas.get(i),para);
+            findImgOrVdo(articleParas.get(i),para,publisher);
             allParas.add(para);
         }
 
-        if(!(allParas.get(0).getImgList().isEmpty())){
-            for (Img img:allParas.get(0).getImgList()) {
-                img.setImgUrl(featureImgUrl(body,cssClassForFeatuteImg));
-                break;
-            }
+        if(allParas.get(0).getImgList().size() == 0){
+            System.out.println("kkkk");
+            Set<Img> imgSet = new HashSet<>();
+            Img img = new Img();
+            img.setImgUrl(featureImgUrl(body,cssClassForFeatuteImg,publisher));
+            imgSet.add(img);
+            allParas.get(0).setImgList(imgSet);
+
+//            for (Img img:allParas.get(0).getImgList()) {
+//                img.setImgUrl(featureImgUrl(body,cssClassForFeatuteImg,publisher));
+//                System.out.println(featureImgUrl(body,cssClassForFeatuteImg,publisher));
+//                break;
+//            }
         }
         return allParas;
     }
 
     @Override
-    public HashSet<Img> findImgOrVdo(Element articlePara,Para para) {
+    public HashSet<Img> findImgOrVdo(Element articlePara,Para para,String publisher) {
         HashSet<Img> imgList = new HashSet<>();
         HashSet<Vdo> vdoList = new HashSet<>();
 
@@ -113,7 +124,9 @@ public class PostServiceImp implements PostService {
         if(imgTags != null){
             for (Element imgTag:imgTags) {
                 Img img = new Img();
-                img.setImgUrl(imgTag.attr("src"));
+                if(publisher.equals("jugantor")){
+                    img.setImgUrl("https://www.jugantor.com" + imgTag.attr("src"));
+                }
                 img.setImgCaption(imgTag.attr("alt"));
                 imgList.add(img);
             }
@@ -133,9 +146,13 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public String featureImgUrl(Element body,String cssClassForFeatuteImg) {
+    public String featureImgUrl(Element body,String cssClassForFeatuteImg,String publisher) {
         Elements elements = body.getElementsByClass(cssClassForFeatuteImg);
-        String imgWithCaption = elements.select("img").first().attr("src");
+        String imgWithCaption = "";
+
+        if(publisher.equals("jugantor")){
+            imgWithCaption = "https://www.jugantor.com" + elements.select("img").first().attr("src");
+        }
         return imgWithCaption;
     }
 

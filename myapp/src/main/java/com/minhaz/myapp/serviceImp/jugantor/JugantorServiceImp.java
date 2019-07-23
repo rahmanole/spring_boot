@@ -36,14 +36,16 @@ public class JugantorServiceImp implements NewsPaperService {
 
     public void savePosts() throws Exception{
         List<Post> postList = postService.createPsot("jugantor",
-                "https://www.jugantor.com/",
+                "https://www.jugantor.com",
                 "h1",
                 "dtl_section",
                 "dtl_section",
                 findPostIds());
+        List<HashSet<String>> catWisePostList = getCatWistPosIdList();
+
         postList.forEach(post -> {
             try {
-                assignCategory(post.getPublisherGivenId(),post,getCatWistPosIdList());
+                assignCategory(post.getPublisherGivenId(),post,catWisePostList);
                 postRepository.save(post);
                 System.out.println("saved");
             } catch (Exception e) {
@@ -79,12 +81,15 @@ public class JugantorServiceImp implements NewsPaperService {
         Element body = document.body();
         Elements posts = body.getElementsByClass("leadmorehl2");
 
-        for (int i=0;i<20;i++) {
-            String link = posts.get(i).getElementsByTag("a").first()
+        for (Element post:posts) {
+            String link = post.getElementsByTag("a").first()
                     .attr("href")
                     .replace("https://www.jugantor.com","");
 
             postId.add(link.substring(0,link.lastIndexOf('/')));
+
+            if(postId.size()>21)
+                break;
         }
 
         return postId;
@@ -111,45 +116,45 @@ public class JugantorServiceImp implements NewsPaperService {
 
     @Override
     public void assignCategory(String id,Post post,List<HashSet<String>>  list){
-        if(list.get(0).contains(id) || list.get(1).contains(id) ||
-                list.get(2).contains(id) || list.get(3).contains(id)){
+        if(list.get(0).contains(id) ){
             post.setCat("politics");
             return;
         }
-        if(list.get(4).contains(id)){
+        if(list.get(1).contains(id) ||
+                list.get(2).contains(id) || list.get(3).contains(id)){
             post.setCat("bangladesh");
             return;
         }
-        if(list.get(5).contains(id)){
+        if(list.get(4).contains(id)){
             post.setCat("international");
             return;
         }
-        if(list.get(6).contains(id)){
+        if(list.get(5).contains(id)){
             post.setCat("economy");
             return;
         }
-        if(list.get(7).contains(id)){
+        if(list.get(6).contains(id)){
             post.setCat("opinion");
             return;
         }
-        if(list.get(8).contains(id)){
+        if(list.get(7).contains(id)){
             post.setCat("sports");
             return;
         }
 
-        if(list.get(9).contains(id)){
+        if(list.get(8).contains(id)){
             post.setCat("entertainment");
             return;
         }
-        if(list.get(10).contains(id)){
+        if(list.get(9).contains(id)){
             post.setCat("sciTech");
             return;
         }
-        if(list.get(11).contains(id)){
+        if(list.get(10).contains(id)){
             post.setCat("aboard");
             return;
         }
-        if(list.get(12).contains(id)){
+        if(list.get(11).contains(id)){
             post.setCat("editorial");
             return;
         }

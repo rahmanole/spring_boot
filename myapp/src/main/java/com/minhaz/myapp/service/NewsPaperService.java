@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public interface NewsPaperService {
-    void savePosts();
+    void savePosts () throws Exception;
     HashSet<String> findPostIds() throws IOException;
     HashSet<String> findPostIds(String catWiseUrl) throws IOException;
     List<HashSet<String>> getCatWistPosIdList() throws Exception;

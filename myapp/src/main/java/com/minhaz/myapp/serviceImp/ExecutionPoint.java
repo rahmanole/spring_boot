@@ -20,13 +20,13 @@ public class ExecutionPoint {
     @Autowired
     PostRepository postRepository;
 
-    @Autowired
-    @Qualifier("prothomAloTagServiceImp")
-    TagService prothomAloTagService;
+//    @Autowired
+//    @Qualifier("prothomAloTagServiceImp")
+//    TagService prothomAloTagService;
 
-    @Autowired
-    @Qualifier("prothomAloServiceImp")
-    NewsPaperService prothomAloService;
+//    @Autowired
+//    @Qualifier("prothomAloServiceImp")
+//    NewsPaperService prothomAloService;
 
     @Autowired
     @Qualifier("jugantorServiceImp")
@@ -84,7 +84,11 @@ public class ExecutionPoint {
     @Transactional
     @Scheduled(fixedDelay = 300000)
     public void saveJugantorPosts() {
-        jugantorServiceImp.savePosts();
+        try{
+            jugantorServiceImp.savePosts();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 

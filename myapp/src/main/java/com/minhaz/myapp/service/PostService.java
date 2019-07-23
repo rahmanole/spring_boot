@@ -16,9 +16,9 @@ public interface PostService {
                           String contentDetailsCssClass,
                           String cssClassForFeatuteImg,
                           HashSet<String> findPostIds) throws Exception;
-    List<Para> psotBody(Elements articleParas,Element body,String cssClassForFeatuteImg);
-    HashSet<Img> findImgOrVdo(Element articlePara, Para para);
-    String featureImgUrl(Element body,String cssClassForFearuteImg);
+    List<Para> psotBody(Elements articleParas,Element body,String cssClassForFeatuteImg,String publisher);
+    HashSet<Img> findImgOrVdo(Element articlePara, Para para,String publisher);
+    String featureImgUrl(Element body,String cssClassForFearuteImg,String publisher);
     List<Post> findAllPosts();
     String getPulisherLogo(String publisher);
     Post getPost(long id);
