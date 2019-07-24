@@ -14,6 +14,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -96,27 +99,20 @@ public class PostServiceImp implements PostService {
             allParas.add(para);
         }
 
-        if(allParas.get(0).getImgList().size() == 0){
-            System.out.println("kkkk");
-            Set<Img> imgSet = new HashSet<>();
+        if(allParas.get(0).getImgList().isEmpty()){
+            List<Img> imgList = new ArrayList<>();
             Img img = new Img();
             img.setImgUrl(featureImgUrl(body,cssClassForFeatuteImg,publisher));
-            imgSet.add(img);
-            allParas.get(0).setImgList(imgSet);
-
-//            for (Img img:allParas.get(0).getImgList()) {
-//                img.setImgUrl(featureImgUrl(body,cssClassForFeatuteImg,publisher));
-//                System.out.println(featureImgUrl(body,cssClassForFeatuteImg,publisher));
-//                break;
-//            }
+            imgList.add(img);
+            allParas.get(0).setImgList(imgList);
         }
         return allParas;
     }
 
     @Override
-    public HashSet<Img> findImgOrVdo(Element articlePara,Para para,String publisher) {
-        HashSet<Img> imgList = new HashSet<>();
-        HashSet<Vdo> vdoList = new HashSet<>();
+    public void findImgOrVdo(Element articlePara,Para para,String publisher) {
+        List<Img> imgList = new ArrayList<>();
+        List<Vdo> vdoList = new ArrayList<>();
 
         Elements imgTags = articlePara.select("img");
         Elements vdoTags = articlePara.getElementsByTag("iframe");
@@ -124,9 +120,13 @@ public class PostServiceImp implements PostService {
         if(imgTags != null){
             for (Element imgTag:imgTags) {
                 Img img = new Img();
+
                 if(publisher.equals("jugantor")){
                     img.setImgUrl("https://www.jugantor.com" + imgTag.attr("src"));
+                }else if(publisher.equals("prothom_alo")){
+                    img.setImgUrl(imgTag.attr("src"));
                 }
+
                 img.setImgCaption(imgTag.attr("alt"));
                 imgList.add(img);
             }
@@ -140,9 +140,9 @@ public class PostServiceImp implements PostService {
                 vdo.setVdoCaption(vdoTag.attr("src"));
                 vdoList.add(vdo);
             }
+            para.setVdoList(vdoList);
         }
 
-        return imgList;
     }
 
     @Override
@@ -152,6 +152,8 @@ public class PostServiceImp implements PostService {
 
         if(publisher.equals("jugantor")){
             imgWithCaption = "https://www.jugantor.com" + elements.select("img").first().attr("src");
+        }else if(publisher.equals("prothom_alo")){
+            imgWithCaption = elements.select("img").first().attr("src");
         }
         return imgWithCaption;
     }
@@ -196,6 +198,16 @@ public class PostServiceImp implements PostService {
     @Override
     public Post getPost(long id) {
         return postRepository.getOne(id);
+    }
+
+    @Override
+    public List<Post> getPostsByCat(String catName) {
+        return postRepository.findByCatOrderByDateTimeDesc(catName);
+    }
+
+    @Override
+    public Page<Post> getAllPosts(int page,String orderParameter) {
+        return postRepository.findAll(PageRequest.of(page, 6, Sort.by(Sort.Direction.DESC, orderParameter)));
     }
 
 }

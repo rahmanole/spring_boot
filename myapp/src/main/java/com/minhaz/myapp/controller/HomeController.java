@@ -24,7 +24,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model, @RequestParam(defaultValue = "0") int page ){
-        model.addAttribute("postList",postRepository.findAll(PageRequest.of(page, 6, Sort.by(Sort.Direction.DESC, "dateTime"))));
+        model.addAttribute("postList",postService.getAllPosts(page,"dateTime"));
         model.addAttribute("timeConverter",dateTimeConverter);
         model.addAttribute("postService",postService);
         page++;

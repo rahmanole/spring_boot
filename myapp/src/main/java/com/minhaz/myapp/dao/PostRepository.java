@@ -2,6 +2,7 @@ package com.minhaz.myapp.dao;
 
 
 import com.minhaz.myapp.entity.Post;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,7 +16,7 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post,Long> {
     PageRequest pageable = PageRequest.of(0, 15);
 
-    List<Post> findByCat(String cat);
+    Page<Post> findByCatOrderByDateTimeDesc(String cat);
     List<Post> findAllByOrderByDateTimeDesc();
 //    List<String> findPub();
     @Query(value = "select p.publisherGivenId from Post p where p.publisher = :publisher")

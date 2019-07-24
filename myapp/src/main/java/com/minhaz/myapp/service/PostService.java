@@ -6,6 +6,7 @@ import com.minhaz.myapp.entity.Para;
 import com.minhaz.myapp.entity.Post;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.data.domain.Page;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -17,9 +18,13 @@ public interface PostService {
                           String cssClassForFeatuteImg,
                           HashSet<String> findPostIds) throws Exception;
     List<Para> psotBody(Elements articleParas,Element body,String cssClassForFeatuteImg,String publisher);
-    HashSet<Img> findImgOrVdo(Element articlePara, Para para,String publisher);
+    void findImgOrVdo(Element articlePara, Para para,String publisher);
     String featureImgUrl(Element body,String cssClassForFearuteImg,String publisher);
     List<Post> findAllPosts();
     String getPulisherLogo(String publisher);
     Post getPost(long id);
+
+    List<Post> getPostsByCat(String catName);
+
+    Page<Post> getAllPosts(int page,String orderParameter);
 }

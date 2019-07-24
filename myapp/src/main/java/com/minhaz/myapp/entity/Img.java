@@ -9,6 +9,7 @@ public class Img {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String imgUrl;
+    @Column(length = 10000)
     private String imgCaption;
 
     public long getId() {

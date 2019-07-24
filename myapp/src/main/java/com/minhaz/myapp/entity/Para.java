@@ -15,11 +15,11 @@ public class Para {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "para_id")
-    private Set<Img> imgList;
+    private List<Img> imgList;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "para_id")
-    private Set<Vdo> vdoList;
+    private List<Vdo> vdoList;
 
     @Column(length = 100000)
     private String description;
@@ -32,19 +32,19 @@ public class Para {
         this.id = id;
     }
 
-    public Set<Img> getImgList() {
+    public List<Img> getImgList() {
         return imgList;
     }
 
-    public void setImgList(Set<Img> imgList) {
+    public void setImgList(List<Img> imgList) {
         this.imgList = imgList;
     }
 
-    public Set<Vdo> getVdoList() {
+    public List<Vdo> getVdoList() {
         return vdoList;
     }
 
-    public void setVdoList(Set<Vdo> vdoList) {
+    public void setVdoList(List<Vdo> vdoList) {
         this.vdoList = vdoList;
     }
 
