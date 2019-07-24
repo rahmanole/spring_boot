@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -201,13 +202,15 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public List<Post> getPostsByCat(String catName) {
-        return postRepository.findByCatOrderByDateTimeDesc(catName);
+    public Page<Post> getPostsByCat(Pageable pageable,String catName) {
+        return postRepository.findAllByCat(PageRequest.of(0,6,Sort.by(Sort.Direction.DESC,"dateTime")),catName);
     }
 
     @Override
     public Page<Post> getAllPosts(int page,String orderParameter) {
         return postRepository.findAll(PageRequest.of(page, 6, Sort.by(Sort.Direction.DESC, orderParameter)));
     }
+
+
 
 }

@@ -23,8 +23,8 @@ public class HomeController {
     DateTimeConverter dateTimeConverter;
 
     @GetMapping("/")
-    public String home(Model model, @RequestParam(defaultValue = "0") int page ){
-        model.addAttribute("postList",postService.getAllPosts(page,"dateTime"));
+    public String home(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam String cat ){
+        model.addAttribute("postList",postService.getPostsByCat(null,cat));
         model.addAttribute("timeConverter",dateTimeConverter);
         model.addAttribute("postService",postService);
         page++;
