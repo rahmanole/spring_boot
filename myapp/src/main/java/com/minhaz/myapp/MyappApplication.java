@@ -17,16 +17,16 @@ public class MyappApplication {
         SpringApplication.run(MyappApplication.class, args);
     }
 
-//    @Bean("threadPoolTaskExecutor")
-//    public TaskExecutor getAyncExecutor(){
-//        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-//
-//        executor.setCorePoolSize(20);
-//        executor.setMaxPoolSize(100);
-//        executor.setWaitForTasksToCompleteOnShutdown(true);
-//        executor.setThreadNamePrefix("Async-");
-//
-//        return executor;
-//    }
+    @Bean("threadPoolTaskExecutor")
+    public TaskExecutor getAyncExecutor(){
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+
+        executor.setCorePoolSize(20);
+        executor.setMaxPoolSize(100);
+        executor.setWaitForTasksToCompleteOnShutdown(true);
+        executor.setThreadNamePrefix("Async-");
+
+        return executor;
+    }
 
 }

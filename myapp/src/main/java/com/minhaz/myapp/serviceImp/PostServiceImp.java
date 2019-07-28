@@ -95,6 +95,9 @@ public class PostServiceImp implements PostService {
         List<Para> allParas = new ArrayList();
         for (int i = 0; i < articleParas.size(); i++) {
             Para para = new Para();
+            if(articleParas.get(i).text().contains("আরো পড়ুন")){
+                continue;
+            }
             para.setDescription(articleParas.get(i).text());
             findImgOrVdo(articleParas.get(i),para,publisher);
             allParas.add(para);
@@ -122,13 +125,17 @@ public class PostServiceImp implements PostService {
             for (Element imgTag:imgTags) {
                 Img img = new Img();
 
+                img.setImgCaption(imgTag.attr("alt"));
                 if(publisher.equals("jugantor")){
                     img.setImgUrl("https://www.jugantor.com" + imgTag.attr("src"));
-                }else if(publisher.equals("prothom_alo")){
-                    img.setImgUrl(imgTag.attr("src"));
-                }
+                    return;
+                }else if(publisher.equals("bd_protidin")){
 
-                img.setImgCaption(imgTag.attr("alt"));
+                    img.setImgUrl("https://www.bd-pratidin.com" + imgTag.attr("src").substring(1));
+                    return;
+                }
+                img.setImgUrl(imgTag.attr("src"));
+
                 imgList.add(img);
             }
             para.setImgList(imgList);
@@ -152,9 +159,21 @@ public class PostServiceImp implements PostService {
         String imgWithCaption = "";
 
         if(publisher.equals("jugantor")){
+
             imgWithCaption = "https://www.jugantor.com" + elements.select("img").first().attr("src");
+
+        }else if(publisher.equals("ittefaq")){
+
+            imgWithCaption = "https://www.ittefaq.com.bd" + elements.select("img").first().attr("src");
+
         }else if(publisher.equals("prothom_alo")){
+
             imgWithCaption = elements.select("img").first().attr("src");
+
+        }else if(publisher.equals("bd_protidin")){
+            //As this vendors img url start with dot(.) thats why i use subString() method to remove the dot(.)
+
+            imgWithCaption = "https://www.bd-pratidin.com" + elements.select("img").first().attr("src").substring(1);
         }
         return imgWithCaption;
     }

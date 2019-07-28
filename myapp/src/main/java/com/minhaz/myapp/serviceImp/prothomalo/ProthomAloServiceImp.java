@@ -44,7 +44,7 @@ public class ProthomAloServiceImp  implements NewsPaperService{
             try {
                 assignCategory(post.getPublisherGivenId(),post,catWisePostList);
                 postRepository.save(post);
-                System.out.println("saved");
+                System.out.println("prothom_alo");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -97,6 +97,7 @@ public class ProthomAloServiceImp  implements NewsPaperService{
         list.add(findPostIds("https://www.prothomalo.com/technology/article/"));
         list.add(findPostIds("https://www.prothomalo.com/durporobash"));
         list.add(findPostIds("https://www.prothomalo.com/opinion-editorial"));
+        list.add(findPostIds("https://www.prothomalo.com/institution"));
         return list;
 
     }
@@ -140,6 +141,10 @@ public class ProthomAloServiceImp  implements NewsPaperService{
         }
         if(list.get(9).contains(id)){
             post.setCat("editorial");
+            return;
+        }
+        if(list.get(10).contains(id)){
+            post.setCat("campus");
             return;
         }
     }

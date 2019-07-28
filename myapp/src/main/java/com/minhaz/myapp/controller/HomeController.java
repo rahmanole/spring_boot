@@ -23,14 +23,24 @@ public class HomeController {
     DateTimeConverter dateTimeConverter;
 
     @GetMapping("/")
-    public String home(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam String cat ){
-        model.addAttribute("postList",postService.getPostsByCat(null,cat));
+    public String home(Model model, @RequestParam(defaultValue = "0") int page ){
+        model.addAttribute("postList",postService.getAllPosts(page,"dateTime"));
         model.addAttribute("timeConverter",dateTimeConverter);
         model.addAttribute("postService",postService);
         page++;
         model.addAttribute("nextPage",page);
         return "index";
     }
+
+//    @GetMapping("/")
+//    public String home(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam String cat ){
+//        model.addAttribute("postList",postService.getPostsByCat(null,cat));
+//        model.addAttribute("timeConverter",dateTimeConverter);
+//        model.addAttribute("postService",postService);
+//        page++;
+//        model.addAttribute("nextPage",page);
+//        return "index";
+//    }
 
     @GetMapping("/post/{id}")
     public String postDetails(Model model,@PathVariable long id){
