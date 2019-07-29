@@ -25,6 +25,7 @@ public class HomeController {
         model.addAttribute("bdPosts", postService.getPostsByCat(null, "bangladesh"));
         model.addAttribute("intPosts", postService.getPostsByCat(null, "international"));
         model.addAttribute("ecoPosts", postService.getPostsByCat(null, "economy"));
+        model.addAttribute("sportsPosts", postService.getPostsByCat(null, "sports"));
         model.addAttribute("timeConverter", dateTimeConverter);
         model.addAttribute("postService", postService);
         return "index";
@@ -68,6 +69,16 @@ public class HomeController {
         page++;
         model.addAttribute("nextPage", page);
         return "economy";
+    }
+
+    @GetMapping("/sports")
+    public String sports(Model model, @RequestParam(defaultValue = "0") int page) {
+        model.addAttribute("sportsPosts", postService.getPostsByCat(null, "sports", page));
+        model.addAttribute("timeConverter", dateTimeConverter);
+        model.addAttribute("postService", postService);
+        page++;
+        model.addAttribute("nextPage", page);
+        return "sports";
     }
 
 
