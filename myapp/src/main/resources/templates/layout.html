@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<title>Home Page</title>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+<div class="container-fluid mainBody">
+    <!-- partial:partials/_navbar.html -->
+
+
+
+    <div class="container-fluid">
+
+        <div class="row" th:replace="~{fragments/header.html :: topnav}">
+
+        </div>
+
+
+        <div layout:fragment="custom-content">
+            custom content is here
+
+        </div>
+
+        <div class="row" th:replace="~{fragments/footer.html :: footer}">
+
+        </div>
+    </div>
+
+    <!-- page-body-wrapper ends -->
+</div>
+
+<!--js files will be loaded here-->
+
+
+</body>
+
+</html>
+

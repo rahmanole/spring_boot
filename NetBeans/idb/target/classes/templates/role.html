@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Role</title>
+</head>
+<body>
+<span th:text="${sucMsg}" style="color: green"></span>
+<form th:object="${role}" th:action="@{/role}" method="post">
+    <input type="text" th:field="*{roleName}" required>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>

@@ -10,6 +10,7 @@ and open the template in the editor.
 
 .mainBody{
     background: #8DD35F;
+    padding-top: 13px;
 }
 
 a:link{
@@ -40,6 +41,11 @@ a:hover {
     padding: 5px 0 5px 0;
     margin-left: -7px;
 }
+
+.oneCat{
+    margin-top: 25px;
+}
+
 @media only screen and (min-width: 768px) {
     .postCard{
         padding: 10px;

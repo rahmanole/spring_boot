@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+<span th:text="${sucMsg}" style="color: green"></span>
+<form th:object="${user}" th:action="@{/user/add}" method="POST">
+    Name:<input type="text" th:field="*{username}" required>
+    Email:<input type="text" th:field="*{email}" required>
+    Mobile:<input type="text" th:field="*{mobile}" required>
+    Password:<input type="text" th:field="*{password}" required>
+    Role:<select th:field="*{roles}" multiple="true">
+    <option th:each="role : ${roleList}" th:value="${role.id}">
+        <span th:text="${role.roleName}"></span>
+    </option>
+</select>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>

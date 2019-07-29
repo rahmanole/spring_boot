@@ -36,7 +36,7 @@ public class ExecutionPoint {
 
 
     @Transactional
- //   @Scheduled(fixedDelay = 300000)
+    @Scheduled(fixedDelay = 300000)
     public void savePosts() {
 
         for(;;){
@@ -53,7 +53,7 @@ public class ExecutionPoint {
     }
 
     @Transactional
-    @Scheduled(fixedDelay = 60000)
+//    @Scheduled(fixedDelay = 60000)
     public void showPostIds() {
 
         try {
@@ -75,6 +75,10 @@ public class ExecutionPoint {
         }
 
     }
+
+
+
+
 
     @Transactional
     @Async("threadPoolTaskExecutor")

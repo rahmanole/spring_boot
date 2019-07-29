@@ -30,10 +30,6 @@ public class JugantorServiceImp implements NewsPaperService {
     PostRepository postRepository;
 
 
-
-
-
-
     public void savePosts() throws Exception{
         List<Post> postList = postService.createPsot("jugantor",
                 "https://www.jugantor.com",

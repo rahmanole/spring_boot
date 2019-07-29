@@ -1,21 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout.html}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
-<body style="background-color: #FFFFFF">
-<div class="row" layout:fragment="custom-content">
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="navbar navbar-expand-sm bg-light">
+
+            <!-- Links -->
+            <ul class="navbar-nav">
+
+            </ul>
+
+        </nav>
+    </div>
     <div class="row">
         <div class="col-lg-3">
         </div>
         <div class="col-lg-6">
             <div class="row">
                 <div class="col">
-                    <h2 th:text="${post.heading}"></h2>
-                    <span th:each="para:${post.postBody}">
+                    <h2 th:text="${postDetails.heading}"></h2>
+                    <span th:each="para:${postDetails.postBody}">
                         <span th:if="${para.getImgList()}">
                             <span th:each="img:${para.getImgList()}">
                                 <figure>

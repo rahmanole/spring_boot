@@ -27,5 +27,7 @@ public interface PostService {
 
     Page<Post> getPostsByCat(Pageable pageable, String catName);
 
+    Page<Post> getPostsByCat(Pageable pageable, String catName,int page);
+
     Page<Post> getAllPosts(int page,String orderParameter);
 }

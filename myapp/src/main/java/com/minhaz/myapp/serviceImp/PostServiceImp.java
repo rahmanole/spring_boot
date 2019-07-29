@@ -224,6 +224,10 @@ public class PostServiceImp implements PostService {
     public Page<Post> getPostsByCat(Pageable pageable,String catName) {
         return postRepository.findAllByCat(PageRequest.of(0,6,Sort.by(Sort.Direction.DESC,"dateTime")),catName);
     }
+    @Override
+    public Page<Post> getPostsByCat(Pageable pageable,String catName,int page) {
+        return postRepository.findAllByCat(PageRequest.of(page,20,Sort.by(Sort.Direction.DESC,"dateTime")),catName);
+    }
 
     @Override
     public Page<Post> getAllPosts(int page,String orderParameter) {
