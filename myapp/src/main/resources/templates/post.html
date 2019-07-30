@@ -8,14 +8,13 @@
 </head>
 <body style="background-color: #FFFFFF">
 <div class="row" layout:fragment="custom-content">
-    <div class="row">
-        <div class="col-lg-3">
-        </div>
-        <div class="col-lg-6">
-            <div class="row">
-                <div class="col">
-                    <h2 th:text="${post.heading}"></h2>
-                    <span th:each="para:${post.postBody}">
+    <div class="col-lg-3">
+    </div>
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="col">
+                <h2 th:text="${post.heading}"></h2>
+                <span th:each="para:${post.postBody}">
                         <span th:if="${para.getImgList()}">
                             <span th:each="img:${para.getImgList()}">
                                 <figure>
@@ -36,7 +35,6 @@
                             <p th:text="${para.description}"></p>
                         </span>
                     </span>
-                </div>
             </div>
         </div>
         <div class="col-lg-3">

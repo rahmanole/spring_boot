@@ -1,0 +1,132 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 25, 2019, 2:43:51 AM
+    Author     : HP
+*/
+
+.mainBody{
+    margin-bottom: 50px;
+}
+.leftMostCol{
+   background: #002752;
+
+}
+
+.rightMostCol{
+    margin-top: 35px;
+}
+
+.pp img{
+    border-radius: 50%;
+}
+
+a:link{
+    text-decoration: none;
+    color: black;
+}
+a:hover {
+    text-decoration: none;
+}
+h1{
+    margin: 0px;
+}
+
+.description{
+    padding: 7px 15px 0px 0px;
+    margin-left: 5px;
+}
+
+
+
+.titleOfLeftCol{
+    background: #BFBFC1;
+    border-radius: 0 25px 25px 0;
+}
+
+.rightColDescription:first-child{
+    margin: 10px 0px 0px 24px;
+}
+.rightColDescription{
+    margin: 0px 0px -5px 24px;
+}
+
+.achvmntTitle{
+    margin: 0;
+    font-size: 17px;
+}
+
+
+
+@media only screen and (min-width: 992px) {
+    .marginLeft{
+        margin-left: 12px;
+    }
+
+    .name{
+        margin-top: 25px;
+    }
+
+    .titleOfLeftCol{
+        margin-top:30px;
+    }
+
+    .titleOfLeftCol h3{
+        margin: 0 0 0 28px;
+        padding: 5px 0px 5px 0;
+    }
+
+    .rightColBody{
+        padding-left: 74px;
+        margin-top: 27px;
+    }
+
+    /*
+        though titleOfLeftCol class is in generalized area but titleOfRightCol.It is
+        because,in mobile view border radius need to be in right side
+    */
+    .titleOfRightCol{
+        background: #BFBFC1;
+        border-radius: 25px 0px 0 25px;
+    }
+
+
+    .titleOfRightCol h3{
+        margin: 0 0 0 40px;
+        padding: 5px 0px 5px 0;
+    }
+
+
+}
+
+@media only screen and (max-width: 991px) {
+    .marginLeft{
+        align-content: center;
+    }
+
+    .name{
+        margin-left: 10px;
+    }
+
+    .titleOfLeftCol{
+        margin-top:15px;
+    }
+
+    .titleOfLeftCol h3{
+        margin: 0 0 0 26px;
+        padding: 5px 0px 5px 0;
+    }
+
+    .titleOfRightCol{
+        background: #BFBFC1;
+        border-radius: 0 25px 25px 0;
+    }
+
+    .titleOfRightCol h3{
+        margin: 0 0 0 26px;
+        padding: 5px 0px 5px 0;
+    }
+}
