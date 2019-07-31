@@ -17,7 +17,7 @@
                 <span th:each="para:${post.postBody}">
                         <span th:if="${para.getImgList()}">
                             <span th:each="img:${para.getImgList()}">
-                                <figure class="conte">
+                                <figure>
                                     <img class="img-fluid mx-auto d-block" th:src="${img.getImgUrl()}"/>
                                     <figcaption class="text-center" th:text="${img.getImgCaption()}"></figcaption>
                                 </figure>

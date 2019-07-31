@@ -35,25 +35,25 @@ public class ExecutionPoint {
     NewsPaperService bdProtidinService;
 
 
-//    @Transactional
-//    @Scheduled(fixedDelay = 300000)
-//    public void savePosts() {
-//
-//        for(;;){
-//            try{
-//                saveProthomAloPosts();
-//                saveJugantorPosts();
-//                saveIttefaqPosts();
-//                break;
-//            }catch (Exception e){
-//                continue;
-//            }
-//        }
-//
-//    }
+    @Transactional
+    @Scheduled(fixedDelay = 300000)
+    public void savePosts() {
+        for(;;){
+            try{
+                saveProthomAloPosts();
+                saveJugantorPosts();
+                saveIttefaqPosts();
+                saveBdPratidinPosts();
+                break;
+            }catch (Exception e){
+                continue;
+            }
+        }
+
+    }
 
     @Transactional
-    @Scheduled(fixedDelay = 60000)
+ //   @Scheduled(fixedDelay = 60000)
     public void showPostIds() {
 
         try {
@@ -75,9 +75,6 @@ public class ExecutionPoint {
         }
 
     }
-
-
-
 
 
     @Transactional
@@ -112,8 +109,14 @@ public class ExecutionPoint {
             e.printStackTrace();
         }
     }
-
-
-
-
+    @Transactional
+    @Async("threadPoolTaskExecutor")
+    public void saveBdPratidinPosts() {
+        System.out.println(Thread.currentThread().getName());
+        try{
+            bdProtidinService.savePosts();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

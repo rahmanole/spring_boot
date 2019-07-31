@@ -8,8 +8,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -18,7 +16,7 @@ public interface PostService {
                           String contentDetailsCssClass,
                           String cssClassForFeatuteImg,
                           HashSet<String> findPostIds) throws Exception;
-    List<Para> psotBody(Elements articleParas,Element body,String cssClassForFeatuteImg,String publisher);
+    List<Para> postBody(Elements articleParas,Img ftrImg,String publisher);
     void findImgOrVdo(Element articlePara, Para para,String publisher);
     Img featureImgUrl(Element body,String cssClassForFearuteImg,String publisher);
     List<Post> findAllPosts();

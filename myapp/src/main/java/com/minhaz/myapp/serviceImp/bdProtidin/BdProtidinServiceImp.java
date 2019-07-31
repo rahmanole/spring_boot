@@ -31,7 +31,7 @@ public class BdProtidinServiceImp implements NewsPaperService {
 
     public void savePosts() throws Exception {
         List<Post> postList = postService.createPsot("bd_pratidin",
-                "https://www.bd-pratidin.com",
+                "https://www.bd-pratidin.com/",
                 "h1",
                 "container-left-area",
                 "main-image",
@@ -54,7 +54,7 @@ public class BdProtidinServiceImp implements NewsPaperService {
     @Override
     public HashSet<String> findPostIds() throws IOException {
         HashSet<String> postId = new HashSet();
-        Document document = Jsoup.connect("https://www.bd-pratidin.com/").userAgent("Opera").get();
+        Document document = Jsoup.connect("https://www.bd-pratidin.com").userAgent("Opera").get();
         Element body = document.body();
 
         Elements posts = body.getElementsByClass("home-latest-news").first().getElementsByTag("a");

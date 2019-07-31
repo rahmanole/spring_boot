@@ -56,7 +56,7 @@ public class ProthomAloServiceImp  implements NewsPaperService{
     @Override
     public HashSet<String> findPostIds() throws IOException {
         HashSet<String> postId = new HashSet();
-        Document document = Jsoup.connect("https://www.prothomalo.com/archive").userAgent("Opera").get();
+        Document document = Jsoup.connect("https://www.prothomalo.com/archive/").userAgent("Opera").get();
         Element body = document.body();
 
         Element posts = body.getElementsByClass("listing").first();

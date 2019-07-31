@@ -33,7 +33,7 @@ public class PostServiceImp implements PostService {
 
 
     @Override
-    public List<Post> createPsot(String publisher,String newsPaperUrl,
+    public List<Post> createPsot(String publisher, String newsPaperUrl,
                                  String htmlTagForHeading,
                                  String contentDetailsCssClass,
                                  String cssClassForFeatuteImg,
@@ -43,7 +43,7 @@ public class PostServiceImp implements PostService {
 
         findPostIds.removeAll(postRepository.getPublisherGivenId(publisher));
 
-        if(findPostIds.size()<1){
+        if (findPostIds.size() < 1) {
             return postList;
         }
 
@@ -76,8 +76,17 @@ public class PostServiceImp implements PostService {
             Elements articleParas = body.getElementsByClass(contentDetailsCssClass).first().getElementsByTag("p");
             articleParas.outerHtml();
 
-            post.setPostBody(psotBody(articleParas,body,cssClassForFeatuteImg,publisher));
-            post.setFtrImg(featureImgUrl(body,cssClassForFeatuteImg,publisher).getImgUrl());
+            Img ftrImg = featureImgUrl(body, cssClassForFeatuteImg, publisher);
+
+            List<Para> postBody = postBody(articleParas, ftrImg, publisher);
+            if (postBody.get(0).getImgList().size() == 0) {
+                Set<Img> imgList = new HashSet<>();
+                imgList.add(ftrImg);
+                postBody.get(0).setImgList(imgList);
+            }
+            post.setPostBody(postBody);
+
+            post.setFtrImg(featureImgUrl(body, cssClassForFeatuteImg, publisher).getImgUrl());
 
 
             postList.add(post);
@@ -87,57 +96,49 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public List<Para> psotBody(Elements articleParas,
-                               Element body,
-                               String cssClassForFeatuteImg,
+    public List<Para> postBody(Elements articleParas,
+                               Img ftrImg,
                                String publisher) {
 
         List<Para> allParas = new ArrayList();
         for (int i = 0; i < articleParas.size(); i++) {
             Para para = new Para();
-            if(articleParas.get(i).text().contains("আরো পড়ুন")){
+            if (articleParas.get(i).text().contains("আরো পড়ুন")) {
                 continue;
             }
+
             para.setDescription(articleParas.get(i).text());
-            findImgOrVdo(articleParas.get(i),para,publisher);
+            findImgOrVdo(articleParas.get(i), para, publisher);
             allParas.add(para);
         }
 
-//        Img i = new Img();
-//        i.setImgUrl(featureImgUrl(body,cssClassForFeatuteImg,publisher));
-//        allParas.get(0).getImgList().add(i);
+//        if (!allParas.get(0).getImgList().contains(ftrImg)) {
+//            Set<Img> imgList = new HashSet<>();
+//            imgList.add(ftrImg);
+//            allParas.get(0).setImgList(imgList);
+//        }
 
-        if(allParas.get(0).getImgList().size() == 0){
-            Set<Img> imgList = new HashSet<>();
-            imgList.add(featureImgUrl(body,cssClassForFeatuteImg,publisher));
-            allParas.get(0).setImgList(imgList);
-        }else if(!allParas.get(0).getImgList().contains(featureImgUrl(body,cssClassForFeatuteImg,publisher))){
-            Set<Img> imgList = new HashSet<>();
-            imgList.add(featureImgUrl(body,cssClassForFeatuteImg,publisher));
-            allParas.get(0).setImgList(imgList);
-        }
-
-            return allParas;
+        return allParas;
     }
 
     @Override
-    public void findImgOrVdo(Element articlePara,Para para,String publisher) {
+    public void findImgOrVdo(Element articlePara, Para para, String publisher) {
         Set<Img> imgList = new HashSet<>();
         List<Vdo> vdoList = new ArrayList<>();
 
         Elements imgTags = articlePara.select("img");
         Elements vdoTags = articlePara.getElementsByTag("iframe");
 
-        if(imgTags != null){
-            for (Element imgTag:imgTags) {
+        if (imgTags != null) {
+            for (Element imgTag : imgTags) {
                 Img img = new Img();
 
                 img.setImgCaption(imgTag.attr("alt"));
 
-                if(publisher.equals("jugantor")){
+                if (publisher.equals("jugantor")) {
                     img.setImgUrl("https://www.jugantor.com" + imgTag.attr("src"));
                     return;
-                }else if(publisher.equals("bd_pratidin")){
+                } else if (publisher.equals("bd_pratidin")) {
                     img.setImgUrl("https://www.bd-pratidin.com" + imgTag.attr("src").substring(1));
                     return;
                 }
@@ -147,12 +148,12 @@ public class PostServiceImp implements PostService {
                 imgList.add(img);
             }
             para.setImgList(imgList);
-        }else{
+        } else {
             para.setImgList(imgList);
         }
 
-        if(vdoTags != null){
-            for (Element vdoTag:vdoTags) {
+        if (vdoTags != null) {
+            for (Element vdoTag : vdoTags) {
                 Vdo vdo = new Vdo();
                 vdo.setVdoUrl(vdoTag.attr("src"));
                 vdo.setVdoCaption(vdoTag.attr("src"));
@@ -164,20 +165,20 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public Img featureImgUrl(Element body,String cssClassForFeatuteImg,String publisher) {
+    public Img featureImgUrl(Element body, String cssClassForFeatuteImg, String publisher) {
         Elements elements = body.getElementsByClass(cssClassForFeatuteImg);
         Img img = new Img();
         String imgUrl = "";
         String caption = "";
 
-        if(publisher.equals("jugantor")){
+        if (publisher.equals("jugantor")) {
 
             imgUrl = "https://www.jugantor.com" + elements.select("img").first().attr("src");
             caption = elements.select("img").first().attr("alt");
 
             img.setImgUrl(imgUrl);
             img.setImgCaption(caption);
-        }else if(publisher.equals("ittefaq")){
+        } else if (publisher.equals("ittefaq")) {
 
             imgUrl = "https://www.ittefaq.com.bd" + elements.select("img").first().attr("src");
             caption = elements.select("img").first().attr("alt");
@@ -185,19 +186,17 @@ public class PostServiceImp implements PostService {
             img.setImgUrl(imgUrl);
             img.setImgCaption(caption);
 
-        }else if(publisher.equals("prothom_alo")){
+        } else if (publisher.equals("prothom_alo")) {
 
             imgUrl = elements.select("img").first().attr("src");
             caption = elements.select("img").first().attr("alt");
 
             img.setImgUrl(imgUrl);
             img.setImgCaption(caption);
-        }else if(publisher.equals("bd_protidin")){
+        } else if (publisher.equals("bd_pratidin")) {
             //As this vendors img url start with dot(.) thats why i use subString() method to remove the dot(.)
-
             imgUrl = "https://www.bd-pratidin.com" + elements.select("img").first().attr("src").substring(1);
             caption = elements.select("img").first().attr("alt");
-
             img.setImgUrl(imgUrl);
             img.setImgCaption(caption);
         }
@@ -247,19 +246,19 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public Page<Post> getPostsByCat(Pageable pageable,String catName) {
-        return postRepository.findAllByCat(PageRequest.of(0,6,Sort.by(Sort.Direction.DESC,"dateTime")),catName);
-    }
-    @Override
-    public Page<Post> getPostsByCat(Pageable pageable,String catName,int page) {
-        return postRepository.findAllByCat(PageRequest.of(page,20,Sort.by(Sort.Direction.DESC,"dateTime")),catName);
+    public Page<Post> getPostsByCat(Pageable pageable, String catName) {
+        return postRepository.findAllByCat(PageRequest.of(0, 6, Sort.by(Sort.Direction.DESC, "dateTime")), catName);
     }
 
     @Override
-    public Page<Post> getAllPosts(int page,String orderParameter) {
+    public Page<Post> getPostsByCat(Pageable pageable, String catName, int page) {
+        return postRepository.findAllByCat(PageRequest.of(page, 20, Sort.by(Sort.Direction.DESC, "dateTime")), catName);
+    }
+
+    @Override
+    public Page<Post> getAllPosts(int page, String orderParameter) {
         return postRepository.findAll(PageRequest.of(page, 6, Sort.by(Sort.Direction.DESC, orderParameter)));
     }
-
 
 
 }
