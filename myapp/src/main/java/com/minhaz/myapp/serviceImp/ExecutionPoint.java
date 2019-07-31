@@ -35,30 +35,30 @@ public class ExecutionPoint {
     NewsPaperService bdProtidinService;
 
 
+//    @Transactional
+//    @Scheduled(fixedDelay = 300000)
+//    public void savePosts() {
+//
+//        for(;;){
+//            try{
+//                saveProthomAloPosts();
+//                saveJugantorPosts();
+//                saveIttefaqPosts();
+//                break;
+//            }catch (Exception e){
+//                continue;
+//            }
+//        }
+//
+//    }
+
     @Transactional
-    @Scheduled(fixedDelay = 300000)
-    public void savePosts() {
-
-        for(;;){
-            try{
-                saveProthomAloPosts();
-                saveJugantorPosts();
-                saveIttefaqPosts();
-                break;
-            }catch (Exception e){
-                continue;
-            }
-        }
-
-    }
-
-    @Transactional
-//    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 60000)
     public void showPostIds() {
 
         try {
 
-            postService.createPsot("bd_protidin",
+            postService.createPsot("bd_pratidin",
                     "https://www.bd-pratidin.com/",
                     "h1",
                     "container-left-area",

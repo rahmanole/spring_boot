@@ -20,7 +20,7 @@ public interface PostService {
                           HashSet<String> findPostIds) throws Exception;
     List<Para> psotBody(Elements articleParas,Element body,String cssClassForFeatuteImg,String publisher);
     void findImgOrVdo(Element articlePara, Para para,String publisher);
-    String featureImgUrl(Element body,String cssClassForFearuteImg,String publisher);
+    Img featureImgUrl(Element body,String cssClassForFearuteImg,String publisher);
     List<Post> findAllPosts();
     String getPulisherLogo(String publisher);
     Post getPost(long id);

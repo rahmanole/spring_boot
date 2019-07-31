@@ -29,27 +29,25 @@ public class BdProtidinServiceImp implements NewsPaperService {
     PostRepository postRepository;
 
 
-
-    public void savePosts() throws Exception{
-        List<Post> postList = postService.createPsot("ittefaq",
-                "https://www.ittefaq.com.bd",
+    public void savePosts() throws Exception {
+        List<Post> postList = postService.createPsot("bd_pratidin",
+                "https://www.bd-pratidin.com",
                 "h1",
-                "dtl_content_block",
-                "dtl_img_block",
+                "container-left-area",
+                "main-image",
                 findPostIds());
         List<HashSet<String>> catWisePostList = getCatWistPosIdList();
 
         postList.forEach(post -> {
             try {
-                assignCategory(post.getPublisherGivenId(),post,catWisePostList);
+                assignCategory(post.getPublisherGivenId(), post, catWisePostList);
                 postRepository.save(post);
-                System.out.println("ittefaq");
+                System.out.println("bd_pratidin");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
-
 
 
     // method for finding artcile url
@@ -60,7 +58,7 @@ public class BdProtidinServiceImp implements NewsPaperService {
         Element body = document.body();
 
         Elements posts = body.getElementsByClass("home-latest-news").first().getElementsByTag("a");
-        for (int i=0;i<20;i++) {
+        for (int i = 0; i < 20; i++) {
             String link = posts.get(i).attr("href");
             postId.add(link);
         }
@@ -76,25 +74,25 @@ public class BdProtidinServiceImp implements NewsPaperService {
 
         Elements posts = body.getElementsByClass("lead-news").first().getElementsByTag("a");
 
-        for (Element post:posts) {
+        for (Element post : posts) {
             String link = post.attr("href");
             postId.add(link);
         }
 
         posts = body.getElementsByClass("lead-news-2nd").first().getElementsByTag("a");
 
-        for (Element post:posts) {
+        for (Element post : posts) {
             String link = post.attr("href");
             postId.add(link);
         }
 
         posts = body.getElementsByClass("lead-news-3nd").first().getElementsByTag("a");
 
-        for (Element post:posts) {
+        for (Element post : posts) {
             String link = post.attr("href");
             postId.add(link);
 
-            if(postId.size()==5)
+            if (postId.size() == 5)
                 break;
         }
 
@@ -102,84 +100,81 @@ public class BdProtidinServiceImp implements NewsPaperService {
     }
 
     @Override
-    public List<HashSet<String>> getCatWistPosIdList() throws Exception{
+    public List<HashSet<String>> getCatWistPosIdList() throws Exception {
 
         List<HashSet<String>> list = new ArrayList<>();
-        list.add(findPostIds("https://www.ittefaq.com.bd/politics"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/national"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/budget2019"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/wholecountry"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/capital"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/court"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/worldnews"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/economy"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/print-edition/opinion"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/sports"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/entertainment"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/scienceandtechnology"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/aboard"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/print-edition/editorial"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/education"));
+        list.add(findPostIds("https://www.bd-pratidin.com/national"));
+        list.add(findPostIds("https://www.bd-pratidin.com/country"));
+        list.add(findPostIds("https://www.bd-pratidin.com/city-news"));
+        list.add(findPostIds("https://www.bd-pratidin.com/chittagong-pratidin"));
+        list.add(findPostIds("https://www.bd-pratidin.com/chayer-desh"));
+        list.add(findPostIds("https://www.bd-pratidin.com/city-roundup"));
+        list.add(findPostIds("https://www.bd-pratidin.com/international-news"));
+        list.add(findPostIds("https://www.bd-pratidin.com/kolkata"));
+        list.add(findPostIds("https://www.bd-pratidin.com/corporate-corner"));
+        list.add(findPostIds("https://www.bd-pratidin.com/facebook"));
+        list.add(findPostIds("https://www.bd-pratidin.com/readers-column"));
+        list.add(findPostIds("https://www.bd-pratidin.com/sports"));
+        list.add(findPostIds("https://www.bd-pratidin.com/entertainment"));
+        list.add(findPostIds("https://www.bd-pratidin.com/tech-world"));
+        list.add(findPostIds("https://www.bd-pratidin.com/probash-potro"));
+        list.add(findPostIds("https://www.bd-pratidin.com/campus-online"));
+        list.add(findPostIds("https://www.bd-pratidin.com/job-market"));
+        list.add(findPostIds("https://www.bd-pratidin.com/mixter"));
         return list;
     }
 
     @Override
-    public void assignCategory(String id,Post post,List<HashSet<String>>  list){
-        if(list.get(0).contains(id) ){
-            post.setCat("politics");
-            return;
-        }
-        if(list.get(1).contains(id) ||
-                list.get(2).contains(id) || list.get(3).contains(id)
-                || list.get(4).contains(id)
-                || list.get(5).contains(id)){
+    public void assignCategory(String id, Post post, List<HashSet<String>> list) {
+        if (list.get(0).contains(id) ||
+                list.get(1).contains(id) ||
+                list.get(2).contains(id) ||
+                list.get(3).contains(id) ||
+                list.get(4).contains(id) ||
+                list.get(5).contains(id)) {
             post.setCat("bangladesh");
             return;
         }
-        if(list.get(6).contains(id)){
+        if (list.get(6).contains(id) || list.get(7).contains(id)) {
             post.setCat("international");
             return;
         }
-        if(list.get(7).contains(id)){
+        if (list.get(8).contains(id)) {
             post.setCat("economy");
             return;
         }
-        if(list.get(8).contains(id)){
+        if (list.get(9).contains(id) || list.get(10).contains(id)) {
             post.setCat("opinion");
             return;
         }
-        if(list.get(9).contains(id)){
+        if (list.get(11).contains(id)) {
             post.setCat("sports");
             return;
         }
 
-        if(list.get(10).contains(id)){
+        if (list.get(12).contains(id)) {
             post.setCat("entertainment");
             return;
         }
-        if(list.get(11).contains(id)){
+        if (list.get(13).contains(id)) {
             post.setCat("sciTech");
             return;
         }
-        if(list.get(12).contains(id)){
+        if (list.get(14).contains(id)) {
             post.setCat("aboard");
             return;
         }
-        if(list.get(13).contains(id)){
-            post.setCat("editorial");
-            return;
-        }
-        if(list.get(14).contains(id)){
+        if (list.get(15).contains(id)) {
             post.setCat("campus");
             return;
         }
+        if (list.get(16).contains(id)) {
+            post.setCat("jobs");
+            return;
+        }
+        if (list.get(17).contains(id)) {
+            post.setCat("others");
+            return;
+        }
     }
-
-    private String findPostCat(String id) {
-
-        return id.split("/")[1];
-    }
-
-
-
 }

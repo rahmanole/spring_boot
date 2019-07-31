@@ -28,7 +28,7 @@
                         </div>
                         <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
                             <div class="row headLine">
-                                <span th:text="${post.heading}">নেই বললেই চলে। একটা উদাহরণেই তা বুঝিয়ে দেওয়া যায়।</span>
+                                <span th:text="${post.heading}"></span>
 
                             </div>
 
@@ -70,7 +70,7 @@
                         </div>
                         <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
                             <div class="row headLine">
-                                <span th:text="${post.heading}">নেই বললেই চলে। একটা উদাহরণেই তা বুঝিয়ে দেওয়া যায়।</span>
+                                <span th:text="${post.heading}"></span>
 
                             </div>
 
@@ -112,14 +112,13 @@
                         </div>
                         <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
                             <div class="row headLine">
-                                <span th:text="${post.heading}">নেই বললেই চলে। একটা উদাহরণেই তা বুঝিয়ে দেওয়া যায়।</span>
-
+                                <span th:text="${post.heading}"></span>
                             </div>
 
                             <div class="row postInfo">
                                 <div class="col-lg-8 col-md-8 col-sm-8 col-8">
                                                 <span class="time"
-                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-4">
                                     <img class="publisherLogo"
@@ -154,14 +153,14 @@
                         </div>
                         <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
                             <div class="row headLine">
-                                <span th:text="${post.heading}">নেই বললেই চলে। একটা উদাহরণেই তা বুঝিয়ে দেওয়া যায়।</span>
+                                <span th:text="${post.heading}"></span>
 
                             </div>
 
                             <div class="row postInfo">
                                 <div class="col-lg-8 col-md-8 col-sm-8 col-8">
                                                 <span class="time"
-                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-4">
                                     <img class="publisherLogo"
@@ -196,14 +195,14 @@
                         </div>
                         <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
                             <div class="row headLine">
-                                <span th:text="${post.heading}">নেই বললেই চলে। একটা উদাহরণেই তা বুঝিয়ে দেওয়া যায়।</span>
+                                <span th:text="${post.heading}"></span>
 
                             </div>
 
                             <div class="row postInfo">
                                 <div class="col-lg-8 col-md-8 col-sm-8 col-8">
                                                 <span class="time"
-                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-4">
                                     <img class="publisherLogo"
@@ -213,10 +212,255 @@
                         </div>
                     </div>
                 </a>
-
             </div>
             <div class="row justify-content-center">
                 <a class="btn btn-primary" th:href="@{/sports}">আরও</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row oneCat">
+        <div class="col">
+
+            <div class="row">
+                <div class="catName col">
+                    <a th:href="@{/entertainment}" class="text-center nav-link">বিনোদন</a>
+                </div>
+            </div>
+
+            <div class="card postCard" th:each="post:${entPosts}">
+                <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                            <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                        </div>
+                        <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                            <div class="row headLine">
+                                <span th:text="${post.heading}"></span>
+
+                            </div>
+
+                            <div class="row postInfo">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                    <img class="publisherLogo"
+                                         th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="row justify-content-center">
+                <a class="btn btn-primary" th:href="@{/entertainment}">আরও</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row oneCat">
+        <div class="col">
+
+            <div class="row">
+                <div class="catName col">
+                    <a th:href="@{/sciTech}" class="text-center nav-link">বিজ্ঞান ও প্রযুক্তি</a>
+                </div>
+            </div>
+
+            <div class="card postCard" th:each="post:${sciTechPosts}">
+                <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                            <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                        </div>
+                        <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                            <div class="row headLine">
+                                <span th:text="${post.heading}"></span>
+
+                            </div>
+
+                            <div class="row postInfo">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                    <img class="publisherLogo"
+                                         th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="row justify-content-center">
+                <a class="btn btn-primary" th:href="@{/sciTech}">আরও</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row oneCat">
+        <div class="col">
+
+            <div class="row">
+                <div class="catName col">
+                    <a th:href="@{/editorial}" class="text-center nav-link">সম্পাদকীয়</a>
+                </div>
+            </div>
+
+            <div class="card postCard" th:each="post:${ediPosts}">
+                <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                            <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                        </div>
+                        <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                            <div class="row headLine">
+                                <span th:text="${post.heading}"></span>
+
+                            </div>
+
+                            <div class="row postInfo">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                    <img class="publisherLogo"
+                                         th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="row justify-content-center">
+                <a class="btn btn-primary" th:href="@{/editorial}">আরও</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row oneCat">
+        <div class="col">
+
+            <div class="row">
+                <div class="catName col">
+                    <a th:href="@{/opinion}" class="text-center nav-link">মতামত</a>
+                </div>
+            </div>
+
+            <div class="card postCard" th:each="post:${opiPosts}">
+                <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                            <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                        </div>
+                        <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                            <div class="row headLine">
+                                <span th:text="${post.heading}"></span>
+
+                            </div>
+
+                            <div class="row postInfo">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                    <img class="publisherLogo"
+                                         th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="row justify-content-center">
+                <a class="btn btn-primary" th:href="@{/opinion}">আরও</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row oneCat">
+        <div class="col">
+
+            <div class="row">
+                <div class="catName col">
+                    <a th:href="@{/aboard}" class="text-center nav-link">প্রবাসে বাংলাদেশীরা </a>
+                </div>
+            </div>
+
+            <div class="card postCard" th:each="post:${aboardPosts}">
+                <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                            <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                        </div>
+                        <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                            <div class="row headLine">
+                                <span th:text="${post.heading}"></span>
+
+                            </div>
+
+                            <div class="row postInfo">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                    <img class="publisherLogo"
+                                         th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="row justify-content-center">
+                <a class="btn btn-primary" th:href="@{/aboard}">আরও</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row oneCat">
+        <div class="col">
+
+            <div class="row">
+                <div class="catName col">
+                    <a th:href="@{/campus}" class="text-center nav-link">শিক্ষাঙ্গন</a>
+                </div>
+            </div>
+
+            <div class="card postCard" th:each="post:${campPosts}">
+                <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                            <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                        </div>
+                        <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                            <div class="row headLine">
+                                <span th:text="${post.heading}"></span>
+
+                            </div>
+
+                            <div class="row postInfo">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                    <img class="publisherLogo"
+                                         th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="row justify-content-center">
+                <a class="btn btn-primary" th:href="@{/campus}">আরও</a>
             </div>
         </div>
     </div>

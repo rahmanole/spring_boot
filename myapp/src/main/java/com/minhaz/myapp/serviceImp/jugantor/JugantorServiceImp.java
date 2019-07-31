@@ -108,6 +108,7 @@ public class JugantorServiceImp implements NewsPaperService {
         list.add(findPostIds("https://www.jugantor.com/exile"));
         list.add(findPostIds("https://www.jugantor.com/editorial"));
         list.add(findPostIds("https://www.jugantor.com/campus"));
+        list.add(findPostIds("https://www.jugantor.com/various"));
         return list;
     }
 
@@ -158,13 +159,9 @@ public class JugantorServiceImp implements NewsPaperService {
             post.setCat("campus");
             return;
         }
+        if(list.get(13).contains(id)){
+            post.setCat("others");
+            return;
+        }
     }
-
-    private String findPostCat(String id) {
-
-        return id.split("/")[1];
-    }
-
-
-
 }

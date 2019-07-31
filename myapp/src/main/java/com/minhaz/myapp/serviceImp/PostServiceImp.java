@@ -77,7 +77,7 @@ public class PostServiceImp implements PostService {
             articleParas.outerHtml();
 
             post.setPostBody(psotBody(articleParas,body,cssClassForFeatuteImg,publisher));
-            post.setFtrImg(featureImgUrl(body,cssClassForFeatuteImg,publisher));
+            post.setFtrImg(featureImgUrl(body,cssClassForFeatuteImg,publisher).getImgUrl());
 
 
             postList.add(post);
@@ -103,19 +103,26 @@ public class PostServiceImp implements PostService {
             allParas.add(para);
         }
 
-        if(allParas.get(0).getImgList().isEmpty()){
-            List<Img> imgList = new ArrayList<>();
-            Img img = new Img();
-            img.setImgUrl(featureImgUrl(body,cssClassForFeatuteImg,publisher));
-            imgList.add(img);
+//        Img i = new Img();
+//        i.setImgUrl(featureImgUrl(body,cssClassForFeatuteImg,publisher));
+//        allParas.get(0).getImgList().add(i);
+
+        if(allParas.get(0).getImgList().size() == 0){
+            Set<Img> imgList = new HashSet<>();
+            imgList.add(featureImgUrl(body,cssClassForFeatuteImg,publisher));
+            allParas.get(0).setImgList(imgList);
+        }else if(!allParas.get(0).getImgList().contains(featureImgUrl(body,cssClassForFeatuteImg,publisher))){
+            Set<Img> imgList = new HashSet<>();
+            imgList.add(featureImgUrl(body,cssClassForFeatuteImg,publisher));
             allParas.get(0).setImgList(imgList);
         }
-        return allParas;
+
+            return allParas;
     }
 
     @Override
     public void findImgOrVdo(Element articlePara,Para para,String publisher) {
-        List<Img> imgList = new ArrayList<>();
+        Set<Img> imgList = new HashSet<>();
         List<Vdo> vdoList = new ArrayList<>();
 
         Elements imgTags = articlePara.select("img");
@@ -126,18 +133,21 @@ public class PostServiceImp implements PostService {
                 Img img = new Img();
 
                 img.setImgCaption(imgTag.attr("alt"));
+
                 if(publisher.equals("jugantor")){
                     img.setImgUrl("https://www.jugantor.com" + imgTag.attr("src"));
                     return;
-                }else if(publisher.equals("bd_protidin")){
-
+                }else if(publisher.equals("bd_pratidin")){
                     img.setImgUrl("https://www.bd-pratidin.com" + imgTag.attr("src").substring(1));
                     return;
                 }
+
                 img.setImgUrl(imgTag.attr("src"));
 
                 imgList.add(img);
             }
+            para.setImgList(imgList);
+        }else{
             para.setImgList(imgList);
         }
 
@@ -154,28 +164,44 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public String featureImgUrl(Element body,String cssClassForFeatuteImg,String publisher) {
+    public Img featureImgUrl(Element body,String cssClassForFeatuteImg,String publisher) {
         Elements elements = body.getElementsByClass(cssClassForFeatuteImg);
-        String imgWithCaption = "";
+        Img img = new Img();
+        String imgUrl = "";
+        String caption = "";
 
         if(publisher.equals("jugantor")){
 
-            imgWithCaption = "https://www.jugantor.com" + elements.select("img").first().attr("src");
+            imgUrl = "https://www.jugantor.com" + elements.select("img").first().attr("src");
+            caption = elements.select("img").first().attr("alt");
 
+            img.setImgUrl(imgUrl);
+            img.setImgCaption(caption);
         }else if(publisher.equals("ittefaq")){
 
-            imgWithCaption = "https://www.ittefaq.com.bd" + elements.select("img").first().attr("src");
+            imgUrl = "https://www.ittefaq.com.bd" + elements.select("img").first().attr("src");
+            caption = elements.select("img").first().attr("alt");
+
+            img.setImgUrl(imgUrl);
+            img.setImgCaption(caption);
 
         }else if(publisher.equals("prothom_alo")){
 
-            imgWithCaption = elements.select("img").first().attr("src");
+            imgUrl = elements.select("img").first().attr("src");
+            caption = elements.select("img").first().attr("alt");
 
+            img.setImgUrl(imgUrl);
+            img.setImgCaption(caption);
         }else if(publisher.equals("bd_protidin")){
             //As this vendors img url start with dot(.) thats why i use subString() method to remove the dot(.)
 
-            imgWithCaption = "https://www.bd-pratidin.com" + elements.select("img").first().attr("src").substring(1);
+            imgUrl = "https://www.bd-pratidin.com" + elements.select("img").first().attr("src").substring(1);
+            caption = elements.select("img").first().attr("alt");
+
+            img.setImgUrl(imgUrl);
+            img.setImgCaption(caption);
         }
-        return imgWithCaption;
+        return img;
     }
 
 
@@ -189,7 +215,7 @@ public class PostServiceImp implements PostService {
         switch (publisher) {
             case "prothom_alo":
                 return "https://paloimages.prothom-alo.com/contents/themes/public/style/images/Prothom-Alo.png";
-            case "bd_protidin":
+            case "bd_pratidin":
                 return "https://www.bd-pratidin.com/assets/importent_images/main_logo.gif";
             case "kaler_kontho":
                 return "https://www.kalerkantho.com/assets/site/img/logo.png";

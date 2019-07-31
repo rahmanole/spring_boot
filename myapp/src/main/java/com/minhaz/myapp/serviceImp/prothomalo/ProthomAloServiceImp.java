@@ -98,6 +98,8 @@ public class ProthomAloServiceImp  implements NewsPaperService{
         list.add(findPostIds("https://www.prothomalo.com/durporobash"));
         list.add(findPostIds("https://www.prothomalo.com/opinion-editorial"));
         list.add(findPostIds("https://www.prothomalo.com/institution"));
+        list.add(findPostIds("https://www.prothomalo.com/chakri-bakri"));
+        list.add(findPostIds("https://www.prothomalo.com/pachmisheli"));
         return list;
 
     }
@@ -147,13 +149,13 @@ public class ProthomAloServiceImp  implements NewsPaperService{
             post.setCat("campus");
             return;
         }
+        if(list.get(11).contains(id)){
+            post.setCat("jobs");
+            return;
+        }
+        if(list.get(12).contains(id)){
+            post.setCat("others");
+            return;
+        }
     }
-
-    private String findPostCat(String id) {
-
-        return id.split("/")[1];
-    }
-
-
-
 }

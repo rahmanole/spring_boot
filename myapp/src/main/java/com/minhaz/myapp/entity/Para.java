@@ -15,7 +15,7 @@ public class Para {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "para_id")
-    private List<Img> imgList;
+    private Set<Img> imgList;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "para_id")
@@ -32,11 +32,11 @@ public class Para {
         this.id = id;
     }
 
-    public List<Img> getImgList() {
+    public Set<Img> getImgList() {
         return imgList;
     }
 
-    public void setImgList(List<Img> imgList) {
+    public void setImgList(Set<Img> imgList) {
         this.imgList = imgList;
     }
 

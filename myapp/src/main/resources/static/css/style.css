@@ -9,8 +9,10 @@ and open the template in the editor.
 */
 
 .mainBody{
-    background: #8DD35F;
+    background:url('../img/bg.jpg') fixed;
+    background-size: cover;
     padding-top: 13px;
+    margin-top: -13px;
 }
 
 a:link{

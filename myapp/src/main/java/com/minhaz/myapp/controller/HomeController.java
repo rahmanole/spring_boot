@@ -26,6 +26,12 @@ public class HomeController {
         model.addAttribute("intPosts", postService.getPostsByCat(null, "international"));
         model.addAttribute("ecoPosts", postService.getPostsByCat(null, "economy"));
         model.addAttribute("sportsPosts", postService.getPostsByCat(null, "sports"));
+        model.addAttribute("entPosts", postService.getPostsByCat(null, "entertainment"));
+        model.addAttribute("sciTechPosts", postService.getPostsByCat(null, "sciTech"));
+        model.addAttribute("ediPosts", postService.getPostsByCat(null, "editorial"));
+        model.addAttribute("opiPosts", postService.getPostsByCat(null, "opinion"));
+        model.addAttribute("aboardPosts", postService.getPostsByCat(null, "aboard"));
+        model.addAttribute("campPosts", postService.getPostsByCat(null, "campus"));
         model.addAttribute("timeConverter", dateTimeConverter);
         model.addAttribute("postService", postService);
         return "index";
@@ -79,6 +85,66 @@ public class HomeController {
         page++;
         model.addAttribute("nextPage", page);
         return "sports";
+    }
+
+    @GetMapping("/entertainment")
+    public String entertainment(Model model, @RequestParam(defaultValue = "0") int page) {
+        model.addAttribute("entPosts", postService.getPostsByCat(null, "entertainment", page));
+        model.addAttribute("timeConverter", dateTimeConverter);
+        model.addAttribute("postService", postService);
+        page++;
+        model.addAttribute("nextPage", page);
+        return "entertainment";
+    }
+
+    @GetMapping("/sciTech")
+    public String sciTech(Model model, @RequestParam(defaultValue = "0") int page) {
+        model.addAttribute("sciTechPosts", postService.getPostsByCat(null, "sciTech", page));
+        model.addAttribute("timeConverter", dateTimeConverter);
+        model.addAttribute("postService", postService);
+        page++;
+        model.addAttribute("nextPage", page);
+        return "sciTech";
+    }
+
+    @GetMapping("/editorial")
+    public String editorial(Model model, @RequestParam(defaultValue = "0") int page) {
+        model.addAttribute("ediPosts", postService.getPostsByCat(null, "editorial", page));
+        model.addAttribute("timeConverter", dateTimeConverter);
+        model.addAttribute("postService", postService);
+        page++;
+        model.addAttribute("nextPage", page);
+        return "editorial";
+    }
+
+    @GetMapping("/opinion")
+    public String opinion(Model model, @RequestParam(defaultValue = "0") int page) {
+        model.addAttribute("opiPosts", postService.getPostsByCat(null, "opinion", page));
+        model.addAttribute("timeConverter", dateTimeConverter);
+        model.addAttribute("postService", postService);
+        page++;
+        model.addAttribute("nextPage", page);
+        return "opinion";
+    }
+
+    @GetMapping("/aboard")
+    public String aboard(Model model, @RequestParam(defaultValue = "0") int page) {
+        model.addAttribute("aboardPosts", postService.getPostsByCat(null, "aboard", page));
+        model.addAttribute("timeConverter", dateTimeConverter);
+        model.addAttribute("postService", postService);
+        page++;
+        model.addAttribute("nextPage", page);
+        return "aboard";
+    }
+
+    @GetMapping("/campus")
+    public String campus(Model model, @RequestParam(defaultValue = "0") int page) {
+        model.addAttribute("campPosts", postService.getPostsByCat(null, "campus", page));
+        model.addAttribute("timeConverter", dateTimeConverter);
+        model.addAttribute("postService", postService);
+        page++;
+        model.addAttribute("nextPage", page);
+        return "campus";
     }
 
 

@@ -177,12 +177,4 @@ public class IttefaqServiceImp implements NewsPaperService {
             return;
         }
     }
-
-    private String findPostCat(String id) {
-
-        return id.split("/")[1];
-    }
-
-
-
 }
