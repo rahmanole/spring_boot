@@ -7,18 +7,52 @@ and open the template in the editor.
     Created on : Jun 25, 2019, 2:43:51 AM
     Author     : HP
 */
+@font-face {
+    font-family: 'Aclonica', sans-serif;
+    src: url('/fonts/Aclonica-Regular.ttf');
+}
+
+@font-face {
+    font-family:  'Playball', cursive;
+    src: url('/fonts/Playball-Regular.ttf');
+    font-style: italic;
+    font-weight: bold;
+}
+
+body {
+    background: url('/img/bg.jpeg') fixed;
+    background-size: cover;
+    padding-top: 13px;
+    margin-top: -13px;
+    font-family:'Aclonica',sans-serif;
+}
 
 .mainBody{
     margin-bottom: 50px;
+    background: #CCCCCC;
+    opacity: 0.8;
 }
-.leftMostCol{
-   background: #002752;
 
+.designation{
+    font-family: 'Courgette',cursive;
+    color: #413b4b;
+}
+
+.fName{
+
+}
+
+.leftMostCol{
+   background: #293462;
+
+}
+.personalDetails{
 }
 
 .rightMostCol{
     margin-top: 35px;
-    margin-bottom: 66px;}
+    margin-bottom: 66px;
+}
 
 .pp img{
     border-radius: 50%;
@@ -36,22 +70,32 @@ h1{
 }
 
 .description{
-    padding: 7px 15px 0px 0px;
+    padding: 0 10px 0 19px;
     margin-left: 5px;
 }
 
 
 
-.titleOfLeftCol{
-    background: #BFBFC1;
+.titlesOfLeftCol{
+    background: #216583;
     border-radius: 0 25px 25px 0;
+    color: white;
+    width: 100%;
+    padding: 6px 0 4px 24px;
+}
+
+.titlesOfRightCol{
+    background: #216583;
+    color: white;
+    width: 100%;
+    padding: 6px 0 4px 41px;
 }
 
 .rightColDescription:first-child{
-    margin: 10px 0px 0px 24px;
+    margin: 10px 0px 0px 10px;
 }
 .rightColDescription{
-    margin: 0px 0px -5px 24px;
+    margin: 0px 0px -5px 10px;
 }
 
 .achvmntTitle{
@@ -59,7 +103,9 @@ h1{
     font-size: 17px;
 }
 
-
+.skillLevels{
+    color: #293462;
+}
 
 @media only screen and (min-width: 992px) {
     .marginLeft{
@@ -70,11 +116,11 @@ h1{
         margin-top: 25px;
     }
 
-    .titleOfLeftCol{
+    .titlesOfLeftCol{
         margin-top:30px;
     }
 
-    .titleOfLeftCol h3{
+    .titlesOfLeftCol h3{
         margin: 0 0 0 28px;
         padding: 5px 0px 5px 0;
     }
@@ -88,13 +134,12 @@ h1{
         though titleOfLeftCol class is in generalized area but titleOfRightCol.It is
         because,in mobile view border radius need to be in right side
     */
-    .titleOfRightCol{
-        background: #BFBFC1;
+    .titlesOfRightCol{
         border-radius: 25px 0px 0 25px;
     }
 
 
-    .titleOfRightCol h3{
+    .titlesOfRightCol h3{
         margin: 0 0 0 40px;
         padding: 5px 0px 5px 0;
     }
@@ -111,21 +156,20 @@ h1{
         margin-left: 10px;
     }
 
-    .titleOfLeftCol{
+    .titlesOfLeftCol{
         margin-top:15px;
     }
 
-    .titleOfLeftCol h3{
+    .titlesOfLeftCol h3{
         margin: 0 0 0 26px;
         padding: 5px 0px 5px 0;
     }
 
-    .titleOfRightCol{
-        background: #BFBFC1;
+    .titlesOfRightCol{
         border-radius: 0 25px 25px 0;
     }
 
-    .titleOfRightCol h3{
+    .titlesOfRightCol h3{
         margin: 0 0 0 26px;
         padding: 5px 0px 5px 0;
     }

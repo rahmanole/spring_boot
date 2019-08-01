@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/style.css}"/>
     <link rel="stylesheet" th:href="@{/all.css}"/>
     <link rel="stylesheet" th:href="@{/fontawesome.css}"/>
+    <link href="https://fonts.googleapis.com/css?family=Signika+Negative&display=swap"/>
 </head>
 <body>
 <div class="container mainBody">
@@ -19,220 +20,303 @@
 
         <div class="col-11 rightMostCol">
             <div class="row">
-                <div class="col-lg-4">
-                    <div class="row pp marginLeft justify-content-center">
-                        <img class="img-fluid"
+                <div class="col-lg-4 personalDetails">
+
+                    <div class="row pp justify-content-center">
+                        <img class="img-fluid d-block mx-auto"
                              th:src="@{/img/pic.jpg}">
+                        <div class="name ">
+                            <h1 class="fName">MD. MINHAZUR</h1>
+                            <h1 class="lName">RAHMAN</h1>
+                            <h3 class="designation">Java Developer</h3>
+                        </div>
                     </div>
-                    <div class="row marginLeft name ">
-                        <h1 class="fName">MD. MINHAZUR</h1>
-                        <h1 class="lName">RAHMAN</h1>
-                        <h3 class="designation">Java Developer</h3>
-                    </div>
+
 
                     <!--About me section-->
-                    <div class="row titleOfLeftCol">
-                        <h3><i class="fas fa-comment-alt"></i> <strong class="ml-2">ABOUT ME</strong></h3>
-                    </div>
-
-                    <div class="row description">
-                        <p class="text-justify">
-                            Lorem Ipsum is simply dummy text of the
-                            printing and typesetting industry. Lorem Ipsum
-                            has been the industry's standard dummy text ever
-                            since the 1500s, when an unknown printer took
-                            a galley of type and scrambled it to make
-                            a type specimen book. It has survived not
-                            only five centuries, but also the leap into
-                            electronic typesetting, remaining essentially
-                            unchanged.
-                        </p>
+                    <div class="row">
+                        <h3 class="titlesOfLeftCol"><i class="fas fa-comment-alt"></i> <strong class="ml-2">ABOUT
+                            ME</strong></h3>
+                        <div class="description">
+                            <p class="text-justify">
+                                Lorem Ipsum is simply dummy text of the
+                                printing and typesetting industry. Lorem Ipsum
+                                has been the industry's standard dummy text ever
+                                since the 1500s, when an unknown printer took
+                                a galley of type and scrambled it to make
+                                a type specimen book. It has survived not
+                                only five centuries, but also the leap into
+                                electronic typesetting, remaining essentially
+                                unchanged.
+                            </p>
+                        </div>
                     </div>
                     <!--                    about me section ends here-->
 
-                    <!--                    contact section starts here-->
-                    <div class="row titleOfLeftCol">
-                        <h3><i class="fas fa-id-card"></i><strong class="ml-2">CONTACT</strong></h3>
-                    </div>
 
-                    <div class="row description mt-3">
-                        <h5><strong class="mr-3"><i class="fas fa-mobile-alt"></i></strong>+8801515616259</h5>
-                        <h5><strong class="mr-3"><i class="fas fa-at"></i></strong>minhaduphy@gmail.com</h5>
-                        <h5><strong class="mr-3"><i class="fas fa-map-marker-alt"></i></strong>
-                            Room:332,Fazlul Haque Hall,
-                            <br>
-                            <span style="margin-left: 37px">University of Dhaka.</span>
-                        </h5>
+                    <!--                    contact section starts here-->
+                    <div class="row ">
+                        <h3 class="titlesOfLeftCol"><i class="fas fa-id-card"></i><strong class="ml-2">CONTACT</strong>
+                        </h3>
+
+
+                        <div class="row description mt-1">
+                            <h5><strong class="mr-4"><i class="fas fa-mobile-alt"></i></strong>+8801515616259</h5>
+                            <h5><strong class="mr-3"><i class="fas fa-at"></i></strong>minhaduphy@gmail.com</h5>
+                            <h5><strong class="mr-3"><i class="fas fa-map-marker-alt"></i></strong>
+                                Room:332,Fazlul Haque Hall,
+                                <br>
+                                <span style="margin-left: 37px">University of Dhaka.</span>
+                            </h5>
+                        </div>
                     </div>
                     <!--                    contact section ends here-->
 
                     <!--                    reference section starts here-->
-                    <div class="row titleOfLeftCol">
-                        <h3><i class="fas fa-asterisk"></i><strong class="ml-2">REFERENCE</strong></h3>
-                    </div>
+                    <div class="row">
+                        <h3 class="titlesOfLeftCol"><i class="fas fa-asterisk"></i><strong
+                                class="ml-2">REFERENCE</strong></h3>
 
-                    <div class="row description mt-3">
-                        <h5 class="mb-0"><strong>MD. RAJAUL ISLAM</strong></h5>
-                        <p>Instructor,Java,CCSL.</p>
-                        <h6><strong class="mr-3"><i class="fas fa-mobile-alt"></i></strong>+8801515616259</h6>
-
+                        <div class="description mt-1">
+                            <h5 class="mb-0"><strong>MD. RAJAUL ISLAM</strong></h5>
+                            <div>
+                                <p class="mb-0">Instructor,Java,CCSL.</p>
+                                <p class="mb-0"><strong class="mr-4"><i class="fas fa-mobile-alt"></i></strong>+8801515616259
+                                </p>
+                                <p class="mb-0"><strong class="mr-3"><i class="fas fa-at"></i></strong>minhaduphy@gmail.com
+                                </p>
+                            </div>
+                        </div>
                     </div>
                     <!--                    reference section ends here-->
                 </div>
 
                 <div class="col-lg-8 rightColBody">
-
-                    <div class="row titleOfRightCol">
-                        <h3><i class="fas fa-trophy"></i><strong class="ml-2">AWARDS</strong></h3>
-                    </div>
-
+                    <!--                    Project section starts here-->
                     <div class="row">
-                        <div class="row rightColDescription">
-                            <div class="col-lg-4">
-                                <p class="achvmntTitle"><strong>Rank:28000</strong></p>
+                        <h3 class="titlesOfRightCol"><i class="fas fa-trophy"></i><strong class="ml-2">AWARDS</strong>
+                        </h3>
 
-                                <p class="">(Out of 1.8million)</p>
-                            </div>
-                            <div class="col-lg-8">
-                                <p class="achvmntTitle"><strong>HackerRank Problem Solving</strong></p>
-                                <p class="text-justify">
-                                    In algorithm and data structure problem solving
-                                    section of hackerrank.com I have 6 star gold
-                                    batch along with this rank.
-                                    Hope to do better in near future.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row rightColDescription">
-                            <div class="col-lg-4">
-                                <p class="achvmntTitle"><strong>Rank:1500</strong></p>
-                                <p class="">(Out of 500K)</p>
+                        <div class="col">
+                            <div class="row rightColDescription">
+                                <div class="col-lg-4">
+                                    <p class="achvmntTitle"><strong>Rank:28000</strong></p>
 
+                                    <p class="">(Out of 1.8million)</p>
+                                </div>
+                                <div class="col-lg-8">
+                                    <p class="achvmntTitle"><strong>HackerRank Problem Solving</strong></p>
+                                    <p class="text-justify">
+                                        In algorithm and data structure problem solving
+                                        section of hackerrank.com I have 6 star gold
+                                        batch along with this rank.
+                                        Hope to do better in near future.
+                                    </p>
+                                </div>
                             </div>
-                            <div class="col-lg-8">
-                                <p class="achvmntTitle"><strong>HackerRank Java Language Proficiency</strong></p>
-                                <p class="text-justify">
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem Ipsum
-                                    has been the industry's standard dummy text ever
-                                </p>
+                            <div class="row rightColDescription">
+                                <div class="col-lg-4">
+                                    <p class="achvmntTitle"><strong>Rank:1500</strong></p>
+                                    <p class="">(Out of 500K)</p>
+
+                                </div>
+                                <div class="col-lg-8">
+                                    <p class="achvmntTitle"><strong>HackerRank Java Language Proficiency</strong></p>
+                                    <p class="text-justify">
+                                        I have solved almost 70% java related problems
+                                        and achieved 5 start gold batch.Hope to solve 100%
+                                        problems in near future.
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
                     </div>
 
                     <!--                    Project section starts here-->
-
-                    <div class="row titleOfRightCol">
-                        <h3><i class="fas fa-project-diagram"></i><strong class="ml-2">PROJECTS</strong></h3>
-                    </div>
-
                     <div class="row">
-                        <div class="row rightColDescription">
-                            <div class="col-lg-4">
-                                <p class="achvmntTitle"><strong>News Aggregation</strong></p>
-                            </div>
-                            <div class="col-lg-8">
-                                <p class="achvmntTitle"><strong>Spring</strong></p>
-                                <p class="text-justify">
-                                    In algorithm and data structure problem solving
-                                    section of hackerrank.com I have 6 star gold
-                                    batch along with this rank.
-                                    Hope to do better in near future.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row rightColDescription">
-                            <div class="col-lg-4">
-                                <p class="achvmntTitle"><strong>Dining System Automation</strong></p>
-                            </div>
-                            <div class="col-lg-8">
-                                <p class="achvmntTitle"><strong>Swing</strong></p>
-                                <p class="text-justify">
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem Ipsum
-                                    has been the industry's standard dummy text ever
-                                </p>
-                            </div>
-                        </div>
+                        <h3 class="titlesOfRightCol"><i class="fas fa-project-diagram"></i><strong
+                                class="ml-2">PROJECTS</strong></h3>
 
+                        <div class="col">
+                            <div class="row rightColDescription">
+                                <div class="col-lg-4">
+                                    <p class="achvmntTitle"><strong>News Aggregation</strong></p>
+                                </div>
+                                <div class="col-lg-8">
+                                    <p class="achvmntTitle"><strong>Spring Boot</strong></p>
+                                    <p class="text-justify">
+                                        Lorem Ipsum is simply dummy text of the
+                                        printing and typesetting industry. Lorem Ipsum
+                                        has been the industry's standard dummy text ever
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row rightColDescription">
+                                <div class="col-lg-4">
+                                    <p class="achvmntTitle"><strong>Dining Automation</strong></p>
+                                </div>
+                                <div class="col-lg-8">
+                                    <p class="achvmntTitle"><strong>Swing</strong></p>
+                                    <p class="text-justify">
+                                        Lorem Ipsum is simply dummy text of the
+                                        printing and typesetting industry. Lorem Ipsum
+                                        has been the industry's standard dummy text ever
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                     <!--                  project section  ends-->
 
                     <!--                    Skill section starts here-->
 
-                    <div class="row titleOfRightCol">
-                        <h3><i class="fas fa-tools"></i><strong class="ml-2">SKILL</strong></h3>
-                    </div>
-
                     <div class="row">
-                        <div class="row rightColDescription">
-                            <div class="col-lg-4">
-                                <p class="achvmntTitle"><strong>News Aggregation</strong></p>
+                        <h3 class="titlesOfRightCol"><i class="fas fa-tools"></i><strong class="ml-2">SKILL</strong>
+                        </h3>
+                        <div class="col mt-2">
+                            <div class="col">
+                                <h6 class="text-center"><strong>WEB TECHNOLOGIES</strong></h6>
+                                <div class="row rightColDescription">
+                                    <div class="col-lg-6">
+                                        <p class="achvmntTitle"><strong>Spring Boot</strong></p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p class="text-justify text-primary">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row rightColDescription">
+                                    <div class="col-lg-6">
+                                        <p class="achvmntTitle"><strong>Angular</strong></p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p class="text-justify text-primary">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row rightColDescription">
+                                    <div class="col-lg-6">
+                                        <p class="achvmntTitle"><strong>Git Version Control</strong></p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p class="text-justify text-primary">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row rightColDescription">
+                                    <div class="col-lg-6">
+                                        <p class="achvmntTitle"><strong>JSTL</strong></p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p class="text-justify text-primary">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-lg-8">
-                                <p class="achvmntTitle"><strong>Spring</strong></p>
-                                <p class="text-justify">
-                                    In algorithm and data structure problem solving
-                                    section of hackerrank.com I have 6 star gold
-                                    batch along with this rank.
-                                    Hope to do better in near future.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row rightColDescription">
-                            <div class="col-lg-4">
-                                <p class="achvmntTitle"><strong>Dining System Automation</strong></p>
-                            </div>
-                            <div class="col-lg-8">
-                                <p class="achvmntTitle"><strong>Swing</strong></p>
-                                <p class="text-justify">
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem Ipsum
-                                    has been the industry's standard dummy text ever
-                                </p>
+                            <div class="col mt-4">
+                                <h6 class="text-center"><strong>APP DEVELOPMENT</strong></h6>
+                                <div class="row rightColDescription">
+                                    <div class="col-lg-6">
+                                        <p class="achvmntTitle"><strong>Spring Boot</strong></p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p class="text-justify text-primary">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row rightColDescription">
+                                    <div class="col-lg-6">
+                                        <p class="achvmntTitle"><strong>Angular</strong></p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p class="text-justify text-primary">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row rightColDescription">
+                                    <div class="col-lg-6">
+                                        <p class="achvmntTitle"><strong>Git Version Control</strong></p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p class="text-justify text-primary">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row rightColDescription">
+                                    <div class="col-lg-6">
+                                        <p class="achvmntTitle"><strong>JSTL</strong></p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p class="text-justify text-primary">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!--        skill section ends-->
 
                     <!--                    Education section starts here-->
-
-                    <div class="row titleOfRightCol">
-                        <h3><i class="fas fa-graduation-cap"></i><strong class="ml-2">EDUCATION</strong></h3>
-                    </div>
-
                     <div class="row">
-                        <div class="row rightColDescription">
-                            <div class="col-lg-4">
-                                <p class="achvmntTitle"><strong>News Aggregation</strong></p>
-                            </div>
-                            <div class="col-lg-8">
-                                <p class="achvmntTitle"><strong>Spring</strong></p>
-                                <p class="text-justify">
-                                    In algorithm and data structure problem solving
-                                    section of hackerrank.com I have 6 star gold
-                                    batch along with this rank.
-                                    Hope to do better in near future.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row rightColDescription">
-                            <div class="col-lg-4">
-                                <p class="achvmntTitle"><strong>Dining System Automation</strong></p>
-                            </div>
-                            <div class="col-lg-8">
-                                <p class="achvmntTitle"><strong>Swing</strong></p>
-                                <p class="text-justify">
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem Ipsum
-                                    has been the industry's standard dummy text ever
-                                </p>
-                            </div>
-                        </div>
-                        <!--        education section ends-->
+                        <h3 class="titlesOfRightCol"><i class="fas fa-graduation-cap"></i><strong
+                                class="ml-2">EDUCATION</strong></h3>
 
+                        <div class="col">
+                            <div class="row rightColDescription">
+                                <div class="col-lg-4">
+                                    <p class="achvmntTitle"><strong>Dining System Automation</strong></p>
+                                </div>
+                                <div class="col-lg-8">
+                                    <p class="achvmntTitle"><strong>Swing</strong></p>
+                                    <p class="text-justify">
+                                        Lorem Ipsum is simply dummy text of the
+                                        printing and typesetting industry. Lorem Ipsum
+                                        has been the industry's standard dummy text ever
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
