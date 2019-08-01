@@ -11,6 +11,7 @@
 </head>
 <body>
 <div class="container mainBody">
+
     <div class="row">
         <div class="col-1 leftMostCol">
 
@@ -21,7 +22,7 @@
                 <div class="col-lg-4">
                     <div class="row pp marginLeft justify-content-center">
                         <img class="img-fluid"
-                             th:src="@{https://scontent.fdac21-1.fna.fbcdn.net/v/t1.0-0/p206x206/13331106_987612578013297_6066224439769302200_n.jpg?_nc_cat=103&_nc_oc=AQlUHjD90I_-lIL8fLbxnS8R6Qk_z92nZAbXV9Oq-Q1umq9eLZzTTwp8GIp4mOQ7JwI&_nc_ht=scontent.fdac21-1.fna&oh=a13ea11c7183c5c0809b2af530195f26&oe=5DEDFABB}">
+                             th:src="@{/img/pic.jpg}">
                     </div>
                     <div class="row marginLeft name ">
                         <h1 class="fName">MD. MINHAZUR</h1>
@@ -29,8 +30,9 @@
                         <h3 class="designation">Java Developer</h3>
                     </div>
 
+                    <!--About me section-->
                     <div class="row titleOfLeftCol">
-                        <h3><strong>ABOUT ME</strong></h3>
+                        <h3><i class="fas fa-comment-alt"></i> <strong class="ml-2">ABOUT ME</strong></h3>
                     </div>
 
                     <div class="row description">
@@ -46,34 +48,69 @@
                             unchanged.
                         </p>
                     </div>
+                    <!--                    about me section ends here-->
+
+                    <!--                    contact section starts here-->
+                    <div class="row titleOfLeftCol">
+                        <h3><i class="fas fa-id-card"></i><strong class="ml-2">CONTACT</strong></h3>
+                    </div>
+
+                    <div class="row description mt-3">
+                        <h5><strong class="mr-3"><i class="fas fa-mobile-alt"></i></strong>+8801515616259</h5>
+                        <h5><strong class="mr-3"><i class="fas fa-at"></i></strong>minhaduphy@gmail.com</h5>
+                        <h5><strong class="mr-3"><i class="fas fa-map-marker-alt"></i></strong>
+                            Room:332,Fazlul Haque Hall
+                            <br>
+                            <span style="margin-left: 37px">University of Dhaka</span>
+                        </h5>
+                    </div>
+                    <!--                    contact section ends here-->
+
+                    <!--                    reference section starts here-->
+                    <div class="row titleOfLeftCol">
+                        <h3><i class="fas fa-asterisk"></i><strong class="ml-2">REFERENCE</strong></h3>
+                    </div>
+
+                    <div class="row description mt-3">
+                        <h5 class="mb-0"><strong>MD. RAJAUL ISLAM</strong></h5>
+                        <p>Instructor,Java,CCSL.</p>
+                        <h6><strong class="mr-3"><i class="fas fa-mobile-alt"></i></strong>+8801515616259</h6>
+
+                    </div>
+                    <!--                    reference section ends here-->
                 </div>
 
                 <div class="col-lg-8 rightColBody">
 
                     <div class="row titleOfRightCol">
-                        <h3><strong>AWARDS</strong></h3>
+                        <h3><i class="fas fa-trophy"></i><strong class="ml-2">AWARDS</strong></h3>
                     </div>
 
                     <div class="row">
                         <div class="row rightColDescription">
                             <div class="col-lg-4">
-                                <p class="achvmntTitle"><strong>Hacker Rank</strong></p>
+                                <p class="achvmntTitle"><strong>Rank:28000</strong></p>
+
+                                <p class="">(Out of 1.8million)</p>
                             </div>
                             <div class="col-lg-8">
-                                <p class="achvmntTitle"><strong>Hacker Rank</strong></p>
+                                <p class="achvmntTitle"><strong>HackerRank Problem Solving</strong></p>
                                 <p class="text-justify">
-                                    Lorem Ipsum is simply dummy text of the
-                                    printing and typesetting industry. Lorem Ipsum
-                                    has been the industry's standard dummy text ever
+                                    In algorithm and data structure problem solving
+                                    section of hackerrank.com I have 6 star gold
+                                    batch along with this rank.
+                                    Hope to do better in near future.
                                 </p>
                             </div>
                         </div>
                         <div class="row rightColDescription">
                             <div class="col-lg-4">
-                                <p class="achvmntTitle"><strong>Hacker Rank</strong></p>
+                                <p class="achvmntTitle"><strong>Rank:1500</strong></p>
+                                <p class="">(Out of 500K)</p>
+
                             </div>
                             <div class="col-lg-8">
-                                <p class="achvmntTitle"><strong>Hacker Rank</strong></p>
+                                <p class="achvmntTitle"><strong>HackerRank Java Language Proficiency</strong></p>
                                 <p class="text-justify">
                                     Lorem Ipsum is simply dummy text of the
                                     printing and typesetting industry. Lorem Ipsum
@@ -81,12 +118,125 @@
                                 </p>
                             </div>
                         </div>
+
+                    </div>
+
+                    <!--                    Project section starts here-->
+
+                    <div class="row titleOfRightCol">
+                        <h3><i class="fas fa-project-diagram"></i><strong class="ml-2">PROJECTS</strong></h3>
+                    </div>
+
+                    <div class="row">
+                        <div class="row rightColDescription">
+                            <div class="col-lg-4">
+                                <p class="achvmntTitle"><strong>News Aggregation</strong></p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p class="achvmntTitle"><strong>Spring</strong></p>
+                                <p class="text-justify">
+                                    In algorithm and data structure problem solving
+                                    section of hackerrank.com I have 6 star gold
+                                    batch along with this rank.
+                                    Hope to do better in near future.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row rightColDescription">
+                            <div class="col-lg-4">
+                                <p class="achvmntTitle"><strong>Dining System Automation</strong></p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p class="achvmntTitle"><strong>Swing</strong></p>
+                                <p class="text-justify">
+                                    Lorem Ipsum is simply dummy text of the
+                                    printing and typesetting industry. Lorem Ipsum
+                                    has been the industry's standard dummy text ever
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--                  project section  ends-->
+
+                    <!--                    Skill section starts here-->
+
+                    <div class="row titleOfRightCol">
+                        <h3><i class="fas fa-tools"></i><strong class="ml-2">SKILL</strong></h3>
+                    </div>
+
+                    <div class="row">
+                        <div class="row rightColDescription">
+                            <div class="col-lg-4">
+                                <p class="achvmntTitle"><strong>News Aggregation</strong></p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p class="achvmntTitle"><strong>Spring</strong></p>
+                                <p class="text-justify">
+                                    In algorithm and data structure problem solving
+                                    section of hackerrank.com I have 6 star gold
+                                    batch along with this rank.
+                                    Hope to do better in near future.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row rightColDescription">
+                            <div class="col-lg-4">
+                                <p class="achvmntTitle"><strong>Dining System Automation</strong></p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p class="achvmntTitle"><strong>Swing</strong></p>
+                                <p class="text-justify">
+                                    Lorem Ipsum is simply dummy text of the
+                                    printing and typesetting industry. Lorem Ipsum
+                                    has been the industry's standard dummy text ever
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--        skill section ends-->
+
+                    <!--                    Education section starts here-->
+
+                    <div class="row titleOfRightCol">
+                        <h3><i class="fas fa-graduation-cap"></i><strong class="ml-2">EDUCATION</strong></h3>
+                    </div>
+
+                    <div class="row">
+                        <div class="row rightColDescription">
+                            <div class="col-lg-4">
+                                <p class="achvmntTitle"><strong>News Aggregation</strong></p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p class="achvmntTitle"><strong>Spring</strong></p>
+                                <p class="text-justify">
+                                    In algorithm and data structure problem solving
+                                    section of hackerrank.com I have 6 star gold
+                                    batch along with this rank.
+                                    Hope to do better in near future.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row rightColDescription">
+                            <div class="col-lg-4">
+                                <p class="achvmntTitle"><strong>Dining System Automation</strong></p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p class="achvmntTitle"><strong>Swing</strong></p>
+                                <p class="text-justify">
+                                    Lorem Ipsum is simply dummy text of the
+                                    printing and typesetting industry. Lorem Ipsum
+                                    has been the industry's standard dummy text ever
+                                </p>
+                            </div>
+                        </div>
+                        <!--        education section ends-->
 
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>
