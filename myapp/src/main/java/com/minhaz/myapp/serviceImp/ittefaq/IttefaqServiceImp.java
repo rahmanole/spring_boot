@@ -32,16 +32,16 @@ public class IttefaqServiceImp implements NewsPaperService {
 
     public void savePosts() throws Exception{
         List<Post> postList = postService.createPsot("ittefaq",
-                "https://www.ittefaq.com.bd",
+                "https://www.ittefaq.com.bd/",
                 "h1",
                 "dtl_content_block",
                 "dtl_img_block",
                 findPostIds());
-        List<HashSet<String>> catWisePostList = getCatWistPosIdList();
+//        List<HashSet<String>> catWisePostList = getCatWistPosIdList();
 
         postList.forEach(post -> {
             try {
-                assignCategory(post.getPublisherGivenId(),post,catWisePostList);
+                assignCategory(post.getPublisherGivenId(),post);
                 postRepository.save(post);
                 System.out.println("ittefaq");
             } catch (Exception e) {
@@ -93,7 +93,7 @@ public class IttefaqServiceImp implements NewsPaperService {
         for (Element post:posts) {
             String link = post.getElementsByTag("a").first()
                     .attr("href")
-                    .replace("https://www.ittefaq.com.bd","");
+                    .replace("https://www.ittefaq.com.bd/","");
 
             postId.add(link.substring(0,link.lastIndexOf('/')));
 
@@ -102,6 +102,64 @@ public class IttefaqServiceImp implements NewsPaperService {
         }
 
         return postId;
+    }
+
+    @Override
+    public void assignCategory(String id,Post post){
+        String cat = id.split("/")[0];
+
+        if (cat.equals("national") ||
+                cat.equals("budget2019") ||
+                cat.equals("wholecountry") ||
+                cat.equals("capital") ||
+                cat.equals("court")
+        ) {
+            post.setCat("bangladesh");
+            return;
+        }
+        if (cat.equals("politics")) {
+            post.setCat("politics");
+            return;
+        }
+        if (cat.equals("worldnews")) {
+            post.setCat("international");
+            return;
+        }
+        if (cat.equals("economy")) {
+            post.setCat("economy");
+            return;
+        }
+        if (cat.equals("print-edition")) {
+
+            if(id.split("/")[2].equals("opinion")){
+                post.setCat("opinion");
+            }else{
+                post.setCat("editorial");
+            }
+
+            return;
+        }
+        if (cat.equals("sports")) {
+            post.setCat("sports");
+            return;
+        }
+
+        if (cat.equals("entertainment")) {
+            post.setCat("entertainment");
+            return;
+        }
+        if (cat.equals("scienceandtechnology")) {
+            post.setCat("sciTech");
+            return;
+        }
+        if (cat.equals("aboard")) {
+            post.setCat("aboard");
+            return;
+        }
+        if (cat.equals("education")) {
+            post.setCat("campus");
+            return;
+        }
     }
 
     @Override
@@ -133,9 +191,10 @@ public class IttefaqServiceImp implements NewsPaperService {
             return;
         }
         if(list.get(1).contains(id) ||
-                list.get(2).contains(id) || list.get(3).contains(id)
-                || list.get(4).contains(id)
-                || list.get(5).contains(id)){
+                list.get(2).contains(id) ||
+                list.get(3).contains(id)||
+                list.get(4).contains(id) ||
+                list.get(5).contains(id)){
             post.setCat("bangladesh");
             return;
         }

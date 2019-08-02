@@ -34,9 +34,13 @@ public class ExecutionPoint {
     @Qualifier("bdProtidinServiceImp")
     NewsPaperService bdProtidinService;
 
+    @Autowired
+    @Qualifier("bdNews24")
+    NewsPaperService bdNews24;
+
 
     @Transactional
-    @Scheduled(fixedDelay = 300000)
+ //   @Scheduled(fixedDelay = 300000)
     public void savePosts() {
         for(;;){
             try{
@@ -53,22 +57,13 @@ public class ExecutionPoint {
     }
 
     @Transactional
- //   @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 30000)
     public void showPostIds() {
 
         try {
 
-            postService.createPsot("bd_pratidin",
-                    "https://www.bd-pratidin.com/",
-                    "h1",
-                    "container-left-area",
-                    "main-image",
-                    bdProtidinService.findPostIds()).forEach(post -> {
-                        System.out.println(post.getHeading());
-                        System.out.println(post.getFtrImg());
-                        post.getPostBody().forEach(para -> {
-                            System.out.println(para.getDescription());
-                        });
+            bdNews24.findPostIds().forEach(id->{
+                System.out.println(id);
             });
         }catch (Exception e){
             e.printStackTrace();

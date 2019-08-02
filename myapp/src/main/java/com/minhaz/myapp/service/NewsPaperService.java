@@ -11,4 +11,5 @@ public interface NewsPaperService {
     HashSet<String> findPostIds(String catWiseUrl) throws IOException;
     List<HashSet<String>> getCatWistPosIdList() throws Exception;
     void assignCategory(String id,Post post,List<HashSet<String>>  list);
+    void assignCategory(String id,Post post);
 }

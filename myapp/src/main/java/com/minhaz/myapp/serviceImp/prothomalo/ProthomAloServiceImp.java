@@ -63,8 +63,7 @@ public class ProthomAloServiceImp  implements NewsPaperService{
         Elements postUrls = posts.getElementsByTag("a");
         for (Element post : postUrls) {
             String link = post.attr("href");
-            if (link.length() > 100)
-                postId.add(link.substring(0, link.indexOf('%')));
+                postId.add(link.substring(1, link.indexOf('%')));
         }
         return postId;
     }
@@ -157,5 +156,10 @@ public class ProthomAloServiceImp  implements NewsPaperService{
             post.setCat("others");
             return;
         }
+    }
+
+    @Override
+    public void assignCategory(String id, Post post) {
+
     }
 }

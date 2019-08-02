@@ -1,27 +1,24 @@
-package com.minhaz.myapp.serviceImp.jugantor;
+package com.minhaz.myapp.serviceImp.bdNews24;
 
 
 import com.minhaz.myapp.dao.PostRepository;
-import com.minhaz.myapp.entity.Img;
-import com.minhaz.myapp.entity.Para;
 import com.minhaz.myapp.entity.Post;
-import com.minhaz.myapp.entity.Vdo;
 import com.minhaz.myapp.service.NewsPaperService;
 import com.minhaz.myapp.service.PostService;
-import com.minhaz.myapp.service.TagService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 @Service
-public class JugantorServiceImp implements NewsPaperService {
+public class BdNews24 implements NewsPaperService {
 
     @Autowired
     PostService postService;
@@ -32,7 +29,7 @@ public class JugantorServiceImp implements NewsPaperService {
 
     public void savePosts() throws Exception{
         List<Post> postList = postService.createPsot("jugantor",
-                "https://www.jugantor.com/",
+                "https://www.jugantor.com",
                 "h1",
                 "dtl_section",
                 "dtl_section",
@@ -56,15 +53,26 @@ public class JugantorServiceImp implements NewsPaperService {
     @Override
     public HashSet<String> findPostIds() throws IOException {
         HashSet<String> postId = new HashSet();
-        Document document = Jsoup.connect("https://www.jugantor.com/").userAgent("Opera").get();
+        Document document = Jsoup.connect("https://bangla.bdnews24.com/news/").userAgent("Opera").get();
         Element body = document.body();
 
-        Elements posts = body.getElementsByClass("editor_picks_list");
+        Elements posts = body.getElementsByClass("paginationSimple576272").first()
+                .getElementsByTag("li");
         for (int i=0;i<20;i++) {
-            String link = posts.get(i).getElementsByTag("a").first()
-                    .attr("href")
-                    .replace("https://www.jugantor.com/","");
-            postId.add(link.substring(0,link.lastIndexOf('/')));
+
+            /*
+            * business logic used here is slightly different from service implementations.
+            * Because all latest news of bdNews24 contains two <a> tag.while using the logic,
+            * used in other services implementations, it shows the link of second <a> tag
+            * which contains category link of that particular link.
+            */
+
+            String  link  = posts.get(i).getElementsByTag("a").outerHtml();
+            int firstIndex = link.indexOf("\"")+1;
+            int lastIndex = link.indexOf("\"",20);
+            link = link.substring(firstIndex,lastIndex).replace("https://bangla.bdnews24.com/","");
+
+            postId.add(link);
         }
         return postId;
     }
@@ -80,7 +88,7 @@ public class JugantorServiceImp implements NewsPaperService {
         for (Element post:posts) {
             String link = post.getElementsByTag("a").first()
                     .attr("href")
-                    .replace("https://www.jugantor.com/","");
+                    .replace("https://www.jugantor.com","");
 
             postId.add(link.substring(0,link.lastIndexOf('/')));
 
@@ -167,7 +175,7 @@ public class JugantorServiceImp implements NewsPaperService {
 
     @Override
     public void assignCategory(String id, Post post) {
-        String cat = id.split("/")[0];
+        String cat = id.split("/")[1];
 
         if (cat.equals("national") ||
                 cat.equals("capital") ||

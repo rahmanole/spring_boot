@@ -10,10 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,12 +33,14 @@ public class BdProtidinServiceImp implements NewsPaperService {
                 "container-left-area",
                 "main-image",
                 findPostIds());
-        List<HashSet<String>> catWisePostList = getCatWistPosIdList();
+//        List<HashSet<String>> catWisePostList = getCatWistPosIdList();
 
         postList.forEach(post -> {
             try {
-                assignCategory(post.getPublisherGivenId(), post, catWisePostList);
-                postRepository.save(post);
+                assignCategory(post.getPublisherGivenId(), post);
+                if(post.getCat() != null){
+                    postRepository.save(post);
+                }
                 System.out.println("bd_pratidin");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -100,17 +99,74 @@ public class BdProtidinServiceImp implements NewsPaperService {
     }
 
     @Override
+    public void assignCategory(String id,Post post){
+        String cat = id.split("/")[0];
+
+        if (cat.equals("national") ||
+                cat.equals("country") ||
+                cat.equals("dengue-update") ||
+                cat.equals("city-news") ||
+                cat.equals("chittagong-pratidin") ||
+                cat.equals("city-roundup") ||
+                cat.equals("chayer-desh")) {
+            post.setCat("bangladesh");
+            return;
+        }
+        if (cat.equals("international-news") || id.equals("kolkata")) {
+            post.setCat("international");
+            return;
+        }
+        if (cat.equals("corporate-corner")) {
+            post.setCat("economy");
+            return;
+        }
+        if (cat.equals("facebook") || id.equals("readers-column")) {
+            post.setCat("opinion");
+            return;
+        }
+        if (cat.equals("sports")) {
+            post.setCat("sports");
+            return;
+        }
+
+        if (cat.equals("entertainment")) {
+            post.setCat("entertainment");
+            return;
+        }
+        if (cat.equals("tech-world")) {
+            post.setCat("sciTech");
+            return;
+        }
+        if (cat.equals("probash-potro")) {
+            post.setCat("aboard");
+            return;
+        }
+        if (cat.equals("campus-online")) {
+            post.setCat("campus");
+            return;
+        }
+        if (cat.equals("job-market")) {
+            post.setCat("jobs");
+            return;
+        }
+        if (cat.equals("mixter")) {
+            post.setCat("others");
+            return;
+        }
+    }
+
+    @Override
     public List<HashSet<String>> getCatWistPosIdList() throws Exception {
 
         List<HashSet<String>> list = new ArrayList<>();
-        list.add(findPostIds("https://www.bd-pratidin.com/national"));
-        list.add(findPostIds("https://www.bd-pratidin.com/country"));
-        list.add(findPostIds("https://www.bd-pratidin.com/city-news"));
-        list.add(findPostIds("https://www.bd-pratidin.com/chittagong-pratidin"));
-        list.add(findPostIds("https://www.bd-pratidin.com/chayer-desh"));
-        list.add(findPostIds("https://www.bd-pratidin.com/city-roundup"));
-        list.add(findPostIds("https://www.bd-pratidin.com/international-news"));
-        list.add(findPostIds("https://www.bd-pratidin.com/kolkata"));
+//        list.add(findPostIds("https://www.bd-pratidin.com/national"));
+//        list.add(findPostIds("https://www.bd-pratidin.com/country"));
+//        list.add(findPostIds("https://www.bd-pratidin.com/city-news"));
+//        list.add(findPostIds("https://www.bd-pratidin.com/chittagong-pratidin"));
+//        list.add(findPostIds("https://www.bd-pratidin.com/chayer-desh"));
+//        list.add(findPostIds("https://www.bd-pratidin.com/city-roundup"));
+//        list.add(findPostIds("https://www.bd-pratidin.com/international-news"));
+//        list.add(findPostIds("https://www.bd-pratidin.com/kolkata"));
         list.add(findPostIds("https://www.bd-pratidin.com/corporate-corner"));
         list.add(findPostIds("https://www.bd-pratidin.com/facebook"));
         list.add(findPostIds("https://www.bd-pratidin.com/readers-column"));
