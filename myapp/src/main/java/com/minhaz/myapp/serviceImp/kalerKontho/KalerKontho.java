@@ -1,4 +1,4 @@
-package com.minhaz.myapp.serviceImp.bdNews24;
+package com.minhaz.myapp.serviceImp.kalerKontho;
 
 
 import com.minhaz.myapp.dao.PostRepository;
@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 
 @Service
-public class BdNews24 implements NewsPaperService {
+public class KalerKontho implements NewsPaperService {
 
     @Autowired
     PostService postService;
@@ -28,11 +28,11 @@ public class BdNews24 implements NewsPaperService {
 
 
     public void savePosts() throws Exception{
-        List<Post> postList = postService.createPsot("bdnews24",
-                "https://bangla.bdnews24.com/",
-                "h1",
-                "custombody",
-                "gallery-image-box",
+        List<Post> postList = postService.createPsot("kaler_kontho",
+                "https://www.kalerkantho.com/",
+                "h2",
+                "some-class-name2",
+                "img-popup",
                 findPostIds());
 //        List<HashSet<String>> catWisePostList = getCatWistPosIdList();
 
@@ -40,7 +40,7 @@ public class BdNews24 implements NewsPaperService {
             try {
                 assignCategory(post.getPublisherGivenId(),post);
                 postRepository.save(post);
-                System.out.println("bdnews24");
+                System.out.println("kaler_kontho");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -53,26 +53,14 @@ public class BdNews24 implements NewsPaperService {
     @Override
     public HashSet<String> findPostIds() throws IOException {
         HashSet<String> postId = new HashSet();
-        Document document = Jsoup.connect("https://bangla.bdnews24.com/news/").userAgent("Opera").get();
+        Document document = Jsoup.connect("https://www.kalerkantho.com/online/entertainment").userAgent("Opera").get();
         Element body = document.body();
-
-        Elements posts = body.getElementsByClass("paginationSimple576272").first()
-                .getElementsByTag("li");
+        Element latestNews = body.getElementById("myTabContent");
+        Elements posts = latestNews.getElementsByTag("li");
         for (int i=0;i<20;i++) {
-
-            /*
-            * business logic used here is slightly different from service implementations.
-            * Because all latest news of bdNews24 contains two <a> tag.while using the logic,
-            * used in other services implementations, it shows the link of second <a> tag
-            * which contains category link of that particular link.
-            */
-
-            String  link  = posts.get(i).getElementsByTag("a").outerHtml();
-            int firstIndex = link.indexOf("\"")+1;
-            int lastIndex = link.indexOf("\"",20);
-            link = link.substring(firstIndex,lastIndex).replace("https://bangla.bdnews24.com/","");
-
-            postId.add(link);
+            String link = posts.get(i).getElementsByTag("a").first()
+                    .attr("href");
+            postId.add(link.substring(2));
         }
         return postId;
     }
@@ -88,7 +76,7 @@ public class BdNews24 implements NewsPaperService {
         for (Element post:posts) {
             String link = post.getElementsByTag("a").first()
                     .attr("href")
-                    .replace("https://www.jugantor.com","");
+                    .replace("https://www.jugantor.com/","");
 
             postId.add(link.substring(0,link.lastIndexOf('/')));
 
@@ -177,55 +165,32 @@ public class BdNews24 implements NewsPaperService {
     public void assignCategory(String id, Post post) {
         String cat = id.split("/")[1];
 
-        if (cat.equals("national") ||
-                cat.equals("capital") ||
-                cat.equals("country-news")
-        ) {
+        if (cat.equals("national") || cat.equals("country-news")) {
             post.setCat("bangladesh");
             return;
         }
-        if (cat.equals("politics")) {
-            post.setCat("politics");
-            return;
-        }
-        if (cat.equals("international")) {
+        if (cat.equals("world")) {
             post.setCat("international");
             return;
         }
-        if (cat.equals("economy")) {
+        if (cat.equals("business")) {
             post.setCat("economy");
             return;
-        }
-        if (cat.equals("opinion")) {
-                post.setCat("opinion");
         }
 
         if (cat.equals("sports")) {
             post.setCat("sports");
             return;
         }
-        if (cat.equals("editorial")) {
-            post.setCat("editorial");
-            return;
-        }
-
         if (cat.equals("entertainment")) {
             post.setCat("entertainment");
             return;
         }
-        if (cat.equals("tech")) {
+        if (cat.equals("info-tech")) {
             post.setCat("sciTech");
             return;
         }
-        if (cat.equals("exile")) {
-            post.setCat("aboard");
-            return;
-        }
-        if (cat.equals("campus")) {
-            post.setCat("campus");
-            return;
-        }
-        if (cat.equals("various")) {
+        if (cat.equals("miscellaneous")) {
             post.setCat("others");
             return;
         }

@@ -8,7 +8,10 @@ public class Img {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(length = 100000)
     private String imgUrl;
+
     @Column(length = 10000)
     private String imgCaption;
 

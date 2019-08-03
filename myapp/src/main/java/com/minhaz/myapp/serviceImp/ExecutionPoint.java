@@ -19,7 +19,7 @@ public class ExecutionPoint {
 
 
     @Autowired
-    @Qualifier("jugantorServiceImp")
+    @Qualifier("kalerKontho")
     NewsPaperService jugantorService;
 
     @Autowired
@@ -38,9 +38,13 @@ public class ExecutionPoint {
     @Qualifier("bdNews24")
     NewsPaperService bdNews24;
 
+    @Autowired
+    @Qualifier("kalerKontho")
+    NewsPaperService kalerKontho;
+
 
     @Transactional
- //   @Scheduled(fixedDelay = 300000)
+    @Scheduled(fixedDelay = 300000)
     public void savePosts() {
         for(;;){
             try{
@@ -48,6 +52,8 @@ public class ExecutionPoint {
                 saveJugantorPosts();
                 saveIttefaqPosts();
                 saveBdPratidinPosts();
+//                saveBdNews24Posts();
+                saveKalerKonthoPosts();
                 break;
             }catch (Exception e){
                 continue;
@@ -57,13 +63,28 @@ public class ExecutionPoint {
     }
 
     @Transactional
-    @Scheduled(fixedDelay = 30000)
+//    @Scheduled(fixedDelay = 30000)
     public void showPostIds() {
 
         try {
 
-            bdNews24.findPostIds().forEach(id->{
-                System.out.println(id);
+//            kalerKontho.findPostIds().forEach(id->{
+//                System.out.println(id.split("/")[1]);
+//            });
+
+            postService.createPsot("kaler_kontho",
+                    "https://www.kalerkantho.com/",
+                    "h2",
+                    "some-class-name2",
+                    "img-popup",
+                    kalerKontho.findPostIds()).forEach(post -> {
+                System.out.println(post.getPublisherGivenId());
+                System.out.println(post.getFtrImg());
+                System.out.println(post.getHeading());
+                post.getPostBody().forEach(para -> {
+                    System.out.println(para.getDescription());
+                    System.out.println(para.getImgList());
+                });
             });
         }catch (Exception e){
             e.printStackTrace();
@@ -110,6 +131,27 @@ public class ExecutionPoint {
         System.out.println(Thread.currentThread().getName());
         try{
             bdProtidinService.savePosts();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    @Transactional
+    @Async("threadPoolTaskExecutor")
+    public void saveBdNews24Posts() {
+        System.out.println(Thread.currentThread().getName());
+        try{
+            bdProtidinService.savePosts();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Transactional
+    @Async("threadPoolTaskExecutor")
+    public void saveKalerKonthoPosts() {
+        System.out.println(Thread.currentThread().getName());
+        try{
+            kalerKontho.savePosts();
         }catch (Exception e){
             e.printStackTrace();
         }

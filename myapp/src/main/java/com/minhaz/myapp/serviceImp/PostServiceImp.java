@@ -62,9 +62,15 @@ public class PostServiceImp implements PostService {
 
 
             // Finding headline of the post
-            Elements heading = body.getElementsByTag(htmlTagForHeading);
+            if(publisher.equals("kaler_kontho")){
+                Element heading = body.getElementsByClass("details").first().
+                        getElementsByTag(htmlTagForHeading).first();
+                post.setHeading(heading.text());
+            }else{
+                Element heading = body.getElementsByTag(htmlTagForHeading).first();
+                post.setHeading(heading.text());
+            }
 
-            post.setHeading(heading.text());
 
             // ---------end-------
 
@@ -137,14 +143,17 @@ public class PostServiceImp implements PostService {
 
                 if (publisher.equals("jugantor")) {
                     img.setImgUrl("https://www.jugantor.com" + imgTag.attr("src"));
-                    return;
+
                 } else if (publisher.equals("bd_pratidin")) {
                     img.setImgUrl("https://www.bd-pratidin.com" + imgTag.attr("src").substring(1));
-                    return;
+
+                }else if (publisher.equals("kaler_kontho")) {
+                    img.setImgUrl("https://www.kalerkantho.com/" + imgTag.attr("src").substring(1));
+
+                }else{
+                    img.setImgUrl(imgTag.attr("src"));
+
                 }
-
-                img.setImgUrl(imgTag.attr("src"));
-
                 imgList.add(img);
             }
             para.setImgList(imgList);
@@ -197,6 +206,14 @@ public class PostServiceImp implements PostService {
             //As this vendors img url start with dot(.) thats why i use subString() method to remove the dot(.)
             imgUrl = "https://www.bd-pratidin.com" + elements.select("img").first().attr("src").substring(1);
             caption = elements.select("img").first().attr("alt");
+
+            img.setImgUrl(imgUrl);
+            img.setImgCaption(caption);
+
+        }else if (publisher.equals("kaler_kontho")) {
+            imgUrl =elements.select("img").first().attr("src");
+            caption = elements.select("img").first().attr("alt");
+            System.out.println(imgUrl);
             img.setImgUrl(imgUrl);
             img.setImgCaption(caption);
         }

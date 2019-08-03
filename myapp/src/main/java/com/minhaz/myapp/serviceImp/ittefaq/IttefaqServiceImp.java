@@ -64,7 +64,7 @@ public class IttefaqServiceImp implements NewsPaperService {
             String link = posts.get(i).getElementsByTag("a").first()
                     .attr("href")
                     .replace("https://www.ittefaq.com.bd","");
-            postId.add(link.substring(0,link.lastIndexOf('/')));
+            postId.add(link.substring(1,link.lastIndexOf('/')));
         }
         return postId;
     }
