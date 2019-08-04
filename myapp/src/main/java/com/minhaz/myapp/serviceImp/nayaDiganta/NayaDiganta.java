@@ -27,26 +27,25 @@ public class NayaDiganta implements NewsPaperService {
     PostRepository postRepository;
 
 
-    public void savePosts() throws Exception{
-        List<Post> postList = postService.createPsot("jugantor",
-                "https://www.jugantor.com/",
+    public void savePosts() throws Exception {
+        List<Post> postList = postService.createPsot("naya_diganta",
+                "http://www.dailynayadiganta.com/",
                 "h1",
-                "dtl_section",
-                "dtl_section",
+                "news-content",
+                "image-holder",
                 findPostIds());
 //        List<HashSet<String>> catWisePostList = getCatWistPosIdList();
 
         postList.forEach(post -> {
             try {
-                assignCategory(post.getPublisherGivenId(),post);
+                assignCategory(post.getPublisherGivenId(), post);
                 postRepository.save(post);
-                System.out.println("jugantor");
+                System.out.println("naya_diganta");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
-
 
 
     // method for finding artcile url
@@ -60,11 +59,11 @@ public class NayaDiganta implements NewsPaperService {
 
         //Naya diganta uploads more than 20 posts at a time
         //That's why all posts are taken
-        for (int i=0;i<posts.size();i++) {
+        for (int i = 0; i < 20; i++) {
             String link = posts.get(i).getElementsByTag("a").first()
                     .attr("href")
-                    .replace("http://www.dailynayadiganta.com/","");
-            postId.add(link.substring(0,link.lastIndexOf('/')));
+                    .replace("http://www.dailynayadiganta.com/", "");
+            postId.add(link.substring(0, link.lastIndexOf('/')));
         }
         return postId;
     }
@@ -72,27 +71,25 @@ public class NayaDiganta implements NewsPaperService {
     //This method for finding post url from specific category
     @Override
     public HashSet<String> findPostIds(String catWiseUrl) throws IOException {
-        HashSet<String> postId = new HashSet<String>();
+        HashSet<String> postId = new HashSet();
         Document document = Jsoup.connect(catWiseUrl).userAgent("Opera").get();
         Element body = document.body();
-        Elements posts = body.getElementsByClass("leadmorehl2");
 
-        for (Element post:posts) {
-            String link = post.getElementsByTag("a").first()
-                    .attr("href")
-                    .replace("https://www.jugantor.com/","");
+        Elements posts = body.getElementsByClass("subcategory")
+                        .first().getElementsByTag("a");
 
-            postId.add(link.substring(0,link.lastIndexOf('/')));
-
-            if(postId.size()>21)
-                break;
+        //Naya diganta uploads more than 20 posts at a time
+        //That's why all posts are taken
+        for (int i = 0; i < posts.size(); i++) {
+            String link = posts.get(i).attr("href")
+                    .replace("http://www.dailynayadiganta.com/", "");
+            postId.add(link.substring(0, link.lastIndexOf('/')).split("/")[1]);
         }
-
         return postId;
     }
 
     @Override
-    public List<HashSet<String>> getCatWistPosIdList() throws Exception{
+    public List<HashSet<String>> getCatWistPosIdList() throws Exception {
 
         List<HashSet<String>> list = new ArrayList<>();
         list.add(findPostIds("https://www.jugantor.com/politics"));
@@ -113,53 +110,54 @@ public class NayaDiganta implements NewsPaperService {
     }
 
     @Override
-    public void assignCategory(String id,Post post,List<HashSet<String>>  list){
-        if(list.get(0).contains(id) ){
+    public void assignCategory(String id, Post post, List<HashSet<String>> list) {
+        if (list.get(0).contains(id)) {
             post.setCat("politics");
             return;
         }
-        if(list.get(1).contains(id) ||
-                list.get(2).contains(id) || list.get(3).contains(id)){
+        if (list.get(1).contains(id) ||
+                list.get(2).contains(id) || list.get(3).contains(id)) {
             post.setCat("bangladesh");
             return;
         }
-        if(list.get(4).contains(id)){
+        if (list.get(4).contains(id)) {
             post.setCat("international");
             return;
         }
-        if(list.get(5).contains(id)){
+        if (list.get(5).contains(id)) {
             post.setCat("economy");
             return;
         }
-        if(list.get(6).contains(id)){
+        if (list.get(6).contains(id)) {
             post.setCat("opinion");
             return;
         }
-        if(list.get(7).contains(id)){
+        if (list.get(7).contains(id)) {
             post.setCat("sports");
             return;
         }
 
-        if(list.get(8).contains(id)){
+        if (list.get(8).contains(id)) {
             post.setCat("entertainment");
             return;
         }
-        if(list.get(9).contains(id)){
+        if (list.get(9).contains(id)) {
             post.setCat("sciTech");
             return;
         }
-        if(list.get(10).contains(id)){
+        if (list.get(10).contains(id)) {
             post.setCat("aboard");
             return;
         }
-        if(list.get(11).contains(id)){
+        if (list.get(11).contains(id)) {
             post.setCat("editorial");
             return;
-        }if(list.get(12).contains(id)){
+        }
+        if (list.get(12).contains(id)) {
             post.setCat("campus");
             return;
         }
-        if(list.get(13).contains(id)){
+        if (list.get(13).contains(id)) {
             post.setCat("others");
             return;
         }
@@ -169,9 +167,23 @@ public class NayaDiganta implements NewsPaperService {
     public void assignCategory(String id, Post post) {
         String cat = id.split("/")[0];
 
-        if (cat.equals("national") ||
-                cat.equals("capital") ||
-                cat.equals("country-news")
+        if (cat.equals("law-and-justice") ||
+                cat.equals("crime") ||
+                cat.equals("diplomacy") ||
+                cat.equals("administration") ||
+                cat.equals("Incident-accident") ||
+                cat.equals("organization") ||
+                cat.equals("election") ||
+                cat.equals("khulna") ||
+                cat.equals("barishal") ||
+                cat.equals("sylhet") ||
+                cat.equals("rangpur") ||
+                cat.equals("mymensingh") ||
+                cat.equals("rajshahi") ||
+                cat.equals("chattagram") ||
+                cat.equals("dhaka") ||
+                cat.equals("last-page") ||
+                cat.equals("parliament")
         ) {
             post.setCat("bangladesh");
             return;
@@ -180,29 +192,66 @@ public class NayaDiganta implements NewsPaperService {
             post.setCat("politics");
             return;
         }
-        if (cat.equals("international")) {
+        if (cat.equals("international") ||
+                cat.equals("onnodiganta") ||
+                cat.equals("subcontinent") ||
+                cat.equals("middle-east") ||
+                cat.equals("turkey") ||
+                cat.equals("usa-canad") ||
+                cat.equals("america") ||
+                cat.equals("europe") ||
+                cat.equals("africa") ||
+                cat.equals("australia") ||
+                cat.equals("international-organizations") ||
+                cat.equals("asia")
+
+        ) {
             post.setCat("international");
             return;
         }
-        if (cat.equals("economy")) {
+        if (cat.equals("economics")) {
             post.setCat("economy");
             return;
         }
         if (cat.equals("opinion")) {
-                post.setCat("opinion");
+            post.setCat("opinion");
         }
 
-        if (cat.equals("sports")) {
+        if (cat.equals("athletics") ||
+                cat.equals("tennis") ||
+                cat.equals("hockey") ||
+                cat.equals("cricket") ||
+                cat.equals("football") ||
+                cat.equals("swimming") ||
+                cat.equals("sports")
+
+        ) {
             post.setCat("sports");
             return;
         }
-        if (cat.equals("editorial")) {
+        if (cat.equals("sub-editorial")) {
             post.setCat("editorial");
             return;
         }
 
-        if (cat.equals("entertainment")) {
+        if (cat.equals("cinema") ||
+                cat.equals("fashion") ||
+                cat.equals("television") ||
+                cat.equals("radio") ||
+                cat.equals("natok") ||
+                cat.equals("music")) {
             post.setCat("entertainment");
+            return;
+        }
+        if (cat.equals("health") ||
+                cat.equals("fashion") ||
+                cat.equals("parenting") ||
+                cat.equals("housekeeping") ||
+                cat.equals("Cooking") ||
+                cat.equals("travel")
+
+        ) {
+            post.setCat("sports");
             return;
         }
         if (cat.equals("tech")) {
@@ -217,7 +266,7 @@ public class NayaDiganta implements NewsPaperService {
             post.setCat("campus");
             return;
         }
-        if (cat.equals("various")) {
+        if (cat.equals("miscellaneous")) {
             post.setCat("others");
             return;
         }

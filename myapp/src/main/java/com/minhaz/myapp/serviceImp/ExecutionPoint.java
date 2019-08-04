@@ -17,11 +17,11 @@ public class ExecutionPoint {
     PostService postService;
 
     @Autowired
-    @Qualifier("nayaDiganta")
+    @Qualifier("jugantorServiceImp")
     NewsPaperService jugantorService;
 
     @Autowired
-    @Qualifier("prothomAloServiceImp")
+    @Qualifier("bbcBangla")
     NewsPaperService prothomAloService;
 
     @Autowired
@@ -37,16 +37,24 @@ public class ExecutionPoint {
     NewsPaperService bdNews24;
 
     @Autowired
-    @Qualifier("kalerKontho")
+    @Qualifier("amaderSomoy")
     NewsPaperService kalerKontho;
 
     @Autowired
-    @Qualifier("nayaDiganta")
+    @Qualifier("bbcBangla")
     NewsPaperService nayaDiganta;
+
+    @Autowired
+    @Qualifier("amaderSomoy")
+    NewsPaperService amaderSomoy;
+
+    @Autowired
+    @Qualifier("banglaTribune")
+    NewsPaperService banglaTribune;
 
 
     @Transactional
- //   @Scheduled(fixedDelay = 300000)
+    @Scheduled(fixedDelay = 300000)
     public void savePosts() {
         for(;;){
             try{
@@ -56,6 +64,8 @@ public class ExecutionPoint {
                 savePosts(bdProtidinService);
                 savePosts(bdNews24);
                 savePosts(kalerKontho);
+                savePosts(nayaDiganta);
+                savePosts(banglaTribune);
                 break;
             }catch (Exception e){
                 continue;
@@ -69,24 +79,24 @@ public class ExecutionPoint {
 
         try {
 
-            nayaDiganta.findPostIds().forEach(id->{
-                System.out.println(id);
-            });
-
-//            postService.createPsot("kaler_kontho",
-//                    "https://www.kalerkantho.com/",
-//                    "h2",
-//                    "some-class-name2",
-//                    "img-popup",
-//                    kalerKontho.findPostIds()).forEach(post -> {
-//                System.out.println(post.getPublisherGivenId());
-//                System.out.println(post.getFtrImg());
-//                System.out.println(post.getHeading());
-//                post.getPostBody().forEach(para -> {
-//                    System.out.println(para.getDescription());
-//                    System.out.println(para.getImgList());
-//                });
+//            banglaTribune.findPostIds().forEach(id->{
+//                System.out.println(id);
 //            });
+
+            postService.createPsot("bangla_tribune",
+                    "http://www.banglatribune.com/",
+                    "h2",
+                    "detail_article",
+                    "jw_detail_content_holder",
+                    banglaTribune.findPostIds()).forEach(post -> {
+                System.out.println(post.getPublisherGivenId());
+                System.out.println(post.getFtrImg());
+                System.out.println(post.getHeading());
+                post.getPostBody().forEach(para -> {
+                    System.out.println(para.getDescription());
+                    System.out.println(para.getImgList());
+                });
+            });
         }catch (Exception e){
             e.printStackTrace();
         }

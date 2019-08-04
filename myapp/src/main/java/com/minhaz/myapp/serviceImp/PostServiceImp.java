@@ -66,6 +66,10 @@ public class PostServiceImp implements PostService {
                 Element heading = body.getElementsByClass("details").first().
                         getElementsByTag(htmlTagForHeading).first();
                 post.setHeading(heading.text());
+            }else if (publisher.equals("bangla_tribune")) {
+                Element heading = body.getElementsByClass("detail_article").first().
+                        getElementsByTag(htmlTagForHeading).first();
+                post.setHeading(heading.text());
             } else {
                 Element heading = body.getElementsByTag(htmlTagForHeading).first();
                 post.setHeading(heading.text());
@@ -81,7 +85,6 @@ public class PostServiceImp implements PostService {
             //This portion for article paras
             Elements articleParas = body.getElementsByClass(contentDetailsCssClass).first().getElementsByTag("p");
             articleParas.outerHtml();
-            System.out.println(id);
             Img ftrImg = featureImgUrl(body, cssClassForFeatuteImg, publisher);
 
             List<Para> postBody = postBody(articleParas, publisher);
@@ -263,6 +266,10 @@ public class PostServiceImp implements PostService {
                 return "https://d30fl32nd2baj9.cloudfront.net/media/2013/01/04/logo1.png1/BINARY/logo1.png";
             case "bbc_bangla":
                 return "http://eqbal.info/wp-content/uploads/2017/10/Logo_BBC_Bangla-768x432.png";
+            case "naya_diganta":
+                return "http://www.dailynayadiganta.com/resources/img/sitesetup/1_2.png";
+           case "bangla_tribune":
+                return "http://cdn.banglatribune.com/contents/themes/public/style/images/logo_bati.png";
             default:
                 return "";
 
