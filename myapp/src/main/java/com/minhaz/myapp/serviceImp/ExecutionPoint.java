@@ -40,18 +40,22 @@ public class ExecutionPoint {
     @Qualifier("kalerKontho")
     NewsPaperService kalerKontho;
 
+    @Autowired
+    @Qualifier("nayaDiganta")
+    NewsPaperService nayaDiganta;
+
 
     @Transactional
-    @Scheduled(fixedDelay = 300000)
+ //   @Scheduled(fixedDelay = 300000)
     public void savePosts() {
         for(;;){
             try{
-                saveProthomAloPosts();
-                saveJugantorPosts();
-                saveIttefaqPosts();
-                saveBdPratidinPosts();
-                saveBdNews24Posts();
-                saveKalerKonthoPosts();
+                savePosts(prothomAloService);
+                savePosts(jugantorService);
+                savePosts(ittefaqService);
+                savePosts(bdProtidinService);
+                savePosts(bdNews24);
+                savePosts(kalerKontho);
                 break;
             }catch (Exception e){
                 continue;
@@ -60,29 +64,29 @@ public class ExecutionPoint {
     }
 
     @Transactional
-//    @Scheduled(fixedDelay = 30000)
+    @Scheduled(fixedDelay = 30000)
     public void showPostIds() {
 
         try {
 
-//            kalerKontho.findPostIds().forEach(id->{
-//                System.out.println(id.split("/")[1]);
-//            });
-
-            postService.createPsot("kaler_kontho",
-                    "https://www.kalerkantho.com/",
-                    "h2",
-                    "some-class-name2",
-                    "img-popup",
-                    kalerKontho.findPostIds()).forEach(post -> {
-                System.out.println(post.getPublisherGivenId());
-                System.out.println(post.getFtrImg());
-                System.out.println(post.getHeading());
-                post.getPostBody().forEach(para -> {
-                    System.out.println(para.getDescription());
-                    System.out.println(para.getImgList());
-                });
+            nayaDiganta.findPostIds().forEach(id->{
+                System.out.println(id);
             });
+
+//            postService.createPsot("kaler_kontho",
+//                    "https://www.kalerkantho.com/",
+//                    "h2",
+//                    "some-class-name2",
+//                    "img-popup",
+//                    kalerKontho.findPostIds()).forEach(post -> {
+//                System.out.println(post.getPublisherGivenId());
+//                System.out.println(post.getFtrImg());
+//                System.out.println(post.getHeading());
+//                post.getPostBody().forEach(para -> {
+//                    System.out.println(para.getDescription());
+//                    System.out.println(para.getImgList());
+//                });
+//            });
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -92,64 +96,11 @@ public class ExecutionPoint {
 
     @Transactional
     @Async("threadPoolTaskExecutor")
-    public void saveProthomAloPosts() {
+    public void savePosts(NewsPaperService newsPaperService) {
         System.out.println(Thread.currentThread().getName());
-        try{
-            prothomAloService.savePosts();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    @Transactional
-    @Async("threadPoolTaskExecutor")
-    public void saveJugantorPosts() {
-        System.out.println(Thread.currentThread().getName());
-        try{
-            jugantorService.savePosts();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    @Transactional
-    @Async("threadPoolTaskExecutor")
-    public void saveIttefaqPosts() {
-        System.out.println(Thread.currentThread().getName());
-        try{
-            ittefaqService.savePosts();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    @Transactional
-    @Async("threadPoolTaskExecutor")
-    public void saveBdPratidinPosts() {
-        System.out.println(Thread.currentThread().getName());
-        try{
-            bdProtidinService.savePosts();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    @Transactional
-    @Async("threadPoolTaskExecutor")
-    public void saveBdNews24Posts() {
-        System.out.println(Thread.currentThread().getName());
-        try{
-            bdNews24.savePosts();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    @Transactional
-    @Async("threadPoolTaskExecutor")
-    public void saveKalerKonthoPosts() {
-        System.out.println(Thread.currentThread().getName());
-        try{
-            kalerKontho.savePosts();
-        }catch (Exception e){
+        try {
+            newsPaperService.savePosts();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

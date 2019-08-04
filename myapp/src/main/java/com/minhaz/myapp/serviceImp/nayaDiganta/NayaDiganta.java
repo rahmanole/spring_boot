@@ -56,14 +56,14 @@ public class NayaDiganta implements NewsPaperService {
         Document document = Jsoup.connect("http://www.dailynayadiganta.com/archive").userAgent("Opera").get();
         Element body = document.body();
 
-        Elements posts = body.getElementsByClass("archive-news-list");
+        Elements posts = body.getElementsByClass("archive").first().getElementsByTag("li");
 
         //Naya diganta uploads more than 20 posts at a time
         //That's why all posts are taken
         for (int i=0;i<posts.size();i++) {
             String link = posts.get(i).getElementsByTag("a").first()
                     .attr("href")
-                    .replace("https://www.jugantor.com/","");
+                    .replace("http://www.dailynayadiganta.com/","");
             postId.add(link.substring(0,link.lastIndexOf('/')));
         }
         return postId;
