@@ -62,11 +62,11 @@ public class PostServiceImp implements PostService {
 
 
             // Finding headline of the post
-            if(publisher.equals("kaler_kontho")){
+            if (publisher.equals("kaler_kontho")) {
                 Element heading = body.getElementsByClass("details").first().
                         getElementsByTag(htmlTagForHeading).first();
                 post.setHeading(heading.text());
-            }else{
+            } else {
                 Element heading = body.getElementsByTag(htmlTagForHeading).first();
                 post.setHeading(heading.text());
             }
@@ -81,10 +81,11 @@ public class PostServiceImp implements PostService {
             //This portion for article paras
             Elements articleParas = body.getElementsByClass(contentDetailsCssClass).first().getElementsByTag("p");
             articleParas.outerHtml();
-
+            System.out.println(id);
             Img ftrImg = featureImgUrl(body, cssClassForFeatuteImg, publisher);
 
-            List<Para> postBody = postBody(articleParas, ftrImg, publisher);
+            List<Para> postBody = postBody(articleParas, publisher);
+
             if (postBody.get(0).getImgList().size() == 0) {
                 Set<Img> imgList = new HashSet<>();
                 imgList.add(ftrImg);
@@ -103,10 +104,10 @@ public class PostServiceImp implements PostService {
 
     @Override
     public List<Para> postBody(Elements articleParas,
-                               Img ftrImg,
                                String publisher) {
 
         List<Para> allParas = new ArrayList();
+
         for (int i = 0; i < articleParas.size(); i++) {
             Para para = new Para();
             if (articleParas.get(i).text().contains("আরো পড়ুন")) {
@@ -117,13 +118,15 @@ public class PostServiceImp implements PostService {
             findImgOrVdo(articleParas.get(i), para, publisher);
             allParas.add(para);
         }
-
-//        if (!allParas.get(0).getImgList().contains(ftrImg)) {
-//            Set<Img> imgList = new HashSet<>();
-//            imgList.add(ftrImg);
-//            allParas.get(0).setImgList(imgList);
-//        }
-
+        //Sometimes articles dont have any description they just use images
+        //in this case I need to do thw following otherwise will get exception
+        //at line 89
+        if (articleParas.size() == 0) {
+            Para para = new Para();
+            Set<Img> imgList = new HashSet<>();
+            para.setImgList(imgList);
+            allParas.add(para);
+        }
         return allParas;
     }
 
@@ -147,12 +150,10 @@ public class PostServiceImp implements PostService {
                 } else if (publisher.equals("bd_pratidin")) {
                     img.setImgUrl("https://www.bd-pratidin.com" + imgTag.attr("src").substring(1));
 
-                }else if (publisher.equals("kaler_kontho")) {
+                } else if (publisher.equals("kaler_kontho")) {
                     img.setImgUrl("https://www.kalerkantho.com/" + imgTag.attr("src").substring(1));
-
-                }else{
+                } else {
                     img.setImgUrl(imgTag.attr("src"));
-
                 }
                 imgList.add(img);
             }
@@ -180,42 +181,53 @@ public class PostServiceImp implements PostService {
         String imgUrl = "";
         String caption = "";
 
-        if (publisher.equals("jugantor")) {
+        if (elements.select("img").first() != null) {
 
-            imgUrl = "https://www.jugantor.com" + elements.select("img").first().attr("src");
-            caption = elements.select("img").first().attr("alt");
+            if (publisher.equals("jugantor")) {
 
-            img.setImgUrl(imgUrl);
-            img.setImgCaption(caption);
-        } else if (publisher.equals("ittefaq")) {
+                imgUrl = "https://www.jugantor.com" + elements.select("img").first().attr("src");
+                caption = elements.select("img").first().attr("alt");
 
-            imgUrl = "https://www.ittefaq.com.bd" + elements.select("img").first().attr("src");
-            caption = elements.select("img").first().attr("alt");
+                img.setImgUrl(imgUrl);
+                img.setImgCaption(caption);
+            } else if (publisher.equals("ittefaq")) {
 
-            img.setImgUrl(imgUrl);
-            img.setImgCaption(caption);
+                imgUrl = "https://www.ittefaq.com.bd" + elements.select("img").first().attr("src");
+                caption = elements.select("img").first().attr("alt");
 
-        } else if (publisher.equals("prothom_alo")) {
+                img.setImgUrl(imgUrl);
+                img.setImgCaption(caption);
 
-            imgUrl = elements.select("img").first().attr("src");
-            caption = elements.select("img").first().attr("alt");
+            } else if (publisher.equals("bd_pratidin")) {
+                //As this vendors img url start with dot(.) thats why i use subString() method to remove the dot(.)
+                imgUrl = "https://www.bd-pratidin.com" + elements.select("img").first().attr("src").substring(1);
+                caption = elements.select("img").first().attr("alt");
 
-            img.setImgUrl(imgUrl);
-            img.setImgCaption(caption);
-        } else if (publisher.equals("bd_pratidin")) {
-            //As this vendors img url start with dot(.) thats why i use subString() method to remove the dot(.)
-            imgUrl = "https://www.bd-pratidin.com" + elements.select("img").first().attr("src").substring(1);
-            caption = elements.select("img").first().attr("alt");
+                img.setImgUrl(imgUrl);
+                img.setImgCaption(caption);
 
-            img.setImgUrl(imgUrl);
-            img.setImgCaption(caption);
+            } else if (publisher.equals("kaler_kontho")) {
+                if (elements.select("img").first() != null) {
+                    imgUrl = elements.select("img").first().attr("src");
+                    caption = elements.select("img").first().attr("alt");
+                } else {
+                    System.out.println("This post dont have any feature image");
+                    //Here we can set our logo as default feature img
+                    //if any post dont have any feature imgage
+                }
+                img.setImgUrl(imgUrl);
+                img.setImgCaption(caption);
+            } else {
+                imgUrl = elements.select("img").first().attr("src");
+                caption = elements.select("img").first().attr("alt");
 
-        }else if (publisher.equals("kaler_kontho")) {
-            imgUrl =elements.select("img").first().attr("src");
-            caption = elements.select("img").first().attr("alt");
-            System.out.println(imgUrl);
-            img.setImgUrl(imgUrl);
-            img.setImgCaption(caption);
+                img.setImgUrl(imgUrl);
+                img.setImgCaption(caption);
+            }
+        } else {
+            System.out.println("This post dont have any feature image");
+            //Here we can set our logo as default feature img
+            //if any post dont have any feature imgage
         }
         return img;
     }

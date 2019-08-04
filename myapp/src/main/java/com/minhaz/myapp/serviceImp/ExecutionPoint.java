@@ -16,10 +16,8 @@ public class ExecutionPoint {
     @Autowired
     PostService postService;
 
-
-
     @Autowired
-    @Qualifier("kalerKontho")
+    @Qualifier("nayaDiganta")
     NewsPaperService jugantorService;
 
     @Autowired
@@ -52,14 +50,13 @@ public class ExecutionPoint {
                 saveJugantorPosts();
                 saveIttefaqPosts();
                 saveBdPratidinPosts();
-//                saveBdNews24Posts();
+                saveBdNews24Posts();
                 saveKalerKonthoPosts();
                 break;
             }catch (Exception e){
                 continue;
             }
         }
-
     }
 
     @Transactional
@@ -140,7 +137,7 @@ public class ExecutionPoint {
     public void saveBdNews24Posts() {
         System.out.println(Thread.currentThread().getName());
         try{
-            bdProtidinService.savePosts();
+            bdNews24.savePosts();
         }catch (Exception e){
             e.printStackTrace();
         }
