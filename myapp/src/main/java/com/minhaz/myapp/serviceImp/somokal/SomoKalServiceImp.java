@@ -1,4 +1,4 @@
-package com.minhaz.myapp.serviceImp.nayaDiganta;
+package com.minhaz.myapp.serviceImp.somokal;
 
 
 import com.minhaz.myapp.dao.PostRepository;
@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 
 @Service
-public class NayaDiganta implements NewsPaperService {
+public class SomoKalServiceImp implements NewsPaperService {
 
     @Autowired
     PostService postService;
@@ -28,13 +28,12 @@ public class NayaDiganta implements NewsPaperService {
 
 
     public void savePosts() throws Exception {
-        List<Post> postList = postService.createPsot("naya_diganta",
-                "http://www.dailynayadiganta.com/",
+        List<Post> postList = postService.createPsot("samakal",
+                "https://samakal.com/",
                 "h1",
-                "news-content",
-                "image-holder",
+                "description",
+                "image-container",
                 findPostIds());
-//        List<HashSet<String>> catWisePostList = getCatWistPosIdList();
 
         postList.forEach(post -> {
             try {
@@ -52,17 +51,15 @@ public class NayaDiganta implements NewsPaperService {
     @Override
     public HashSet<String> findPostIds() throws IOException {
         HashSet<String> postId = new HashSet();
-        Document document = Jsoup.connect("http://www.dailynayadiganta.com/archive").userAgent("Opera").get();
+        Document document = Jsoup.connect("https://samakal.com/").userAgent("Opera").get();
         Element body = document.body();
 
-        Elements posts = body.getElementsByClass("archive").first().getElementsByTag("li");
+        Elements posts = body.getElementById("latestnews").getElementsByTag("a");
 
-        //Naya diganta uploads more than 20 posts at a time
-        //That's why all posts are taken
-        for (int i = 0; i < 20; i++) {
-            String link = posts.get(i).getElementsByTag("a").first()
-                    .attr("href")
-                    .replace("http://www.dailynayadiganta.com/", "");
+        for (int i = 0; i < 10; i++) {
+            String link = posts.get(i).
+                    attr("href")
+                    .replace("https://samakal.com/", "");
             postId.add(link.substring(0, link.lastIndexOf('/')));
         }
         return postId;
@@ -167,23 +164,8 @@ public class NayaDiganta implements NewsPaperService {
     public void assignCategory(String id, Post post) {
         String cat = id.split("/")[0];
 
-        if (cat.equals("law-and-justice") ||
-                cat.equals("crime") ||
-                cat.equals("diplomacy") ||
-                cat.equals("administration") ||
-                cat.equals("Incident-accident") ||
-                cat.equals("organization") ||
-                cat.equals("election") ||
-                cat.equals("khulna") ||
-                cat.equals("barishal") ||
-                cat.equals("sylhet") ||
-                cat.equals("rangpur") ||
-                cat.equals("mymensingh") ||
-                cat.equals("rajshahi") ||
-                cat.equals("chattagram") ||
-                cat.equals("dhaka") ||
-                cat.equals("last-page") ||
-                cat.equals("parliament")
+        if (cat.equals("bangladesh") ||
+                cat.equals("whole-country")
         ) {
             post.setCat("bangladesh");
             return;
@@ -192,20 +174,7 @@ public class NayaDiganta implements NewsPaperService {
             post.setCat("politics");
             return;
         }
-        if (cat.equals("international") ||
-                cat.equals("onnodiganta") ||
-                cat.equals("subcontinent") ||
-                cat.equals("middle-east") ||
-                cat.equals("turkey") ||
-                cat.equals("usa-canad") ||
-                cat.equals("america") ||
-                cat.equals("europe") ||
-                cat.equals("africa") ||
-                cat.equals("australia") ||
-                cat.equals("international-organizations") ||
-                cat.equals("asia")
-
-        ) {
+        if (cat.equals("international")) {
             post.setCat("international");
             return;
         }
@@ -213,61 +182,21 @@ public class NayaDiganta implements NewsPaperService {
             post.setCat("economy");
             return;
         }
-        if (cat.equals("opinion")) {
-            post.setCat("opinion");
-        }
 
-        if (cat.equals("athletics") ||
-                cat.equals("tennis") ||
-                cat.equals("hockey") ||
-                cat.equals("cricket") ||
-                cat.equals("football") ||
-                cat.equals("swimming") ||
-                cat.equals("sports")
-
-        ) {
+        if (cat.equals("sports")) {
             post.setCat("sports");
             return;
         }
-        if (cat.equals("sub-editorial")) {
-            post.setCat("editorial");
-            return;
-        }
-
-        if (cat.equals("cinema") ||
-                cat.equals("fashion") ||
-                cat.equals("television") ||
-                cat.equals("radio") ||
-                cat.equals("natok") ||
-                cat.equals("music")) {
+        if (cat.equals("entertainment")) {
             post.setCat("entertainment");
             return;
         }
-        if (cat.equals("health") ||
-                cat.equals("fashion") ||
-                cat.equals("parenting") ||
-                cat.equals("housekeeping") ||
-                cat.equals("Cooking") ||
-                cat.equals("travel")
-
-        ) {
-            post.setCat("lifestyle");
-            return;
-        }
-        if (cat.equals("tech")) {
+        if (cat.equals("technology")) {
             post.setCat("sciTech");
             return;
         }
-        if (cat.equals("exile")) {
+        if (cat.equals("probas")) {
             post.setCat("aboard");
-            return;
-        }
-        if (cat.equals("campus")) {
-            post.setCat("campus");
-            return;
-        }
-        if (cat.equals("miscellaneous")) {
-            post.setCat("others");
             return;
         }
     }

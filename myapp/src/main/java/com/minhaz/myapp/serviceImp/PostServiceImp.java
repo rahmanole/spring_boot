@@ -70,6 +70,14 @@ public class PostServiceImp implements PostService {
                 Element heading = body.getElementsByClass("detail_article").first().
                         getElementsByTag(htmlTagForHeading).first();
                 post.setHeading(heading.text());
+            }else if (publisher.equals("samakal")) {
+                Element heading = body.getElementsByClass("detail-top").first().
+                        getElementsByTag(htmlTagForHeading).first();
+                post.setHeading(heading.text());
+            }else if (publisher.equals("inqilab")) {
+                Element heading = body.getElementsByTag("article").first().
+                        getElementsByTag(htmlTagForHeading).first();
+                post.setHeading(heading.text());
             } else {
                 Element heading = body.getElementsByTag(htmlTagForHeading).first();
                 post.setHeading(heading.text());
@@ -83,7 +91,14 @@ public class PostServiceImp implements PostService {
 
             post.setPublisher(publisher);
             //This portion for article paras
-            Elements articleParas = body.getElementsByClass(contentDetailsCssClass).first().getElementsByTag("p");
+            Elements articleParas;
+            if(publisher.equals("inqilab")){
+                articleParas = body.getElementsByTag(contentDetailsCssClass);
+            }else {
+                articleParas = body.getElementsByClass(contentDetailsCssClass).first().getElementsByTag("p");
+
+            }
+
             articleParas.outerHtml();
             Img ftrImg = featureImgUrl(body, cssClassForFeatuteImg, publisher);
 
@@ -254,8 +269,8 @@ public class PostServiceImp implements PostService {
                 return "https://www.jugantor.com/templates/jugantor-v2/images/logo_main.png?v=1";
             case "ittefaq":
                 return "https://www.ittefaq.com.bd/templates/desktop-v1/images/main-logo.png";
-            case "somokal":
-                return "https://samakal.com/assets/images/logo-bn.png";
+            case "samakal":
+                return "/img/logo_Samakal.png";
             case "amader_somoy":
                 return "http://www.dainikamadershomoy.com/files/assets/img/main-logo.png";
             case "inquilab":
@@ -268,8 +283,10 @@ public class PostServiceImp implements PostService {
                 return "http://eqbal.info/wp-content/uploads/2017/10/Logo_BBC_Bangla-768x432.png";
             case "naya_diganta":
                 return "http://www.dailynayadiganta.com/resources/img/sitesetup/1_2.png";
-           case "bangla_tribune":
+            case "bangla_tribune":
                 return "http://cdn.banglatribune.com/contents/themes/public/style/images/logo_bati.png";
+            case "inqilab":
+                return "https://www.dailyinqilab.com/includes/themes/dailyinqilab/images/logo.png";
             default:
                 return "";
 

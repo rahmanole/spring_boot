@@ -40,7 +40,7 @@ public class BanglaTribune implements NewsPaperService {
             try {
                 assignCategory(post.getPublisherGivenId(),post);
                 postRepository.save(post);
-                System.out.println("jugantor");
+                System.out.println("bangla_tribune");
             } catch (Exception e) {
                 e.printStackTrace();
             }

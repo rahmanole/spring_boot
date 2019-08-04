@@ -21,7 +21,7 @@ public class ExecutionPoint {
     NewsPaperService jugantorService;
 
     @Autowired
-    @Qualifier("bbcBangla")
+    @Qualifier("prothomAloServiceImp")
     NewsPaperService prothomAloService;
 
     @Autowired
@@ -37,11 +37,11 @@ public class ExecutionPoint {
     NewsPaperService bdNews24;
 
     @Autowired
-    @Qualifier("amaderSomoy")
+    @Qualifier("kalerKontho")
     NewsPaperService kalerKontho;
 
     @Autowired
-    @Qualifier("bbcBangla")
+    @Qualifier("nayaDiganta")
     NewsPaperService nayaDiganta;
 
     @Autowired
@@ -51,6 +51,14 @@ public class ExecutionPoint {
     @Autowired
     @Qualifier("banglaTribune")
     NewsPaperService banglaTribune;
+
+    @Autowired
+    @Qualifier("somoKalServiceImp")
+    NewsPaperService somoKalService;
+
+    @Autowired
+    @Qualifier("inqilabServiceImp")
+    NewsPaperService inqilabServiceImp;
 
 
     @Transactional
@@ -66,6 +74,8 @@ public class ExecutionPoint {
                 savePosts(kalerKontho);
                 savePosts(nayaDiganta);
                 savePosts(banglaTribune);
+                savePosts(somoKalService);
+                savePosts(inqilabServiceImp);
                 break;
             }catch (Exception e){
                 continue;
@@ -74,29 +84,29 @@ public class ExecutionPoint {
     }
 
     @Transactional
-    @Scheduled(fixedDelay = 30000)
+//    @Scheduled(fixedDelay = 30000)
     public void showPostIds() {
-
         try {
 
-//            banglaTribune.findPostIds().forEach(id->{
+//            inqilabServiceImp.findPostIds("https://www.dailyinqilab.com/newscategory/national-news/").forEach(id->{
 //                System.out.println(id);
 //            });
 
-            postService.createPsot("bangla_tribune",
-                    "http://www.banglatribune.com/",
-                    "h2",
-                    "detail_article",
-                    "jw_detail_content_holder",
-                    banglaTribune.findPostIds()).forEach(post -> {
-                System.out.println(post.getPublisherGivenId());
-                System.out.println(post.getFtrImg());
-                System.out.println(post.getHeading());
-                post.getPostBody().forEach(para -> {
-                    System.out.println(para.getDescription());
-                    System.out.println(para.getImgList());
-                });
-            });
+//            postService.createPsot("inqilab",
+//                    "https://www.dailyinqilab.com/article/",
+//                    "h1",
+//                    "article",
+//                    "image_block",
+//                    inqilabServiceImp.findPostIds()).forEach(post -> {
+//                System.out.println(post.getPublisherGivenId());
+//                System.out.println(post.getCat());
+//                System.out.println(post.getFtrImg());
+//                System.out.println(post.getHeading());
+//                post.getPostBody().forEach(para -> {
+//                    System.out.println(para.getDescription());
+//                    System.out.println(para.getImgList());
+//                });
+//            });
         }catch (Exception e){
             e.printStackTrace();
         }
