@@ -78,7 +78,7 @@ public class ProthomAloServiceImp  implements NewsPaperService{
         for (int i = 0; i < 5; i++) {
             String link = posts.get(i).getElementsByTag("a").first().attr("href");
             if (link.length() > 100)
-                postId.add(link.substring(0, link.indexOf('%')));
+                postId.add(link.substring(1, link.indexOf('%')));
         }
         return postId;
     }
@@ -100,10 +100,12 @@ public class ProthomAloServiceImp  implements NewsPaperService{
         list.add(findPostIds("https://www.prothomalo.com/chakri-bakri"));
         list.add(findPostIds("https://www.prothomalo.com/pachmisheli"));
         return list;
-
     }
 
     public void assignCategory(String id,Post post,List<HashSet<String>>  list){
+        System.out.println(id);
+        System.out.println(list.get(0));
+
         if(list.get(0).contains(id)){
             post.setCat("politics");
             return;

@@ -66,16 +66,16 @@ public class ExecutionPoint {
     public void savePosts() {
         for(;;){
             try{
-                savePosts(prothomAloService);
-                savePosts(jugantorService);
+                savePosts(inqilabServiceImp);
+                savePosts(banglaTribune);
+                savePosts(kalerKontho);
+                savePosts(somoKalService);
                 savePosts(ittefaqService);
+                savePosts(jugantorService);
+                savePosts(nayaDiganta);
                 savePosts(bdProtidinService);
                 savePosts(bdNews24);
-                savePosts(kalerKontho);
-                savePosts(nayaDiganta);
-                savePosts(banglaTribune);
-                savePosts(somoKalService);
-                savePosts(inqilabServiceImp);
+                savePosts(prothomAloService);
                 break;
             }catch (Exception e){
                 continue;
