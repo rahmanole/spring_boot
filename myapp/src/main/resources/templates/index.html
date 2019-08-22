@@ -4,21 +4,19 @@
       layout:decorate="~{layout.html}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>মূল পাতা</title>
 </head>
 <body>
 <div class="row" layout:fragment="custom-content">
 
 
 <div class="col-lg-6 offset-lg-3" >
-    <img class="img-fluid d-block mx-auto"
-         th:src="@{/img/logo_Samakal.png}">
     <div class="row oneCat">
         <div class="col">
 
             <div class="row">
                 <div class="catName col">
-                    <a th:href="@{/politics}" class="text-center nav-link">রাজনীতি</a>
+                    <a th:href="@{'/news/'+politics}" class="text-center nav-link">রাজনীতি</a>
                 </div>
             </div>
 
@@ -50,7 +48,7 @@
 
             </div>
             <div class="row justify-content-center">
-                <a class="btn btn-primary" th:href="@{/politics}">আরও</a>
+                <a class="btn btn-primary" th:href="@{'/news/'+politics}">আরও</a>
             </div>
         </div>
     </div>
@@ -60,7 +58,7 @@
 
             <div class="row">
                 <div class="catName col">
-                    <a th:href="@{/bangladesh}" class="text-center nav-link">বাংলাদেশ</a>
+                    <a th:href="@{'/news/'+bangladesh}" class="text-center nav-link">বাংলাদেশ</a>
                 </div>
             </div>
 
@@ -92,7 +90,7 @@
 
             </div>
             <div class="row justify-content-center">
-                <a class="btn btn-primary" th:href="@{/bangladesh}">আরও</a>
+                <a class="btn btn-primary" th:href="@{'/news/'+bangladesh}">আরও</a>
             </div>
         </div>
     </div>
@@ -102,7 +100,7 @@
 
             <div class="row">
                 <div class="catName col">
-                    <a th:href="@{/international}" class="text-center nav-link">আন্তর্জাতিক</a>
+                    <a th:href="@{'/news/'+international}" class="text-center nav-link">আন্তর্জাতিক</a>
                 </div>
             </div>
 
@@ -133,7 +131,7 @@
 
             </div>
             <div class="row justify-content-center">
-                <a class="btn btn-primary" th:href="@{/bangladesh}">আরও</a>
+                <a class="btn btn-primary" th:href="@{'/news/'+international}">আরও</a>
             </div>
         </div>
     </div>
@@ -143,7 +141,7 @@
 
             <div class="row">
                 <div class="catName col">
-                    <a th:href="@{/economy}" class="text-center nav-link">অর্থনীতি</a>
+                    <a th:href="@{'/news/'+economy}" class="text-center nav-link">অর্থনীতি</a>
                 </div>
             </div>
 
@@ -175,7 +173,7 @@
 
             </div>
             <div class="row justify-content-center">
-                <a class="btn btn-primary" th:href="@{/bangladesh}">আরও</a>
+                <a class="btn btn-primary" th:href="@{'/news/'+economy}">আরও</a>
             </div>
         </div>
     </div>
@@ -185,7 +183,7 @@
 
             <div class="row">
                 <div class="catName col">
-                    <a th:href="@{/sports}" class="text-center nav-link">খেলা</a>
+                    <a th:href="@{'/news/'+sports}" class="text-center nav-link">খেলা</a>
                 </div>
             </div>
 
@@ -216,7 +214,7 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <a class="btn btn-primary" th:href="@{/sports}">আরও</a>
+                <a class="btn btn-primary" th:href="@{'/news/'+sports}">আরও</a>
             </div>
         </div>
     </div>
@@ -226,7 +224,7 @@
 
             <div class="row">
                 <div class="catName col">
-                    <a th:href="@{/entertainment}" class="text-center nav-link">বিনোদন</a>
+                    <a th:href="@{'/news/'+entertainment}" class="text-center nav-link">বিনোদন</a>
                 </div>
             </div>
 
@@ -257,7 +255,7 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <a class="btn btn-primary" th:href="@{/entertainment}">আরও</a>
+                <a class="btn btn-primary" th:href="@{'/news/'+entertainment}">আরও</a>
             </div>
         </div>
     </div>
@@ -267,7 +265,7 @@
 
             <div class="row">
                 <div class="catName col">
-                    <a th:href="@{/sciTech}" class="text-center nav-link">বিজ্ঞান ও প্রযুক্তি</a>
+                    <a th:href="@{'/news/'+sciTech}" class="text-center nav-link">বিজ্ঞান ও প্রযুক্তি</a>
                 </div>
             </div>
 
@@ -298,7 +296,7 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <a class="btn btn-primary" th:href="@{/sciTech}">আরও</a>
+                <a class="btn btn-primary" th:href="@{'/news/'+sciTech}">আরও</a>
             </div>
         </div>
     </div>
@@ -308,7 +306,7 @@
 
             <div class="row">
                 <div class="catName col">
-                    <a th:href="@{/editorial}" class="text-center nav-link">সম্পাদকীয়</a>
+                    <a th:href="@{'/news/'+editorial}" class="text-center nav-link">সম্পাদকীয়</a>
                 </div>
             </div>
 
@@ -339,7 +337,7 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <a class="btn btn-primary" th:href="@{/editorial}">আরও</a>
+                <a class="btn btn-primary" th:href="@{'/news/'+editorial}">আরও</a>
             </div>
         </div>
     </div>
@@ -349,7 +347,7 @@
 
             <div class="row">
                 <div class="catName col">
-                    <a th:href="@{/opinion}" class="text-center nav-link">মতামত</a>
+                    <a th:href="@{'/news/'+opinion}" class="text-center nav-link">মতামত</a>
                 </div>
             </div>
 
@@ -380,7 +378,7 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <a class="btn btn-primary" th:href="@{/opinion}">আরও</a>
+                <a class="btn btn-primary" th:href="@{'/news/'+opinion}">আরও</a>
             </div>
         </div>
     </div>
@@ -390,7 +388,7 @@
 
             <div class="row">
                 <div class="catName col">
-                    <a th:href="@{/aboard}" class="text-center nav-link">প্রবাসে বাংলাদেশীরা </a>
+                    <a th:href="@{'/news/'+aboard}" class="text-center nav-link">প্রবাসে বাংলাদেশীরা </a>
                 </div>
             </div>
 
@@ -421,7 +419,7 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <a class="btn btn-primary" th:href="@{/aboard}">আরও</a>
+                <a class="btn btn-primary" th:href="@{'/news/'+aboard}">আরও</a>
             </div>
         </div>
     </div>
@@ -431,7 +429,7 @@
 
             <div class="row">
                 <div class="catName col">
-                    <a th:href="@{/campus}" class="text-center nav-link">শিক্ষাঙ্গন</a>
+                    <a th:href="@{'/news/'+campus}" class="text-center nav-link">শিক্ষাঙ্গন</a>
                 </div>
             </div>
 
@@ -462,7 +460,7 @@
                 </a>
             </div>
             <div class="row justify-content-center">
-                <a class="btn btn-primary" th:href="@{/campus}">আরও</a>
+                <a class="btn btn-primary" th:href="@{'/news/'+campus}">আরও</a>
             </div>
         </div>
     </div>
