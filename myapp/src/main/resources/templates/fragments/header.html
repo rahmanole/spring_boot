@@ -8,18 +8,34 @@
 
 
 <div class="row mb-3 mt-0" th:fragment="topnav">
-    <div class="col-lg-6 offset-lg-3">
-        <nav class="navbar navbar-expand-md bg-dark navbar-dark ">
-            <a class="navbar-brand" href="#">সংবাদ</a>
+    <div id="topNavbar"  class="col-lg-12">
+        <nav  class="navbar navbar-expand-md bg-dark navbar-dark ">
+            <a class="navbar-brand" th:href="@{/}">সংবাদ</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
+            <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+                <ul class="navbar-nav catsInHeader">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">সংবাদপত্র</a>
+                        <a class="nav-link text-white" href="">সংবাদপত্র</a>
+                    </li>
+                    <li class="nav-item dropdown catNav">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">ক্যাটাগরি</a>
+                        <div class="dropdown-menu">
+                            <a class="nav-link dropdown-item" href="#politics">রাজনীতি</a>
+                            <a class="nav-link dropdown-item" href="#bangladesh">বাংলাদেশ</a>
+                            <a class="nav-link dropdown-item" href="#international">আন্তর্জাতিক</a>
+                            <a class="nav-link dropdown-item" href="#economy">অর্থনীতি</a>
+                            <a class="nav-link dropdown-item" href="#sports">খেলা</a>
+                            <a class="nav-link dropdown-item" href="#entertainment">বিনোদন</a>
+                            <a class="nav-link dropdown-item" href="#sciTech">বিজ্ঞান ও প্রযুক্তি</a>
+                            <a class="nav-link dropdown-item" href="#editorial">সম্পাদকীয়</a>
+                            <a class="nav-link dropdown-item" href="#opinion">মতামত</a>
+                            <a class="nav-link dropdown-item" href="#aboard">প্রবাসে বাংলাদেশীরা</a>
+                            <a class="nav-link dropdown-item" href="#campus">শিক্ষাঙ্গন</a>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#">ক্যাটাগরি</a>
@@ -35,7 +51,17 @@
         </nav>
     </div>
 </div>
-
-
+<script>
+    var prevScrollpos = window.pageYOffset;
+    window.onscroll = function() {
+        var currentScrollPos = window.pageYOffset;
+        if (prevScrollpos > currentScrollPos) {
+            document.getElementById("topNavbar").style.top = "0";
+        } else {
+            document.getElementById("topNavbar").style.top = "-50px";
+        }
+        prevScrollpos = currentScrollPos;
+    }
+</script>
 </body>
 </html>

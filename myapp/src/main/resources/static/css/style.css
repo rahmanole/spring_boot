@@ -7,13 +7,18 @@ and open the template in the editor.
     Created on : Jun 25, 2019, 2:43:51 AM
     Author     : HP
 */
-
-.mainBody{
-    background:url('../img/bg.jpg') fixed;
+html{
+    scroll-padding-top: 15px;
+    scroll-behavior: smooth;
+}
+body{
+    background: #b9bbbe;
+    /*background:url('../img/bg.jpg') fixed;*/
     background-size: cover;
     padding-top: 13px;
     margin-top: -13px;
 }
+
 
 a:link{
     text-decoration: none;
@@ -45,10 +50,22 @@ a:hover {
 }
 
 .oneCat{
-    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.leftNavBar a{
+
+}
+
+.catsInHeader{
+
 }
 
 @media only screen and (min-width: 768px) {
+    .mainBody{
+        width: 67%;
+        margin: 0 auto;
+    }
     .postCard{
         padding: 10px;
         margin-bottom: 6px;
@@ -75,6 +92,14 @@ a:hover {
 
     }
 
+    .catNav{
+        display: none;
+    }
+
+    .leftNavBar{
+        background: #b9bbbe;
+    }
+
 }
 
 @media only screen and (max-width: 767px) {
@@ -87,7 +112,11 @@ a:hover {
     }
     .headLine{
         height: 81%;
-        font-size: 14px;
+        font-size: 12px;
+    }
+
+    .headLineAndPostInfo{
+        margin-left: -5px;
     }
 
     .publisherLogo{
@@ -97,5 +126,9 @@ a:hover {
     .time{
         font-size: 11px;
         float: right;
+    }
+
+    .leftNavBar{
+        display: none;
     }
 }

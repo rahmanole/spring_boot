@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="col-lg-3 leftNavBar" th:fragment="leftNavBarForSingleCat">
+    <nav class="navbar bg-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a th:href="@{'/news/'+politics}" class="nav-link">রাজনীতি</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{'/news/'+bangladesh}" class="nav-link">বাংলাদেশ</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{'/news/'+international}" class="nav-link" >আন্তর্জাতিক</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{'/news/'+economy}" class="nav-link" >অর্থনীতি</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{'/news/'+sports}" class="nav-link" >খেলা</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{'/news/'+entertainment}" class="nav-link" >বিনোদন</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{'/news/'+sciTech}" class="nav-link">বিজ্ঞান ও প্রযুক্তি</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{'/news/'+editorial}" class="nav-link" >সম্পাদকীয়</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{'/news/'+opinion}" class="nav-link" >মতামত</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{'/news/'+aboard}" class="nav-link" >প্রবাসে বাংলাদেশীরা</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{'/news/'+campus}" class="nav-link" >শিক্ষাঙ্গন</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+</body>
+</html>

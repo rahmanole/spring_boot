@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout.html}">
+      layout:decorate="~{layoutForSingleCat.html}">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${catName}"></title>
+    <title>মূল পাতা</title>
 </head>
 <body>
-<div class="row" layout:fragment="custom-content">
-
-
-<div class="col-lg-6 offset-lg-3" >
+<div class="col-lg-9" layout:fragment="custom-content">
     <div class="row oneCat">
         <div class="col">
 
@@ -52,6 +49,7 @@
             </div>
         </div>
     </div>
+
 </div>
 </div>
 </body>
