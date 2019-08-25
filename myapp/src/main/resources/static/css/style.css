@@ -7,8 +7,15 @@ and open the template in the editor.
     Created on : Jun 25, 2019, 2:43:51 AM
     Author     : HP
 */
+#topNavbar{
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    transition: top 0.3s;
+    width: 69.7%;
+}
 html{
-    scroll-padding-top: 15px;
+    scroll-padding-top: 60px;
     scroll-behavior: smooth;
 }
 body{
@@ -63,7 +70,7 @@ a:hover {
 
 @media only screen and (min-width: 768px) {
     .mainBody{
-        width: 67%;
+        width: 69%;
         margin: 0 auto;
     }
     .postCard{
@@ -93,12 +100,22 @@ a:hover {
     }
 
     .catNav{
-        display: none;
+        background: black;
+        opacity: 0.8;
+    }
+
+    catNav a:hover{
+        background: black;
+        opacity: 0.8;
     }
 
     .leftNavBar{
         background: #b9bbbe;
+        z-index: 999;
+        padding-right: 0;
     }
+
+
 
 }
 
@@ -112,7 +129,7 @@ a:hover {
     }
     .headLine{
         height: 81%;
-        font-size: 12px;
+        font-size: 13px;
     }
 
     .headLineAndPostInfo{
@@ -130,5 +147,9 @@ a:hover {
 
     .leftNavBar{
         display: none;
+    }
+
+    #topNavbar{
+        width: 100%;
     }
 }
