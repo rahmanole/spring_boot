@@ -35,15 +35,7 @@ public class SomoKalServiceImp implements NewsPaperService {
                 "image-container",
                 findPostIds());
 
-        postList.forEach(post -> {
-            try {
-                assignCategory(post.getPublisherGivenId(), post);
-                postRepository.save(post);
-                System.out.println("naya_diganta");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        saveAndAssignCategory(postList);
     }
 
 
@@ -65,139 +57,56 @@ public class SomoKalServiceImp implements NewsPaperService {
         return postId;
     }
 
-    //This method for finding post url from specific category
-    @Override
-    public HashSet<String> findPostIds(String catWiseUrl) throws IOException {
-        HashSet<String> postId = new HashSet();
-        Document document = Jsoup.connect(catWiseUrl).userAgent("Opera").get();
-        Element body = document.body();
+    public void saveAndAssignCategory(List<Post> posts) {
+        List<String> notsavePostsList = new ArrayList<>();
+        int i = 0;
 
-        Elements posts = body.getElementsByClass("subcategory")
-                        .first().getElementsByTag("a");
+        for (Post post : posts) {
+            System.out.println("into loop");
+            String cat = post.getPublisherGivenId().split("/")[0];
 
-        //Naya diganta uploads more than 20 posts at a time
-        //That's why all posts are taken
-        for (int i = 0; i < posts.size(); i++) {
-            String link = posts.get(i).attr("href")
-                    .replace("http://www.dailynayadiganta.com/", "");
-            postId.add(link.substring(0, link.lastIndexOf('/')).split("/")[1]);
-        }
-        return postId;
-    }
+            if (cat.equals("bangladesh") ||
+                    cat.equals("whole-country") ||
+                    cat.equals("capital")
+            ) {
+                post.setCat("bangladesh");
 
-    @Override
-    public List<HashSet<String>> getCatWistPosIdList() throws Exception {
+            } else if (cat.equals("politics")) {
+                post.setCat("politics");
 
-        List<HashSet<String>> list = new ArrayList<>();
-        list.add(findPostIds("https://www.jugantor.com/politics"));
-        list.add(findPostIds("https://www.jugantor.com/national"));
-        list.add(findPostIds("https://www.jugantor.com/capital"));
-        list.add(findPostIds("https://www.jugantor.com/country-news"));
-        list.add(findPostIds("https://www.jugantor.com/international"));
-        list.add(findPostIds("https://www.jugantor.com/economics"));
-        list.add(findPostIds("https://www.jugantor.com/opinion"));
-        list.add(findPostIds("https://www.jugantor.com/sports"));
-        list.add(findPostIds("https://www.jugantor.com/entertainment"));
-        list.add(findPostIds("https://www.jugantor.com/tech"));
-        list.add(findPostIds("https://www.jugantor.com/exile"));
-        list.add(findPostIds("https://www.jugantor.com/editorial"));
-        list.add(findPostIds("https://www.jugantor.com/campus"));
-        list.add(findPostIds("https://www.jugantor.com/various"));
-        return list;
-    }
+            } else if (cat.equals("international")) {
+                post.setCat("international");
 
-    @Override
-    public void assignCategory(String id, Post post, List<HashSet<String>> list) {
-        if (list.get(0).contains(id)) {
-            post.setCat("politics");
-            return;
-        }
-        if (list.get(1).contains(id) ||
-                list.get(2).contains(id) || list.get(3).contains(id)) {
-            post.setCat("bangladesh");
-            return;
-        }
-        if (list.get(4).contains(id)) {
-            post.setCat("international");
-            return;
-        }
-        if (list.get(5).contains(id)) {
-            post.setCat("economy");
-            return;
-        }
-        if (list.get(6).contains(id)) {
-            post.setCat("opinion");
-            return;
-        }
-        if (list.get(7).contains(id)) {
-            post.setCat("sports");
-            return;
+            } else if (cat.equals("economics")) {
+                post.setCat("economy");
+
+            } else if (cat.equals("sports")) {
+                post.setCat("sports");
+
+            } else if (cat.equals("entertainment")) {
+                post.setCat("entertainment");
+
+            } else if (cat.equals("analysis")) {
+                post.setCat("opinion");
+
+            }else if (cat.equals("technology")) {
+                post.setCat("sciTech");
+
+            } else if (cat.equals("probas")) {
+                post.setCat("aboard");
+            }
+
+            if (post.getCat() != null) {
+                postRepository.save(post);
+                System.out.println("naya diganta");
+                i++;
+            }else{
+                notsavePostsList.add(post.getPublisherGivenId());
+            }
         }
 
-        if (list.get(8).contains(id)) {
-            post.setCat("entertainment");
-            return;
-        }
-        if (list.get(9).contains(id)) {
-            post.setCat("sciTech");
-            return;
-        }
-        if (list.get(10).contains(id)) {
-            post.setCat("aboard");
-            return;
-        }
-        if (list.get(11).contains(id)) {
-            post.setCat("editorial");
-            return;
-        }
-        if (list.get(12).contains(id)) {
-            post.setCat("campus");
-            return;
-        }
-        if (list.get(13).contains(id)) {
-            post.setCat("others");
-            return;
-        }
-    }
-
-    @Override
-    public void assignCategory(String id, Post post) {
-        String cat = id.split("/")[0];
-
-        if (cat.equals("bangladesh") ||
-                cat.equals("whole-country")
-        ) {
-            post.setCat("bangladesh");
-            return;
-        }
-        if (cat.equals("politics")) {
-            post.setCat("politics");
-            return;
-        }
-        if (cat.equals("international")) {
-            post.setCat("international");
-            return;
-        }
-        if (cat.equals("economics")) {
-            post.setCat("economy");
-            return;
-        }
-
-        if (cat.equals("sports")) {
-            post.setCat("sports");
-            return;
-        }
-        if (cat.equals("entertainment")) {
-            post.setCat("entertainment");
-            return;
-        }
-        if (cat.equals("technology")) {
-            post.setCat("sciTech");
-            return;
-        }
-        if (cat.equals("probas")) {
-            post.setCat("aboard");
-            return;
-        }
+        System.out.println("Post retrieved:" + posts.size());
+        System.out.println("Num of Posts was not saved from naya diganta:" + (posts.size() - i));
+        System.out.println("Not saved posts:"+notsavePostsList);
     }
 }

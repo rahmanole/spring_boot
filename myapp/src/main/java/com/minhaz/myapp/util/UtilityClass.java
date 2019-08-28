@@ -1,11 +1,13 @@
 package com.minhaz.myapp.util;
 
-import org.springframework.stereotype.Component;
+import com.minhaz.myapp.entity.Post;
+import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
-@Component
+@Service
 public class UtilityClass {
 
     public String getDateTime(Date date){
@@ -23,13 +25,13 @@ public class UtilityClass {
         String postTime = numberConvert(hour)+":"+numberConvert(minute);
 
         if(day == Calendar.getInstance().get(Calendar.DAY_OF_MONTH)){
-            postDate = "আজ"+", ";
+            postDate = "আজ"+" ";
         }
 
         if(minute<10){
             postTime = numberConvert(hour)+":০"+numberConvert(minute);
         }
-        return postDate+postTime;
+        return postDate+postTime+",";
     }
 
     public String getMonthNameInBangla(int month){
@@ -108,9 +110,9 @@ public class UtilityClass {
 
         switch (cat){
             case "politics":
-                return "রাজনীতি";
+                return "রাজনীতি,";
             case "bangladesh":
-                return "বাংলাদেশ";
+                return "বাংলাদেশ,";
             case "international":
                 return "আন্তর্জাতিক";
             case "sports":
@@ -129,7 +131,20 @@ public class UtilityClass {
                 return "প্রবাসে বাংলাদেশীরা";
             case "campus":
                 return "শিক্ষাঙ্গন";
+
         }
-        return "";
+        if(cat == null){
+                return "NULL";
+        }
+        return "শিক্ষাঙ্গন";
+    }
+
+    public static void showStatistics(String newsPaper,List<Post> posts,List<String> notSavedPosts){
+        System.out.println("========"+newsPaper +"=========");
+        System.out.println("Total Post retrieved:" + posts.size());
+        System.out.println("Total skipped:" + (notSavedPosts.size()));
+        System.out.println("Skipped posts list:" + notSavedPosts);
+        System.out.println("========END=========");
+        System.out.println();
     }
 }

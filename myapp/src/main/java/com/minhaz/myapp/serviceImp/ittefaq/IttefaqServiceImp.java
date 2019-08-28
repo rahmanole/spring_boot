@@ -5,6 +5,7 @@ import com.minhaz.myapp.dao.PostRepository;
 import com.minhaz.myapp.entity.Post;
 import com.minhaz.myapp.service.NewsPaperService;
 import com.minhaz.myapp.service.PostService;
+import com.minhaz.myapp.util.UtilityClass;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -29,8 +30,7 @@ public class IttefaqServiceImp implements NewsPaperService {
     PostRepository postRepository;
 
 
-
-    public void savePosts() throws Exception{
+    public void savePosts() throws Exception {
         List<Post> postList = postService.createPsot("ittefaq",
                 "https://www.ittefaq.com.bd/",
                 "h1",
@@ -39,17 +39,8 @@ public class IttefaqServiceImp implements NewsPaperService {
                 findPostIds());
 //        List<HashSet<String>> catWisePostList = getCatWistPosIdList();
 
-        postList.forEach(post -> {
-            try {
-                assignCategory(post.getPublisherGivenId(),post);
-                postRepository.save(post);
-                System.out.println("ittefaq");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        saveAndAssignCategory(postList);
     }
-
 
 
     // method for finding artcile url
@@ -60,180 +51,70 @@ public class IttefaqServiceImp implements NewsPaperService {
         Element body = document.body();
 
         Elements posts = body.getElementsByClass("allnews");
-        for (int i=0;i<20;i++) {
+        for (int i = 0; i < 20; i++) {
             String link = posts.get(i).getElementsByTag("a").first()
                     .attr("href")
-                    .replace("https://www.ittefaq.com.bd","");
-            postId.add(link.substring(1,link.lastIndexOf('/')));
+                    .replace("https://www.ittefaq.com.bd", "");
+            postId.add(link.substring(1, link.lastIndexOf('/')));
         }
         return postId;
     }
 
-    //This method for finding post url from specific category
-    @Override
-    public HashSet<String> findPostIds(String catWiseUrl) throws IOException {
-        HashSet<String> postId = new HashSet<String>();
-        Document document = Jsoup.connect(catWiseUrl).userAgent("Opera").get();
-        Element body = document.body();
-        Elements posts = body.getElementsByClass("category-lead-top");
+    public void saveAndAssignCategory(List<Post> posts) {
+        List<String> notsavePostsList = new ArrayList<>();
+        for (Post post : posts) {
 
-        for (Element post:posts) {
-            String link = post.getElementsByTag("a").first()
-                    .attr("href")
-                    .replace("https://www.ittefaq.com.bd","");
+            String cat = post.getPublisherGivenId().split("/")[0];
 
-            postId.add(link.substring(0,link.lastIndexOf('/')));
+            if (cat.equals("national") ||
+                    cat.equals("budget2019") ||
+                    cat.equals("wholecountry") ||
+                    cat.equals("capital") ||
+                    cat.equals("court")
+            ) {
+                post.setCat("bangladesh");
 
-            if(postId.size()>21)
-                break;
-        }
+            } else if (cat.equals("politics")) {
+                post.setCat("politics");
 
-        posts = body.getElementsByClass("category-mid-top");
+            } else if (cat.equals("worldnews")) {
+                post.setCat("international");
 
-        for (Element post:posts) {
-            String link = post.getElementsByTag("a").first()
-                    .attr("href")
-                    .replace("https://www.ittefaq.com.bd/","");
+            } else if (cat.equals("economy")) {
+                post.setCat("economy");
 
-            postId.add(link.substring(0,link.lastIndexOf('/')));
+            } else if (cat.equals("print-edition")) {
 
-            if(postId.size()>21)
-                break;
-        }
+                if (post.getPublisherGivenId().split("/")[2].equals("opinion")) {
+                    post.setCat("opinion");
+                } else {
+                    post.setCat("editorial");
+                }
 
-        return postId;
-    }
+            } else if (cat.equals("sports")) {
+                post.setCat("sports");
 
-    @Override
-    public void assignCategory(String id,Post post){
-        String cat = id.split("/")[0];
+            } else if (cat.equals("entertainment")) {
+                post.setCat("entertainment");
 
-        if (cat.equals("national") ||
-                cat.equals("budget2019") ||
-                cat.equals("wholecountry") ||
-                cat.equals("capital") ||
-                cat.equals("court")
-        ) {
-            post.setCat("bangladesh");
-            return;
-        }
-        if (cat.equals("politics")) {
-            post.setCat("politics");
-            return;
-        }
-        if (cat.equals("worldnews")) {
-            post.setCat("international");
-            return;
-        }
-        if (cat.equals("economy")) {
-            post.setCat("economy");
-            return;
-        }
-        if (cat.equals("print-edition")) {
+            } else if (cat.equals("scienceandtechnology")) {
+                post.setCat("sciTech");
 
-            if(id.split("/")[2].equals("opinion")){
-                post.setCat("opinion");
-            }else{
-                post.setCat("editorial");
+            } else if (cat.equals("aboard")) {
+                post.setCat("aboard");
+
+            } else if (cat.equals("education")) {
+                post.setCat("campus");
             }
 
-            return;
-        }
-        if (cat.equals("sports")) {
-            post.setCat("sports");
-            return;
-        }
+            if (post.getCat() != null) {
+                postRepository.save(post);
+                System.out.println("ittefaq");
+            } else {
+                notsavePostsList.add(post.getPublisherGivenId());
 
-        if (cat.equals("entertainment")) {
-            post.setCat("entertainment");
-            return;
+            }
         }
-        if (cat.equals("scienceandtechnology")) {
-            post.setCat("sciTech");
-            return;
-        }
-        if (cat.equals("aboard")) {
-            post.setCat("aboard");
-            return;
-        }
-        if (cat.equals("education")) {
-            post.setCat("campus");
-            return;
-        }
-    }
-
-    @Override
-    public List<HashSet<String>> getCatWistPosIdList() throws Exception{
-
-        List<HashSet<String>> list = new ArrayList<>();
-        list.add(findPostIds("https://www.ittefaq.com.bd/politics"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/national"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/budget2019"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/wholecountry"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/capital"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/court"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/worldnews"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/economy"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/print-edition/opinion"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/sports"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/entertainment"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/scienceandtechnology"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/aboard"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/print-edition/editorial"));
-        list.add(findPostIds("https://www.ittefaq.com.bd/education"));
-        return list;
-    }
-
-    @Override
-    public void assignCategory(String id,Post post,List<HashSet<String>>  list){
-        if(list.get(0).contains(id) ){
-            post.setCat("politics");
-            return;
-        }
-        if(list.get(1).contains(id) ||
-                list.get(2).contains(id) ||
-                list.get(3).contains(id)||
-                list.get(4).contains(id) ||
-                list.get(5).contains(id)){
-            post.setCat("bangladesh");
-            return;
-        }
-        if(list.get(6).contains(id)){
-            post.setCat("international");
-            return;
-        }
-        if(list.get(7).contains(id)){
-            post.setCat("economy");
-            return;
-        }
-        if(list.get(8).contains(id)){
-            post.setCat("opinion");
-            return;
-        }
-        if(list.get(9).contains(id)){
-            post.setCat("sports");
-            return;
-        }
-
-        if(list.get(10).contains(id)){
-            post.setCat("entertainment");
-            return;
-        }
-        if(list.get(11).contains(id)){
-            post.setCat("sciTech");
-            return;
-        }
-        if(list.get(12).contains(id)){
-            post.setCat("aboard");
-            return;
-        }
-        if(list.get(13).contains(id)){
-            post.setCat("editorial");
-            return;
-        }
-        if(list.get(14).contains(id)){
-            post.setCat("campus");
-            return;
-        }
+        UtilityClass.showStatistics("Ittefaq",posts,notsavePostsList);
     }
 }

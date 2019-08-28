@@ -72,8 +72,11 @@ public class HomeController {
 //        return "index";
 //    }
 
-    @GetMapping("/post/{id}")
-    public String postDetails(Model model, @PathVariable long id) {
+    @GetMapping("/post/{cat}/{id}")
+    public String postDetails(Model model,@PathVariable String cat,@PathVariable long id) {
+        model.addAttribute("catWiseAllNews", postService.getPostsByCat(null, cat));
+        model.addAttribute("postService", postService);
+        model.addAttribute("utilityClass",utilityClass);
         Post post = postService.getPost(id);
         model.addAttribute("post", post);
         return "post";

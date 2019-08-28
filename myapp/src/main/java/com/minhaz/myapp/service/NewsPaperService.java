@@ -8,8 +8,5 @@ import java.util.List;
 public interface NewsPaperService {
     void savePosts () throws Exception;
     HashSet<String> findPostIds() throws IOException;
-    HashSet<String> findPostIds(String catWiseUrl) throws IOException;
-    List<HashSet<String>> getCatWistPosIdList() throws Exception;
-    void assignCategory(String id,Post post,List<HashSet<String>>  list);
-    void assignCategory(String id,Post post);
+    void saveAndAssignCategory(List<Post> posts);
 }

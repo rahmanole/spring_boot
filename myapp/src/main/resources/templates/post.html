@@ -45,6 +45,37 @@
             </div>
         </div>
     </div>
+    <div class="row oneCat">
+        <div class="col">
+            <div class="card postCard" th:each="post:${catWiseAllNews}">
+                <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                            <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                        </div>
+                        <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                            <div class="row headLine">
+                                <span th:text="${post.heading}">নেই বললেই চলে। একটা উদাহরণেই তা বুঝিয়ে দেওয়া যায়।</span>
+
+                            </div>
+
+                            <div class="row postInfo">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                    <img class="publisherLogo"
+                                         th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>
 
 </div>
 </body>

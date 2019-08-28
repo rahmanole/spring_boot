@@ -149,6 +149,11 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
+    public void postSave(List<Post> posts) {
+
+    }
+
+    @Override
     public void findImgOrVdo(Element articlePara, Para para, String publisher) {
         Set<Img> imgList = new HashSet<>();
         List<Vdo> vdoList = new ArrayList<>();

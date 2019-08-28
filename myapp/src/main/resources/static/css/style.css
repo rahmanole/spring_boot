@@ -60,12 +60,8 @@ a:hover {
     margin-bottom: 15px;
 }
 
-.leftNavBar a{
-
-}
-
-.catsInHeader{
-
+.postInfo{
+    width: 100%;
 }
 
 @media only screen and (min-width: 768px) {

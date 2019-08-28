@@ -88,10 +88,6 @@ public class ExecutionPoint {
     public void showPostIds() {
         try {
 
-//            inqilabServiceImp.findPostIds("https://www.dailyinqilab.com/newscategory/national-news/").forEach(id->{
-//                System.out.println(id);
-//            });
-
 //            postService.createPsot("inqilab",
 //                    "https://www.dailyinqilab.com/article/",
 //                    "h1",

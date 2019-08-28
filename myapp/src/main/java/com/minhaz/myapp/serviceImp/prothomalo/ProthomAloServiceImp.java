@@ -68,8 +68,13 @@ public class ProthomAloServiceImp  implements NewsPaperService{
         return postId;
     }
 
-    //This method for finding post url from specific category
     @Override
+    public void saveAndAssignCategory(List<Post> posts) {
+
+    }
+
+    //This method for finding post url from specific category
+
     public HashSet<String> findPostIds(String catWiseUrl) throws IOException {
         HashSet<String> postId = new HashSet<String>();
         Document document = Jsoup.connect(catWiseUrl).userAgent("Opera").get();
@@ -160,8 +165,5 @@ public class ProthomAloServiceImp  implements NewsPaperService{
         }
     }
 
-    @Override
-    public void assignCategory(String id, Post post) {
 
-    }
 }

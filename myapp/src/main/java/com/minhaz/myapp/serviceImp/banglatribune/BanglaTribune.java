@@ -5,6 +5,7 @@ import com.minhaz.myapp.dao.PostRepository;
 import com.minhaz.myapp.entity.Post;
 import com.minhaz.myapp.service.NewsPaperService;
 import com.minhaz.myapp.service.PostService;
+import com.minhaz.myapp.util.UtilityClass;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -34,17 +35,7 @@ public class BanglaTribune implements NewsPaperService {
                 "detail_article",
                 "jw_detail_content_holder",
                 findPostIds());
-//        List<HashSet<String>> catWisePostList = getCatWistPosIdList();
-
-        postList.forEach(post -> {
-            try {
-                assignCategory(post.getPublisherGivenId(),post);
-                postRepository.save(post);
-                System.out.println("bangla_tribune");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        saveAndAssignCategory(postList);
     }
 
 
@@ -65,161 +56,64 @@ public class BanglaTribune implements NewsPaperService {
         return postId;
     }
 
-    //This method for finding post url from specific category
-    @Override
-    public HashSet<String> findPostIds(String catWiseUrl) throws IOException {
-        HashSet<String> postId = new HashSet<String>();
-        Document document = Jsoup.connect(catWiseUrl).userAgent("Opera").get();
-        Element body = document.body();
-        Elements posts = body.getElementsByClass("leadmorehl2");
-
-        for (Element post:posts) {
-            String link = post.getElementsByTag("a").first()
-                    .attr("href")
-                    .replace("https://www.jugantor.com/","");
-
-            postId.add(link.substring(0,link.lastIndexOf('/')));
-
-            if(postId.size()>21)
-                break;
-        }
-
-        return postId;
-    }
 
     @Override
-    public List<HashSet<String>> getCatWistPosIdList() throws Exception{
+    public void saveAndAssignCategory(List<Post> posts) {
+        List<String> notsavePostsList = new ArrayList<>();
+        for (Post post:posts) {
+            String cat = post.getPublisherGivenId().split("/")[0];
 
-        List<HashSet<String>> list = new ArrayList<>();
-        list.add(findPostIds("https://www.jugantor.com/politics"));
-        list.add(findPostIds("https://www.jugantor.com/national"));
-        list.add(findPostIds("https://www.jugantor.com/capital"));
-        list.add(findPostIds("https://www.jugantor.com/country-news"));
-        list.add(findPostIds("https://www.jugantor.com/international"));
-        list.add(findPostIds("https://www.jugantor.com/economics"));
-        list.add(findPostIds("https://www.jugantor.com/opinion"));
-        list.add(findPostIds("https://www.jugantor.com/sports"));
-        list.add(findPostIds("https://www.jugantor.com/entertainment"));
-        list.add(findPostIds("https://www.jugantor.com/tech"));
-        list.add(findPostIds("https://www.jugantor.com/exile"));
-        list.add(findPostIds("https://www.jugantor.com/editorial"));
-        list.add(findPostIds("https://www.jugantor.com/campus"));
-        list.add(findPostIds("https://www.jugantor.com/various"));
-        return list;
-    }
+            if (cat.equals("national") ||
+                    cat.equals("country") ||
+                    cat.equals("others")
+            ) {
+                post.setCat("bangladesh");
 
-    @Override
-    public void assignCategory(String id,Post post,List<HashSet<String>>  list){
-        if(list.get(0).contains(id) ){
-            post.setCat("politics");
-            return;
-        }
-        if(list.get(1).contains(id) ||
-                list.get(2).contains(id) || list.get(3).contains(id)){
-            post.setCat("bangladesh");
-            return;
-        }
-        if(list.get(4).contains(id)){
-            post.setCat("international");
-            return;
-        }
-        if(list.get(5).contains(id)){
-            post.setCat("economy");
-            return;
-        }
-        if(list.get(6).contains(id)){
-            post.setCat("opinion");
-            return;
-        }
-        if(list.get(7).contains(id)){
-            post.setCat("sports");
-            return;
-        }
+            }else if (cat.equals("politics")) {
+                post.setCat("politics");
 
-        if(list.get(8).contains(id)){
-            post.setCat("entertainment");
-            return;
-        }
-        if(list.get(9).contains(id)){
-            post.setCat("sciTech");
-            return;
-        }
-        if(list.get(10).contains(id)){
-            post.setCat("aboard");
-            return;
-        }
-        if(list.get(11).contains(id)){
-            post.setCat("editorial");
-            return;
-        }if(list.get(12).contains(id)){
-            post.setCat("campus");
-            return;
-        }
-        if(list.get(13).contains(id)){
-            post.setCat("others");
-            return;
-        }
-    }
+            }else if (cat.equals("foreign")) {
+                post.setCat("international");
 
-    @Override
-    public void assignCategory(String id, Post post) {
-        String cat = id.split("/")[0];
+            }else if (cat.equals("business")) {
+                post.setCat("economy");
 
-        if (cat.equals("national") ||
-                cat.equals("country") ||
-                cat.equals("others")
-        ) {
-            post.setCat("bangladesh");
-            return;
-        }
-        if (cat.equals("politics")) {
-            post.setCat("politics");
-            return;
-        }
-        if (cat.equals("foreign")) {
-            post.setCat("international");
-            return;
-        }
-        if (cat.equals("business")) {
-            post.setCat("economy");
-            return;
-        }
-        if (cat.equals("columns")) {
+            }else if (cat.equals("columns")) {
                 post.setCat("opinion");
-        }
 
-        if (cat.equals("sport")) {
-            post.setCat("sports");
-            return;
-        }
-        if (cat.equals("editorial")) {
-            post.setCat("editorial");
-            return;
-        }
+            }else if (cat.equals("sport")) {
+                post.setCat("sports");
 
-        if (cat.equals("entertainment")) {
-            post.setCat("entertainment");
-            return;
+            }else if (cat.equals("editorial")) {
+                post.setCat("editorial");
+
+            }else if (cat.equals("entertainment")) {
+                post.setCat("entertainment");
+
+            }else if (cat.equals("tech-and-gadget")) {
+                post.setCat("sciTech");
+
+            }else if (cat.equals("exile")) {
+                post.setCat("aboard");
+
+            }else if (cat.equals("campus")) {
+                post.setCat("campus");
+
+            }else if (cat.equals("lifestyle")) {
+                post.setCat("lifestyle");
+
+            }else if (cat.equals("various")) {
+                post.setCat("others");
+            }
+            if(post.getCat() != null){
+                postRepository.save(post);
+                System.out.println("bangla_trubne");
+            }else{
+                notsavePostsList.add(post.getPublisherGivenId());
+            }
         }
-        if (cat.equals("tech-and-gadget")) {
-            post.setCat("sciTech");
-            return;
-        }
-        if (cat.equals("exile")) {
-            post.setCat("aboard");
-            return;
-        }
-        if (cat.equals("campus")) {
-            post.setCat("campus");
-            return;
-        }
-        if (cat.equals("lifestyle")) {
-            post.setCat("lifestyle");
-            return;
-        }
-        if (cat.equals("various")) {
-            post.setCat("others");
-            return;
-        }
+        UtilityClass.showStatistics("Bangla_tribune",posts,notsavePostsList);
+
     }
+
 }
