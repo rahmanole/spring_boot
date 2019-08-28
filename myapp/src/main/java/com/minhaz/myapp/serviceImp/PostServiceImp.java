@@ -252,11 +252,6 @@ public class PostServiceImp implements PostService {
 
 
     @Override
-    public List<Post> findAllPosts() {
-        return postRepository.findAllByOrderByDateTimeDesc();
-    }
-
-    @Override
     public String getPulisherLogo(String publisher) {
         switch (publisher) {
             case "prothom_alo":
@@ -303,15 +298,18 @@ public class PostServiceImp implements PostService {
         return postRepository.findAllByCat(PageRequest.of(0, 6, Sort.by(Sort.Direction.DESC, "dateTime")), catName);
     }
 
+
     @Override
     public Page<Post> getPostsByCat(Pageable pageable, String catName, int page) {
         return postRepository.findAllByCat(PageRequest.of(page, 20, Sort.by(Sort.Direction.DESC, "dateTime")), catName);
     }
 
     @Override
-    public Page<Post> getAllPosts(int page, String orderParameter) {
-        return postRepository.findAll(PageRequest.of(page, 6, Sort.by(Sort.Direction.DESC, orderParameter)));
+    public Page<Post> getAllPosts(int page) {
+        return postRepository.findAll(PageRequest.of(page,20, Sort.Direction.DESC,"dateTime"));
     }
+
+
 
 
 }

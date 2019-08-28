@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>মূল পাতা</title>
+</head>
+<body>
+    <div class="col-lg-9" layout:fragment="custom-content">
+        <div class="row oneCat">
+            <div class="col">
+
+                <div id="politics" class="row">
+                    <div class="catName col">
+                        <a th:href="@{'/news/'+politics}" class="text-center nav-link">রাজনীতি</a>
+                    </div>
+                </div>
+
+                <div class="card postCard" th:each="post:${politicsPosts}">
+                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                            </div>
+                            <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                                <div class="row headLine">
+                                    <span th:text="${post.heading}"></span>
+
+                                </div>
+
+                                <div class="row postInfo">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                        <img class="publisherLogo"
+                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary" th:href="@{'/news/'+politics}">আরও</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row oneCat">
+            <div class="col">
+
+                <div id="bangladesh" class="row">
+                    <div class="catName col">
+                        <a th:href="@{'/news/'+bangladesh}" class="text-center nav-link">বাংলাদেশ</a>
+                    </div>
+                </div>
+
+                <div class="card postCard" th:each="post:${bdPosts}">
+                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                            </div>
+                            <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                                <div class="row headLine">
+                                    <span th:text="${post.heading}"></span>
+
+                                </div>
+
+                                <div class="row postInfo">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                        <img class="publisherLogo"
+                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary" th:href="@{'/news/'+bangladesh}">আরও</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row oneCat">
+            <div class="col">
+
+                <div id="international" class="row">
+                    <div class="catName col">
+                        <a th:href="@{'/news/'+international}" class="text-center nav-link">আন্তর্জাতিক</a>
+                    </div>
+                </div>
+
+                <div class="card postCard" th:each="post:${intPosts}">
+                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                            </div>
+                            <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                                <div class="row headLine">
+                                    <span th:text="${post.heading}"></span>
+                                </div>
+
+                                <div class="row postInfo">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                        <img class="publisherLogo"
+                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary" th:href="@{'/news/'+international}">আরও</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row oneCat">
+            <div class="col">
+
+                <div id="economy" class="row">
+                    <div class="catName col">
+                        <a th:href="@{'/news/'+economy}" class="text-center nav-link">অর্থনীতি</a>
+                    </div>
+                </div>
+
+                <div class="card postCard" th:each="post:${ecoPosts}">
+                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                            </div>
+                            <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                                <div class="row headLine">
+                                    <span th:text="${post.heading}"></span>
+
+                                </div>
+
+                                <div class="row postInfo">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                        <img class="publisherLogo"
+                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary" th:href="@{'/news/'+economy}">আরও</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row oneCat">
+            <div class="col">
+
+                <div id="sports" class="row">
+                    <div class="catName col">
+                        <a th:href="@{'/news/'+sports}" class="text-center nav-link">খেলা</a>
+                    </div>
+                </div>
+
+                <div class="card postCard" th:each="post:${sportsPosts}">
+                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                            </div>
+                            <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                                <div class="row headLine">
+                                    <span th:text="${post.heading}"></span>
+
+                                </div>
+
+                                <div class="row postInfo">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                        <img class="publisherLogo"
+                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary" th:href="@{'/news/'+sports}">আরও</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row oneCat">
+            <div class="col">
+
+                <div id="entertainment" class="row">
+                    <div class="catName col">
+                        <a th:href="@{'/news/'+entertainment}" class="text-center nav-link">বিনোদন</a>
+                    </div>
+                </div>
+
+                <div class="card postCard" th:each="post:${entPosts}">
+                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                            </div>
+                            <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                                <div class="row headLine">
+                                    <span th:text="${post.heading}"></span>
+
+                                </div>
+
+                                <div class="row postInfo">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                        <img class="publisherLogo"
+                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary" th:href="@{'/news/'+entertainment}">আরও</a>
+                </div>
+            </div>
+        </div>
+
+        <div  class="row oneCat">
+            <div class="col">
+
+                <div id="sciTech" class="row">
+                    <div class="catName col">
+                        <a th:href="@{'/news/'+sciTech}" class="text-center nav-link">বিজ্ঞান ও প্রযুক্তি</a>
+                    </div>
+                </div>
+
+                <div class="card postCard" th:each="post:${sciTechPosts}">
+                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                            </div>
+                            <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                                <div class="row headLine">
+                                    <span th:text="${post.heading}"></span>
+
+                                </div>
+
+                                <div class="row postInfo">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                        <img class="publisherLogo"
+                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary" th:href="@{'/news/'+sciTech}">আরও</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row oneCat">
+            <div class="col">
+
+                <div id="editorial" class="row">
+                    <div class="catName col">
+                        <a th:href="@{'/news/'+editorial}" class="text-center nav-link">সম্পাদকীয়</a>
+                    </div>
+                </div>
+
+                <div class="card postCard" th:each="post:${ediPosts}">
+                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                            </div>
+                            <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                                <div class="row headLine">
+                                    <span th:text="${post.heading}"></span>
+
+                                </div>
+
+                                <div class="row postInfo">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                        <img class="publisherLogo"
+                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary" th:href="@{'/news/'+editorial}">আরও</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row oneCat">
+            <div class="col">
+
+                <div id="opinion" class="row">
+                    <div class="catName col">
+                        <a th:href="@{'/news/'+opinion}" class="text-center nav-link">মতামত</a>
+                    </div>
+                </div>
+
+                <div class="card postCard" th:each="post:${opiPosts}">
+                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                            </div>
+                            <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                                <div class="row headLine">
+                                    <span th:text="${post.heading}"></span>
+
+                                </div>
+
+                                <div class="row postInfo">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                        <img class="publisherLogo"
+                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary" th:href="@{'/news/'+opinion}">আরও</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row oneCat">
+            <div class="col">
+
+                <div id="aboard" class="row">
+                    <div class="catName col">
+                        <a th:href="@{'/news/'+aboard}" class="text-center nav-link">প্রবাসে বাংলাদেশীরা </a>
+                    </div>
+                </div>
+
+                <div class="card postCard" th:each="post:${aboardPosts}">
+                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                            </div>
+                            <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                                <div class="row headLine">
+                                    <span th:text="${post.heading}"></span>
+
+                                </div>
+
+                                <div class="row postInfo">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                        <img class="publisherLogo"
+                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary" th:href="@{'/news/'+aboard}">আরও</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row oneCat">
+            <div class="col">
+
+                <div id="campus" class="row">
+                    <div class="catName col">
+                        <a th:href="@{'/news/'+campus}" class="text-center nav-link">শিক্ষাঙ্গন</a>
+                    </div>
+                </div>
+
+                <div class="card postCard" th:each="post:${campPosts}">
+                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                            </div>
+                            <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                                <div class="row headLine">
+                                    <span th:text="${post.heading}"></span>
+
+                                </div>
+
+                                <div class="row postInfo">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                                <span class="time"
+                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                        <img class="publisherLogo"
+                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary" th:href="@{'/news/'+campus}">আরও</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

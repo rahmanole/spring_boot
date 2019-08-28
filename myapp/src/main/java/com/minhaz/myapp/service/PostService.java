@@ -19,13 +19,14 @@ public interface PostService {
     List<Para> postBody(Elements articleParas,String publisher);
     void findImgOrVdo(Element articlePara, Para para,String publisher);
     Img featureImgUrl(Element body,String cssClassForFearuteImg,String publisher);
-    List<Post> findAllPosts();
+
     String getPulisherLogo(String publisher);
     Post getPost(long id);
 
     Page<Post> getPostsByCat(Pageable pageable, String catName);
 
+    Page<Post> getAllPosts(int page);
+
     Page<Post> getPostsByCat(Pageable pageable, String catName,int page);
 
-    Page<Post> getAllPosts(int page,String orderParameter);
 }
