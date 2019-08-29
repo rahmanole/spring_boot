@@ -20,7 +20,7 @@ public interface PostService {
     void postSave(List<Post> posts);
     void findImgOrVdo(Element articlePara, Para para,String publisher);
     Img featureImgUrl(Element body,String cssClassForFearuteImg,String publisher);
-
+    Page<Post> getPostsByCatForPostPage(String catName,long postId);
     String getPulisherLogo(String publisher);
     Post getPost(long id);
 

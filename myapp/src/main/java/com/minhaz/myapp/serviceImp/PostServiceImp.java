@@ -14,16 +14,14 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImp implements PostService {
@@ -255,6 +253,19 @@ public class PostServiceImp implements PostService {
         return img;
     }
 
+    @Override
+    public Page<Post> getPostsByCatForPostPage(String catName, long postId) {
+        List<Post> postsForPostPage = postRepository
+                .findAllByCat(PageRequest.of(0, 8, Sort.by(Sort.Direction.DESC, "dateTime")), catName)
+                .getContent()
+                .stream().collect(Collectors.toList());;
+        Post post = getPost(postId);
+        int i = postsForPostPage.indexOf(post);
+        postsForPostPage.remove(i);
+        Page<Post> posts = new PageImpl<>(postsForPostPage);
+        return posts;
+    }
+
 
     @Override
     public String getPulisherLogo(String publisher) {
@@ -302,6 +313,7 @@ public class PostServiceImp implements PostService {
     public Page<Post> getPostsByCat(Pageable pageable, String catName) {
         return postRepository.findAllByCat(PageRequest.of(0, 6, Sort.by(Sort.Direction.DESC, "dateTime")), catName);
     }
+
 
 
     @Override

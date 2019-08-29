@@ -74,7 +74,7 @@ public class HomeController {
 
     @GetMapping("/post/{cat}/{id}")
     public String postDetails(Model model,@PathVariable String cat,@PathVariable long id) {
-        model.addAttribute("catWiseAllNews", postService.getPostsByCat(null, cat));
+        model.addAttribute("catWiseAllNews", postService.getPostsByCatForPostPage(cat,id));
         model.addAttribute("postService", postService);
         model.addAttribute("utilityClass",utilityClass);
         Post post = postService.getPost(id);

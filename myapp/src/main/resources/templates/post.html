@@ -48,7 +48,7 @@
     <div class="row oneCat">
         <div class="col">
             <div class="card postCard" th:each="post:${catWiseAllNews}">
-                <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
+                <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}">
                     <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-4 col-4">
                             <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
