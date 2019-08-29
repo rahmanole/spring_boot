@@ -64,6 +64,10 @@ a:hover {
     width: 100%;
 }
 
+a{
+    color: black;
+}
+
 @media only screen and (min-width: 768px) {
     .mainBody{
         width: 69%;
@@ -147,5 +151,9 @@ a:hover {
 
     #topNavbar{
         width: 100%;
+    }
+
+    .postInfo{
+
     }
 }
