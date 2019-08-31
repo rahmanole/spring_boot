@@ -65,7 +65,8 @@ public class NayaDiganta implements NewsPaperService {
     public void saveAndAssignCategory(List<Post> posts) {
         List<String> notsavePostsList = new ArrayList<>();
         for (Post post : posts) {
-            String cat = post.getPublisherGivenId().split("/")[1];
+            String cat = post.getPublisherGivenId().split("/")[0];
+            System.out.println(cat);
 
             if (cat.equals("law-and-justice") ||
                     cat.equals("crime") ||

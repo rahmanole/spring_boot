@@ -9,6 +9,7 @@ import com.minhaz.myapp.entity.Vdo;
 import com.minhaz.myapp.service.NewsPaperService;
 import com.minhaz.myapp.service.PostService;
 import com.minhaz.myapp.service.TagService;
+import com.minhaz.myapp.util.UtilityClass;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,8 +23,6 @@ import java.util.*;
 
 @Service
 public class ProthomAloServiceImp  implements NewsPaperService{
-
-
 
     @Autowired
     PostRepository postRepository;
@@ -39,17 +38,20 @@ public class ProthomAloServiceImp  implements NewsPaperService{
                 "col_in",
                 findPostIds());
         List<HashSet<String>> catWisePostList = getCatWistPosIdList();
-
+        List<String> notsavePostsList = new ArrayList<>();
         postList.forEach(post -> {
             try {
                 assignCategory(post.getPublisherGivenId(),post,catWisePostList);
-                postRepository.save(post);
-                System.out.println("prothom_alo");
+                if(post.getCat() != null){
+                    postRepository.save(post);
+                }else{
+                    notsavePostsList.add(post.getPublisherGivenId());
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
-
+        UtilityClass.showStatistics("Prothom_alo",postList,notsavePostsList);
     }
 
     // method for finding artcile url

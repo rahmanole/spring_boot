@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
 @Service
 public class PostServiceImp implements PostService {
 
@@ -258,10 +257,12 @@ public class PostServiceImp implements PostService {
         List<Post> postsForPostPage = postRepository
                 .findAllByCat(PageRequest.of(0, 8, Sort.by(Sort.Direction.DESC, "dateTime")), catName)
                 .getContent()
-                .stream().collect(Collectors.toList());;
+                .stream().collect(Collectors.toList());
         Post post = getPost(postId);
         int i = postsForPostPage.indexOf(post);
-        postsForPostPage.remove(i);
+        System.out.println(postsForPostPage.size());
+        System.out.println(i);
+        postsForPostPage.remove(post);
         Page<Post> posts = new PageImpl<>(postsForPostPage);
         return posts;
     }

@@ -8,9 +8,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 
+@Service
 public interface PostService {
     List<Post> createPsot(String publisher,String newsPaperUrl,String htmlTagForHeading,
                           String contentDetailsCssClass,

@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HomeController {
+
     @Autowired
     PostService postService;
+
     @Autowired
     PostRepository postRepository;
+
     @Autowired
     UtilityClass utilityClass;
 
