@@ -31,6 +31,10 @@ public class ProthomAloServiceImp  implements NewsPaperService{
     PostService postService;
 
     public void savePosts() throws Exception{
+        if(findPostIds().isEmpty()){
+            System.out.println("Archieve is empty");
+            return;
+        }
         List<Post> postList = postService.createPsot("prothom_alo",
                 "https://www.prothomalo.com/",
                 "h1",
@@ -82,7 +86,7 @@ public class ProthomAloServiceImp  implements NewsPaperService{
         Document document = Jsoup.connect(catWiseUrl).userAgent("Opera").get();
         Element body = document.body();
         Elements posts = body.getElementsByClass("each");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             String link = posts.get(i).getElementsByTag("a").first().attr("href");
             if (link.length() > 100)
                 postId.add(link.substring(1, link.indexOf('%')));

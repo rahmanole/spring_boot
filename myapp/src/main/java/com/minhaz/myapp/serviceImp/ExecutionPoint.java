@@ -66,7 +66,7 @@ public class ExecutionPoint {
     public void savePosts() {
         for(;;){
             try{
-                savePosts(inqilabServiceImp);
+ //               savePosts(inqilabServiceImp);
                 savePosts(banglaTribune);
                 savePosts(kalerKontho);
                 savePosts(somoKalService);

@@ -10,13 +10,15 @@
 <div class="row mb-3 mt-0" th:fragment="topnav">
     <div id="topNavbar" class="col-lg-12">
         <nav class="navbar navbar-expand-md bg-dark navbar-dark ">
-            <a class="navbar-brand" th:href="@{/}">সংবাদ</a>
+            <a class="navbar-brand logo" th:href="@{/}">
+                <img th:src="@{/img/logo.png}"/>
+            </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+            <div class=" collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
                 <ul class="navbar-nav catsInHeader">
                     <li class="nav-item">
                         <a class="nav-link text-white" th:href="@{/categorised}">বিভাগ অনুসারে</a>

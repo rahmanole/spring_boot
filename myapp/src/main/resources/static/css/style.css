@@ -20,17 +20,14 @@ html{
 }
 body{
     background: #F5F5F6;
-    /*background:url('../img/bg.jpg') fixed;*/
+    background:url('../img/bg.jpg') fixed;
     background-size: cover;
     padding-top: 13px;
     margin-top: -13px;
 }
 
 
-a:link{
-    text-decoration: none;
-    color: black;
-}
+
 a:hover {
     text-decoration: none;
 }
@@ -77,6 +74,12 @@ a{
     padding: 7px 25px 19px 25px;
 }
 
+
+
+.logo img{
+    height: 39px;
+}
+
 @media only screen and (min-width: 768px) {
     .mainBody{
         width: 69%;
@@ -115,7 +118,7 @@ a{
         display: none;
     }
 
-    catNav a:hover{
+    .catNav a:hover{
         background: black;
         opacity: 0.8;
     }
@@ -125,10 +128,31 @@ a{
         padding-right: 0;
     }
 
+    .leftNavBar nav{
+        padding:0;
+    }
+    .leftNavBar ul{
+        width: 100%;
+    }
+
+    .leftNavBar li{
+    }
+    .leftNavBar li a{
+        margin-left: 16px;
+    }
+
+    .leftNavBar li:hover{
+        olor: black;
+        background: white;
+    }
+
+     a:link{
+        color: black;
+    }
+
     .dropdown{
         display: none;
     }
-
 }
 
 @media only screen and (max-width: 767px) {
