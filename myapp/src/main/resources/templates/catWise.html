@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout.html}">
+      layout:decorate="~{layoutForCatWise.html}">
 <head>
     <meta charset="UTF-8">
     <title>মূল পাতা</title>
@@ -29,14 +29,12 @@
 
                                 </div>
 
-                                <div class="row postInfo">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                                                <span class="time"
-                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
+                                <div class="row postInfo d-inline-flex flex-row-reverse">
+                                    <div class="ml-2">
+                                        <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                                        <img class="publisherLogo"
-                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    <div class="">
+                                        <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
                                     </div>
                                 </div>
                             </div>
@@ -71,14 +69,12 @@
 
                                 </div>
 
-                                <div class="row postInfo">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                                                <span class="time"
-                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
+                                <div class="row postInfo d-inline-flex flex-row-reverse">
+                                    <div class="ml-2">
+                                        <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                                        <img class="publisherLogo"
-                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    <div class="">
+                                        <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
                                     </div>
                                 </div>
                             </div>
@@ -112,14 +108,12 @@
                                     <span th:text="${post.heading}"></span>
                                 </div>
 
-                                <div class="row postInfo">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                                                <span class="time"
-                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                <div class="row postInfo d-inline-flex flex-row-reverse">
+                                    <div class="ml-2">
+                                        <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                                        <img class="publisherLogo"
-                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    <div class="">
+                                        <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
                                     </div>
                                 </div>
                             </div>
@@ -154,14 +148,12 @@
 
                                 </div>
 
-                                <div class="row postInfo">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                                                <span class="time"
-                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                <div class="row postInfo d-inline-flex flex-row-reverse">
+                                    <div class="ml-2">
+                                        <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                                        <img class="publisherLogo"
-                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    <div class="">
+                                        <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
                                     </div>
                                 </div>
                             </div>
@@ -196,14 +188,12 @@
 
                                 </div>
 
-                                <div class="row postInfo">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                                                <span class="time"
-                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                <div class="row postInfo d-inline-flex flex-row-reverse">
+                                    <div class="ml-2">
+                                        <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                                        <img class="publisherLogo"
-                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    <div class="">
+                                        <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
                                     </div>
                                 </div>
                             </div>
@@ -237,14 +227,12 @@
 
                                 </div>
 
-                                <div class="row postInfo">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                                                <span class="time"
-                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                <div class="row postInfo d-inline-flex flex-row-reverse">
+                                    <div class="ml-2">
+                                        <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                                        <img class="publisherLogo"
-                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    <div class="">
+                                        <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
                                     </div>
                                 </div>
                             </div>
@@ -278,14 +266,12 @@
 
                                 </div>
 
-                                <div class="row postInfo">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                                                <span class="time"
-                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                <div class="row postInfo d-inline-flex flex-row-reverse">
+                                    <div class="ml-2">
+                                        <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                                        <img class="publisherLogo"
-                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    <div class="">
+                                        <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
                                     </div>
                                 </div>
                             </div>
@@ -319,14 +305,12 @@
 
                                 </div>
 
-                                <div class="row postInfo">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                                                <span class="time"
-                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                <div class="row postInfo d-inline-flex flex-row-reverse">
+                                    <div class="ml-2">
+                                        <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                                        <img class="publisherLogo"
-                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    <div class="">
+                                        <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
                                     </div>
                                 </div>
                             </div>
@@ -360,14 +344,12 @@
 
                                 </div>
 
-                                <div class="row postInfo">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                                                <span class="time"
-                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                <div class="row postInfo d-inline-flex flex-row-reverse">
+                                    <div class="ml-2">
+                                        <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                                        <img class="publisherLogo"
-                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    <div class="">
+                                        <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
                                     </div>
                                 </div>
                             </div>
@@ -401,14 +383,12 @@
 
                                 </div>
 
-                                <div class="row postInfo">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                                                <span class="time"
-                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                <div class="row postInfo d-inline-flex flex-row-reverse">
+                                    <div class="ml-2">
+                                        <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                                        <img class="publisherLogo"
-                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    <div class="">
+                                        <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
                                     </div>
                                 </div>
                             </div>
@@ -442,14 +422,12 @@
 
                                 </div>
 
-                                <div class="row postInfo">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                                                <span class="time"
-                                                      th:text="${timeConverter.getDateTime(post.getDateTime())}"></span>
+                                <div class="row postInfo d-inline-flex flex-row-reverse">
+                                    <div class="ml-2">
+                                        <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                                        <img class="publisherLogo"
-                                             th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    <div class="">
+                                        <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
                                     </div>
                                 </div>
                             </div>

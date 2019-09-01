@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layoutForSingleCat.html}">
+      layout:decorate="~{layout.html}">
 <head>
     <meta charset="UTF-8">
     <title th:text="${post.getHeading()}"></title>
@@ -59,14 +59,12 @@
 
                             </div>
 
-                            <div class="row postInfo">
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                                                <span class="time"
-                                                      th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
+                            <div class="row postInfo d-inline-flex flex-row-reverse">
+                                <div class="ml-2">
+                                    <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img class="publisherLogo"
-                                         th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                <div class="">
+                                    <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
                                 </div>
                             </div>
                         </div>

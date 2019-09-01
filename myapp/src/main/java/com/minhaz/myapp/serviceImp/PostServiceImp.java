@@ -272,36 +272,31 @@ public class PostServiceImp implements PostService {
     public String getPulisherLogo(String publisher) {
         switch (publisher) {
             case "prothom_alo":
-                return "https://paloimages.prothom-alo.com/contents/themes/public/style/images/Prothom-Alo.png";
+                return "/img/logo_prothom_alo.png";
             case "bd_pratidin":
-                return "https://www.bd-pratidin.com/assets/importent_images/main_logo.gif";
+                return "/img/logo_bd_pratidin.gif";
             case "kaler_kontho":
-                return "https://www.kalerkantho.com/assets/site/img/logo.png";
+                return "/img/logo_kaler_kontho.png";
             case "jugantor":
-                return "https://www.jugantor.com/templates/jugantor-v2/images/logo_main.png?v=1";
+                return "/img/logo_jugantor.png";
             case "ittefaq":
-                return "https://www.ittefaq.com.bd/templates/desktop-v1/images/main-logo.png";
+                return "/img/logo_ittefaq.png";
             case "samakal":
                 return "/img/logo_Samakal.png";
             case "amader_somoy":
-                return "http://www.dainikamadershomoy.com/files/assets/img/main-logo.png";
+                return "/img/logo_amader_shomoy.png";
             case "inquilab":
-                return "https://www.dailyinqilab.com/includes/themes/dailyinqilab/images/logo.png";
-            case "bhorer_kagoj":
-                return "https://www.bhorerkagoj.com/wp-content/uploads/2018/11/Bhorer-Kagoj-logo-1.png";
+                return "/img/logo_inquilab.png";
             case "bdnews24":
-                return "https://d30fl32nd2baj9.cloudfront.net/media/2013/01/04/logo1.png1/BINARY/logo1.png";
-            case "bbc_bangla":
-                return "http://eqbal.info/wp-content/uploads/2017/10/Logo_BBC_Bangla-768x432.png";
+                return "/img/logo_bdnews24.png";
             case "naya_diganta":
-                return "http://www.dailynayadiganta.com/resources/img/sitesetup/1_2.png";
+                return "/img/logo_naya_diganta.png";
             case "bangla_tribune":
-                return "http://cdn.banglatribune.com/contents/themes/public/style/images/logo_bati.png";
+                return "/img/logo_bangla_tribune.png";
             case "inqilab":
-                return "https://www.dailyinqilab.com/includes/themes/dailyinqilab/images/logo.png";
+                return "/img/logo_inquilab.png";
             default:
                 return "";
-
         }
     }
 
@@ -326,8 +321,4 @@ public class PostServiceImp implements PostService {
     public Page<Post> getAllPosts(int page) {
         return postRepository.findAll(PageRequest.of(page,20, Sort.Direction.DESC,"dateTime"));
     }
-
-
-
-
 }

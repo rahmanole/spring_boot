@@ -110,9 +110,9 @@ public class UtilityClass {
 
         switch (cat){
             case "politics":
-                return "রাজনীতি,";
+                return "রাজনীতি";
             case "bangladesh":
-                return "বাংলাদেশ,";
+                return "বাংলাদেশ";
             case "international":
                 return "আন্তর্জাতিক";
             case "sports":
@@ -128,7 +128,7 @@ public class UtilityClass {
             case "opinion":
                 return "মতামত";
             case "aboard":
-                return "প্রবাসে বাংলাদেশীরা";
+                return "প্রবাসীরা";
             case "campus":
                 return "শিক্ষাঙ্গন";
 

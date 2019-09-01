@@ -19,7 +19,7 @@ html{
     scroll-behavior: smooth;
 }
 body{
-    background: #b9bbbe;
+    background: #F5F5F6;
     /*background:url('../img/bg.jpg') fixed;*/
     background-size: cover;
     padding-top: 13px;
@@ -62,10 +62,19 @@ a:hover {
 
 .postInfo{
     width: 100%;
+    margin-left: 0;
 }
 
 a{
     color: black;
+}
+.headLine{
+    width: 100%;
+}
+
+.contactForm{
+    background: #FFF;
+    padding: 7px 25px 19px 25px;
 }
 
 @media only screen and (min-width: 768px) {
@@ -84,8 +93,9 @@ a{
         height: 92px;
     }
     .publisherLogo{
-        height: 20px;
-        float: right;
+        height: 16px;
+        width: 75px;
+        margin-top:-9px;
     }
     .time{
         font-size: 13px;
@@ -102,6 +112,7 @@ a{
     .catNav{
         background: black;
         opacity: 0.8;
+        display: none;
     }
 
     catNav a:hover{
@@ -110,12 +121,13 @@ a{
     }
 
     .leftNavBar{
-        background: #b9bbbe;
         z-index: 999;
         padding-right: 0;
     }
 
-
+    .dropdown{
+        display: none;
+    }
 
 }
 
@@ -138,7 +150,8 @@ a{
 
     .publisherLogo{
         height: 14px;
-        float: right;
+        width: 70px;
+        margin-bottom:12px;
     }
     .time{
         font-size: 11px;
@@ -154,6 +167,19 @@ a{
     }
 
     .postInfo{
+
+    }
+
+    .catNav{
+        background: #343A40;
+        margin-left: 7px;
+        padding: 0px 0 0 14px;
+    }
+
+    .catNav a:link:hover{
+        background: #343A40;
+    }
+    .catNav a:link{
 
     }
 }

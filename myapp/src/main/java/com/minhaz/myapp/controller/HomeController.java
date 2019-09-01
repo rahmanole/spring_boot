@@ -44,7 +44,7 @@ public class HomeController {
         model.addAttribute("opiPosts", postService.getPostsByCat(null, "opinion"));
         model.addAttribute("aboardPosts", postService.getPostsByCat(null, "aboard"));
         model.addAttribute("campPosts", postService.getPostsByCat(null, "campus"));
-        model.addAttribute("timeConverter", utilityClass);
+        model.addAttribute("utilityClass", utilityClass);
         model.addAttribute("postService", postService);
         return "catWise";
     }
@@ -83,5 +83,11 @@ public class HomeController {
         Post post = postService.getPost(id);
         model.addAttribute("post", post);
         return "post";
+    }
+
+    @GetMapping("/contact")
+    public String contact(Model model) {
+
+        return "contact";
     }
 }
