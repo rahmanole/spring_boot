@@ -14,13 +14,17 @@ and open the template in the editor.
     transition: top 0.3s;
     width: 69.7%;
 }
+
+#leftNavBar {
+    transition: top 0.8s;
+}
 html{
     scroll-padding-top: 60px;
     scroll-behavior: smooth;
 }
 body{
     background: #F5F5F6;
-    background:url('../img/bg.jpeg') fixed;
+    /*background:url('../img/bg.jpeg') fixed;*/
     background-size: cover;
     padding-top: 13px;
     margin-top: -13px;
@@ -79,7 +83,9 @@ a{
 .logo img{
     height: 39px;
 }
-
+.slider{
+    position: fixed;
+}
 @media only screen and (min-width: 768px) {
     .mainBody{
         width: 69%;

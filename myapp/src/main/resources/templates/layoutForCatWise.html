@@ -30,6 +30,25 @@
 </head>
 
 <body>
+<body>
+<div id="demo" class="slider carousel slide" data-ride="carousel" data-interval="5000">
+
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>
+        <li data-target="#demo" data-slide-to="1"></li>
+    </ul>
+
+    <!-- The slideshow -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img th:src="@{/img/slider_1.jpg}" alt="Los Angeles" width="100%" height="100%">
+        </div>
+        <div class="carousel-item">
+            <img th:src="@{/img/slider_2.jpeg}" alt="Chicago" width="100%" height="100%">
+        </div>
+    </div>
+</div>
 <div class="container-fluid">
     <div class="mainBody">
         <div th:replace="~{fragments/header.html :: topnav}">
