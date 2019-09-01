@@ -131,12 +131,9 @@ public class UtilityClass {
                 return "প্রবাসীরা";
             case "campus":
                 return "শিক্ষাঙ্গন";
-
+            default:
+                return "অন্যান্য";
         }
-        if(cat == null){
-                return "NULL";
-        }
-        return "শিক্ষাঙ্গন";
     }
 
     public static void showStatistics(String newsPaper,List<Post> posts,List<String> notSavedPosts){
