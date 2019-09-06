@@ -8,6 +8,19 @@
 </head>
 <body style="background: #F5F5F6">
 <div class="col-lg-9" layout:fragment="custom-content">
+    <div class="row publisheAndTime d-inline-flex ">
+        <div class="col-3" style="padding: 0">
+            <div class="">
+                <img class="postPagePublisherLogo"
+                     th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+            </div>
+        </div>
+        <div class="dateTimeCat col-9 d-inline-flex flex-row-reverse" style="margin-left: 0">
+            <span th:text="${time}"> </span>
+            <span th:text="${catNameInBangla}"> </span>
+        </div>
+
+    </div>
     <div class="row postDetails">
         <div class="col">
             <h2 class="text-center mb-3 mt-2" style="font-size: 22px" th:text="${post.heading}"></h2>
@@ -61,7 +74,8 @@
 
                             <div class="row postInfo d-inline-flex flex-row-reverse">
                                 <div class="ml-2">
-                                    <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    <img class="publisherLogo"
+                                         th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                 </div>
                                 <div class="">
                                     <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>

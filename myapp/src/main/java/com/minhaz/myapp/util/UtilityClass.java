@@ -34,7 +34,7 @@ public class UtilityClass {
         return postDate+postTime+",";
     }
 
-    public String getMonthNameInBangla(int month){
+    private String getMonthNameInBangla(int month){
         switch (month){
             case 0:
                 return  "জানুয়ারী";
@@ -110,29 +110,29 @@ public class UtilityClass {
 
         switch (cat){
             case "politics":
-                return "রাজনীতি";
+                return "রাজনীতি,";
             case "bangladesh":
-                return "বাংলাদেশ";
+                return "বাংলাদেশ,";
             case "international":
-                return "আন্তর্জাতিক";
+                return "আন্তর্জাতিক,";
             case "sports":
-                return "খেলা";
+                return "খেলা,";
             case "economy":
-                return "অর্থনীতি";
+                return "অর্থনীতি,";
             case "entertainment":
-                return "বিনোদন";
+                return "বিনোদন,";
             case "sciTech":
-                return "বিজ্ঞান ও প্রযুক্তি";
+                return "বিজ্ঞান ও প্রযুক্তি,";
             case "editorial":
-                return "সম্পাদকীয়";
+                return "সম্পাদকীয়,";
             case "opinion":
-                return "মতামত";
+                return "মতামত,";
             case "aboard":
-                return "প্রবাসীরা";
+                return "প্রবাসীরা,";
             case "campus":
-                return "শিক্ষাঙ্গন";
+                return "শিক্ষাঙ্গন,";
             default:
-                return "অন্যান্য";
+                return "অন্যান্য,";
         }
     }
 

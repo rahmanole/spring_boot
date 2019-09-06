@@ -28,7 +28,6 @@ public class PostServiceImp implements PostService {
     @Autowired
     PostRepository postRepository;
 
-
     @Override
     public List<Post> createPsot(String publisher, String newsPaperUrl,
                                  String htmlTagForHeading,

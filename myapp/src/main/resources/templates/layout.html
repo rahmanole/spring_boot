@@ -5,7 +5,7 @@
 
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <link rel="shortcut icon" th:href="@{/img/ms-icon-310x310.png}" type="image/x-icon">
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/all.css}">
@@ -20,7 +20,7 @@
             var currentScrollPos = window.pageYOffset;
             if (prevScrollpos > currentScrollPos) {
                 document.getElementById("topNavbar").style.top = "0";
-                document.getElementById("leftNavBar").style.top = "70px";
+                document.getElementById("leftNavBar").style.top = "65px";
             } else {
                 document.getElementById("topNavbar").style.top = "-70px";
                 document.getElementById("leftNavBar").style.top = "0px";
@@ -56,7 +56,7 @@
 
         </div>
 
-        <div class="row" style="margin-top:75px">
+        <div class="row" style="margin-top:65px">
             <div th:replace="~{fragments/leftNavBar.html :: leftNav}">
 
             </div>

@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="card postCard" th:each="post:${politicsPosts}">
-                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-4">
                                 <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="card postCard" th:each="post:${bdPosts}">
-                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-4">
                                 <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
@@ -98,7 +98,7 @@
                 </div>
 
                 <div class="card postCard" th:each="post:${intPosts}">
-                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-4">
                                 <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
@@ -137,7 +137,7 @@
                 </div>
 
                 <div class="card postCard" th:each="post:${ecoPosts}">
-                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-4">
                                 <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
@@ -177,7 +177,7 @@
                 </div>
 
                 <div class="card postCard" th:each="post:${sportsPosts}">
-                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-4">
                                 <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
@@ -216,7 +216,7 @@
                 </div>
 
                 <div class="card postCard" th:each="post:${entPosts}">
-                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-4">
                                 <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
@@ -255,7 +255,7 @@
                 </div>
 
                 <div class="card postCard" th:each="post:${sciTechPosts}">
-                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-4">
                                 <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
@@ -294,7 +294,7 @@
                 </div>
 
                 <div class="card postCard" th:each="post:${ediPosts}">
-                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-4">
                                 <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
@@ -333,7 +333,7 @@
                 </div>
 
                 <div class="card postCard" th:each="post:${opiPosts}">
-                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-4">
                                 <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
@@ -372,7 +372,7 @@
                 </div>
 
                 <div class="card postCard" th:each="post:${aboardPosts}">
-                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-4">
                                 <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
@@ -411,7 +411,46 @@
                 </div>
 
                 <div class="card postCard" th:each="post:${campPosts}">
-                    <a th:href="@{'/post/'+${post.id}}" target="_blank">
+                    <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>
+                            </div>
+                            <div class="headLineAndPostInfo col-lg-9 col-md-9 col-sm-8 col-8">
+                                <div class="row headLine">
+                                    <span th:text="${post.heading}"></span>
+
+                                </div>
+
+                                <div class="row postInfo d-inline-flex flex-row-reverse">
+                                    <div class="ml-2">
+                                        <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    </div>
+                                    <div class="">
+                                        <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> ১ ঘন্টা ২৫ মিনিট আগে</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary" th:href="@{'/news/'+campus}">আরও</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row oneCat">
+            <div class="col">
+
+                <div id="others" class="row">
+                    <div class="catName col">
+                        <a th:href="@{'/others/'+campus}" class="text-center nav-link">অন্যান্য</a>
+                    </div>
+                </div>
+
+                <div class="card postCard" th:each="post:${campPosts}">
+                    <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-4">
                                 <img class="ftrImg img-fluid" th:src="${post.ftrImg}"/>

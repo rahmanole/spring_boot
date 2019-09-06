@@ -11,24 +11,34 @@
     <div class="row">
         <div class="col">
             <div class="contactForm">
-                <h2>Stacked form</h2>
-                <form action="/action_page.php">
+                <h4 class="text-center">যোগাযোগ </h4>
+                <form th:object="${mail}" th:action="@{/sendMessage}" th:method="POST" >
                     <div class="form-group">
-                        <label for="email">নাম :</label>
-                        <input type="text" class="form-control" id="email"   placeholder="" name="name" required>
+                        <label >নাম :<span style="color: red">*</span></label>
+                        <input type="text" th:field="*{name}" class="form-control" required/>
                     </div>
                     <div class="form-group">
-                        <label for="pwd">ইমেইল:</label>
-                        <input type="email" class="form-control" id="pwd" placeholder="" name="email" required>
+                        <label >ইমেইল:<span style="color: red">*</span></label>
+                        <input type="email" th:field="*{sender}" class="form-control" placeholder="" name="email" required/>
+                    </div>
+                    <div class="form-group">
+                        <label >বিষয়:<span style="color: red">*</span></label>
+                        <input type="text" th:field="*{subject}" class="form-control" placeholder="" name="email" required/>
                     </div>
                     <div class="form-group">
                         <label >প্রতিষ্ঠান:</label>
-                        <input type="text" class="form-control" placeholder="" name="email" required>
+                        <input type="text" th:field="*{company}" class="form-control" placeholder="" name="company" />
                     </div>
                     <div class="form-group">
-                        <label for="pwd">মতামত/অভিযোগ:</label>
-                        <textarea type="text" rows="8" class="form-control" placeholder="" name="pswd" required></textarea>
+                        <label >মতামত/অভিযোগ:<span style="color: red">*</span></label>
+                        <textarea type="text" th:field="*{message}" rows="8" class="form-control" placeholder="" name="pswd" required></textarea>
                     </div>
+
+                    <div class="form-group">
+                        <label class="">Upload file:</label>
+                        <input class="" type="file" name="file">
+                    </div>
+
                     <button type="submit"  class="btn btn-primary">সাবমিট</button>
                 </form>
             </div>

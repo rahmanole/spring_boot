@@ -76,9 +76,23 @@ a{
 .contactForm{
     background: #FFF;
     padding: 7px 25px 19px 25px;
+    opacity: 0.8;
 }
 
 
+.header{
+    height: 55px;
+}
+
+.logo{
+}
+
+.header li:hover{
+    background: black;
+}
+.header li a{
+    padding: 14px;
+}
 
 .logo img{
     height: 39px;
@@ -88,10 +102,10 @@ a{
 }
 
 .postDetails{
-    background: #000;
-    color: white;
-    opacity: 0.5;
+    background: #FFF;
+    opacity: 0.7;
     margin: 0 0 18px 0;
+    color: black;
 }
 @media only screen and (min-width: 768px) {
     .mainBody{
@@ -147,15 +161,12 @@ a{
     .leftNavBar ul{
         width: 100%;
     }
-
-    .leftNavBar li{
-    }
     .leftNavBar li a{
         margin-left: 16px;
     }
 
     .leftNavBar li:hover{
-        olor: black;
+        color: black;
         background: white;
     }
 
@@ -165,6 +176,32 @@ a{
 
     .dropdown{
         display: none;
+    }
+
+    .publisheAndTime{
+        background: #FFF;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .postPageTime{
+        font-size: 15px;
+    }
+
+    .postPagePublisherLogo{
+        height: 22px;
+        width: 100px;
+        margin: 3px 8px 4px 13px;
+    }
+    .header{
+        padding-right: 4px;
+    }
+
+    .header ul{
+        padding: 0;
+        padding-left: 0px;
+        background: #343A40;
+        padding-left: 14px;
     }
 }
 
@@ -187,7 +224,7 @@ a{
 
     .publisherLogo{
         height: 14px;
-        width: 70px;
+        width: 67px;
         margin-bottom:12px;
     }
     .time{
@@ -208,9 +245,10 @@ a{
     }
 
     .catNav{
-        background: #343A40;
+        background: #111111;
         margin-left: 7px;
         padding: 0px 0 0 14px;
+        margin-right: 19px;
     }
 
     .catNav a:link:hover{
@@ -221,5 +259,62 @@ a{
     }
     .slider{
         display:none;
+    }
+
+    .publisheAndTime{
+        background: #FFF;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .postPageTime{
+        font-size: 15px;
+    }
+
+    .postPagePublisherLogo{
+        height: 22px;
+        margin-right: 8px;
+        margin-bottom: 4px;
+        margin-top: 3px;
+        width: 100px;
+    }
+
+    #topNavbar{
+        padding: 0;
+    }
+
+    .header{
+        padding-right: 17px;
+        padding-top: 0;
+    }
+
+    .header ul{
+        padding: 0;
+        padding-left: 0px;
+        padding-left: 20px;
+        background: #343A40;
+        margin-right: -17px;
+        margin-left: -17px;
+    }
+
+    .publisheAndTime{
+        background: #FFF;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .postPageTime{
+        font-size: 15px;
+    }
+
+    .postPagePublisherLogo{
+        height: 18px;
+        width: 77px;
+        margin: -3px 0 4px 6px;
+    }
+
+    .dateTimeCat{
+        font-size: 13px;
+        padding: 0 4px 0 0;
     }
 }
