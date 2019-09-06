@@ -7,9 +7,9 @@
     <title>নিউজ হাব</title>
 </head>
 <body>
+
 <div class="col-lg-9" layout:fragment="custom-content">
     <div class="row oneCat">
-        <i class="fas fa-abacus"></i>
         <div class="col">
             <div class="card postCard" th:each="post:${allPosts}">
                 <a th:href="@{'/post/'+${post.cat}+'/'+${post.id}}" target="_blank">
@@ -25,10 +25,12 @@
 
                             <div class="row  postInfo d-inline-flex flex-row-reverse">
                                 <div class="ml-2">
-                                    <img class="publisherLogo" th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
+                                    <img class="publisherLogo"
+                                         th:src="${postService.getPulisherLogo(post.getPublisher())}"/>
                                 </div>
                                 <div class="ml-2">
-                                    <span class="time" th:text="${utilityClass.getDateTime(post.getDateTime())}"> </span>
+                                    <span class="time"
+                                          th:text="${utilityClass.getDateTime(post.getDateTime())}"> </span>
                                 </div>
                                 <div class=" ">
                                     <span class="time" th:text="${utilityClass.getCatNameInBangla(post.cat)}"> </span>
@@ -46,7 +48,6 @@
         </div>
     </div>
 
-</div>
 </div>
 </body>
 </html>

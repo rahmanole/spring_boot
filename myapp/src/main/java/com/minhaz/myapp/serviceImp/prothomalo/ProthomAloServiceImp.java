@@ -66,6 +66,9 @@ public class ProthomAloServiceImp  implements NewsPaperService{
         Element body = document.body();
 
         Element posts = body.getElementsByClass("listing").first();
+        if(posts == null){
+            return postId;
+        }
         Elements postUrls = posts.getElementsByTag("a");
         for (Element post : postUrls) {
             String link = post.attr("href");

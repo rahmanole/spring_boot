@@ -1,0 +1,226 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : Jun 25, 2019, 2:43:51 AM
+    Author     : HP
+*/
+#topNavbar{
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  transition: top 0.3s;
+  width: 69.7%;
+}
+
+#leftNavBar {
+  transition: top 0.8s;
+}
+html{
+  scroll-padding-top: 60px;
+  scroll-behavior: smooth;
+}
+body{
+  background: #F5F5F6;
+  /*background:url('../img/bg.jpeg') fixed;*/
+  background-size: cover;
+  padding-top: 13px;
+  margin-top: -13px;
+}
+
+
+
+a:hover {
+  text-decoration: none;
+}
+
+.ftrImg{
+  border-radius: 4px;
+}
+.custom-card-body{
+  padding: 10px;
+  margin-bottom: 5px;
+}
+.catName{
+  background: white;
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+.catName p{
+  margin: 0px;
+  margin-left: 0px;
+  padding: 5px 0 5px 0;
+  margin-left: -7px;
+}
+
+.oneCat{
+  margin-bottom: 15px;
+}
+
+.postInfo{
+  width: 100%;
+  margin-left: 0;
+}
+
+a{
+  color: black;
+}
+.headLine{
+  width: 100%;
+}
+
+.contactForm{
+  background: #FFF;
+  padding: 7px 25px 19px 25px;
+}
+
+
+
+.logo img{
+  height: 39px;
+}
+.slider{
+  position: fixed;
+}
+
+.postDetails{
+  background: #000;
+  color: white;
+  opacity: 0.5;
+  margin: 0 0 18px 0;
+}
+@media only screen and (min-width: 768px) {
+  .mainBody{
+    width: 69%;
+    margin: 0 auto;
+  }
+  .postCard{
+    padding: 10px;
+    margin-bottom: 6px;
+  }
+  .headLine{
+    height: 78%;
+  }
+  .ftrImg{
+    height: 92px;
+  }
+  .publisherLogo{
+    height: 16px;
+    width: 75px;
+    margin-top:-9px;
+  }
+  .time{
+    font-size: 13px;
+    float: right;
+  }
+  .postInfo{
+
+  }
+
+  .headLineAndPostInfo{
+
+  }
+
+  .catNav{
+    background: black;
+    opacity: 0.8;
+    display: none;
+  }
+
+  .catNav a:hover{
+    background: black;
+    opacity: 0.8;
+  }
+
+  .leftNavBar{
+    z-index: 999;
+    padding-right: 0;
+  }
+
+  .leftNavBar nav{
+    padding:0;
+  }
+  .leftNavBar ul{
+    width: 100%;
+  }
+
+  .leftNavBar li{
+  }
+  .leftNavBar li a{
+    margin-left: 16px;
+  }
+
+  .leftNavBar li:hover{
+    olor: black;
+    background: white;
+  }
+
+  a:link{
+    color: black;
+  }
+
+  .dropdown{
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .postCard{
+    padding: 10px;
+    margin-bottom: 6px;
+  }
+  .ftrImg{
+    height: 66px;
+  }
+  .headLine{
+    height: 81%;
+    font-size: 13px;
+  }
+
+  .headLineAndPostInfo{
+    margin-left: -5px;
+  }
+
+  .publisherLogo{
+    height: 14px;
+    width: 70px;
+    margin-bottom:12px;
+  }
+  .time{
+    font-size: 11px;
+    float: right;
+  }
+
+  .leftNavBar{
+    display: none;
+  }
+
+  #topNavbar{
+    width: 100%;
+  }
+
+  .postInfo{
+
+  }
+
+  .catNav{
+    background: #343A40;
+    margin-left: 7px;
+    padding: 0px 0 0 14px;
+  }
+
+  .catNav a:link:hover{
+    background: #343A40;
+  }
+  .catNav a:link{
+
+  }
+}
+
+.contentBody{
+position: fixed;
+}

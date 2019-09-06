@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>NewsHubBD</title>
+  <base href="/">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script>
+    var prevScrollpos = window.pageYOffset;
+    window.onscroll = function() {
+      var currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos) {
+        document.getElementById("topNavbar").style.top = "0";
+        document.getElementById("leftNavBar").style.top = "70px";
+      } else {
+        document.getElementById("topNavbar").style.top = "-70px";
+        document.getElementById("leftNavBar").style.top = "0px";
+      }
+      prevScrollpos = currentScrollPos;
+    }
+  </script>
+</head>
+<body>
+<app-root></app-root>
+</body>
+</html>

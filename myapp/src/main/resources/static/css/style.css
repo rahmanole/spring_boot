@@ -219,4 +219,7 @@ a{
     .catNav a:link{
 
     }
+    .slider{
+        display:none;
+    }
 }

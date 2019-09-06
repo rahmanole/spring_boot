@@ -50,17 +50,5 @@
         </nav>
     </div>
 </div>
-<script>
-    var prevScrollpos = window.pageYOffset;
-    window.onscroll = function () {
-        var currentScrollPos = window.pageYOffset;
-        if (prevScrollpos > currentScrollPos) {
-            document.getElementById("topNavbar").style.top = "0";
-        } else {
-            document.getElementById("topNavbar").style.top = "-50px";
-        }
-        prevScrollpos = currentScrollPos;
-    }
-</script>
 </body>
 </html>
