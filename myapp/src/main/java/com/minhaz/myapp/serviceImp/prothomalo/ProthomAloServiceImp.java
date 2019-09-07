@@ -2,20 +2,15 @@ package com.minhaz.myapp.serviceImp.prothomalo;
 
 
 import com.minhaz.myapp.dao.PostRepository;
-import com.minhaz.myapp.entity.Img;
-import com.minhaz.myapp.entity.Para;
 import com.minhaz.myapp.entity.Post;
-import com.minhaz.myapp.entity.Vdo;
 import com.minhaz.myapp.service.NewsPaperService;
 import com.minhaz.myapp.service.PostService;
-import com.minhaz.myapp.service.TagService;
 import com.minhaz.myapp.util.UtilityClass;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -89,7 +84,7 @@ public class ProthomAloServiceImp  implements NewsPaperService{
         Document document = Jsoup.connect(catWiseUrl).userAgent("Opera").get();
         Element body = document.body();
         Elements posts = body.getElementsByClass("each");
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 15; i++) {
             String link = posts.get(i).getElementsByTag("a").first().attr("href");
             if (link.length() > 100)
                 postId.add(link.substring(1, link.indexOf('%')));
@@ -117,8 +112,6 @@ public class ProthomAloServiceImp  implements NewsPaperService{
     }
 
     public void assignCategory(String id,Post post,List<HashSet<String>>  list){
-        System.out.println(id);
-        System.out.println(list.get(0));
 
         if(list.get(0).contains(id)){
             post.setCat("politics");
@@ -173,6 +166,4 @@ public class ProthomAloServiceImp  implements NewsPaperService{
             return;
         }
     }
-
-
 }

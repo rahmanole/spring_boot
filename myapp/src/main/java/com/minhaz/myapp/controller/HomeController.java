@@ -71,7 +71,7 @@ public class HomeController {
         model.addAttribute("postService", postService);
         model.addAttribute("utilityClass",utilityClass);
         Post post = postService.getPost(id);
-        String catNameInBangla = utilityClass.getCatNameInBangla(post.getCat())+",";
+        String catNameInBangla = utilityClass.getCatNameInBangla(post.getCat());
         String time = utilityClass.getDateTime(post.getDateTime()).replace(",","");
         model.addAttribute("post", post);
         model.addAttribute("catNameInBangla", catNameInBangla);

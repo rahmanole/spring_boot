@@ -11,9 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -109,7 +107,6 @@ public class IttefaqServiceImp implements NewsPaperService {
 
             if (post.getCat() != null) {
                 postRepository.save(post);
-                System.out.println("ittefaq");
             } else {
                 notsavePostsList.add(post.getPublisherGivenId());
 

@@ -126,7 +126,6 @@ public class BdNews24 implements NewsPaperService {
 
             if (post.getCat() != null) {
                 postRepository.save(post);
-                System.out.println("bdNews24");
             } else {
                 notsavePostsList.add(post.getPublisherGivenId());
             }

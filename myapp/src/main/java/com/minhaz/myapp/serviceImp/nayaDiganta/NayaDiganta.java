@@ -66,7 +66,6 @@ public class NayaDiganta implements NewsPaperService {
         List<String> notsavePostsList = new ArrayList<>();
         for (Post post : posts) {
             String cat = post.getPublisherGivenId().split("/")[0];
-            System.out.println(cat);
 
             if (cat.equals("law-and-justice") ||
                     cat.equals("crime") ||
@@ -160,7 +159,6 @@ public class NayaDiganta implements NewsPaperService {
 
             if (post.getCat() != null) {
                 postRepository.save(post);
-                System.out.println("naya_diganta");
             }else{
                 notsavePostsList.add(post.getPublisherGivenId());
             }

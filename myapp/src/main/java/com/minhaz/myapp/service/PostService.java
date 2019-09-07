@@ -19,7 +19,6 @@ public interface PostService {
                           String cssClassForFeatuteImg,
                           HashSet<String> findPostIds) throws Exception;
     List<Para> postBody(Elements articleParas,String publisher);
-    void postSave(List<Post> posts);
     void findImgOrVdo(Element articlePara, Para para,String publisher);
     Img featureImgUrl(Element body,String cssClassForFearuteImg,String publisher);
     Page<Post> getPostsByCatForPostPage(String catName,long postId);

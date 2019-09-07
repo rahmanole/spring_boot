@@ -111,9 +111,7 @@ public class ExecutionPoint {
 
 
     @Transactional
-    @Async("threadPoolTaskExecutor")
     public void savePosts(NewsPaperService newsPaperService) {
-        System.out.println(Thread.currentThread().getName());
         try {
             newsPaperService.savePosts();
         } catch (Exception e) {

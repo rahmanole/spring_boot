@@ -1,6 +1,5 @@
 package com.minhaz.myapp.serviceImp.kalerKontho;
 
-
 import com.minhaz.myapp.dao.PostRepository;
 import com.minhaz.myapp.entity.Post;
 import com.minhaz.myapp.service.NewsPaperService;
@@ -12,12 +11,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class KalerKontho implements NewsPaperService {
@@ -93,7 +90,6 @@ public class KalerKontho implements NewsPaperService {
 
             if(post.getCat() != null){
                 postRepository.save(post);
-                System.out.println("Kalerkontho");
             }else{
                 notsavePostsList.add(post.getPublisherGivenId());
             }

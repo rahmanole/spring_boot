@@ -6,22 +6,16 @@ import com.minhaz.myapp.entity.Para;
 import com.minhaz.myapp.entity.Post;
 import com.minhaz.myapp.entity.Vdo;
 import com.minhaz.myapp.service.PostService;
-import com.minhaz.myapp.service.NewsPaperService;
-import com.minhaz.myapp.service.TagService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.*;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.*;
 import java.util.stream.Collectors;
+
 @Service
 public class PostServiceImp implements PostService {
 
@@ -47,7 +41,6 @@ public class PostServiceImp implements PostService {
             Post post = new Post();
 
             String completeArticleUrl = newsPaperUrl + id;
-
             post.setPublisherGivenId(id);
 
             post.setDateTime(new Date());
@@ -55,7 +48,6 @@ public class PostServiceImp implements PostService {
 
             Document document = Jsoup.connect(completeArticleUrl).userAgent("Opera").get();
             Element body = document.body();
-
 
             // Finding headline of the post
             if (publisher.equals("kaler_kontho")) {
@@ -109,7 +101,6 @@ public class PostServiceImp implements PostService {
 
             post.setFtrImg(featureImgUrl(body, cssClassForFeatuteImg, publisher).getImgUrl());
 
-
             postList.add(post);
 
         }
@@ -117,8 +108,7 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public List<Para> postBody(Elements articleParas,
-                               String publisher) {
+    public List<Para> postBody(Elements articleParas, String publisher) {
 
         List<Para> allParas = new ArrayList();
 
@@ -132,8 +122,9 @@ public class PostServiceImp implements PostService {
             findImgOrVdo(articleParas.get(i), para, publisher);
             allParas.add(para);
         }
+
         //Sometimes articles dont have any description they just use images
-        //in this case I need to do thw following otherwise will get exception
+        //in this case I need to do the following otherwise will get exception
         //at line 89
         if (articleParas.size() == 0) {
             Para para = new Para();
@@ -145,12 +136,8 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public void postSave(List<Post> posts) {
+    public void findImgOrVdo(Element articlePara,Para para,String publisher) {
 
-    }
-
-    @Override
-    public void findImgOrVdo(Element articlePara, Para para, String publisher) {
         Set<Img> imgList = new HashSet<>();
         List<Vdo> vdoList = new ArrayList<>();
 
@@ -190,7 +177,6 @@ public class PostServiceImp implements PostService {
             }
             para.setVdoList(vdoList);
         }
-
     }
 
     @Override
@@ -230,7 +216,7 @@ public class PostServiceImp implements PostService {
                     imgUrl = elements.select("img").first().attr("src");
                     caption = elements.select("img").first().attr("alt");
                 } else {
-                    System.out.println("This post dont have any feature image");
+                    img.setImgUrl("/img/newsHubLogo.png");
                     //Here we can set our logo as default feature img
                     //if any post dont have any feature imgage
                 }
@@ -244,7 +230,7 @@ public class PostServiceImp implements PostService {
                 img.setImgCaption(caption);
             }
         } else {
-            System.out.println("This post dont have any feature image");
+            img.setImgUrl("/img/newsHubLogo.png");
             //Here we can set our logo as default feature img
             //if any post dont have any feature imgage
         }
@@ -257,10 +243,8 @@ public class PostServiceImp implements PostService {
                 .findAllByCat(PageRequest.of(0, 8, Sort.by(Sort.Direction.DESC, "dateTime")), catName)
                 .getContent()
                 .stream().collect(Collectors.toList());
+
         Post post = getPost(postId);
-        int i = postsForPostPage.indexOf(post);
-        System.out.println(postsForPostPage.size());
-        System.out.println(i);
         postsForPostPage.remove(post);
         Page<Post> posts = new PageImpl<>(postsForPostPage);
         return posts;

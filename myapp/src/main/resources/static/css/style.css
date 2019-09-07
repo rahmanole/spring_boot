@@ -115,7 +115,14 @@ a{
     .postCard{
         padding: 10px;
         margin-bottom: 6px;
+        transition: 0.3s;
     }
+
+    .postCard:hover{
+        color: white;
+        background: #91C9D4;
+    }
+
     .headLine{
         height: 78%;
     }
@@ -153,6 +160,7 @@ a{
     .leftNavBar{
         z-index: 999;
         padding-right: 0;
+        transition: 0.5s;
     }
 
     .leftNavBar nav{
@@ -166,8 +174,8 @@ a{
     }
 
     .leftNavBar li:hover{
-        color: black;
-        background: white;
+        color: white;
+        background: #91C9D4;
     }
 
      a:link{

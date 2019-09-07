@@ -107,7 +107,6 @@ public class BanglaTribune implements NewsPaperService {
             }
             if(post.getCat() != null){
                 postRepository.save(post);
-                System.out.println("bangla_trubne");
             }else{
                 notsavePostsList.add(post.getPublisherGivenId());
             }
