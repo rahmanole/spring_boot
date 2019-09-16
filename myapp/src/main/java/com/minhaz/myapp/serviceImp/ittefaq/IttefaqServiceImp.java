@@ -35,7 +35,6 @@ public class IttefaqServiceImp implements NewsPaperService {
                 "dtl_content_block",
                 "dtl_img_block",
                 findPostIds());
-//        List<HashSet<String>> catWisePostList = getCatWistPosIdList();
 
         saveAndAssignCategory(postList);
     }

@@ -101,7 +101,6 @@ public class BdProtidinServiceImp implements NewsPaperService {
 
             if (post.getCat() != null) {
                 postRepository.save(post);
-                System.out.println("bd_protidin");
             } else {
                 notsavePostsList.add(post.getPublisherGivenId());
             }

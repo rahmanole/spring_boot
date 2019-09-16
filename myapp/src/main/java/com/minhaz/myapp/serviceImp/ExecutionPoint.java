@@ -64,20 +64,20 @@ public class ExecutionPoint {
     @Transactional
     @Scheduled(fixedDelay = 300000)
     public void savePosts() {
-        for(;;){
-            try{
- //               savePosts(inqilabServiceImp);
-                savePosts(banglaTribune);
-                savePosts(kalerKontho);
-                savePosts(somoKalService);
-                savePosts(ittefaqService);
-                savePosts(jugantorService);
-                savePosts(nayaDiganta);
-                savePosts(bdProtidinService);
-                savePosts(bdNews24);
-                savePosts(prothomAloService);
+        for (; ; ) {
+            try {
+//               savePosts(inqilabServiceImp);
+//                savePosts(banglaTribune);
+//                savePosts(kalerKontho);
+//                savePosts(somoKalService);
+//                savePosts(ittefaqService);
+//                savePosts(jugantorService);
+//                savePosts(nayaDiganta);
+//                savePosts(bdProtidinService);
+//                savePosts(bdNews24);
+//                savePosts(prothomAloService);
                 break;
-            }catch (Exception e){
+            } catch (Exception e) {
                 continue;
             }
         }
@@ -103,7 +103,7 @@ public class ExecutionPoint {
 //                    System.out.println(para.getImgList());
 //                });
 //            });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
