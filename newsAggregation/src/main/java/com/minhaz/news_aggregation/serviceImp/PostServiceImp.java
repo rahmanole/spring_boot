@@ -1,10 +1,9 @@
-package com.minhaz.news_aggregation.serviceImp;
+package com.globalBookShop.gsb.serviceImp;
 
-import com.minhaz.news_aggregation.dao.PostRepository;
-import com.minhaz.news_aggregation.entity.Post;
-import com.minhaz.news_aggregation.service.PostService;
+import com.globalBookShop.gsb.dao.PostRepository;
+import com.globalBookShop.gsb.entity.Post;
+import com.globalBookShop.gsb.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;

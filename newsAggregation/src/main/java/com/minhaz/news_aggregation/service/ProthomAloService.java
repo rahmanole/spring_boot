@@ -1,8 +1,4 @@
-package com.minhaz.news_aggregation.service;
-
-import com.minhaz.news_aggregation.entity.Post;
-
-import java.util.List;
+package com.globalBookShop.gsb.service;
 
 public interface ProthomAloService {
 
