@@ -1,5 +1,7 @@
 package com.globalbookshop.gbs.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +13,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(length = 30,unique = true,nullable = false)
+    @Column(length = 100,nullable = false)
     private String title;
 
     @ManyToMany( cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -20,40 +22,41 @@ public class Book {
             joinColumns = {@JoinColumn(name="book_id")},
             inverseJoinColumns = {@JoinColumn(name = "author_id")}
     )
+    @JsonIgnoreProperties("books")
     private List<Author> authors;
+    @Column(unique = true,nullable = false)
+    private String isbn;
     @Column(name = "copyright_year")
     private int copyrightYear;
     private int availablity;
     private double listPrice;
     private double discount;
 
-    @ManyToMany( cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "book_pub",
-            joinColumns = {@JoinColumn(name="book_id")},
-            inverseJoinColumns = {@JoinColumn(name = "pub_id")}
-    )
-    private List<Publisher> publishers;
-    @Column(length = 30,unique = true)
+    @ManyToOne( cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("books")
+    private Publisher publishers;
+    @Column(length = 30)
     private String imprint;
-    @Column(length = 30,unique = true)
+    @Column(length = 30)
     private String formate;
-    @Column(name="edition_type",length = 30,unique = true)
+    @Column(name="edition_type",length = 30)
     private String editionType;
     private int pages;
-    @Column(length = 30,unique = true)
+    @Column(length = 30)
     private String printOrigin;
+
     private Date publicationDate;
-    @Column(length = 30,unique = true)
+    @Column(length = 30)
     private String dimentions;
     private  double weight;
 
-    @ManyToMany( cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany( cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(
             name = "book_img",
             joinColumns = {@JoinColumn(name="book_id")},
             inverseJoinColumns = {@JoinColumn(name = "img_id")}
     )
+
     private List<Image> images;
 
     @ManyToMany( cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -62,6 +65,7 @@ public class Book {
             joinColumns = {@JoinColumn(name="book_id")},
             inverseJoinColumns = {@JoinColumn(name = "dept_id")}
     )
+    @JsonIgnoreProperties("books")
     private List<Department> depts;
 
     @ManyToMany( cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -70,8 +74,9 @@ public class Book {
             joinColumns = {@JoinColumn(name="book_id")},
             inverseJoinColumns = {@JoinColumn(name = "course_id")}
     )
+    @JsonIgnoreProperties("books")
     private List<Course> courses;
-    @Column(length = 30,unique = true)
+    @Column(length = 30)
     private String restriction;
     @Column(columnDefinition = "TEXT")
     private String overview;
@@ -90,6 +95,14 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public List<Author> getAuthors() {
@@ -132,11 +145,11 @@ public class Book {
         this.discount = discount;
     }
 
-    public List<Publisher> getPublishers() {
+    public Publisher getPublishers() {
         return publishers;
     }
 
-    public void setPublishers(List<Publisher> publishers) {
+    public void setPublishers(Publisher publishers) {
         this.publishers = publishers;
     }
 
