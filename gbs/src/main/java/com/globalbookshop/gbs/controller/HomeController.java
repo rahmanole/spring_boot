@@ -81,4 +81,11 @@ public class HomeController {
         return departmentService.getBooksByDept(deptName);
     }
 
+    @ResponseBody
+    @GetMapping("test")
+    public List<Book> test() {
+        System.out.println("Done");
+        return departmentService.getBooksByDept("Physics");
+    }
+
 }
