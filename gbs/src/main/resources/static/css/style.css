@@ -123,6 +123,33 @@ a:hover {
     margin-bottom: 0;
 }
 
+header, main, footer {
+    padding-left: 240px;
+}
+
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+
+sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: yellow;
+    padding: 50px;
+    font-size: 20px;
+}
+
+.dashbarSideNav ul li .dropdown-menu a:hover{
+    color: black;
+}
+
+
+
+
+
 
 
 
