@@ -12,26 +12,9 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/all.css}">
     <link rel="stylesheet" th:href="@{/css/fontawesome.css}">
-
-    <script th:src="@{/js/jquery.js}"></script>
-    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
-    <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
-
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/mdb.min.css}">
 
-    <script>
-        var prevScrollpos = window.pageYOffset;
-        window.onscroll = function () {
-            var currentScrollPos = window.pageYOffset;
-            if (prevScrollpos > currentScrollPos) {
-                document.getElementById("topNavbar").style.top = "0";
-            } else {
-                document.getElementById("topNavbar").style.top = "-70px";
-            }
-            prevScrollpos = currentScrollPos;
-        }
-    </script>
 </head>
 
 <body>
@@ -61,43 +44,49 @@
     </div>
 </div>
 
+<!--Login Modal-->
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="email" id="defaultForm-email" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
+                </div>
 
-<script type="text/javascript" th:src="@{../static/js/jquery.js}"></script>
+                <div class="md-form mb-4">
+                    <i class="fas fa-lock prefix grey-text"></i>
+                    <input type="password" id="defaultForm-pass" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
+                </div>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="submit" class="btn btn-default">Login</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--login modal ends here-->
+
+
+<script type="text/javascript" th:src="@{js/jquery.js}"></script>
 <!-- Bootstrap tooltips -->
-<script type="text/javascript" th:src="@{../static/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{js/popper.min.js}"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" th:src="@{../static/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{js/bootstrap.bundle.js}"></script>
 <!-- MDB core JavaScript -->
-<script type="text/javascript" th:src="@{../static/js/mdb.min.js}"></script>
-<!-- Your custom scripts (optional) -->
-<script>
-    // SideNav Button Initialization
-    $(".button-collapse").sideNav();
-    // SideNav Scrollbar Initialization
-    var sideNavScrollbar = document.querySelector('.custom-scrollbar');
-    var ps = new PerfectScrollbar(sideNavScrollbar);
+<script type="text/javascript" th:src="@{js/mdb.min.js}"></script>
 
-    // SideNav Default Options
-    $('.button-collapse').sideNav({
-        edge: 'left', // Choose the horizontal origin
-        closeOnClick: false, // Closes side-nav on &lt;a&gt; clicks, useful for Angular/Meteor
-        breakpoint: 1440, // Breakpoint for button collapse
-        MENU_WIDTH: 240, // Width for sidenav
-        timeDurationOpen: 300, // Time duration open menu
-        timeDurationClose: 200, // Time duration open menu
-        timeDurationOverlayOpen: 50, // Time duration open overlay
-        timeDurationOverlayClose: 200, // Time duration close overlay
-        easingOpen: 'easeOutQuad', // Open animation
-        easingClose: 'easeOutCubic', // Close animation
-        showOverlay: true, // Display overflay
-        showCloseButton: false // Append close button into siednav
-    });
-
-    // Show sideNav
-    $('.button-collapse').sideNav('show');
-    // Hide sideNav
-    $('.button-collapse').sideNav('hide');
-</script>
 </body>
 
 </html>

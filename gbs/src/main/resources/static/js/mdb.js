@@ -2793,8 +2793,8 @@
          */
         e = void 0, r = function() {
             var t = {
-                    CUSTOMFILE: '.custom-file input[type="file"]',
-                    CUSTOMFILELABEL: ".custom-file-label",
+                    CUSTOMFILE: '.custom-files input[type="files"]',
+                    CUSTOMFILELABEL: ".custom-files-label",
                     FORM: "form",
                     INPUT: "input"
                 },

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layoutForWebUI.html}">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body layout:fragment="custom-content">
+
+<div class="row w-100 position-relative" style="margin: 25px 0px 25px 0px">
+    <div class="col-8 offset-2">
+        <h4 class="text-center mb-3">User Registration</h4>
+        <div class="card  p-4">
+            <form th:object="${user}" method="post">
+
+                <div class="md-form">
+                    <input type="text" th:field="*{businessName}" id="bName" class="form-control">
+                    <label for="bName">Business Name</label>
+                </div>
+
+                <div class="md-form">
+                    <input type="text" th:field="*{businessType}" id="bType" class="form-control">
+                    <label for="bType">Business Type</label>
+                </div>
+
+                <div class="md-form">
+                    <textarea id="bAddress" th:field="*{businessAddress}" class="md-textarea form-control" rows="2"></textarea>
+                    <label for="bAddress">Business Address</label>
+                </div>
+
+                <div class="md-form">
+                    <input type="text" id="bWebsite" th:field="*{businessWebsite}" class=" form-control" >
+                    <label for="bWebsite">Business Website</label>
+                </div>
+
+                <div class="md-form">
+                    <input type="text" id="contactName" th:field="*{contactName}" class=" form-control" >
+                    <label for="contactName">Contact Name</label>
+                </div>
+
+                <div class="md-form">
+                    <textarea id="contactAddress" th:field="*{contactAddress}" class="md-textarea form-control" rows="2"></textarea>
+                    <label for="contactAddress">Contact Address </label>
+                </div>
+
+                <div class="md-form">
+                    <input type="email" id="email" th:field="*{email}" class=" form-control" >
+                    <label for="email">Email</label>
+                </div>
+
+                <div class="md-form">
+                    <input type="text" id="city" th:field="*{city}" class=" form-control" >
+                    <label for="city">City</label>
+                </div>
+
+                <div class="md-form">
+                    <input type="text" id="state" th:field="*{state}" class=" form-control" >
+                    <label for="state">State</label>
+                </div>
+
+                <div class="md-form">
+                    <input type="text" id="postCode" th:field="*{postCode}" class=" form-control" >
+                    <label for="postCode">Postcode</label>
+                </div>
+
+                <div class="md-form">
+                    <select th:field="*{country}" class="browser-default custom-select">
+                        <option th:value="none" selected>Select Country</option>
+                        <option th:value="Bangladesh">Bangladesh</option>
+                        <option th:value="USA">USA</option>
+                        <option th:value="Australia">Australia</option>
+                    </select>
+                </div>
+
+
+
+                <div class="md-form">
+                    <input type="text" id="telephone" th:field="*{telephone}" class=" form-control" >
+                    <label for="telephone">Telephone</label>
+                </div>
+
+                <div class="md-form">
+                    <input type="text" id="mobile" th:field="*{mobile}" class=" form-control" >
+                    <label for="mobile">Mobile</label>
+                </div>
+
+                <div class="md-form">
+                    <input type="text" id="fax" th:field="*{fax}" class=" form-control" >
+                    <label for="fax">Fax</label>
+                </div>
+
+                <div class="md-form">
+                    <input type="password" id="password" th:field="*{password}" class=" form-control" >
+                    <label for="fax">Password</label>
+                </div>
+
+                <div class="md-form">
+                    <input type="password" id="conPass" th:field="*{fax}" class=" form-control" >
+                    <label for="conPass">Confirm Password</label>
+                </div>
+
+                <div class="md-form">
+                    <button class="btn btn-block btn-primary font-weight-bolder" type="submit">Submit</button>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
