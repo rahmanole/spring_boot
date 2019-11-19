@@ -120,7 +120,7 @@ public class FileUploadServiceImp implements FileUploadService {
                 book.setAuthors(getAuthorList(cellValue));
                 break;
             case 3:
-                book.setCopyrightYear(Integer.parseInt(cellValue));
+                book.setCopyrightYear(cellValue);
                 break;
             case 4:
                 book.setAvailablity(Integer.parseInt(cellValue));
@@ -132,7 +132,7 @@ public class FileUploadServiceImp implements FileUploadService {
                 book.setDiscount(Double.parseDouble(cellValue));
                 break;
             case 7:
-                book.setPublishers(getPublisher(cellValue));
+                book.setPublisher(getPublisher(cellValue));
                 break;
             case 8:
                 book.setImprint(cellValue);

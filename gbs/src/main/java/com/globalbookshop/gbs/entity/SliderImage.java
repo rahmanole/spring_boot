@@ -1,21 +1,15 @@
 package com.globalbookshop.gbs.entity;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import javax.persistence.*;
 
 @Entity
-@Table(name = "images")
-public class Image {
+@Table(name = "slider_images")
+public class SliderImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "img_url", columnDefinition = "TEXT",nullable = false)
+    @Column(name = "img_url", columnDefinition = "MEDIUMTEXT",length = 500000,nullable = false)
     private String imgUrl;
-
-    @Column(name="img_type", length = 20,nullable = false)
-    @ColumnDefault("book")
-    private String imageTyoe;
 
     @Column(length = 50)
     private String title;
@@ -38,14 +32,6 @@ public class Image {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
-    }
-
-    public String getImageTyoe() {
-        return imageTyoe;
-    }
-
-    public void setImageTyoe(String imageTyoe) {
-        this.imageTyoe = imageTyoe;
     }
 
     public String getTitle() {

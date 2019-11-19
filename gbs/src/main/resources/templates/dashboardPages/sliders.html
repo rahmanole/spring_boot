@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboardLayout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body layout:fragment="custom-content">
+
+<div id="content-wrapper">
+
+    <div class="container-fluid">
+        <div class="col-10 offset-1">
+            <div class="card mb-5" th:each="slider:${sliderList}">
+
+                <!-- Card image -->
+                <img class="card-img-top" height="300" th:src="${slider.getImgUrl()}"/>
+                <!-- Card content -->
+                <div class="card-body">
+
+                    <!-- Title -->
+
+                    <h4 class="card-title" th:text="${'Slider '+(sliderList.indexOf(slider)+1)}">Slider 1</h4>
+                    <h5 class="card-title" th:text="${slider.getTitle()}">Card title</h5>
+                    <h6 class="card-title" th:text="${slider.getSubtitle()}">Subtitle</h6>
+                    <a href="#" class="btn btn-primary ml-0" data-toggle="modal"
+                       data-target="#modalLoginForm">Upload</a>
+                    <a href="#" class="btn btn-primary ml-0" data-toggle="modal" data-target="#modalConfirmDelete">Remove</a>
+                    <a th:href="@{'/updateSlider/'+${slider.getId()}}" class="btn btn-primary ml-0">Update</a>
+
+                </div>
+
+                <!--Modal: modalConfirmDelete-->
+                <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+                        <!--Content-->
+                        <div class="modal-content text-center">
+                            <!--Header-->
+                            <div class="modal-header d-flex justify-content-center">
+                                <p class="heading">Are you sure?</p>
+                            </div>
+
+                            <!--Body-->
+                            <div class="modal-body">
+
+                                <i class="fas fa-times fa-4x animated rotateIn"></i>
+
+                            </div>
+
+                            <!--Footer-->
+                            <div class="modal-footer flex-center">
+                                <a th:href="@{'/deleteSlider/'+${slider.getId()}}"
+                                   class="btn  btn-outline-danger">Yes</a>
+                                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+                            </div>
+                        </div>
+                        <!--/.Content-->
+                    </div>
+                </div>
+                <!--Modal: modalConfirmDelete-->
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form method="POST" th:object="${slider}" th:action="@{/sliderUploader}" enctype="multipart/form-data">
+
+                    <div class="modal-body mx-3">
+                        <div class="card p-4">
+                            <div class="md-form">
+                                <input type="file" name="file" class=""/><br/>
+                            </div>
+                            <div class="md-form">
+                                <input type="text" id="title" th:field="*{title}" class=" form-control">
+                                <label for="title">Titlte</label>
+                            </div>
+                            <div class="md-form">
+                                <input type="text" id="subtitle" th:field="*{subtitle}" class=" form-control">
+                                <label for="subtitle">Subtitle</label>
+                            </div>
+                            <div th:if="${message}">
+                                <h2 th:text="${message}"/>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary ml-0">Upload Image</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+</html>

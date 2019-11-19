@@ -1,8 +1,12 @@
 package com.globalbookshop.gbs.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.http.codec.multipart.Part;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +20,15 @@ public class Book {
     @Column(length = 100,nullable = false)
     private String title;
 
+    @Transient
+    private ArrayList<String> authorNames = new ArrayList();
+    @Transient
+    private ArrayList<String> deptNames = new ArrayList();
+    @Transient
+    private ArrayList<String> courseNames = new ArrayList();
+    @Transient
+    private String publisherName;
+
     @ManyToMany( cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(
             name = "book_author",
@@ -27,14 +40,14 @@ public class Book {
     @Column(unique = true,nullable = false)
     private String isbn;
     @Column(name = "copyright_year")
-    private int copyrightYear;
+    private String copyrightYear;
     private int availablity;
     private double listPrice;
     private double discount;
 
     @ManyToOne( cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnoreProperties("books")
-    private Publisher publishers;
+    private Publisher publisher;
     @Column(length = 30)
     private String imprint;
     @Column(length = 30)
@@ -50,14 +63,15 @@ public class Book {
     private String dimentions;
     private  double weight;
 
-    @OneToMany( cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "book_img",
-            joinColumns = {@JoinColumn(name="book_id")},
-            inverseJoinColumns = {@JoinColumn(name = "img_id")}
-    )
-
-    private List<Image> images;
+    @Column(name = "cover_img", columnDefinition = "MEDIUMTEXT",length = 500000,nullable = false)
+    private String coverImg;
+    @Column(name = "back_img", columnDefinition = "MEDIUMTEXT",length = 500000)
+    private String backImg;
+    @Column(name = "other_img", columnDefinition = "MEDIUMTEXT",length = 500000)
+    private String otherImg;
+//
+//    @Transient
+//    private List<File> mImages;
 
     @ManyToMany( cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(
@@ -113,11 +127,11 @@ public class Book {
         this.authors = authors;
     }
 
-    public int getCopyrightYear() {
+    public String getCopyrightYear() {
         return copyrightYear;
     }
 
-    public void setCopyrightYear(int copyrightYear) {
+    public void setCopyrightYear(String copyrightYear) {
         this.copyrightYear = copyrightYear;
     }
 
@@ -145,12 +159,12 @@ public class Book {
         this.discount = discount;
     }
 
-    public Publisher getPublishers() {
-        return publishers;
+    public Publisher getPublisher() {
+        return publisher;
     }
 
-    public void setPublishers(Publisher publishers) {
-        this.publishers = publishers;
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     public String getImprint() {
@@ -217,12 +231,28 @@ public class Book {
         this.weight = weight;
     }
 
-    public List<Image> getImages() {
-        return images;
+    public String getCoverImg() {
+        return coverImg;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public void setCoverImg(String coverImg) {
+        this.coverImg = coverImg;
+    }
+
+    public String getBackImg() {
+        return backImg;
+    }
+
+    public void setBackImg(String backImg) {
+        this.backImg = backImg;
+    }
+
+    public String getOtherImg() {
+        return otherImg;
+    }
+
+    public void setOtherImg(String otherImg) {
+        this.otherImg = otherImg;
     }
 
     public List<Department> getDepts() {
@@ -255,5 +285,37 @@ public class Book {
 
     public void setOverview(String overview) {
         this.overview = overview;
+    }
+
+    public ArrayList<String> getAuthorNames() {
+        return authorNames;
+    }
+
+    public void setAuthorNames(ArrayList<String> authorNames) {
+        this.authorNames = authorNames;
+    }
+
+    public ArrayList<String> getDeptNames() {
+        return deptNames;
+    }
+
+    public void setDeptNames(ArrayList<String> deptNames) {
+        this.deptNames = deptNames;
+    }
+
+    public ArrayList<String> getCourseNames() {
+        return courseNames;
+    }
+
+    public void setCourseNames(ArrayList<String> courseNames) {
+        this.courseNames = courseNames;
+    }
+
+    public String getPublisherName() {
+        return publisherName;
+    }
+
+    public void setPublisherName(String publisherName) {
+        this.publisherName = publisherName;
     }
 }

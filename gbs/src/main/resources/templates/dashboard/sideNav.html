@@ -13,26 +13,46 @@
                 <span>Dashboard</span>
             </a>
         </li>
+
+<!--        <li class="nav-item dropdown">-->
+<!--            <a style="color: white"  href="#" class=" nav-link dropdown-toggle" data-toggle="collapse" data-target="#demo">-->
+<!--                <i class="fas fa-upload"></i>-->
+<!--                <span class="ml-1">Add Book</span>-->
+<!--            </a>-->
+<!--            <div id="demo" class="collapse bg-light">-->
+<!--                <a  class="dropdown-item" th:href="@{addBook}">Form</a>-->
+<!--                <a   class="dropdown-item" th:href="@{uploadExcel}">Upload Excel</a>-->
+<!--            </div>-->
+<!--        </li>-->
+
         <li class="nav-item dropdown">
             <a style="color: white"   class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-upload"></i>
                 <span class="ml-1">Add Book</span>
             </a>
-            <div class="dropdown-menu bg-light" aria-labelledby="pagesDropdown">
+            <div  style="border-radius: 0" class="dropdown-menu bg-light m-0 " aria-labelledby="pagesDropdown">
                 <a  class="dropdown-item" th:href="@{addBook}">Form</a>
                 <a   class="dropdown-item" th:href="@{uploadExcel}">Upload Excel</a>
             </div>
         </li>
-        <li class="nav-item">
-            <a style="color: white" class="nav-link" th:href="@{sliders}">
+
+        <li class="nav-item dropdown">
+            <a style="color: white"   class="nav-link dropdown-toggle" href="#" id="sliderMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="far fa-image mr-1"></i>
-                <span>Sliders</span></a>
+                <span class="ml-1">Sliders</span>
+            </a>
+            <div style="border-radius: 0" class="dropdown-menu bg-light m-0 " aria-labelledby="">
+                <a  class="dropdown-item" th:href="@{uploadSliders}">Add Slider</a>
+                <a   class="dropdown-item" th:href="@{sliders}">Show All</a>
+            </div>
         </li>
+
         <li class="nav-item">
             <a style="color: white" class="nav-link" href="tables.html">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Tables</span></a>
         </li>
+
     </ul>
 </div>
 

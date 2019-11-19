@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboardLayout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body layout:fragment="custom-content">
+<div id="content-wrapper">
+
+    <div class="container-fluid">
+            <div class="col-8 offset-2">
+
+                <div class="card p-4">
+                    <form method="POST" th:object="${slider}" th:action="@{/sliderUploader}" enctype="multipart/form-data">
+
+
+                        <div class="md-form">
+                            <input type="file" name="file" class=""/><br/>
+                        </div>
+                        <div class="md-form">
+                            <input type="text" id="title" th:field="*{title}" class=" form-control" >
+                            <label for="title">Titlte</label>
+                        </div>
+                        <div class="md-form">
+                            <input type="text" id="subtitle" th:field="*{subtitle}" class=" form-control" >
+                            <label for="subtitle">Subtitle</label>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary ml-0">Upload Image</button>
+                        </div>
+                    </form>
+
+                    <div th:if="${message}">
+                        <h2 th:text="${message}"/>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+</div>
+
+</body>
+</html>

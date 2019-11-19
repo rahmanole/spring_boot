@@ -22,9 +22,13 @@ public class HomeController {
     CourseService courseService;
     @Autowired
     DepartmentService departmentService;
+    @Autowired
+    SliderImageService sliderImageService;
+
 
     @GetMapping("/")
-    public String home() {
+    public String home(Model model) {
+        model.addAttribute("sliderList",sliderImageService.getAllSliders());
         return "index";
     }
 

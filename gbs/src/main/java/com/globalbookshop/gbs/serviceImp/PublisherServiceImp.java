@@ -7,6 +7,7 @@ import com.globalbookshop.gbs.service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -17,5 +18,18 @@ public class PublisherServiceImp implements PublisherService {
     @Override
     public List<Book> getBooksByTitle(String title){
         return publisherDao.findPublisherByPublisher(title).getBooks();
+    }
+
+    @Override
+    public List<String> publisherNames() {
+        List<String> publisherNames = publisherDao.publisherNames();
+        Collections.sort(publisherNames);
+        return publisherNames;
+    }
+
+
+    @Override
+    public Publisher getPublisher(String publisherName){
+        return publisherDao.findPublisherByPublisher(publisherName);
     }
 }

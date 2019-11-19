@@ -14,8 +14,8 @@ public class Publisher {
     private long id;
     @Column(length = 50,unique = true,nullable = false)
     private String publisher;
-    @OneToMany(mappedBy = "publishers",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("publishers")
+    @OneToMany(mappedBy = "publisher",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("publisher")
     List<Book> books = new ArrayList<>();
 
     public long getId() {
