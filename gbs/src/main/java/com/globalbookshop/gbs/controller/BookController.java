@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Encoder;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -44,20 +46,22 @@ public class BookController {
     }
 
     @PostMapping("saveBook")
-    public String saveBook(Book book, @RequestParam("images") MultipartFile[] images) {
+    public String saveBook(Book book, @RequestParam("frontCover") MultipartFile[] frontCover) {
 
         List<Author> authorList = authorService.getAuthorList(book.getAuthorNames());
         Publisher publisher = publisherService.getPublisher(book.getPublisherName());
         List<Course> courseList = courseService.getCourseList(book.getCourseNames());
         List<Department> deptList = departmentService.getDeptList(book.getDeptNames());
 
-        for (MultipartFile image: images) {
+        for (MultipartFile image: frontCover) {
             try {
                 System.out.println(sliderImageService.getBase64Image(image));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
+
 
         List<BookImage> imagess = new ArrayList<>();
         BookImage bookImage = new BookImage();

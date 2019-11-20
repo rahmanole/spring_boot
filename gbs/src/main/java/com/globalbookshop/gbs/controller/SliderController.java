@@ -55,7 +55,7 @@ public class SliderController {
                 return "redirect:/sliders";
             }else {
 
-                slider.setImgUrl("data:image/jpeg;base64,"+sliderImageService.getBase64Image(file));
+                slider.setImgUrl("data:image/jpg;base64,"+sliderImageService.getBase64Image(file));
                 sliderImageService.saveSlider(slider);
             }
         } catch (Exception e) {
