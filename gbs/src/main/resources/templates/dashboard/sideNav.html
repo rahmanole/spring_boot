@@ -8,7 +8,7 @@
 <div th:fragment="sideNav" class="dashbarSideNav">
     <ul class="sidebar navbar-nav" >
         <li class="nav-item active">
-            <a class="nav-link" th:href="@{dashboard}">
+            <a class="nav-link" th:href="@{/dashboard}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
@@ -31,8 +31,9 @@
                 <span class="ml-1">Add Book</span>
             </a>
             <div  style="border-radius: 0" class="dropdown-menu bg-light m-0 " aria-labelledby="pagesDropdown">
-                <a  class="dropdown-item" th:href="@{addBook}">Form</a>
-                <a   class="dropdown-item" th:href="@{uploadExcel}">Upload Excel</a>
+                <a  class="dropdown-item" th:href="@{/addBook}">Form</a>
+                <a   class="dropdown-item" th:href="@{/uploadExcel}">Upload Excel</a>
+                <a   class="dropdown-item" th:href="@{/bookList}">Book List</a>
             </div>
         </li>
 
@@ -42,15 +43,9 @@
                 <span class="ml-1">Sliders</span>
             </a>
             <div style="border-radius: 0" class="dropdown-menu bg-light m-0 " aria-labelledby="">
-                <a  class="dropdown-item" th:href="@{uploadSliders}">Add Slider</a>
-                <a   class="dropdown-item" th:href="@{sliders}">Show All</a>
+                <a  class="dropdown-item" th:href="@{/uploadSliders}">Add Slider</a>
+                <a   class="dropdown-item" th:href="@{/sliders}">Show All</a>
             </div>
-        </li>
-
-        <li class="nav-item">
-            <a style="color: white" class="nav-link" href="tables.html">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Tables</span></a>
         </li>
 
     </ul>

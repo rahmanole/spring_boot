@@ -1,12 +1,11 @@
 package com.globalbookshop.gbs.serviceImp;
 
-import com.globalbookshop.gbs.dao.AuthorDao;
-import com.globalbookshop.gbs.dao.CourseDao;
-import com.globalbookshop.gbs.dao.DepartmentDao;
-import com.globalbookshop.gbs.dao.PublisherDao;
+import com.globalbookshop.gbs.dao.*;
 import com.globalbookshop.gbs.entity.*;
 import com.globalbookshop.gbs.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,10 +21,21 @@ public class BookServiceImp implements BookService {
     DepartmentDao departmentDao;
     @Autowired
     CourseDao courseDao;
+    @Autowired
+    BookDao bookDao;
 
- @Override
+    @Override
     public void saveBook(Book book) {
+        bookDao.save(book);
+    }
 
+    public Book getBook(long id){
+        return bookDao.getOne(id);
+    }
+
+    @Override
+    public Page<Book> getAllBooks() {
+        return bookDao.findAll(PageRequest.of(0,20));
     }
 
 

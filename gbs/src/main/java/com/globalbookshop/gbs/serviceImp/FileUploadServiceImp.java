@@ -117,7 +117,7 @@ public class FileUploadServiceImp implements FileUploadService {
                 book.setIsbn(cellValue);
                 break;
             case 2:
-                book.setAuthors(getAuthorList(cellValue));
+                book.setAuthors(getAuthorList(cellValue.split(",")));
                 break;
             case 3:
                 book.setCopyrightYear(cellValue);
@@ -165,10 +165,10 @@ public class FileUploadServiceImp implements FileUploadService {
                 book.setWeight(Double.parseDouble(cellValue));
                 break;
             case 16:
-                book.setDepts(getDeptList(cellValue));
+                book.setDepts(getDeptList(cellValue.split(",")));
                 break;
             case 17:
-                book.setCourses(getCourseList(cellValue));
+                book.setCourses(getCourseList(cellValue.split(",")));
                 break;
             case 18:
                 book.setRestriction(cellValue);
@@ -179,8 +179,7 @@ public class FileUploadServiceImp implements FileUploadService {
         }
     }
 
-    private List<Author> getAuthorList(String cellValue) {
-        String[] authorNames = cellValue.split(",");
+    public List<Author> getAuthorList(String[] authorNames) {
         List<Author> authorList = new ArrayList<>();
 
         for (String authorName : authorNames) {
@@ -197,8 +196,7 @@ public class FileUploadServiceImp implements FileUploadService {
         return authorList;
     }
 
-    private List<Course> getCourseList(String cellValue) {
-        String[] courseNames = cellValue.split(",");
+    public List<Course> getCourseList(String[] courseNames) {
         List<Course> courseList = new ArrayList<>();
         for (String courseName : courseNames) {
             Course course;
@@ -215,8 +213,7 @@ public class FileUploadServiceImp implements FileUploadService {
         return courseList;
     }
 
-    private List<Department> getDeptList(String cellValue) {
-        String[] courseNames = cellValue.split(",");
+    public List<Department> getDeptList(String[] courseNames) {
         List<Department> deptList = new ArrayList<>();
         for (String departmentName : courseNames) {
             Department department;
@@ -233,7 +230,7 @@ public class FileUploadServiceImp implements FileUploadService {
         return deptList;
     }
 
-    private Publisher getPublisher(String cellValue) {
+    public Publisher getPublisher(String cellValue) {
         Publisher publisher;
 
         publisher = publisherDao.findPublisherByPublisher(cellValue);

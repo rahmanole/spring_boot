@@ -52,6 +52,10 @@
                             <label for="format">Format</label>
                         </div>
                         <div class="md-form">
+                            <input type="text" th:field="*{dimentions}" id="dim" class="form-control">
+                            <label for="dim">Dimension</label>
+                        </div>
+                        <div class="md-form">
                             <input type="text" th:field="*{editionType}" id="editionType" class="form-control">
                             <label for="editionType">Edition Type</label>
                         </div>
@@ -62,7 +66,7 @@
 
                         <div class="md-form" style="margin-top: 10px">
                             <span style="color: #757575;margin-bottom: 4px">Publication Date</span>
-                            <input type="date"  id="publicationDate" class="form-control pt-0">
+                            <input type="date" name="pubDate" id="publicationDate" class="form-control pt-0">
                         </div>
 
                         <div class="md-form">
@@ -76,6 +80,10 @@
                         <div class="md-form">
                             <input type="text" th:field="*{discount}" id="discount" class="form-control">
                             <label for="discount">Discount</label>
+                        </div>
+                        <div class="md-form">
+                            <input type="text" th:field="*{pages}" id="pages" class="form-control">
+                            <label for="pages">Pages</label>
                         </div>
                         <div class="md-form">
                             <input type="text" th:field="*{weight}" id="weight" class="form-control">
@@ -95,6 +103,7 @@
                                         th:text="${courseName}">Alabama</option>
                             </select>
                         </div>
+
                         <div class="md-form">
                             <input type="text" th:field="*{restriction}" id="restriction" class="form-control">
                             <label for="restriction">Market Restriction</label>
@@ -103,15 +112,17 @@
                             <input type="text" th:field="*{overview}" id="overview" class="form-control">
                             <label for="overview">Overview</label>
                         </div>
+
                         <div class="md-form">
                             <span style="color: #757575;margin-bottom: 4px">Front Cover</span>
                             <br>
                             <input type="file"  name="frontCover" id="frontCover"/>
                         </div>
+
                         <div class="md-form">
                             <span style="color: #757575;margin-bottom: 4px">Back Cover</span>
                             <br>
-                            <input type="file"  name="frontCover" id="backCover" />
+                            <input type="file"  name="backCover" id="backCover" />
                         </div>
                         <button class="btn btn-primary btn-block" type="submit">Submit</button>
                     </form>

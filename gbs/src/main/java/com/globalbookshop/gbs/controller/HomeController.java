@@ -24,11 +24,15 @@ public class HomeController {
     DepartmentService departmentService;
     @Autowired
     SliderImageService sliderImageService;
+    @Autowired
+    BookService bookService;
 
 
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("sliderList",sliderImageService.getAllSliders());
+        model.addAttribute("books",bookService.getAllBooks());
+        System.out.println("==================================="+bookService.getAllBooks().getSize());
         return "index";
     }
 

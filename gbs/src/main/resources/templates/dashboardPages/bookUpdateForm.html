@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboardLayout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body layout:fragment="custom-content">
+<div id="content-wrapper">
+
+    <div class="container-fluid">
+        <div class="col-10 offset-1">
+            <h4 class="text-center mb-3">Book Information</h4>
+
+            <div class="card  p-4">
+                <form method="post" th:action="@{/saveBook}" th:object="${book}" enctype="multipart/form-data">
+
+                    <div class="md-form">
+                        <input type="text" readonly th:field="*{id}" id="id" class="form-control">
+                        <label for="id">ID</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" th:field="*{title}" id="title" class="form-control">
+                        <label for="title">Title</label>
+                    </div>
+                    <div class="md-form">
+                        <span style="color: #757575;margin-bottom: 4px">Authors</span>
+                        <select th:field="*{authorNames}" id="authors" class="form-control js-example-basic-multiple "
+                                multiple="multiple">
+                            <option th:each="authorName:${allAuthors}" th:value="${authorName}"
+                                    th:text="${authorName}">Alabama
+                            </option>
+                        </select>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" th:field="*{isbn}" id="isbn" class="form-control">
+                        <label for="isbn">ISBN</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" th:field="*{copyrightYear}" id="copyYear" class="form-control">
+                        <label for="copyYear">Copyright Year</label>
+                    </div>
+                    <div class="md-form">
+                        <span style="color: #757575;margin-bottom: 4px">Publisher</span>
+                        <select th:field="*{publisherName}" class="form-control js-example-basic-multiple ">
+                            <option th:each="publisher:${publishers}" th:value="${publisher}"
+                                    th:text="${publisher}">Alabama
+                            </option>
+                        </select>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" th:field="*{imprint}" id="imprint" class="form-control">
+                        <label for="imprint">Imprint</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" th:field="*{formate}" id="format" class="form-control">
+                        <label for="format">Format</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" th:field="*{dimentions}" id="dim" class="form-control">
+                        <label for="dim">Dimension</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" th:field="*{editionType}" id="editionType" class="form-control">
+                        <label for="editionType">Edition Type</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" th:field="*{printOrigin}" id="printOrigin" class="form-control">
+                        <label for="printOrigin">Print Origin</label>
+                    </div>
+
+                    <div class="md-form" style="margin-top: 10px">
+                        <span style="color: #757575;margin-bottom: 4px">Publication Date</span>
+                        <input type="date" name="pubDate" id="publicationDate" class="form-control pt-0">
+                    </div>
+
+                    <div class="md-form">
+                        <input type="text" th:field="*{availablity}" id="avail" class="form-control">
+                        <label for="avail">Availability</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" th:field="*{listPrice}" id="listPrice" class="form-control">
+                        <label for="listPrice">List Price</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" th:field="*{discount}" id="discount" class="form-control">
+                        <label for="discount">Discount</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" th:field="*{pages}" id="pages" class="form-control">
+                        <label for="pages">Pages</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" th:field="*{weight}" id="weight" class="form-control">
+                        <label for="weight">Weight</label>
+                    </div>
+                    <div class="md-form">
+                        <span style="color: #757575;margin-bottom: 4px">Departments</span>
+                        <select th:field="*{deptNames}" class="form-control js-example-basic-multiple "
+                                multiple="multiple">
+                            <option th:each="dept:${deptNames}" th:value="${dept}"
+                                    th:text="${dept}">Alabama
+                            </option>
+                        </select>
+                    </div>
+                    <div class="md-form">
+                        <span style="color: #757575;margin-bottom: 4px">Courses</span>
+                        <select th:field="*{courseNames}" class="form-control js-example-basic-multiple "
+                                multiple="multiple">
+                            <option th:each="courseName:${courseNames}" th:value="${courseName}"
+                                    th:text="${courseName}">Alabama
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="md-form">
+                        <input type="text" th:field="*{restriction}" id="restriction" class="form-control">
+                        <label for="restriction">Market Restriction</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="text" th:field="*{overview}" id="overview" class="form-control">
+                        <label for="overview">Overview</label>
+                    </div>
+
+                    <div class="md-form">
+                        <span style="color: #757575;margin-bottom: 4px">Front Cover</span>
+                        <br>
+                        <input type="file" name="frontCover" id="frontCover"/>
+                        <img class="card-img-top" height="100%" th:src="${book.getBookImages().size() > 0} ? ${book.getBookImages().get(0).getImgUrl()}:'ff'"/>
+                    </div>
+
+                    <div class="md-form">
+                        <span style="color: #757575;margin-bottom: 4px">Back Cover</span>
+                        <br>
+                        <input type="file" name="backCover" id="backCover"/>
+                        <img class="card-img-top" height="100%"
+                             th:src="${book.getBookImages().size() > 0} ? ${book.getBookImages().get(1).getImgUrl()}:' ff'"/>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

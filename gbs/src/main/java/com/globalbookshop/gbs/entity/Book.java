@@ -1,12 +1,8 @@
 package com.globalbookshop.gbs.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.http.codec.multipart.Part;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,11 +17,11 @@ public class Book {
     private String title;
 
     @Transient
-    private ArrayList<String> authorNames = new ArrayList();
+    private String[] authorNames;
     @Transient
-    private ArrayList<String> deptNames = new ArrayList();
+    private String[]  deptNames;
     @Transient
-    private ArrayList<String> courseNames = new ArrayList();
+    private String[]  courseNames;
     @Transient
     private String publisherName;
 
@@ -58,17 +54,21 @@ public class Book {
     @Column(length = 30)
     private String printOrigin;
 
+
     private Date publicationDate;
     @Column(length = 30)
+
     private String dimentions;
     private  double weight;
 
-    @Column(name = "cover_img", columnDefinition = "MEDIUMTEXT",length = 500000,nullable = false)
-    private String coverImg;
-    @Column(name = "back_img", columnDefinition = "MEDIUMTEXT",length = 500000)
-    private String backImg;
-    @Column(name = "other_img", columnDefinition = "MEDIUMTEXT",length = 500000)
-    private String otherImg;
+    @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "img_id")
+    List<BookImage> bookImages;
+
+//    @Column(name = "back_img", columnDefinition = "MEDIUMTEXT",length = 500000)
+//    private String backImg;
+//    @Column(name = "other_img", columnDefinition = "MEDIUMTEXT",length = 500000)
+//    private String otherImg;
 //
 //    @Transient
 //    private List<File> mImages;
@@ -90,7 +90,7 @@ public class Book {
     )
     @JsonIgnoreProperties("books")
     private List<Course> courses;
-    @Column(length = 30)
+
     private String restriction;
     @Column(columnDefinition = "TEXT")
     private String overview;
@@ -231,33 +231,6 @@ public class Book {
         this.weight = weight;
     }
 
-    public String getCoverImg() {
-        return coverImg;
-    }
-
-    public void setCoverImg(String coverImg) {
-        this.coverImg = coverImg;
-    }
-
-    public String getBackImg() {
-        return backImg;
-    }
-
-    public void setBackImg(String backImg) {
-        this.backImg = backImg;
-    }
-
-    public String getOtherImg() {
-        return otherImg;
-    }
-
-    public void setOtherImg(String otherImg) {
-        this.otherImg = otherImg;
-    }
-
-    public List<Department> getDepts() {
-        return depts;
-    }
 
     public void setDepts(List<Department> depts) {
         this.depts = depts;
@@ -287,27 +260,27 @@ public class Book {
         this.overview = overview;
     }
 
-    public ArrayList<String> getAuthorNames() {
+    public String[] getAuthorNames() {
         return authorNames;
     }
 
-    public void setAuthorNames(ArrayList<String> authorNames) {
+    public void setAuthorNames(String[] authorNames) {
         this.authorNames = authorNames;
     }
 
-    public ArrayList<String> getDeptNames() {
+    public String[] getDeptNames() {
         return deptNames;
     }
 
-    public void setDeptNames(ArrayList<String> deptNames) {
+    public void setDeptNames(String[] deptNames) {
         this.deptNames = deptNames;
     }
 
-    public ArrayList<String> getCourseNames() {
+    public String[] getCourseNames() {
         return courseNames;
     }
 
-    public void setCourseNames(ArrayList<String> courseNames) {
+    public void setCourseNames(String[] courseNames) {
         this.courseNames = courseNames;
     }
 
@@ -318,4 +291,17 @@ public class Book {
     public void setPublisherName(String publisherName) {
         this.publisherName = publisherName;
     }
+
+    public List<BookImage> getBookImages() {
+        return bookImages;
+    }
+
+    public void setBookImages(List<BookImage> bookImages) {
+        this.bookImages = bookImages;
+    }
+
+    public List<Department> getDepts() {
+        return depts;
+    }
+
 }
