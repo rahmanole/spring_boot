@@ -128,14 +128,14 @@
                         <span style="color: #757575;margin-bottom: 4px">Front Cover</span>
                         <br>
                         <input type="file" name="frontCover" id="frontCover"/>
-                        <img class="card-img-top" height="100%" th:src="${book.getBookImages().size() > 0} ? ${book.getBookImages().get(0).getImgUrl()}:'ff'"/>
+                        <img  height="100" width="60" th:src="${book.getBookImages().size() > 0} ? ${book.getBookImages().get(0).getImgUrl()}:'ff'"/>
                     </div>
 
                     <div class="md-form">
                         <span style="color: #757575;margin-bottom: 4px">Back Cover</span>
                         <br>
                         <input type="file" name="backCover" id="backCover"/>
-                        <img class="card-img-top" height="100%"
+                        <img  height="100" width="60"
                              th:src="${book.getBookImages().size() > 0} ? ${book.getBookImages().get(1).getImgUrl()}:' ff'"/>
                     </div>
                     <button class="btn btn-primary btn-block" type="submit">Submit</button>
