@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<select id="drop">
+    <option>Authors</option>
+    <option>Courses</option>
+    <option>Departmetns</option>
+</select>
+
+<select id="second">
+    <option>Select Author</option>
+</select>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#drop").change(function () {
+            var urlName = '/' + $('#drop :selected').val();
+            var val = "";
+            $.ajax({
+                method: "GET",
+                url: urlName,
+                success: function (data) {
+                    console.log(urlName);
+                    $("#second").append().html("");
+                    for (var i = 0; i < data.length; i++) {
+                        $("#second").append("<option value=\"" + data[i].value + "\">" + data[i] + "</option>");
+                    }
+
+                    val = data;
+                    console.log(val);
+                }
+            });
+
+
+        });
+    });
+</script>
+</body>
+</html>

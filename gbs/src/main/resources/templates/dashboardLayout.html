@@ -15,12 +15,12 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/all.css}">
     <link rel="stylesheet" th:href="@{/css/fontawesome.css}">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <link rel="stylesheet" th:href="@{/css/mdb.min.css}">
     <link th:href="@{https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css}"  rel="stylesheet" type="text/css" />
 
     <!-- Page level plugin CSS-->
-    <link th:href="@{/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
+    <link th:href="@{/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link rel="stylesheet" th:href="@{/css/sb-admin.css}" >
@@ -98,6 +98,20 @@
     //         // alert(combinedSize);
     //     })
     // })
+
+    $(document).ready(function(){
+        $("#drop").change(function () {
+            var val = $.ajax({
+                type: "GET",
+                url: 'http://localhost:8008/getAuthors',
+                dataType: 'jsonp',
+                success: function(data){
+                    alert(data)
+                }
+            })
+
+        });
+    });
 
 </script>
 

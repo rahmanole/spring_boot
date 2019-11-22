@@ -5,6 +5,8 @@ import com.globalbookshop.gbs.dao.BookImageDao;
 import com.globalbookshop.gbs.entity.*;
 import com.globalbookshop.gbs.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,15 +33,15 @@ public class BookController {
     @Autowired
     FileUploadService fileUploadService;
 
+    @Autowired
+    BookDao bookDao;
+
 
     @Autowired
     BookImageDao bookImageDao;
 
     @Autowired
     SliderImageService sliderImageService;
-
-    @Autowired
-    BookDao bookDao;
 
 
     @GetMapping("addBook")
@@ -131,4 +133,40 @@ public class BookController {
 
         return "dashboardPages/bookList";
     }
+
+    @ResponseBody
+    @GetMapping("/Authors")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<Object> getAuthors(){
+        return new ResponseEntity<>(authorService.authorNames(), HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @GetMapping("/Courses")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<Object> getCourses(){
+        return new ResponseEntity<>(courseService.courseNames(), HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @GetMapping("/getAllSrchKeys")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<Object> getAllKeys(){
+
+        List<String> allKeys = courseService.courseNames();
+        allKeys.addAll(courseService.courseNames());
+        allKeys.addAll(authorService.authorNames());
+        allKeys.addAll(publisherService.publisherNames());
+        allKeys.addAll(departmentService.deptNames());
+        allKeys.addAll(bookDao.isbns());
+
+        return new ResponseEntity<>(allKeys, HttpStatus.OK);
+    }
+
+    @GetMapping("/select")
+    public String dependentDropdownList(){
+        return "dependentDropdownList";
+    }
+
+
 }

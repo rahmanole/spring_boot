@@ -14,6 +14,7 @@
     <link rel="stylesheet" th:href="@{/css/fontawesome.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/mdb.min.css}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 </head>
 
@@ -80,12 +81,37 @@
 
 
 <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/js/autoComplt.js}"></script>
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
 <!-- Bootstrap core JavaScript -->
 <script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" th:src="@{/js/mdb.min.js}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $("#drop").change(function () {
+            var urlName = '/'+ $('#drop :selected').val();
+            var val = $.ajax({
+                method: "GET",
+                url: urlName,
+                success: function(data){
+                    console.log(urlName);
+
+                    $("#second").append().html("");
+                    for(var i=0;i<data.length;i++){
+                        $("#second").append("<option value=\""+data[i].value+"\">"+data[i]+"</option>");
+                    }
+
+                }
+            });
+
+        });
+    });
+</script>
 
 </body>
 
