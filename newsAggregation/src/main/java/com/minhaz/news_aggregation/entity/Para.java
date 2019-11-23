@@ -1,4 +1,4 @@
-package com.globalBookShop.gsb.entity;
+package com.minhaz.news_aggregation.entity;
 
 import javax.persistence.*;
 

@@ -1,6 +1,6 @@
-package com.globalBookShop.gsb.dao;
+package com.minhaz.news_aggregation.dao;
 
-import com.globalBookShop.gsb.entity.Post;
+import com.minhaz.news_aggregation.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

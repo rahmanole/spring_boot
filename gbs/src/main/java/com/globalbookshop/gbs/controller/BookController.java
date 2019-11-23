@@ -154,11 +154,11 @@ public class BookController {
     public ResponseEntity<Object> getAllKeys(){
 
         List<String> allKeys = courseService.courseNames();
-        allKeys.addAll(courseService.courseNames());
         allKeys.addAll(authorService.authorNames());
         allKeys.addAll(publisherService.publisherNames());
         allKeys.addAll(departmentService.deptNames());
         allKeys.addAll(bookDao.isbns());
+        allKeys.addAll(bookDao.getTitles());
 
         return new ResponseEntity<>(allKeys, HttpStatus.OK);
     }

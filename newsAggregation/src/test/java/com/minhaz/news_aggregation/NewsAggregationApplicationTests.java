@@ -1,4 +1,4 @@
-package com.globalBookShop.gsb;
+package com.minhaz.news_aggregation;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

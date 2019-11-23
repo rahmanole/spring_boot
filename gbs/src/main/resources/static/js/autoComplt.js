@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     $.ajax({
         method: "GET",
@@ -9,12 +8,13 @@ $(document).ready(function () {
                 $("#second").append("<option value=\"" + data[i].value + "\">" + data[i] + "</option>");
             }
 
-            auto(data);
+            autoCompletedTextField(data);
         }
     });
 });
- function auto(tags){
-    $( "#search" ).autocomplete({
+
+function autoCompletedTextField(tags) {
+    $("#search").autocomplete({
         source: tags
     });
-} ;
+};

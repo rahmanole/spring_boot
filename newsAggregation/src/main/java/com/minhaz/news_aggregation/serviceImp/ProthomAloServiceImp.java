@@ -1,14 +1,17 @@
-package com.globalBookShop.gsb.serviceImp;
+package com.minhaz.news_aggregation.serviceImp;
 
 
 
-import com.globalBookShop.gsb.entity.Para;
-import com.globalBookShop.gsb.entity.Post;
-import com.globalBookShop.gsb.service.ProthomAloService;
+import com.minhaz.news_aggregation.dao.PostRepository;
+import com.minhaz.news_aggregation.entity.Para;
+import com.minhaz.news_aggregation.entity.Post;
+import com.minhaz.news_aggregation.service.ProthomAloService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

@@ -1,0 +1,49 @@
+==============For Dropdownlist with multi select===============
+Step One: Add this two css and js file
+CSS:https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css
+JS:https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js
+
+
+Step One: Add this css class on the field
+	"js-example-basic-multiple"
+
+Step three: Add this jquery code
+
+<script>
+	$(document).ready(function() {
+        	$('.js-example-basic-multiple').select2();
+    	});
+</script>
+
+
+
+==============Auto Completed Textfield===============
+Step One: Add the below code snipt of jQuery
+<script>
+$(document).ready(function () {
+    $.ajax({
+        method: "GET",
+        url: '/getAllSrchKeys',
+        success: function (data) {
+            $("#second").append().html("");
+            for (var i = 0; i < data.length; i++) {
+                $("#second").append("<option value=\"" + data[i].value + "\">" + data[i] + "</option>");
+            }
+
+            autoCompletedTextField(data);
+        }
+    });
+});
+
+function autoCompletedTextField(tags) {
+    $("#search").autocomplete({
+        source: tags
+    });
+};
+</script>
+
+Step Two: Add the id "search" on the text field
+
+
+
+

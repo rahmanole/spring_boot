@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/all.css}">
+    <link rel="stylesheet" th:href="@{/css/fontawesome.css}">
+
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+    <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/mdb.min.css}">
+
+    <script>
+        var prevScrollpos = window.pageYOffset;
+        window.onscroll = function () {
+            var currentScrollPos = window.pageYOffset;
+            if (prevScrollpos > currentScrollPos) {
+                document.getElementById("topNavbar").style.top = "0";
+            } else {
+                document.getElementById("topNavbar").style.top = "-70px";
+            }
+            prevScrollpos = currentScrollPos;
+        }
+    </script>
+</head>
+
+<body>
+
+<div class="container-fluid p-0" style="overflow: hidden">
+
+    <div th:replace="~{fragments/topToolBar.html :: topToolBar}">
+
+    </div>
+
+    <div th:replace="~{fragments/logoAndSrch.html :: logoAndSrch}">
+
+    </div>
+
+    <div th:replace="~{fragments/topNavBar.html :: topNavBar}">
+
+    </div>
+
+    <div th:replace="~{fragments/sideNav.html :: sideNav}">
+
+    </div>
+
+    <div class="row mainBody">
+        <div layout:fragment="custom-content">
+
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/footer.html :: footer}">
+
+    </div>
+</div>
+
+
+<script type="text/javascript" th:src="@{../static/js/jquery.js}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" th:src="@{../static/js/popper.min.js}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" th:src="@{../static/js/bootstrap.min.js}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" th:src="@{../static/js/mdb.min.js}"></script>
+<!-- Your custom scripts (optional) -->
+<script>
+    // SideNav Button Initialization
+    $(".button-collapse").sideNav();
+    // SideNav Scrollbar Initialization
+    var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+    var ps = new PerfectScrollbar(sideNavScrollbar);
+
+    // SideNav Default Options
+    $('.button-collapse').sideNav({
+        edge: 'left', // Choose the horizontal origin
+        closeOnClick: false, // Closes side-nav on &lt;a&gt; clicks, useful for Angular/Meteor
+        breakpoint: 1440, // Breakpoint for button collapse
+        MENU_WIDTH: 240, // Width for sidenav
+        timeDurationOpen: 300, // Time duration open menu
+        timeDurationClose: 200, // Time duration open menu
+        timeDurationOverlayOpen: 50, // Time duration open overlay
+        timeDurationOverlayClose: 200, // Time duration close overlay
+        easingOpen: 'easeOutQuad', // Open animation
+        easingClose: 'easeOutCubic', // Close animation
+        showOverlay: true, // Display overflay
+        showCloseButton: false // Append close button into siednav
+    });
+
+    // Show sideNav
+    $('.button-collapse').sideNav('show');
+    // Hide sideNav
+    $('.button-collapse').sideNav('hide');
+</script>
+</body>
+
+</html>
+

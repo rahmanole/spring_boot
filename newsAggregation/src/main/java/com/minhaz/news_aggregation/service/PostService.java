@@ -1,6 +1,6 @@
-package com.globalBookShop.gsb.service;
+package com.minhaz.news_aggregation.service;
 
-import com.globalBookShop.gsb.entity.Post;
+import com.minhaz.news_aggregation.entity.Post;
 
 import java.util.List;
 

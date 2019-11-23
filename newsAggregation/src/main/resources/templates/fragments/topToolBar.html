@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class=" row mt-0" th:fragment="topToolBar">
+    <nav class="navbar p-0 navbar-expand-lg navbar-dark primary-color" style="width: 100%">
+        <div class="container p-0 topToolBar">
+            <div class="row" style="width: 100%">
+                <div class="col-lg-8">
+                    <!-- Collapse button -->
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+                            aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Collapsible content -->
+                    <div class="collapse navbar-collapse " id="basicExampleNav">
+
+                        <!-- Links -->
+                        <ul class="navbar-nav mr-auto" style="width: 100%">
+                            <li><img th:src="@{/img/seperator.png}" height="40" width="1"></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Login </a>
+                            </li>
+                            <li><img th:src="@{/img/seperator.png}" height="40" width="1"></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">SignUp</a>
+                            </li>
+                            <li><img th:src="@{/img/seperator.png}" height="40" width="1"></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Dashboard</a>
+                            </li>
+                            <li><img th:src="@{/img/seperator.png}" height="40" width="1"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 pr-0">
+                    <div class="dropdown">
+                        <ul class="navbar-nav mr-auto d-flex justify-content-end w-100">
+                            <li class="nav-item dropdown float-right">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">Notifications</a>
+                                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </li>
+                            <li><img th:src="@{/img/seperator.png}" height="40" width="1"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

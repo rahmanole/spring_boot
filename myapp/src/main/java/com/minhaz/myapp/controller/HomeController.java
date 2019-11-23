@@ -1,7 +1,6 @@
 package com.minhaz.myapp.controller;
 
 import com.minhaz.myapp.dao.PostRepository;
-import com.minhaz.myapp.entity.Email;
 import com.minhaz.myapp.entity.Post;
 import com.minhaz.myapp.service.PostService;
 import com.minhaz.myapp.util.UtilityClass;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Controller
 public class HomeController {
