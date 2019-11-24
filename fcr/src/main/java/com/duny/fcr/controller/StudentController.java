@@ -22,7 +22,7 @@ public class StudentController {
     }
 
 
-    @PostMapping("save")
+    @PostMapping("student/save")
     public String save(Student student, @RequestParam("d") String d) throws Exception{
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-mm-dd");
         Date date = sf.parse(d);
@@ -30,6 +30,8 @@ public class StudentController {
         student.setDob(sf.parse(d));
         student.setStatus("applied");
         student.setFeePolicy("nd");
+        int student_id = studentRepo.getStudentId();
+        student.setStudentId(++student_id);
         studentRepo.save(student);
         return "redirect:/student/registration";
     }
