@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layoutForm.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Form Examples | Bootstrap Based Admin Template - Material Design</title>
+    <!-- Favicon-->
+
+</head>
+
+<body class="theme-red">
+
+
+<section class="content" layout:fragment="custom-content">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2 class="text-center">
+                            Conditions
+                        </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
+                                   role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    <li><a href="javascript:void(0);">Another action</a></li>
+                                    <li><a href="javascript:void(0);">Something else here</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <form method="POST" name="feeRep">
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <label class="form-label">Student Type</label>
+                                    <br>
+                                    <br>
+                                    <input  type="radio" name="admisnFee" id="male" value="755" />
+                                    <label for="male">New Student</label>
+                                    <input  type="radio" name="admisnFee" id="female" value="240" />
+                                    <label for="female">Returning Student</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <label class="form-label">Course</label>
+                                    <br>
+
+                                    <select id="course"  class="form-control show-tick">
+                                        <option  selected>Select a course</option>
+                                        <option value="755">Boy's Nazira</option>
+                                        <option value="755">Boy's Hifz</option>
+                                        <option value="755">Boy's Alim</option>
+                                        <option value="240">Girl's Nazira</option>
+                                        <option value="240">Girl's Hifz</option>
+                                        <option value="240">Girl's Alim</option>
+                                        <option value="240">NYIIS Only</option>
+                                        <option value="50">Standardized</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <label class="form-label">Is residential?</label>
+                                    <br>
+                                    <br>
+                                    <input  type="radio" name="boarding" id="yes" value="1000"/>
+                                    <label for="yes">Yes</label>
+                                    <input  type="radio" name="boarding" id="no"  value="0"/>
+                                    <label for="no">No</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2 class="text-center">
+                            Common Mandatory Fees
+                        </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
+                                   role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    <li><a href="javascript:void(0);">Another action</a></li>
+                                    <li><a href="javascript:void(0);">Something else here</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="body">
+                        <form  >
+                            <table class="table">
+                                <tr>
+                                    <td>Admission Fee</td>
+                                    <td><input id="admsnFee" disabled class="form-control" type="text" ></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Academic Fee</td>
+                                    <td><input id="courseFee" disabled class="form-control" type="text" ></td>
+                                </tr>
+                                <tr>
+                                    <td>Residential Fee</td>
+                                    <td><input id="residentialFee" disabled class="form-control" type="text" ></td>
+                                </tr>
+                                <tr>
+                                    <td>Total</td>
+                                    <td><input id="total" disabled class="form-control" type="text" ></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>

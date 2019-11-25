@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout.html}">
+      layout:decorate="~{layoutForm.html}">
 
 <head>
     <meta charset="UTF-8">
@@ -69,6 +69,22 @@
                                     <label for="male">Male</label>
                                     <input  type="radio" th:field="*{gender}" id="female" th:value="Female"/>
                                     <label for="female">Female</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <label class="form-label">Course</label>
+                                    <br>
+
+                                    <select th:field="*{course}" class="form-control show-tick">
+                                        <option th:value="course" selected>Select a course</option>
+                                        <option th:value="Academy">Academy</option>
+                                        <option th:value="Nazra">Nazra</option>
+                                        <option th:value="Hifz">Hifz</option>
+                                        <option th:value="Alim">Alim</option>
+                                        <option th:value="Alim">Alima</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -145,9 +161,11 @@
                                     <br>
 
                                     <select th:field="*{state}" class="form-control show-tick">
-                                        <option th:value="New_York">Mustard</option>
-                                        <option th:value="Florida">Ketchup</option>
-                                        <option th:value="Texas">Relish</option>
+                                        <option th:value="state" selected>Select State</option>
+                                        <option th:value="New_York">New York</option>
+                                        <option th:value="Florida">Florida</option>
+                                        <option th:value="Texas">Texas</option>
+                                        <option th:value="California">California</option>
                                     </select>
                                 </div>
                             </div>
@@ -184,11 +202,10 @@
                             <button type="submit" class="btn btn-primary waves-effect">SUBMIT</button>
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
-
-
     </div>
 </section>
 </body>

@@ -30,15 +30,23 @@ public class StudentController {
         student.setDob(sf.parse(d));
         student.setStatus("applied");
         student.setFeePolicy("nd");
-        int student_id = studentRepo.getStudentId();
-        student.setStudentId(++student_id);
+        int application_id = studentRepo.getMaxApplicationId();
+        //student.setApplicationId(1000);
+        student.setApplicationId(++application_id);
         studentRepo.save(student);
         return "redirect:/student/registration";
     }
 
     @GetMapping("student/pending")
     public String pendingApplications(Model model){
+        model.addAttribute("appliesStList",studentRepo.findAll());
         return "pages/tables/pending";
+    }
+
+    @GetMapping("details/{id}")
+    public String pendingApplications(Model model,@PathVariable long id){
+        model.addAttribute("student",studentRepo.getOne(id));
+        return "pages/studentInfo";
     }
 
 }

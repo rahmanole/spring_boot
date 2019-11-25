@@ -17,6 +17,8 @@ public class Student {
     private long id;
     @Column(name = "student_id",length = 10)
     private int studentId;
+    @Column(name = "application_id",length = 10)
+    private int applicationId;
     @Column(length = 30,nullable = false)
     private String name;
     @Column(length = 30,nullable = false)
@@ -57,4 +59,6 @@ public class Student {
     private Date dateOfAdmission;
     @Column(length = 15,nullable = false)
     private String status;
+    @Column(length = 15,nullable = false)
+    private String course;
 }
