@@ -13,24 +13,23 @@
           type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
     <!-- Bootstrap Core Css -->
+    <!-- Bootstrap Core Css -->
     <link th:href="@{/plugins/bootstrap/css/bootstrap.css}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-
 
     <!-- Waves Effect Css -->
-    <link th:href="@{/plugins/node-waves/waves.css}" rel="stylesheet"/>
-    <link th:href="@{/plugins/bootstrap-select/css/bootstrap-select.css}" rel="stylesheet"/>
-    <!-- Animation Css -->
-    <link th:href="@{/plugins/animate-css/animate.css}" rel="stylesheet"/>
+    <link th:href="@{/plugins/node-waves/waves.css}" rel="stylesheet" />
 
-    <!-- Morris Chart Css-->
-    <link th:href="@{/plugins/morrisjs/morris.css}" rel="stylesheet"/>
+    <!-- Animation Css -->
+    <link th:href="@{/plugins/animate-css/animate.css}" rel="stylesheet" />
+
+    <!-- JQuery DataTable Css -->
+    <link th:href="@{/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css}" rel="stylesheet">
 
     <!-- Custom Css -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link th:href="@{/css/themes/all-themes.css}" rel="stylesheet"/>
+    <link th:href="@{/css/themes/all-themes.css}" rel="stylesheet" />
 </head>
 
 <body class="theme-red">
@@ -46,6 +45,7 @@
 
 <!-- Jquery Core Js -->
 <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+
 <!-- Bootstrap Core Js -->
 <script th:src="@{/plugins/bootstrap/js/bootstrap.js}"></script>
 
@@ -58,33 +58,23 @@
 <!-- Waves Effect Plugin Js -->
 <script th:src="@{/plugins/node-waves/waves.js}"></script>
 
-<!-- Jquery CountTo Plugin Js -->
-<script th:src="@{/plugins/jquery-countto/jquery.countTo.js}"></script>
-
-<!-- Morris Plugin Js -->
-<script th:src="@{/plugins/raphael/raphael.min.js}"></script>
-<script th:src="@{/plugins/morrisjs/morris.js}"></script>
-
-<!-- ChartJs -->
-<script th:src="@{/plugins/chartjs/Chart.bundle.js}"></script>
-
-<!-- Flot Charts Plugin Js -->
-<script th:src="@{/plugins/flot-charts/jquery.flot.js}"></script>
-<script th:src="@{/plugins/flot-charts/jquery.flot.resize.js}"></script>
-<script th:src="@{/plugins/flot-charts/jquery.flot.pie.js}"></script>
-<script th:src="@{/plugins/flot-charts/jquery.flot.categories.js}"></script>
-<script th:src="@{/plugins/flot-charts/jquery.flot.time.js}"></script>
-
-<!-- Sparkline Chart Plugin Js -->
-<script th:src="@{/plugins/jquery-sparkline/jquery.sparkline.js}"></script>
+<!-- Jquery DataTable Plugin Js -->
+<script th:src="@{/plugins/jquery-datatable/jquery.dataTables.js}"></script>
+<script th:src="@{/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js}"></script>
+<script th:src="@{/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js}"></script>
+<script th:src="@{/plugins/jquery-datatable/extensions/export/buttons.flash.min.js}"></script>
+<script th:src="@{/plugins/jquery-datatable/extensions/export/jszip.min.js}"></script>
+<script th:src="@{/plugins/jquery-datatable/extensions/export/pdfmake.min.js}"></script>
+<script th:src="@{/plugins/jquery-datatable/extensions/export/vfs_fonts.js}"></script>
+<script th:src="@{/plugins/jquery-datatable/extensions/export/buttons.html5.min.js}"></script>
+<script th:src="@{/plugins/jquery-datatable/extensions/export/buttons.print.min.js}"></script>
 
 <!-- Custom Js -->
 <script th:src="@{/js/admin.js}"></script>
-<script th:src="@{/js/pages/index.js}"></script>
+<script th:src="@{/js/pages/tables/jquery-datatable.js}"></script>
+
 <!-- Demo Js -->
 <script th:src="@{/js/demo.js}"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script th:src="@{/js/pages/feeReport.js}"></script>
 </body>
 
 </html>

@@ -32,6 +32,7 @@ public class StudentController {
         student.setFeePolicy("nd");
         int application_id = studentRepo.getMaxApplicationId();
         //student.setApplicationId(1000);
+        System.out.println(student.getCourseName());
         student.setApplicationId(++application_id);
         studentRepo.save(student);
         return "redirect:/student/registration";

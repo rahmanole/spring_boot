@@ -20,9 +20,6 @@
             <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="header">
-                        <h2 class="text-center">
-                            Conditions
-                        </h2>
                         <ul class="header-dropdown m-r--5">
                             <li class="dropdown">
                                 <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
@@ -39,36 +36,62 @@
                     </div>
                     <div class="body">
                         <form method="POST" name="feeRep">
-
+                            <div>
+                                <p class="text-center" style="margin: 0">
+                                    Conditions For Common Mandatory Fees
+                                </p>
+                            </div>
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <label class="form-label">Student Type</label>
                                     <br>
                                     <br>
-                                    <input  type="radio" name="admisnFee" id="male" value="200" />
+                                    <input type="radio" name="admisnFee" id="male" value="200"/>
                                     <label for="male">New Student</label>
-                                    <input  type="radio" name="admisnFee" id="female" value="100" />
+                                    <input type="radio" name="admisnFee" id="female" value="100"/>
                                     <label for="female">Returning Student</label>
                                 </div>
                             </div>
 
-                            <div class="form-group form-float">
+                            <div class="form-group form-float" id="courseDiv">
                                 <div class="form-line">
                                     <label class="form-label">Course</label>
                                     <br>
-
-                                    <select id="course"  class="form-control show-tick">
-                                        <option  selected>Select a course</option>
+                                    <select id="course" class="form-control show-tick">
+                                        <option selected>Select a course</option>
+                                        <option value="240">Academy</option>
                                         <option value="755">Boy's Nazira</option>
+                                        <option value="240">Banaat Nazira</option>
                                         <option value="755">Boy's Hifz</option>
-                                        <option value="755">Boy's Alim</option>
-                                        <option value="240">Girl's Nazira</option>
-                                        <option value="240">Girl's Hifz</option>
-                                        <option value="240">Girl's Alim</option>
-                                        <option value="240">NYIIS Only</option>
-                                        <option value="50">Standardized</option>
+                                        <option value="240">Banaat Hifz</option>
+                                        <option value="Alim">Alim</option>
+                                        <option value="Alima">Alima</option>
+                                        <option value="50">Standardized Test</option>
                                     </select>
                                 </div>
+                            </div>
+
+                            <div class="form-group form-float" id="bookFeeDiv">
+                                <div class="form-line">
+                                    <label class="form-label">Book Fee</label>
+                                    <br>
+                                    <select id="bookFee" class="form-control show-tick">
+                                        <option selected>Select a course</option>
+                                        <option value="Oola">Oola</option>
+                                        <option value="Thania">Thania</option>
+                                        <option value="Thalitha">Thalitha</option>
+                                        <option value="Rabiya">Rabiya</option>
+                                        <option value="Khamisa">Khamisa</option>
+                                        <option value="Saadisa">Saadisa</option>
+                                        <option value="Darua">Darua</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <p class="text-center" style="margin: 0">
+                                    Conditions For Tuition Fees
+                                </p>
                             </div>
 
                             <div class="form-group form-float">
@@ -76,23 +99,295 @@
                                     <label class="form-label">Is residential?</label>
                                     <br>
                                     <br>
-                                    <input  type="radio" name="boarding" id="yes" value="1000"/>
+                                    <input type="radio" name="boarding" value="2700" id="yes"/>
                                     <label for="yes">Yes</label>
-                                    <input  type="radio" name="boarding" id="no"  value="0"/>
+                                    <input type="radio" name="boarding" value="0" id="no" selected/>
                                     <label for="no">No</label>
                                 </div>
                             </div>
 
+                            <div style="margin-bottom: 20px">
+                                <p class="text-center" style="margin: 0">
+                                    Apply Discounts
+                                </p>
+                            </div>
+
+                            <div class="form-group form-float" id="discount">
+                                <div class="form-line">
+                                    <input type="checkbox" id="sponsor" value="sponsor"/>
+                                    <label for="sponsor" style="margin-right: 10px">Sponsor</label>
+
+                                    <input type="checkbox" id="dollarADay"/>
+                                    <label for="dollarADay" style="margin-right: 10px">Dollar A Day Donor</label>
+
+                                    <input type="checkbox" id="collection"/>
+                                    <label for="collection" style="margin-right: 10px">Collection For DUNY</label>
+
+                                    <input type="checkbox" id="sibling"/>
+                                    <label for="sibling" style="margin-right: 10px">Sibling Discount</label>
+
+                                    <input type="checkbox" id="staff"/>
+                                    <label for="staff" style="margin-right: 10px">Staff Discount</label>
+
+                                    <input type="checkbox" id="otp"/>
+                                    <label for="otp" style="margin-right: 10px">OTP Discount</label>
+
+                                    <input type="checkbox" id="zakat"/>
+                                    <label for="zakat" style="margin-right: 10px">Zakat</label>
+
+                                    <!-- ============Discount Divs=========-->
+
+                                    <div class="form-group form-float" id="sponsorDiv">
+                                        <div class="form-line">
+                                            <div class="row">
+                                                <p class="text-center" style="margin-bottom: 20px">
+                                                    Sponsor
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-5">
+                                                    <p style="margin-bottom: 5px">Assign </p>
+                                                    <form >
+
+                                                        <div class="form-group form-float">
+                                                            <div class="form-line">
+                                                                <input type="text" id="spNameForAssign"
+                                                                       class="form-control">
+                                                                <label class="form-label">Sponsor Name</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <button type="submit" class="btn btn-primary waves-effect">
+                                                            Assign
+                                                        </button>
+                                                    </form>
+                                                </div>
+
+                                                <div class="col-lg-7">
+                                                    <ul class="nav nav-tabs">
+                                                        <li class="active"><a data-toggle="tab" href="#home">Details</a></li>
+                                                        <li><a data-toggle="tab" href="#menu1">Add</a></li>
+                                                     </ul>
+                                                    <div class="tab-content">
+                                                        <div id="home" class="tab-pane fade in active" >
+                                                            <table class="table table-striped bg-info" id="spnsrDtlsTbl">
+
+                                                            </table>
+                                                        </div>
+                                                        <div id="menu1" class="tab-pane fade">
+                                                            <form method="POST" th:object="${sponsor}">
+                                                                <div class="form-group form-float">
+                                                                    <div class="form-line">
+                                                                        <input type="text" th:field="*{name}" id="sponsorName" class="form-control">
+                                                                        <label class="form-label">Name</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group form-float">
+                                                                    <div class="form-line">
+                                                                        <input type="text" th:field="*{email}"id="sponsorEmail" class="form-control">
+                                                                        <label class="form-label">Email</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group form-float">
+                                                                    <div class="form-line">
+                                                                        <input type="text" th:field="*{phone}"id="phone" class="form-control">
+                                                                        <label class="form-label">Phone</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group form-float">
+                                                                    <div class="form-line">
+                                                                        <input type="text" th:field="*{address}"id="address" class="form-control">
+                                                                        <label class="form-label">Address</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group form-float">
+                                                                    <div class="form-line">
+                                                                        <input type="text" th:field="*{donationInterval}"id="donationPeriod" class="form-control">
+                                                                        <label class="form-label">Donation Period</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group form-float">
+                                                                    <div class="form-line">
+                                                                        <input type="number" th:field="*{donationAmount}"id="donationAmount" class="form-control">
+                                                                        <label class="form-label">Donation Amount</label>
+                                                                    </div>
+                                                                </div>
+                                                                <button type="submit" class="btn btn-primary waves-effect">SUBMIT</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-float" id="dollarADayDiv">
+                                        <div class="form-line">
+                                            <div class="row">
+                                                <p class="text-center" style="margin-bottom: 20px">
+                                                    Dollar A Day Donor
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-5">
+                                                    <p style="margin-bottom: 5px">Assign </p>
+                                                    <form method="POST">
+
+                                                        <div class="form-group form-float">
+                                                            <div class="form-line">
+                                                                <input type="text" id="dollarADonarName"
+                                                                       class="form-control">
+                                                                <label class="form-label">Sponsor Name</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <button type="submit" class="btn btn-primary waves-effect">
+                                                            Assing
+                                                        </button>
+                                                    </form>
+                                                </div>
+
+                                                <div class="col-lg-7">
+                                                    <button type="submit" id="addSp" class="btn btn-primary waves-effect">
+                                                       Add Sponsor
+                                                    </button>
+                                                    <form method="POST">
+                                                        <div class="form-group form-float">
+                                                            <div class="form-line">
+                                                                <input type="text" id="name"
+                                                                       class="form-control">
+                                                                <label class="form-label">Name</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group form-float">
+                                                            <div class="form-line">
+                                                                <input type="text" id="email"
+                                                                       class="form-control">
+                                                                <label class="form-label">Email</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <button type="submit" class="btn btn-primary waves-effect">Add
+                                                        </button>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-float" id="collectionDiv">
+
+                                        <div class="form-line">
+                                            <div class="row">
+                                                <p class="text-center" style="margin-bottom: 20px">
+                                                    Collection For DUNY
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-5">
+                                                    <p>Assign </p>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <p>Add New</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-float" id="siblingDiv">
+
+                                        <div class="form-line">
+                                            <div class="row">
+                                                <p class="text-center" style="margin-bottom: 20px">
+                                                    Sibling
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-5">
+                                                    <p>Assign </p>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <p>Add New</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-float" id="staffDiv">
+
+                                        <div class="form-line">
+                                            <div class="row">
+                                                <p class="text-center" style="margin-bottom: 20px">
+                                                    Staff
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-5">
+                                                    <p>Assign </p>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <p>Add New</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-float" id="otpDiv">
+
+                                        <div class="form-line">
+                                            <div class="row">
+                                                <p class="text-center" style="margin-bottom: 20px">
+                                                    One Time Payment
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-5">
+                                                    <p>Assign </p>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <p>Add New</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-float" id="zakatDiv">
+
+                                        <div class="form-line">
+                                            <div class="row">
+                                                <p class="text-center" style="margin-bottom: 20px">
+                                                    Apply For Zakat
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-5">
+                                                    <p>Assign </p>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <p>Add New</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- ============== Discount Divs Ends Here=========-->
+
+                                </div>
+                            </div>
                         </form>
                     </div>
 
                 </div>
             </div>
+
             <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="header">
                         <h2 class="text-center">
-                            Common Mandatory Fees
+                            Statement of Fees
                         </h2>
                         <ul class="header-dropdown m-r--5">
                             <li class="dropdown">
@@ -110,45 +405,79 @@
                     </div>
 
                     <div class="body">
-                        <form  >
+                        <form>
                             <table class="table">
+                                <tr id="tuitionDue" class="bg-danger">
+                                    <td>Tuition Due</td>
+                                    <td><input id="tDue" disabled class="form-control text-right" value="150"
+                                               type="text"></td>
+                                </tr>
+
+
+                                <tr id="collectionDue" class="bg-danger">
+                                    <td>Collection Due</td>
+                                    <td><input id="cDue" disabled class="form-control text-right" value="150"
+                                               type="text"></td>
+                                </tr>
                                 <tr>
-                                    <td>Admission Fee</td>
-                                    <td><input id="admsnFee" disabled class="form-control" type="text" ></td>
-                                    <td></td>
+                                    <td style="width: 70%">Admission</td>
+                                    <td><input id="admsnFee" disabled class="form-control text-right" type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td>Meal Plan</td>
+                                    <td><input id="mealFee" disabled class="form-control text-right" value="100.00"
+                                               type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Academic</td>
+                                    <td><input id="courseFee" disabled class="form-control text-right" type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td>Book</td>
+                                    <td><input id="bookFeeField" disabled class="form-control text-right" type="text">
+                                    </td>
+                                </tr>
+
+                                <tr class="bg-info">
+                                    <td>Total From Mandatory Common Fees</td>
+                                    <td id="totalMandatoryFee" class="text-right "></td>
                                 </tr>
 
                                 <tr>
-                                    <td>Academic Fee</td>
-                                    <td><input id="courseFee" disabled class="form-control" type="text" ></td>
+                                    <td>Residential</td>
+                                    <td><input id="residentialFee" disabled class="form-control text-right" type="text">
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>Residential Fee</td>
-                                    <td><input id="residentialFee" disabled class="form-control" type="text" ></td>
+                                    <td class="w-75">Yearly Tuition</td>
+                                    <td class="w-25"><input id="tuitnFee" disabled class="form-control text-right"
+                                                            value="3800.00" type="text"></td>
                                 </tr>
-                                <tr>
-                                    <td>Yearly Tuition Fee</td>
-                                    <td><input id="tuitnFee" disabled class="form-control" type="text" ></td>
 
-                                </tr>
-                                <tr id="lastYearDue">
-                                    <td>Last Year Due</td>
-                                    <td><input id="due" disabled class="form-control" value="100" type="text" ></td>
-                                </tr>
-                                <tr>
+                                <tr class="bg-info" >
                                     <td>Total</td>
-                                    <td><input id="total" disabled class="form-control" type="text" ></td>
+                                    <td id="total" class="text-right"></td>
+                                </tr>
+
+                                <tr id="otpRow">
+                                    <td class="w-75">Otp Discoint</td>
+                                    <td class="w-25"><input id="otpDisField" disabled class="form-control text-right"
+                                                            value="380.00" type="text"></td>
+                                </tr>
+                                <tr class="bg-info">
+                                    <td>Grand Total</td>
+                                    <td id="gradnTotalFee" class="text-right "></td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td>
+                                    <td class="align-right">
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </td>
                                 </tr>
                             </table>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>

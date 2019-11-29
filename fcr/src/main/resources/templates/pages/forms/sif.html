@@ -38,10 +38,10 @@
                         </ul>
                     </div>
                     <div class="body">
-                        <form method="POST" th:object="${student}"  th:action="@{/student/save}">
+                        <form method="POST" th:object="${student}" th:action="@{/student/save}">
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <input type="text" th:field="*{name}"  id="name" class="form-control">
+                                    <input type="text" th:field="*{name}" id="name" class="form-control">
                                     <label class="form-label">Name</label>
                                 </div>
                             </div>
@@ -65,9 +65,9 @@
                                     <label class="form-label">Gender</label>
                                     <br>
                                     <br>
-                                    <input  type="radio" th:field="*{gender}" id="male" th:value="Male" checked/>
+                                    <input type="radio" th:field="*{gender}" id="male" th:value="Male" checked/>
                                     <label for="male">Male</label>
-                                    <input  type="radio" th:field="*{gender}" id="female" th:value="Female"/>
+                                    <input type="radio" th:field="*{gender}" id="female" th:value="Female"/>
                                     <label for="female">Female</label>
                                 </div>
                             </div>
@@ -77,13 +77,16 @@
                                     <label class="form-label">Course</label>
                                     <br>
 
-                                    <select th:field="*{course}" class="form-control show-tick">
-                                        <option th:value="course" selected>Select a course</option>
+                                    <select th:field="*{courseName}" class="form-control show-tick">
+                                        <option selected>Select a course</option>
                                         <option th:value="Academy">Academy</option>
-                                        <option th:value="Nazra">Nazra</option>
-                                        <option th:value="Hifz">Hifz</option>
+                                        <option th:value="Boy\'s Nazira">Boy's Nazira</option>
+                                        <option th:value="Banaat Nazira">Banaat Nazira</option>
+                                        <option th:value="Boy\'s Hifz">Boy's Hifz</option>
+                                        <option th:value="Banaat Hifz">Banaat Hifz</option>
                                         <option th:value="Alim">Alim</option>
-                                        <option th:value="Alim">Alima</option>
+                                        <option th:value="Alima">Alima</option>
+                                        <option th:value="Standardized Test">Standardized Test</option>
                                     </select>
                                 </div>
                             </div>
@@ -93,9 +96,9 @@
                                     <label class="form-label">Need Boarding?</label>
                                     <br>
                                     <br>
-                                    <input  type="radio" th:field="*{boarding}" id="radio_1" th:value="yes" />
+                                    <input type="radio" th:field="*{boarding}" id="radio_1" th:value="yes"/>
                                     <label for="radio_1">Yes</label>
-                                    <input  type="radio" th:field="*{boarding}" id="radio_2" th:value="no" checked/>
+                                    <input type="radio" th:field="*{boarding}" id="radio_2" th:value="no" checked/>
                                     <label for="radio_2">NO</label>
                                 </div>
                             </div>
@@ -137,7 +140,8 @@
 
                             <div class="form-group">
                                 <div class="form-line">
-                                    <textarea rows="2" th:field="*{address}" class="form-control no-resize" placeholder="Address"></textarea>
+                                    <textarea rows="2" th:field="*{address}" class="form-control no-resize"
+                                              placeholder="Address"></textarea>
                                 </div>
                             </div>
 

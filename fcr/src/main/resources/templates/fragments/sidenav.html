@@ -11,7 +11,7 @@
         <!-- User Info -->
         <div class="user-info">
             <div class="image">
-                <img src="images/user.png" width="48" height="48" alt="User" />
+                <img th:src="@{images/user.png}" width="48" height="48" alt="User" />
             </div>
             <div class="info-container">
                 <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
@@ -31,6 +31,7 @@
             </div>
         </div>
         <!-- #User Info -->
+
         <!-- Menu -->
         <div class="menu">
             <ul class="list">
@@ -72,6 +73,19 @@
                     <ul class="ml-menu">
                         <li>
                             <a th:href="@{/fee/report}">Fee Report</a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li>
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="material-icons">assignment</i>
+                        <span>Sponsor</span>
+                    </a>
+                    <ul class="ml-menu">
+                        <li>
+                            <a th:href="@{/sponsor/add}">Add Sponsor</a>
                         </li>
                     </ul>
                 </li>

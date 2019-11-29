@@ -59,6 +59,6 @@ public class Student {
     private Date dateOfAdmission;
     @Column(length = 15,nullable = false)
     private String status;
-    @Column(length = 15,nullable = false)
-    private String course;
+    @OneToOne(mappedBy = "student",fetch = FetchType.LAZY)
+    private FinDtlsOfStudent finDtlsOfStudent;
 }
