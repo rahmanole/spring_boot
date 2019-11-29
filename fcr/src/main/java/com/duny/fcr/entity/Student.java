@@ -1,5 +1,6 @@
 package com.duny.fcr.entity;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -59,6 +60,4 @@ public class Student {
     private Date dateOfAdmission;
     @Column(length = 15,nullable = false)
     private String status;
-    @OneToOne(mappedBy = "student",fetch = FetchType.LAZY)
-    private FinDtlsOfStudent finDtlsOfStudent;
 }

@@ -6,10 +6,10 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="sponsor")
+@Table(name="dadd")
 @Getter
 @Setter
-public class Sponsor {
+public class DADDonor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +22,9 @@ public class Sponsor {
     private String phone;
     @Column(nullable = false)
     private String address;
-    @Column(name = "donation_period")
-    private String donationInterval;
-    @Column(name = "donation_amount")
-    private double donationAmount;
+    @Column(name="donation_amount")
+    private double donationAmount = 1.0;
     @Column(length = 6,nullable = true)
     private String st_id;
+
 }

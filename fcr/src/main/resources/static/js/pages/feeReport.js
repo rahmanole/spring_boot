@@ -60,7 +60,9 @@ $(document).ready(function () {
         }else{
             $('#bookFeeDiv').hide();
         }
-
+        if(course == 'Select a course'){
+            acFee =0;
+        }
         $('#courseFee').val(acFee.toFixed(2));
         mandatoryFee = totalMandatoryFee(stType, acFee, mealFee, bookFee);
         $('#totalMandatoryFee').html(mandatoryFee.toFixed(2));
@@ -221,6 +223,10 @@ $(document).ready(function () {
     $('#otpRow').hide();
     $('#bookFeeDiv').hide();
 
+    $('#stBtn').click(function () {
+        getStudentById();
+    });
+
 });
 
 
@@ -247,7 +253,7 @@ function hideDiscounts( ids) {
         $('#'+ids[i]).hide();
     }
 }
-var obj;
+
 function getSponsorByname(name) {
     $.ajax({
         method:'GET',
@@ -268,11 +274,25 @@ function getSponsorByname(name) {
                 +
                 "<tr><td>" + "Ammount" + "</td>" + "<td>"+ data.donationAmount+"</td></tr>"
                 +
-                "<tr><td>" + "Remaining" + "</td>" + "<td>"+"</td></tr></tbody>"
-
+                "<tr><td>" + "Remaining" + "</td>"+ "<td>"+(data.st_id==null?data.donationAmount:0)+"</td></tr></tbody>"
+                +
+                "<tr><td>" + "Assigned Student" + "</td>"+ "<td>"+ (data.st_id==null?'Not assigned':data.st_id)+"</td></tr></tbody>"
             );
 
             console.log(data);
+        }
+    })
+}
+
+function getStudentById() {
+    $.ajax({
+        method:'GET',
+        url:'/student/details/'+1,
+        success:function (data) {
+            console.log(data);
+        },
+        error:function () {
+            console.log('not success');
         }
     })
 }

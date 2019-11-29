@@ -1,7 +1,9 @@
 package com.duny.fcr.controller;
 
 import com.duny.fcr.entity.Sponsor;
+import com.duny.fcr.entity.Student;
 import com.duny.fcr.repo.SponsorRepo;
+import com.duny.fcr.repo.StudentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,9 @@ import java.util.List;
 public class SponsorController {
     @Autowired
     SponsorRepo sponsorRepo;
+    @Autowired
+    StudentRepo studentRepo;
+
 
     @GetMapping("sponsor/add")
     public String add(Model model){
@@ -39,6 +44,12 @@ public class SponsorController {
     @ResponseBody
     public Sponsor getSponsorByname(@PathVariable String name){
        return sponsorRepo.findSponsorByName(name);
+    }
+
+    @GetMapping("/api/{id}")
+    @ResponseBody
+    public Sponsor getStudent(@PathVariable Long id){
+       return sponsorRepo.getOne(id);
     }
 
 }

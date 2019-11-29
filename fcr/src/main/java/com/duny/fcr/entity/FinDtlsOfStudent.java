@@ -19,15 +19,8 @@ public class FinDtlsOfStudent {
     // One student can take maximum two sponsors
     // or one sponsor take take two students
     @Column(nullable = true)
-    private long sp1_id;
-    @Column(nullable = true)
-    private double sp1_alloc;
-    @Column(nullable = true)
-    private long sp2_id;
-    @Column(nullable = true)
-    private double sp2_alloc;
-
-    // One student can take maximum thee dadd
+    private long sp_id;
+    // One student can take maximum three dadd
     @Column(nullable = true)
     private long dadd1_id;
     @Column(nullable = true)

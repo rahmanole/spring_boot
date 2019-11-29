@@ -44,10 +44,10 @@ public class StudentController {
         return "pages/tables/pending";
     }
 
-    @GetMapping("details/{id}")
-    public String pendingApplications(Model model,@PathVariable long id){
-        model.addAttribute("student",studentRepo.getOne(id));
-        return "pages/studentInfo";
+    @GetMapping("/student/details/{id}")
+    @ResponseBody
+    public Student pendingApplications(@PathVariable long id){
+        return studentRepo.getOne(id);
     }
 
 }
