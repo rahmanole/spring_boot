@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "member_info")
@@ -41,6 +42,7 @@ public class MemberInfo {
     private Date applicationDate;
     @Column(name="card_no",length =10,unique = true)
     private String cardNo;
-    private byte[] avatar;
-    private byte[] boardingCard;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private List<Image> images;
 }
