@@ -1,6 +1,5 @@
 $(document).ready(function () {
     showDeptist();
-
     $('#addDept').click(function () {
         var formData = JSON.stringify($("form").serializeJSON());
         $.ajax({
@@ -9,7 +8,7 @@ $(document).ready(function () {
             data: formData,
             contentType: "application/json",
             success: function () {
-                showDeptist()
+                showDeptist();
                 console.log('success');
             },
             error:function () {
@@ -25,17 +24,15 @@ $(document).ready(function () {
 
 function showDeptist(){
     $.ajax({
-        metthod: "get",
+        method: "get",
         url: '/dept/list',
         success: (function (data) {
-            console.log(data);
             $('#deptNames').remove();
-            $('#deptListDiv').append("<ul id='deptNames'></ul>");
+            $('#deptListDiv').append("<ul id='deptNames' style='list-style: none'></ul>");
 
             for (var i=0;i<data.length;i++){
                 $('#deptNames').append("<li>"+data[i]+"</li>");
             }
-
         })
     });
 }

@@ -41,6 +41,6 @@ public class MemberInfo {
     private Date applicationDate;
     @Column(name="card_no",length =10,unique = true)
     private String cardNo;
-
-    
+    private byte[] avatar;
+    private byte[] boardingCard;
 }

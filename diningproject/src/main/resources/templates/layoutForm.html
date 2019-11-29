@@ -18,19 +18,26 @@
     <link th:href="@{/plugins/bootstrap/css/bootstrap.css}" rel="stylesheet">
 
     <!-- Waves Effect Css -->
-    <link th:href="@{/plugins/node-waves/waves.css}" rel="stylesheet"/>
+    <link th:href="@{/plugins/node-waves/waves.css}" rel="stylesheet" />
 
     <!-- Animation Css -->
-    <link th:href="@{/plugins/animate-css/animate.css}" rel="stylesheet"/>
+    <link th:href="@{/plugins/animate-css/animate.css}" rel="stylesheet" />
 
-    <!-- Morris Chart Css-->
-    <link th:href="@{/plugins/morrisjs/morris.css}" rel="stylesheet"/>
+    <!-- Bootstrap Material Datetime Picker Css -->
+    <link th:href="@{/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css}" rel="stylesheet" />
+
+    <!-- Wait Me Css -->
+    <link th:href="@{/plugins/waitme/waitMe.css}" rel="stylesheet" />
+    <link th:href="@{/plugins/jqueryUI/jquery-ui.css}" rel="stylesheet" />
+
+    <!-- Bootstrap Select Css -->
+    <link th:href="@{/plugins/bootstrap-select/css/bootstrap-select.css}" rel="stylesheet" />
 
     <!-- Custom Css -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link th:href="@{/css/themes/all-themes.css}" rel="stylesheet"/>
+    <link th:href="@{/css/themes/all-themes.css}" rel="stylesheet" />
 </head>
 
 <body class="theme-red">
@@ -43,6 +50,8 @@
 
     <section layout:fragment="custom-content">
     </section>
+
+
     <!-- Jquery Core Js -->
     <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
 
@@ -57,33 +66,16 @@
 
     <!-- Waves Effect Plugin Js -->
     <script th:src="@{/plugins/node-waves/waves.js}"></script>
-
-    <!-- Jquery CountTo Plugin Js -->
-    <script th:src="@{/plugins/jquery-countto/jquery.countTo.js}"></script>
-
-    <!-- Morris Plugin Js -->
-    <script th:src="@{/plugins/raphael/raphael.min.js}"></script>
-    <script th:src="@{/plugins/morrisjs/morris.js}"></script>
-
-    <!-- ChartJs -->
-    <script th:src="@{/plugins/chartjs/Chart.bundle.js}"></script>
-
-    <!-- Flot Charts Plugin Js -->
-    <script th:src="@{/plugins/flot-charts/jquery.flot.js}"></script>
-    <script th:src="@{/plugins/flot-charts/jquery.flot.resize.js}"></script>
-    <script th:src="@{/plugins/flot-charts/jquery.flot.pie.js}"></script>
-    <script th:src="@{/plugins/flot-charts/jquery.flot.categories.js}"></script>
-    <script th:src="@{/plugins/flot-charts/jquery.flot.time.js}"></script>
-
-    <!-- Sparkline Chart Plugin Js -->
-    <script th:src="@{/plugins/jquery-sparkline/jquery.sparkline.js}"></script>
+    <script th:src="@{/plugins/jqueryUI/jquery-ui.js}"></script>
 
     <!-- Custom Js -->
     <script th:src="@{/js/admin.js}"></script>
-    <script th:src="@{/js/pages/index.js}"></script>
 
     <!-- Demo Js -->
     <script th:src="@{/js/demo.js}"></script>
+    <script th:src="@{/js/customJS/dept.js}"></script>
+    <script th:src="@{/js/customJS/memberinfo.js}"></script>
+    <script th:src="@{/js/pages/jquery.serializejson.js}"></script>
 </body>
 
 </html>

@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DeptDao extends JpaRepository<Dept,Long> {
+public interface DeptRepo extends JpaRepository<Dept,Long> {
     String GET_MAX_DEPT_ID = "select max(dept_id) from depts";
     String GET_DEPT_NAMEs = "select dept_name from depts";
-    String GET_DEPT_ID = "select dept_id from depts where dept_name :=?1";
+    String GET_DEPT_ID = "select dept_id from depts where dept_name =?1";
 
     @Query(nativeQuery = true,value = GET_MAX_DEPT_ID)
     int getMaxDeptId();
