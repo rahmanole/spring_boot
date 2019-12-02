@@ -218,30 +218,36 @@ $(document).ready(function () {
         }
 
         if ($('#selfFunded').is(':checked')) {
-            $('#otp').attr('disabled', false);
-            $('#sponsor').attr('disabled', true);
-            $('#dollarADay').attr('disabled', true);
-            $('#collection').attr('disabled', true);
-            $('#sibling').attr('disabled', true);
-            $('#staff').attr('disabled', true);
-            $('#zakat').attr('disabled', true);
+            var isChecked = $('#selfFunded').is(':checked');
+            if(isChecked){
+                $('#otp').attr('disabled', false);
+                $('#sponsor').attr('disabled', true);
+                $('#dollarADay').attr('disabled', true);
+                $('#collection').attr('disabled', true);
+                $('#sibling').attr('disabled', true);
+                $('#staff').attr('disabled', true);
+                $('#zakat').attr('disabled', true);
+            }
 
-        } else {
-            $('#otp').prop('checked', false);
+            if(!isChecked){
+                $('#otp').prop('checked', false);
 
-            otp = 0;
-            $('#grandTotalFee').html(total.toFixed(2));
-            $('#otpDiv').slideUp();
-            $('#otpRow').hide();
+                otp = 0;
+                $('#grandTotalFee').html(total.toFixed(2));
+                $('#otpDiv').slideUp();
+                $('#otpRow').hide();
 
-            $('#otp').attr('disabled', true);
+                $('#otp').attr('disabled', true);
 
-            $('#sponsor').attr('disabled', false);
-            $('#dollarADay').attr('disabled', false);
-            $('#collection').attr('disabled', false);
-            $('#sibling').attr('disabled', false);
-            $('#staff').attr('disabled', false);
-            $('#zakat').attr('disabled', false);
+                $('#sponsor').attr('disabled', false);
+                $('#dollarADay').attr('disabled', false);
+                $('#collection').attr('disabled', false);
+                $('#sibling').attr('disabled', false);
+                $('#staff').attr('disabled', false);
+                $('#zakat').attr('disabled', false);
+            }
+
+
         }
     });
 
@@ -321,7 +327,7 @@ $(document).ready(function () {
         grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
         console.log(grandTotalFee);
 
-        //$('#grandTotalFee').html(grandTotalFee.toFixed(2));
+        $('#grandTotalFee').html(grandTotalFee.toFixed(2));
 
     });
 
