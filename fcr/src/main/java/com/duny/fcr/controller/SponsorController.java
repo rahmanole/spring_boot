@@ -46,10 +46,12 @@ public class SponsorController {
        return sponsorRepo.findSponsorByName(name);
     }
 
-    @GetMapping("/api/{id}")
+    @GetMapping("/sponsor/student/{st_id}")
     @ResponseBody
-    public Sponsor getStudent(@PathVariable Long id){
-       return sponsorRepo.getOne(id);
+    public Sponsor getSponsorOfStudent(@PathVariable int st_id){
+       return sponsorRepo.getSponsorOfStudent(st_id);
     }
+
+
 
 }

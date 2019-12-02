@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name="dadd")
 @Getter
 @Setter
-public class DADDonor {
+public class Dadd {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,6 @@ public class DADDonor {
     @Column(name="donation_amount")
     private double donationAmount = 1.0;
     @Column(length = 6,nullable = true)
-    private String st_id;
+    private int st_id;
 
 }

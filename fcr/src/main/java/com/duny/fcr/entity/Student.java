@@ -1,6 +1,5 @@
 package com.duny.fcr.entity;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,9 +15,9 @@ public class Student {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private long id;
-    @Column(name = "student_id",length = 10)
-    private int studentId;
-    @Column(name = "application_id",length = 10)
+    @Column(name = "student_id",length =10,unique = true)
+    private String studentId;
+    @Column(name = "application_id",length = 10,unique = true,nullable = false)
     private int applicationId;
     @Column(length = 30,nullable = false)
     private String name;
@@ -47,17 +46,20 @@ public class Student {
     private String aptNo;
     @Column(length = 30,nullable = false)
     private String city;
-    @Column(length = 30,nullable = false,columnDefinition = "varchar(30) default 'applied'")
-    private String state = "applied";
+    @Column(length = 30,nullable = false)
+    private String state;
     @Column(length = 10,nullable = false)
     private String zip;
     @Column(length = 50,nullable = false)
     private String currentSchool;
     @Column(length = 30,nullable = false)
     private String currentGrade;
-    @Column(nullable = false, columnDefinition = "varchar(30) default 'nd'" )
-    private String feePolicy="nd";
     private Date dateOfAdmission;
     @Column(length = 15,nullable = false)
-    private String status;
+    private String status  = "applied";
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name="fin_details_id")
+
+    private FinDtlsOfStudent finDtlsOfStudent;
+
 }

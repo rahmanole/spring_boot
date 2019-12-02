@@ -27,5 +27,5 @@ public class Sponsor {
     @Column(name = "donation_amount")
     private double donationAmount;
     @Column(length = 6,nullable = true)
-    private String st_id;
+    private long st_id;
 }

@@ -18,24 +18,25 @@
     <div class="container-fluid">
 
         <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                 <div class="card" style="padding: 20px">
                     <h5 class="text-center">Student's Brief Info</h5>
-                    <button id="stBtn">Show student</button>
+                    <table class="table table-striped" id="st_details">
+                        <tbody id="studentDetails">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="card" style="padding: 20px">
+                    <h5 class="text-center">Financial Details</h5>
                     <table class="table table-striped">
-                        <tbody>
-                        <tr>
-                            <td>John</td>
-                            <td>Doe</td>
-                        </tr>
-                        <tr>
-                            <td>Mary</td>
-                            <td>Moe</td>
-                        </tr>
-                        <tr>
-                            <td>July</td>
-                            <td>Dooley</td>
-                        </tr>
+                        <tbody id="finDtlsTbl">
+
+
+<!--                        Below are fin details-->
+
                         </tbody>
                     </table>
                 </div>
@@ -93,6 +94,7 @@
                                         <option value="Alim">Alim</option>
                                         <option value="Alima">Alima</option>
                                         <option value="50">Standardized Test</option>
+                                        <option value="na">Academic Not Applicable</option>
                                     </select>
                                 </div>
                             </div>
@@ -155,11 +157,14 @@
                                     <input type="checkbox" id="staff"/>
                                     <label for="staff" style="margin-right: 10px">Staff Discount</label>
 
-                                    <input type="checkbox" id="otp"/>
-                                    <label for="otp" style="margin-right: 10px">OTP Discount</label>
+                                    <input type="checkbox" id="selfFunded"/>
+                                    <label for="selfFunded" style="margin-right: 10px">Self Funded</label>
 
                                     <input type="checkbox" id="zakat"/>
                                     <label for="zakat" style="margin-right: 10px">Zakat</label>
+
+                                    <input type="checkbox" id="otp" disabled/>
+                                    <label for="otp" style="margin-right: 10px">OTP Discount</label>
 
                                     <!-- ============Discount Divs=========-->
 
@@ -173,8 +178,7 @@
                                             <div class="row">
                                                 <div class="col-lg-5">
                                                     <p style="margin-bottom: 5px">Assign </p>
-                                                    <form >
-
+                                                    <form>
                                                         <div class="form-group form-float">
                                                             <div class="form-line">
                                                                 <input type="text" id="spNameForAssign"
@@ -182,68 +186,86 @@
                                                                 <label class="form-label">Sponsor Name</label>
                                                             </div>
                                                         </div>
-
-                                                        <button type="submit" class="btn btn-primary waves-effect">
+                                                        <p id="spAssignStatus"
+                                                           style="color: red;margin: -6px 0 0 0"></p>
+                                                        <button type="button" id="assignSp"
+                                                                class="btn btn-primary waves-effect">
                                                             Assign
                                                         </button>
                                                     </form>
+                                                    <div id="removeSpDiv">
+
+                                                    </div>
+
                                                 </div>
 
                                                 <div class="col-lg-7">
                                                     <ul class="nav nav-tabs">
-                                                        <li class="active"><a data-toggle="tab" href="#home">Details</a></li>
+                                                        <li class="active"><a data-toggle="tab" href="#home">Details</a>
+                                                        </li>
                                                         <li><a data-toggle="tab" href="#menu1">Add</a></li>
-                                                     </ul>
+                                                    </ul>
                                                     <div class="tab-content">
-                                                        <div id="home" class="tab-pane fade in active" >
-                                                            <table class="table table-striped bg-info" id="spnsrDtlsTbl">
+                                                        <div id="home" class="tab-pane fade in active">
+                                                            <table class="table table-striped bg-info"
+                                                                   id="spnsrDtlsTbl">
 
                                                             </table>
                                                         </div>
                                                         <div id="menu1" class="tab-pane fade">
-                                                            <form method="POST" th:object="${sponsor}">
+                                                            <form method="POST">
                                                                 <div class="form-group form-float">
                                                                     <div class="form-line">
-                                                                        <input type="text" th:field="*{name}" id="sponsorName" class="form-control">
+                                                                        <input type="text" id="sponsorName"
+                                                                               class="form-control">
                                                                         <label class="form-label">Name</label>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group form-float">
                                                                     <div class="form-line">
-                                                                        <input type="text" th:field="*{email}"id="sponsorEmail" class="form-control">
+                                                                        <input type="text" id="sponsorEmail"
+                                                                               class="form-control">
                                                                         <label class="form-label">Email</label>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group form-float">
                                                                     <div class="form-line">
-                                                                        <input type="text" th:field="*{phone}"id="phone" class="form-control">
+                                                                        <input type="text" id="phone"
+                                                                               class="form-control">
                                                                         <label class="form-label">Phone</label>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group form-float">
                                                                     <div class="form-line">
-                                                                        <input type="text" th:field="*{address}"id="address" class="form-control">
+                                                                        <input type="text" id="address"
+                                                                               class="form-control">
                                                                         <label class="form-label">Address</label>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group form-float">
                                                                     <div class="form-line">
-                                                                        <input type="text" th:field="*{donationInterval}"id="donationPeriod" class="form-control">
-                                                                        <label class="form-label">Donation Period</label>
+                                                                        <input type="text" id="donationPeriod"
+                                                                               class="form-control">
+                                                                        <label class="form-label">Donation
+                                                                            Period</label>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group form-float">
                                                                     <div class="form-line">
-                                                                        <input type="number" th:field="*{donationAmount}"id="donationAmount" class="form-control">
-                                                                        <label class="form-label">Donation Amount</label>
+                                                                        <input type="number" id="donationAmount"
+                                                                               class="form-control">
+                                                                        <label class="form-label">Donation
+                                                                            Amount</label>
                                                                     </div>
                                                                 </div>
-                                                                <button type="submit" class="btn btn-primary waves-effect">SUBMIT</button>
+                                                                <button type="button"
+                                                                        class="btn btn-primary waves-effect">SUBMIT
+                                                                </button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -252,76 +274,122 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="form-group form-float" id="dollarADayDiv">
                                         <div class="form-line">
                                             <div class="row">
                                                 <p class="text-center" style="margin-bottom: 20px">
-                                                    Dollar A Day Donor
+                                                    DADD Assign
                                                 </p>
                                             </div>
                                             <div class="row">
                                                 <div class="col-lg-5">
                                                     <p style="margin-bottom: 5px">Assign </p>
-                                                    <form method="POST">
-
+                                                    <form>
                                                         <div class="form-group form-float">
                                                             <div class="form-line">
-                                                                <input type="text" id="dollarADonarName"
+                                                                <input type="text" id="daddNames"
                                                                        class="form-control">
-                                                                <label class="form-label">Sponsor Name</label>
+                                                                <label class="form-label">DADD Name</label>
                                                             </div>
                                                         </div>
-
-                                                        <button type="submit" class="btn btn-primary waves-effect">
-                                                            Assing
+                                                        <p id="daddAssignStatus"
+                                                           style="color: red;margin: -6px 0 0 0"></p>
+                                                        <button type="button" id="assignDadd"
+                                                                class="btn btn-primary waves-effect">
+                                                            Assign
                                                         </button>
                                                     </form>
                                                 </div>
 
                                                 <div class="col-lg-7">
-                                                    <button type="submit" id="addSp" class="btn btn-primary waves-effect">
-                                                       Add Sponsor
-                                                    </button>
-                                                    <form method="POST">
-                                                        <div class="form-group form-float">
-                                                            <div class="form-line">
-                                                                <input type="text" id="name"
-                                                                       class="form-control">
-                                                                <label class="form-label">Name</label>
-                                                            </div>
-                                                        </div>
+                                                    <ul class="nav nav-tabs">
+                                                        <li class="active"><a data-toggle="tab"
+                                                                              href="#homeDadd">Details</a></li>
+                                                        <li><a data-toggle="tab" href="#menu3">Add</a></li>
+                                                    </ul>
+                                                    <div class="tab-content">
+                                                        <div id="homeDadd" class="tab-pane fade in active">
+                                                            <table class="table table-striped bg-info"
+                                                                   id="ddaddDtlsTbl">
 
-                                                        <div class="form-group form-float">
-                                                            <div class="form-line">
-                                                                <input type="text" id="email"
-                                                                       class="form-control">
-                                                                <label class="form-label">Email</label>
-                                                            </div>
+                                                            </table>
                                                         </div>
+                                                        <div id="menu3" class="tab-pane fade">
+                                                            <form method="POST">
+                                                                <div class="form-group form-float">
+                                                                    <div class="form-line">
+                                                                        <input type="text" id="daddName"
+                                                                               class="form-control">
+                                                                        <label class="form-label">Name</label>
+                                                                    </div>
+                                                                </div>
 
-                                                        <button type="submit" class="btn btn-primary waves-effect">Add
-                                                        </button>
-                                                    </form>
+                                                                <div class="form-group form-float">
+                                                                    <div class="form-line">
+                                                                        <input type="text" id="daddEmail"
+                                                                               class="form-control">
+                                                                        <label class="form-label">Email</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group form-float">
+                                                                    <div class="form-line">
+                                                                        <input type="text" id="daddPhone"
+                                                                               class="form-control">
+                                                                        <label class="form-label">Phone</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group form-float">
+                                                                    <div class="form-line">
+                                                                        <input type="text" id="daddAddress"
+                                                                               class="form-control">
+                                                                        <label class="form-label">Address</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group form-float">
+                                                                    <div class="form-line">
+                                                                        <input type="number" id="daddDonationAmount"
+                                                                               class="form-control">
+                                                                        <label class="form-label">Donation
+                                                                            Amount</label>
+                                                                    </div>
+                                                                </div>
+                                                                <button type="button"
+                                                                        class="btn btn-primary waves-effect">SUBMIT
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
 
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group form-float" id="collectionDiv">
-
                                         <div class="form-line">
                                             <div class="row">
                                                 <p class="text-center" style="margin-bottom: 20px">
                                                     Collection For DUNY
                                                 </p>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-lg-5">
-                                                    <p>Assign </p>
-                                                </div>
-                                                <div class="col-lg-7">
-                                                    <p>Add New</p>
+                                            <div class="row" style="padding: 0px 100px 20px 100px">
+                                                <div class="col-6 offset-l12">
+                                                    <form>
+                                                        <div class="form-group form-float">
+                                                            <div class="form-line">
+                                                                <input type="number" id="collectionAmt"
+                                                                       class="form-control">
+                                                                <label class="form-label">Collection Amount</label>
+                                                            </div>
+                                                        </div>
+                                                        <!--                                                        <p id="daddAssignStatus" style="color: red;margin: -6px 0 0 0"></p>-->
+                                                        <button type="button" id="addColl"
+                                                                class="btn btn-primary waves-effect">
+                                                            Add
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -335,47 +403,26 @@
                                                 </p>
                                             </div>
                                             <div class="row">
-                                                <div class="col-lg-5">
-                                                    <p>Assign </p>
-                                                </div>
-                                                <div class="col-lg-7">
-                                                    <p>Add New</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group form-float" id="staffDiv">
+                                                <div class="col-12">
+                                                    <form method="POST" style="padding: 20px">
+                                                        <div class="form-group form-float">
+                                                            <div class="form-line" id="sbIdSelectBox">
+                                                                <p>
+                                                                    <b>Select Sibling's ID</b>
+                                                                </p>
+                                                                <select id="siblingsIds" class="form-control show-tick"
+                                                                        data-live-search="true" multiple>
+                                                                    <option th:each="st_id:${studentIDS}"
+                                                                            th:text="${st_id}"></option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
 
-                                        <div class="form-line">
-                                            <div class="row">
-                                                <p class="text-center" style="margin-bottom: 20px">
-                                                    Staff
-                                                </p>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-5">
-                                                    <p>Assign </p>
-                                                </div>
-                                                <div class="col-lg-7">
-                                                    <p>Add New</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group form-float" id="otpDiv">
 
-                                        <div class="form-line">
-                                            <div class="row">
-                                                <p class="text-center" style="margin-bottom: 20px">
-                                                    One Time Payment
-                                                </p>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-5">
-                                                    <p>Assign </p>
-                                                </div>
-                                                <div class="col-lg-7">
-                                                    <p>Add New</p>
+                                                        <button type="button" id="addSibling"
+                                                                class="btn btn-primary waves-effect">SUBMIT
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -388,14 +435,25 @@
                                                     Apply For Zakat
                                                 </p>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-lg-5">
-                                                    <p>Assign </p>
-                                                </div>
-                                                <div class="col-lg-7">
-                                                    <p>Add New</p>
+                                            <div class="row" style="padding: 0px 100px 20px 100px">
+                                                <div class="col-6 offset-l12">
+                                                    <form>
+                                                        <div class="form-group form-float">
+                                                            <div class="form-line">
+                                                                <input type="number" id="zakatAmount"
+                                                                       class="form-control">
+                                                                <label class="form-label">Zakat Amount</label>
+                                                            </div>
+                                                        </div>
+                                                        <!--                                                        <p id="daddAssignStatus" style="color: red;margin: -6px 0 0 0"></p>-->
+                                                        <button type="button" id="addZakat"
+                                                                class="btn btn-primary waves-effect">
+                                                            Add
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
 
@@ -446,8 +504,16 @@
                                                type="text"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 70%">Admission</td>
-                                    <td><input id="admsnFee" disabled class="form-control text-right" type="text"></td>
+                                    <td style="width: 70%;padding-top: 20px">Admission</td>
+                                    <td>
+                                        <div class="form-group form-float" style="margin-bottom: 0">
+                                            <div class="form-line">
+                                                <input type="text" disabled id="admsnFee"
+                                                       class="form-control text-right">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <!--                                    <td><input id="admsnFee" disabled class="form-control text-right" type="text"></td>-->
                                 </tr>
                                 <tr>
                                     <td>Meal Plan</td>
@@ -481,9 +547,32 @@
                                                             value="3800.00" type="text"></td>
                                 </tr>
 
-                                <tr class="bg-info" >
+                                <tr class="bg-info">
                                     <td>Total</td>
                                     <td id="total" class="text-right"></td>
+                                </tr>
+
+                                <tr id="sponsorRow">
+                                    <td class="w-75">Sponsor's Amount</td>
+                                    <td class="w-25"><input id="spAmnt" disabled class="form-control text-right"
+                                                            type="text"></td>
+                                </tr>
+                                <tr id="daddRow">
+                                    <td class="w-75">DADD Amount</td>
+                                    <td class="w-25"><input id="daddAmnt" disabled class="form-control text-right"
+                                                            type="text"></td>
+                                </tr>
+
+                                <tr id="collRow">
+                                    <td class="w-75">Collection Amount</td>
+                                    <td class="w-25"><input id="collAmt" disabled class="form-control text-right"
+                                                            type="text"></td>
+                                </tr>
+
+                                <tr id="sibRow">
+                                    <td class="w-75">Sibling Discount</td>
+                                    <td class="w-25"><input id="sibDisAmnt" disabled class="form-control text-right"
+                                                            type="text"></td>
                                 </tr>
 
                                 <tr id="otpRow">
@@ -491,9 +580,19 @@
                                     <td class="w-25"><input id="otpDisField" disabled class="form-control text-right"
                                                             value="380.00" type="text"></td>
                                 </tr>
+                                <tr id="staffFeeRow">
+                                    <td class="w-75">Staff Discoint</td>
+                                    <td class="w-25"><input id="staffFeeAmt" disabled class="form-control text-right"
+                                                            value="3800.00" type="text"></td>
+                                </tr>
+                                <tr id="zakatFeeRow">
+                                    <td class="w-75">Zakat Amount</td>
+                                    <td class="w-25"><input id="zakatAmnt" disabled class="form-control text-right"
+                                                            type="text"></td>
+                                </tr>
                                 <tr class="bg-info">
                                     <td>Grand Total</td>
-                                    <td id="gradnTotalFee" class="text-right "></td>
+                                    <td id="grandTotalFee" class="text-right "></td>
                                 </tr>
                                 <tr>
                                     <td></td>

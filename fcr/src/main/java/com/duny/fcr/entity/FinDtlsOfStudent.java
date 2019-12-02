@@ -13,26 +13,13 @@ public class FinDtlsOfStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name="st_id",nullable = false,unique = true)
-    private Student student;
-    // One student can take maximum two sponsors
-    // or one sponsor take take two students
+    // One student can take maximum 1 sponsors
+    // or one sponsor take take 1 students
     @Column(nullable = true)
     private long sp_id;
     // One student can take maximum three dadd
     @Column(nullable = true)
-    private long dadd1_id;
-    @Column(nullable = true)
-    private double dadd1_alloc;
-    @Column(nullable = true)
-    private long dadd2_id;
-    @Column(nullable = true)
-    private double dadd2_alloc;
-    @Column(nullable = true)
-    private long dadd3_id;
-    @Column(nullable = true)
-    private double dadd3_alloc;
+    private boolean hasDadd;
 
     @Column(nullable = true)
     private double collection;
