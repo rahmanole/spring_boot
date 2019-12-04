@@ -19,27 +19,21 @@ Step three: Add this jquery code
 
 ==============Auto Completed Textfield===============
 Step One: Add the below code snipt of jQuery
+add these plugins :https://code.jquery.com/ui/1.12.1/jquery-ui.js and 
+		https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css
+then:
 <script>
 $(document).ready(function () {
     $.ajax({
         method: "GET",
         url: '/getAllSrchKeys',
         success: function (data) {
-            $("#second").append().html("");
-            for (var i = 0; i < data.length; i++) {
-                $("#second").append("<option value=\"" + data[i].value + "\">" + data[i] + "</option>");
-            }
-
-            autoCompletedTextField(data);
+            $("#search").autocomplete({
+                source: data
+            });
         }
     });
 });
-
-function autoCompletedTextField(tags) {
-    $("#search").autocomplete({
-        source: tags
-    });
-};
 </script>
 
 Step Two: Add the id "search" on the text field

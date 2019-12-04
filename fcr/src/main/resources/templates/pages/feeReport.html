@@ -192,6 +192,10 @@
                                                                 class="btn btn-primary waves-effect">
                                                             Assign
                                                         </button>
+                                                        <button type="button" id="removeSp"
+                                                                class="btn btn-primary waves-effect">
+                                                            Remove
+                                                        </button>
                                                     </form>
                                                     <div id="removeSpDiv">
 
@@ -207,6 +211,7 @@
                                                     </ul>
                                                     <div class="tab-content">
                                                         <div id="home" class="tab-pane fade in active">
+                                                            <p class='text-center' style="margin: 0" id='isAssigned'></p>
                                                             <table class="table table-striped bg-info"
                                                                    id="spnsrDtlsTbl">
 
@@ -275,95 +280,104 @@
                                         </div>
                                     </div>
                                     <div class="form-group form-float" id="dollarADayDiv">
-                                        <div class="form-line">
-                                            <div class="row">
-                                                <p class="text-center" style="margin-bottom: 20px">
-                                                    DADD Assign
-                                                </p>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-5">
-                                                    <p style="margin-bottom: 5px">Assign </p>
-                                                    <form>
-                                                        <div class="form-group form-float">
-                                                            <div class="form-line">
-                                                                <input type="text" id="daddNames"
-                                                                       class="form-control">
-                                                                <label class="form-label">DADD Name</label>
+
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a data-toggle="tab"
+                                                                  href="#daddAssignTab">DADD Assign </a></li>
+                                            <li><a data-toggle="tab" href="#daddRemove">DADD Remove</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+
+                                            <div class="form-line tab-pane fade in active " id="daddAssignTab" >
+                                                <div class="row">
+                                                    <div class="col-lg-5">
+                                                        <p style="margin-bottom: 5px">Assign </p>
+                                                        <form>
+                                                            <div class="form-group form-float">
+                                                                <div class="form-line">
+                                                                    <input type="text" id="daddNames"
+                                                                           class="form-control">
+                                                                    <label class="form-label">DADD Name</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <p id="daddAssignStatus"
-                                                           style="color: red;margin: -6px 0 0 0"></p>
-                                                        <button type="button" id="assignDadd"
-                                                                class="btn btn-primary waves-effect">
-                                                            Assign
-                                                        </button>
-                                                    </form>
-                                                </div>
-
-                                                <div class="col-lg-7">
-                                                    <ul class="nav nav-tabs">
-                                                        <li class="active"><a data-toggle="tab"
-                                                                              href="#homeDadd">Details</a></li>
-                                                        <li><a data-toggle="tab" href="#menu3">Add</a></li>
-                                                    </ul>
-                                                    <div class="tab-content">
-                                                        <div id="homeDadd" class="tab-pane fade in active">
-                                                            <table class="table table-striped bg-info"
-                                                                   id="ddaddDtlsTbl">
-
-                                                            </table>
-                                                        </div>
-                                                        <div id="menu3" class="tab-pane fade">
-                                                            <form method="POST">
-                                                                <div class="form-group form-float">
-                                                                    <div class="form-line">
-                                                                        <input type="text" id="daddName"
-                                                                               class="form-control">
-                                                                        <label class="form-label">Name</label>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group form-float">
-                                                                    <div class="form-line">
-                                                                        <input type="text" id="daddEmail"
-                                                                               class="form-control">
-                                                                        <label class="form-label">Email</label>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group form-float">
-                                                                    <div class="form-line">
-                                                                        <input type="text" id="daddPhone"
-                                                                               class="form-control">
-                                                                        <label class="form-label">Phone</label>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group form-float">
-                                                                    <div class="form-line">
-                                                                        <input type="text" id="daddAddress"
-                                                                               class="form-control">
-                                                                        <label class="form-label">Address</label>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group form-float">
-                                                                    <div class="form-line">
-                                                                        <input type="number" id="daddDonationAmount"
-                                                                               class="form-control">
-                                                                        <label class="form-label">Donation
-                                                                            Amount</label>
-                                                                    </div>
-                                                                </div>
-                                                                <button type="button"
-                                                                        class="btn btn-primary waves-effect">SUBMIT
-                                                                </button>
-                                                            </form>
-                                                        </div>
+                                                            <p id="daddAssignStatus"
+                                                               style="color: red;margin: -6px 0 0 0"></p>
+                                                            <button type="button" id="assignDadd"
+                                                                    class="btn btn-primary waves-effect">
+                                                                Assign
+                                                            </button>
+                                                        </form>
                                                     </div>
 
+                                                    <div class="col-lg-7">
+                                                        <ul class="nav nav-tabs">
+                                                            <li class="active"><a data-toggle="tab"
+                                                                                  href="#homeDadd">Details</a></li>
+                                                            <li><a data-toggle="tab" href="#menu3">Add</a></li>
+                                                        </ul>
+                                                        <div class="tab-content">
+                                                            <div id="homeDadd" class="tab-pane fade in active">
+                                                                <table class="table table-striped bg-info"
+                                                                       id="ddaddDtlsTbl">
+
+                                                                </table>
+                                                            </div>
+                                                            <div id="menu3" class="tab-pane fade">
+                                                                <form method="POST">
+                                                                    <div class="form-group form-float">
+                                                                        <div class="form-line">
+                                                                            <input type="text" id="daddName"
+                                                                                   class="form-control">
+                                                                            <label class="form-label">Name</label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group form-float">
+                                                                        <div class="form-line">
+                                                                            <input type="text" id="daddEmail"
+                                                                                   class="form-control">
+                                                                            <label class="form-label">Email</label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group form-float">
+                                                                        <div class="form-line">
+                                                                            <input type="text" id="daddPhone"
+                                                                                   class="form-control">
+                                                                            <label class="form-label">Phone</label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group form-float">
+                                                                        <div class="form-line">
+                                                                            <input type="text" id="daddAddress"
+                                                                                   class="form-control">
+                                                                            <label class="form-label">Address</label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group form-float">
+                                                                        <div class="form-line">
+                                                                            <input type="number" id="daddDonationAmount"
+                                                                                   class="form-control">
+                                                                            <label class="form-label">Donation
+                                                                                Amount</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="button"
+                                                                            class="btn btn-primary waves-effect">SUBMIT
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
+                                            </div>
+                                            <div class="form-line tab-pane fade" id="daddRemove">
+                                                <table class="table" id="daddListTbl">
+
+                                                </table>
                                             </div>
                                         </div>
                                     </div>

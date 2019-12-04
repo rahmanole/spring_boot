@@ -15,6 +15,22 @@ public interface SponsorRepo extends JpaRepository<Sponsor,Long> {
     String GET_SPONSOR_BY_ST_ID = "select * from sponsor where st_id = ?";
     String REMOVE_STUDNET_FROM_SPONSOR = "update sponsor set st_id=0 where id=?";
 
+    String INSERT_SP_ID_FIN_TABLE = "update fin_details set sp_id=? where id=?";
+    String INSERT_ST_ID_SP_TABLE = "update sponsor set st_id=? where id=?";
+
+
+
+
+    @Modifying
+    @Transactional
+    @Query(value = INSERT_SP_ID_FIN_TABLE,nativeQuery = true)
+    void inserSpID(int sp_id,int findtl_id);
+
+    @Modifying
+    @Transactional
+    @Query(value = INSERT_ST_ID_SP_TABLE,nativeQuery = true)
+    void inserStID(int st_id,int sp_id);
+
     @Query(nativeQuery = true,value = GET_SPONSOR_LIST)
     List<String> getSponsorNames();
 

@@ -2,10 +2,7 @@ package com.duny.fcr.controller;
 
 import com.duny.fcr.dto.SpAssignDTO;
 import com.duny.fcr.entity.FinDtlsOfStudent;
-import com.duny.fcr.repo.FeeRepo;
-import com.duny.fcr.repo.FinDtlsOfStudentRepo;
-import com.duny.fcr.repo.SponsorRepo;
-import com.duny.fcr.repo.StudentRepo;
+import com.duny.fcr.repo.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,8 @@ public class FeeController {
 
     @Autowired
     FeeRepo feeRepo;
+    @Autowired
+    DaddRepo daddRepo;
 
     @Autowired
     FinDtlsOfStudentRepo finDtlsOfStudentRepo;
@@ -35,29 +34,9 @@ public class FeeController {
         return "pages/feeReport";
     }
 
-    @PostMapping(value = "/fee/spAssing")
-    public String spAssign(@RequestBody String spAssingDTO) {
-        GsonBuilder builder = new GsonBuilder();
-        builder.setPrettyPrinting();
-        Gson gson = new Gson();
-        SpAssignDTO dto = gson.fromJson(spAssingDTO, SpAssignDTO.class);
-        feeRepo.inserSpID(dto.getSp_id(), dto.getFin_dtl_id());
-        feeRepo.inserStID(dto.getSt_id(), dto.getSp_id());
-        return "redirect:/pages/report/1";
-    }
 
-    @PostMapping(value = "/fee/daddAssign")
-    public String daddAssign(@RequestBody String spAssingDTO) {
-        GsonBuilder builder = new GsonBuilder();
-        builder.setPrettyPrinting();
-        Gson gson = new Gson();
 
-        SpAssignDTO dto = gson.fromJson(spAssingDTO, SpAssignDTO.class);
 
-        feeRepo.inserDaddIDInFin(dto.getFin_dtl_id());
-        feeRepo.inserStIDInDadd(dto.getSt_id(), dto.getDadd_id());
-        return "redirect:/pages/report/1";
-    }
 
     @GetMapping("/findetails/{id}")
     @ResponseBody
@@ -71,9 +50,10 @@ public class FeeController {
                                          @PathVariable("sp_id") int sp_id) {
         finDtlsOfStudentRepo.removeSponsor(id);
         sponsorRepo.removeStudentFromSponsor(sp_id);
-
         return "redirect:/pages/report/1";
     }
+
+
 
 
 }

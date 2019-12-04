@@ -39,10 +39,14 @@ public class MemberInfo {
     private String applicationStatus = "applied";
     @Column(name="meal_status",length = 10)
     private String mealStatus;
+    @Column(name="deposite_paid",length = 5)
+    private String depositPaid = "no";
     private Date applicationDate;
     @Column(name="card_no",length =10,unique = true)
     private String cardNo;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private List<Image> images;
+    @Column(length = 30,nullable = false)
+    private String password;
 }

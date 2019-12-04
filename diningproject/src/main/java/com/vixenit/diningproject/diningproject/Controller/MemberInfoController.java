@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.jws.WebParam;
 import javax.validation.constraints.Max;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.List;
 
 @Controller
 public class MemberInfoController {
+
 
     @Autowired
     MemberInfoRepo memberInfoRepo;
@@ -50,16 +52,9 @@ public class MemberInfoController {
         return "redirect:/member/registration";
     }
 
-//    @PostMapping("/member/save")
-//    public String save(@RequestBody String memberInfoJson){
-//        GsonBuilder gsonBuilder = new GsonBuilder();
-//        gsonBuilder.setPrettyPrinting();
-//        Gson gson = gsonBuilder.create();
-//
-//        MemberInfo memberInfo = gson.fromJson(memberInfoJson,MemberInfo.class);
-//        System.out.println(memberInfo.getDeptName());
-//        memberInfo.setApplicationDate(new Date());
-//        //memberInfoRepo.save(memberInfo);
-//        return "pages/forms/memberRegForm.html";
-//    }
+    @GetMapping("/member/applications")
+    public String getAllMmberInfo(Model model){
+        model.addAttribute("appliedMemebers",memberInfoRepo.getAllAppliedMemebers());
+        return "/pages/tables/appliedMembers.html";
+    }
 }

@@ -217,9 +217,9 @@ $(document).ready(function () {
             $('#zakatDiv').slideUp();
         }
 
-        if ($('#selfFunded').is(':checked')) {
-            var isChecked = $('#selfFunded').is(':checked');
-            if(isChecked){
+        $('#selfFunded').change(function () {
+            var isChecked = $(this).is(':checked');
+            if (isChecked) {
                 $('#otp').attr('disabled', false);
                 $('#sponsor').attr('disabled', true);
                 $('#dollarADay').attr('disabled', true);
@@ -229,7 +229,7 @@ $(document).ready(function () {
                 $('#zakat').attr('disabled', true);
             }
 
-            if(!isChecked){
+            if (!isChecked) {
                 $('#otp').prop('checked', false);
 
                 otp = 0;
@@ -247,8 +247,7 @@ $(document).ready(function () {
                 $('#zakat').attr('disabled', false);
             }
 
-
-        }
+        });
     });
 
 
@@ -270,6 +269,7 @@ $(document).ready(function () {
     $('#collRow').hide();
     $('#sibRow').hide();
     $('#zakatFeeRow').hide();
+    $('#removeSp').hide();
 
     $('#stBtn').click(function () {
         getStudentById();
@@ -321,12 +321,11 @@ $(document).ready(function () {
         if (sp_id > 0 && fin_dtl_Id_of_sp > 0) {
             assignSp(fin_dtl_Id_of_sp, sp_id, st_id, dadd_id);
         }
-
+        $('#assignSp').attr('disabled', true);
+        $('#spAssignMsgs').append('');
+        $('#spAssignStatus').append('<sapn class="text-success">Successfully assigned sponsor</sapn>');
         sponsor = applySponsorDiscount();
-        console.log(sponsor);
         grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
-        console.log(grandTotalFee);
-
         $('#grandTotalFee').html(grandTotalFee.toFixed(2));
 
     });
@@ -505,13 +504,15 @@ function getSponsorByname(name) {
             );
 
             if (data.st_id > 0) {
-                $('#spAssignStatus').html("");
-                $('#spAssignStatus').html("This sponsor is assigned already");
+                $('#isAssigned').html("");
+                $('#isAssigned').append('<sapn id="spAsssignMsgs" class="text-danger">This sponsor already assigned</sapn>');
                 $('#assignSp').attr('disabled', true);
 
             } else {
-                $('#spAssignStatus').html("");
-                $('#assignSp').attr('disabled', false);
+                $('#isAssigned').html("");
+                if (!$('#sp_name').length) {
+                    $('#assignSp').attr('disabled', false);
+                }
             }
         }
     })
@@ -550,6 +551,7 @@ function getDaddByname(name) {
             } else {
                 $('#daddAssignStatus').html("");
                 $('#assignDadd').attr('disabled', false);
+
             }
         }
     })
@@ -626,7 +628,12 @@ function studentFeeReport(st_id) {
             );
 
             if (data.finDtlsOfStudent.sp_id > 0) {
-                reportForSponsor(data.id,data.finDtlsOfStudent.id);
+                reportForSponsor(data.id, data.finDtlsOfStudent.id);
+                $('#isAssigned').append('<sapn id="spAsssignMsgs" class="text-danger">Sponosred to ' + data.name + '</sapn>');
+            }
+
+            if (data.finDtlsOfStudent.hasDadd) {
+                getAllDaddsForASt(data.finDtlsOfStudent.id,data.id);
             }
 
             console.log(data);
@@ -639,7 +646,7 @@ function studentFeeReport(st_id) {
 }
 
 //This function adds sponsor's details of the student on finalcial details table
-function reportForSponsor(st_id,fin_dtls_id) {
+function reportForSponsor(st_id, fin_dtls_id) {
     $.ajax({
         method: 'GET',
         url: '/sponsor/student/' + st_id,
@@ -655,22 +662,24 @@ function reportForSponsor(st_id,fin_dtls_id) {
                 sponsor = parseInt(data.donationAmount);
             }
             $('#finDtlsTbl').append(
-
-                "<tr><td>" + "Sponsor Name" + "</td>" + "<td>" + data.name + "</td></tr>"
+                "<tr><td>" + "Sponsor Name" + "</td>" + "<td id='sp_name'>" + data.name + "</td></tr>"
                 +
                 "<tr><td>" + "Sponsor\'s Amount" + "</td>" + "<td>" + sponsor + " /year</td></tr>"
+            );
 
-            );
-            $('#removeSpDiv').append(
-                '<p> Sponsor Name: '+data.name+'</p>'
-                +
-                '<button id="removeSp" type="button" class="btn btn-primary"> Remove</button>'
-            );
+            getSponsorByname(data.name);
+            //if sponsor is available then assign button willbe disabled and remove buttom
+            //will be appeared
+            $('#removeSp').show();
+            $('#assignSp').attr('disabled', true);
 
             $('#removeSp').click(function () {
-                removingSponsor(fin_dtls_id,data.id);
+                removingSponsor(fin_dtls_id, data.id);
                 $('#spAssignStatus').html('Sponsor Removed')
+                $('#assignSp').attr('disabled', false);
+                $('#daddTBody').remove();
             });
+            //ends here
         },
         error: function () {
             console.log('not success');
@@ -691,6 +700,48 @@ function removingSponsor(fin_id, sp_id) {
         url: '/sponsor/remover/' + parseInt(fin_id) + '/' + parseInt(sp_id),
         success: function () {
             console.log('success');
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+
+}
+
+//This method removes a dadd
+function removingDadd(fin_id,dadd_id,st_id) {
+
+    console.log(fin_id);
+    console.log(st_id);
+
+    $.ajax({
+        method: 'GET',
+        url: '/dadd/remove/' + parseInt(fin_id) + '/' + parseInt(st_id)+ '/' + parseInt(st_id),
+        success: function () {
+            console.log('success');
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+
+}
+
+//Get all dadds of a student
+
+function getAllDaddsForASt(fin_id,st_id) {
+
+    $.ajax({
+        method: 'GET',
+        url: '/dadd/all/' + parseInt(st_id),
+        success: function (data) {
+            console.log(data[0].id);
+            for(var i=0;i<data.length;i++){
+                $('#daddListTbl').append(
+                    "<tr><td>" + "Name" + "</td>" + "<td>" + data[i].name + "</td>"+"<td><button type='button' class='btn' id="+i+">Remove</button></td></tr>"
+                )
+            }
+
         },
         error: function () {
             console.log('not success');
