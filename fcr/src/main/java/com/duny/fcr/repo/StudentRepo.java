@@ -12,7 +12,8 @@ public interface StudentRepo extends JpaRepository<Student,Long> {
     String query_for_application_id = "select max(application_id) from Student";
     String query_for_STUDNET_id = "select max(student_id) from Student";
     String GET_ALL_ST_ID = "select student_id from Student";
-    String GET_ALL_PENDING_ST = "select * from Student where status='applied'";
+    String GET_ALL_PENDING_ST = "select * from student where status='applied'";
+    String GET_STUDENT_BY_ST_ID = "select * from student where student_id=?";
 
     @Query(nativeQuery = true,value = query_for_application_id)
     int getMaxApplicationId();
@@ -25,4 +26,7 @@ public interface StudentRepo extends JpaRepository<Student,Long> {
 
     @Query(nativeQuery = true,value = GET_ALL_PENDING_ST)
     List<Student> getPendingStudents();
+
+    @Query(nativeQuery = true,value = GET_STUDENT_BY_ST_ID)
+    List<Student> getStudentByStudentId(String st_id);
 }

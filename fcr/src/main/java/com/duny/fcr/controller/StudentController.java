@@ -59,13 +59,13 @@ public class StudentController {
         return studentRepo.getOne(id);
     }
 
-    @GetMapping("/student/json/{id}")
+    @GetMapping("/student/json/{studentId}")
     @ResponseBody
-    public String getStudentByIdForJson(@PathVariable long id) {
+    public String getStudentByIdForJson(@PathVariable String studentId) {
         GsonBuilder b = new GsonBuilder();
         b.registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY);
         Gson gson = b.create();
-        return gson.toJson(studentRepo.getOne(id));
+        return gson.toJson(studentRepo.getStudentByStudentId(studentId));
     }
 
 

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface FinDtlsOfStudentRepo extends JpaRepository<FinDtlsOfStudent,Long> {
     String REMOVE_SPONSOR = "update fin_details set sp_id = 0 where id=? ";
     String FIN_DETAILS_OF_ST = "select * from fin_details where st_id=?";
+    String INSERT_COLLECTION = "update fin_details set collection = ? where id=?";
 
     @Query(value = FIN_DETAILS_OF_ST,nativeQuery = true)
     FinDtlsOfStudent getFinDetails(long id);
@@ -17,4 +18,9 @@ public interface FinDtlsOfStudentRepo extends JpaRepository<FinDtlsOfStudent,Lon
     @Transactional
     @Query(value = REMOVE_SPONSOR,nativeQuery = true)
     void removeSponsor(long id);
+
+    @Modifying
+    @Transactional
+    @Query(value = INSERT_COLLECTION,nativeQuery = true)
+    void insertColletion(double collection,long id);
 }

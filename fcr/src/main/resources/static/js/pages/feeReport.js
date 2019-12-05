@@ -348,31 +348,30 @@ $(document).ready(function () {
 
     //removing dadd
 
+    $('#daddRmvBtn_0').on('click',function () {
+        console.log('dadd rmv');
+    });
 
-    $(document).on("click", "#daddRmvBtn_0,#daddRmvBtn_1,#daddRmvBtn_2", function(){
+    $(document).on('click','#daddRmvBtn_0,#daddRmvBtn_1',function () {
         var st_id = document.getElementById('st_id').innerHTML;
         var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
 
-        if(this.id = 'daddRmvBtn_0'){
-            var dadd_id = document.getElementById('daddId_0').innerHTML;
-            console.log(this.id);
+        console.log();
+        if(this.id=='daddRmvBtn_0'){
+            var dadd_id = document.getElementById('daddId_0').innerText;
             removingDadd(fin_dtl_Id,dadd_id,st_id);
-            $('#rowDadd_0').fadeOut().delay(1000);
-        }else if(this.id = 'daddRmvBtn_1'){
-            var dadd_id = document.getElementById('daddId_1').innerHTML;
+            $('#daddRow_0').fadeOut().delay(1000);
             console.log(this.id);
-            removingDadd(fin_dtl_Id,dadd_id,st_id);
-            $('#rowDadd_1').fadeOut().delay(1000);
-
-        }else if(this.id = 'daddRmvBtn_2'){
-
+        }else if(this.id=='daddRmvBtn_1'){
+            var dadd_id = document.getElementById('daddId_1').innerText;
+             removingDadd(fin_dtl_Id,dadd_id,st_id);
+             $('#daddRow_1').fadeOut().delay(1000);
+            console.log(this.id);
         }
-
-        console.log(this.id);
-
-
-
-    })
+    });
+    $('#daddRmvBtn_0').click(function (){
+        console.log('hello');
+    });
 
     //collection discount
 
@@ -636,34 +635,34 @@ function assignDadd(fin_dtl_id_of_st, sp_id, st_id, dadd_id) {
 function studentFeeReport(st_id) {
     $.ajax({
         method: 'GET',
-        url: '/student/json/' + 1,
+        url: '/student/json/' + 111,
         success: function (data) {
             data = $.parseJSON(data);
+            console.log(data);
 
             $('#studentDetails').append(
-                "<tr style='display: none'><td>" + "Fin Details ID" + "</td>" + "<td id='fin_dtl_id' >" + data.finDtlsOfStudent.id + "</td></tr>"
+                "<tr style='display: none'><td>" + "Fin Details ID" + "</td>" + "<td id='fin_dtl_id' >" + data[0].finDtlsOfStudent.id + "</td></tr>"
                 +
-                "<tr style='display: none'><td>" + "Student ID" + "</td>" + "<td id='st_id' >" + data.id + "</td></tr>"
+                "<tr style='display: none'><td>" + "Student ID" + "</td>" + "<td id='st_id' >" + data[0].id + "</td></tr>"
                 +
-                "<tr><td>" + "Student ID" + "</td>" + "<td>" + data.studentId + "</td></tr>"
+                "<tr><td>" + "Student ID" + "</td>" + "<td>" + data[0].studentId + "</td></tr>"
                 +
-                "<tr><td>" + "Student Name" + "</td>" + "<td>" + data.name + "</td></tr>"
+                "<tr><td>" + "Student Name" + "</td>" + "<td>" + data[0].name + "</td></tr>"
                 +
-                "<tr><td>" + "Father  Name" + "</td>" + "<td>" + data.fatherName + "</td></tr>"
+                "<tr><td>" + "Father  Name" + "</td>" + "<td>" + data[0].fatherName + "</td></tr>"
                 +
-                "<tr><td>" + "Mother Name" + "</td>" + "<td>" + data.motherName + "</td></tr>"
+                "<tr><td>" + "Mother Name" + "</td>" + "<td>" + data[0].motherName + "</td></tr>"
                 +
-                "<tr><td>" + "Date of Birth" + "</td>" + "<td>" + data.dob + "</td></tr>"
+                "<tr><td>" + "Date of Birth" + "</td>" + "<td>" + data[0].dob + "</td></tr>"
             );
 
-            if (data.finDtlsOfStudent.sp_id > 0) {
-                reportForSponsor(data.id, data.finDtlsOfStudent.id);
+            if (data[0].finDtlsOfStudent.sp_id > 0) {
+                reportForSponsor(data[0].id, data[0].finDtlsOfStudent.id);
                 $('#isAssigned').append('<sapn id="spAsssignMsgs" class="text-danger">Sponosred to ' + data.name + '</sapn>');
             }
 
-            if (data.finDtlsOfStudent.hasDadd) {
-                getAllDaddsForASt(data.finDtlsOfStudent.id,data.id);
-
+            if (data[0].finDtlsOfStudent.hasDadd) {
+                getAllDaddsForASt(data[0].finDtlsOfStudent.id,data[0].id);
             }
 
             console.log(data);
@@ -763,18 +762,19 @@ var daddsContribution = 0;
 
 function getAllDaddsForASt(fin_id,st_id) {
 
-    var daddsContribution = 0;
-
     $.ajax({
         method: 'GET',
         url: '/dadd/all/' + parseInt(st_id),
         success: function (data) {
             totalDadd = data.length;
+            console.log(data[0].id);
+            var daddsContribution = 0;
             for(var i=0;i<data.length;i++){
-                daddsContribution += (parseInt(data[i].donationAmount))*360;
-                $('#daddListTbl').append(
 
-                    "<tr id=rowDadd_"+i+"><td>" + "Name" + "</td>" + "<td>" + data[i].name + "</td>"+"<td id=daddId_"+i+">"+data[i].id+"</td>"+"<td><button type='button' class='btn' id=daddRmvBtn_"+i+">Remove</button></td></tr>"
+                daddsContribution += (parseInt(data[i].donationAmount))*360;
+
+                $('#tblDaddList').append(
+                    "<tr id='daddRow_"+i+"'><td>" + "Name" + "</td>" + "<td>" + data[i].name + "</td>"+"<td id='daddId_"+i+"'>"+data[i].id+"</td>"+"<td><button type='button' class='btn' id='daddRmvBtn_"+i+"'>Remove</button></td></tr>"
                 )
             }
 

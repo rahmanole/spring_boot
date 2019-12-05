@@ -1,10 +1,7 @@
 package com.duny.fcr.controller;
 
-import com.duny.fcr.dto.SpAssignDTO;
 import com.duny.fcr.entity.FinDtlsOfStudent;
 import com.duny.fcr.repo.*;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,9 +32,6 @@ public class FeeController {
     }
 
 
-
-
-
     @GetMapping("/findetails/{id}")
     @ResponseBody
     public FinDtlsOfStudent getFindetails(@PathVariable long id) {
@@ -51,6 +45,14 @@ public class FeeController {
         finDtlsOfStudentRepo.removeSponsor(id);
         sponsorRepo.removeStudentFromSponsor(sp_id);
         return "redirect:/pages/report/1";
+    }
+
+
+    @GetMapping("/findetails/{collection}/{fin_id}")
+    @ResponseBody
+    public String insertCollection(@PathVariable long collection,@PathVariable int fin_id) {
+        finDtlsOfStudentRepo.insertColletion(collection,fin_id);
+        return "";
     }
 
 
