@@ -79,4 +79,10 @@ public class DaddController {
         return daddRepo.findAllBySt_id(st_id);
     }
 
+    @GetMapping(value = "/dadd/byId/{id}")
+    @ResponseBody
+    public Dadd getDaddById(@PathVariable("id") long id) {
+        return daddRepo.getOne(id);
+    }
+
 }

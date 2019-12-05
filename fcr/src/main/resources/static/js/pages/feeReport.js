@@ -346,7 +346,36 @@ $(document).ready(function () {
         applyDaddDiscount();
     });
 
+    //removing dadd
+
+
+    $(document).on("click", "#daddRmvBtn_0,#daddRmvBtn_1,#daddRmvBtn_2", function(){
+        var st_id = document.getElementById('st_id').innerHTML;
+        var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
+
+        if(this.id = 'daddRmvBtn_0'){
+            var dadd_id = document.getElementById('daddId_0').innerHTML;
+            console.log(this.id);
+            removingDadd(fin_dtl_Id,dadd_id,st_id);
+            $('#rowDadd_0').fadeOut().delay(1000);
+        }else if(this.id = 'daddRmvBtn_1'){
+            var dadd_id = document.getElementById('daddId_1').innerHTML;
+            console.log(this.id);
+            removingDadd(fin_dtl_Id,dadd_id,st_id);
+            $('#rowDadd_1').fadeOut().delay(1000);
+
+        }else if(this.id = 'daddRmvBtn_2'){
+
+        }
+
+        console.log(this.id);
+
+
+
+    })
+
     //collection discount
+
 
     $('#addColl').click(function () {
         applyCollDiscount();
@@ -612,7 +641,7 @@ function studentFeeReport(st_id) {
             data = $.parseJSON(data);
 
             $('#studentDetails').append(
-                "<tr style='display: none'><td>" + "Student ID" + "</td>" + "<td id='fin_dtl_id' >" + data.finDtlsOfStudent.id + "</td></tr>"
+                "<tr style='display: none'><td>" + "Fin Details ID" + "</td>" + "<td id='fin_dtl_id' >" + data.finDtlsOfStudent.id + "</td></tr>"
                 +
                 "<tr style='display: none'><td>" + "Student ID" + "</td>" + "<td id='st_id' >" + data.id + "</td></tr>"
                 +
@@ -634,6 +663,7 @@ function studentFeeReport(st_id) {
 
             if (data.finDtlsOfStudent.hasDadd) {
                 getAllDaddsForASt(data.finDtlsOfStudent.id,data.id);
+
             }
 
             console.log(data);
@@ -664,7 +694,7 @@ function reportForSponsor(st_id, fin_dtls_id) {
             $('#finDtlsTbl').append(
                 "<tr><td>" + "Sponsor Name" + "</td>" + "<td id='sp_name'>" + data.name + "</td></tr>"
                 +
-                "<tr><td>" + "Sponsor\'s Amount" + "</td>" + "<td>" + sponsor + " /year</td></tr>"
+                "<tr><td>" + "Sponsor\'s Amount" + "</td>" + "<td>" + "$"+ sponsor + " /year</td></tr>"
             );
 
             getSponsorByname(data.name);
@@ -716,7 +746,7 @@ function removingDadd(fin_id,dadd_id,st_id) {
 
     $.ajax({
         method: 'GET',
-        url: '/dadd/remove/' + parseInt(fin_id) + '/' + parseInt(st_id)+ '/' + parseInt(st_id),
+        url: '/dadd/remove/' + parseInt(fin_id) + '/' + parseInt(dadd_id)+ '/' + parseInt(st_id),
         success: function () {
             console.log('success');
         },
@@ -728,19 +758,29 @@ function removingDadd(fin_id,dadd_id,st_id) {
 }
 
 //Get all dadds of a student
+var totalDadd = 0;
+var daddsContribution = 0;
 
 function getAllDaddsForASt(fin_id,st_id) {
+
+    var daddsContribution = 0;
 
     $.ajax({
         method: 'GET',
         url: '/dadd/all/' + parseInt(st_id),
         success: function (data) {
-            console.log(data[0].id);
+            totalDadd = data.length;
             for(var i=0;i<data.length;i++){
+                daddsContribution += (parseInt(data[i].donationAmount))*360;
                 $('#daddListTbl').append(
-                    "<tr><td>" + "Name" + "</td>" + "<td>" + data[i].name + "</td>"+"<td><button type='button' class='btn' id="+i+">Remove</button></td></tr>"
+
+                    "<tr id=rowDadd_"+i+"><td>" + "Name" + "</td>" + "<td>" + data[i].name + "</td>"+"<td id=daddId_"+i+">"+data[i].id+"</td>"+"<td><button type='button' class='btn' id=daddRmvBtn_"+i+">Remove</button></td></tr>"
                 )
             }
+
+            $('#finDtlsTbl').append(
+                "<tr><td>" + "Amount from DADDs" + "</td>" + "<td id='sp_name'>" + daddsContribution + "</td></tr>"
+            );
 
         },
         error: function () {
@@ -749,6 +789,7 @@ function getAllDaddsForASt(fin_id,st_id) {
     })
 
 }
+
 
 
 
