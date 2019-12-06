@@ -50,12 +50,59 @@ public class FeeController {
 
     @GetMapping("/findetails/{collection}/{fin_id}")
     @ResponseBody
-    public String insertCollection(@PathVariable long collection,@PathVariable int fin_id) {
+    public String insertCollection(@PathVariable double collection,@PathVariable int fin_id) {
         finDtlsOfStudentRepo.insertColletion(collection,fin_id);
         return "";
     }
 
 
+    @GetMapping("/findetails/zakat/{zakat}/{fin_id}")
+    @ResponseBody
+    public String insertZakat(@PathVariable double zakat,@PathVariable int fin_id) {
+        finDtlsOfStudentRepo.insertZakat(zakat,fin_id);
+        return "";
+    }
+
+    @GetMapping("/findetails/addStaff/{fin_id}")
+    @ResponseBody
+    public String insertStaff(@PathVariable int fin_id) {
+        finDtlsOfStudentRepo.insertStaff(fin_id);
+        return "";
+    }
+
+    @GetMapping("/findetails/removeStaff/{fin_id}")
+    @ResponseBody
+    public String removeStaff(@PathVariable int fin_id) {
+        finDtlsOfStudentRepo.removeStaff(fin_id);
+        return "";
+    }
 
 
+    @GetMapping("/findetails/selfFund/{fin_id}")
+    @ResponseBody
+    public String insertSelfFunded(@PathVariable int fin_id) {
+        finDtlsOfStudentRepo.insertSelfFunded(fin_id);
+        return "";
+    }
+
+    @GetMapping("/findetails/removeSelfFund/{fin_id}")
+    @ResponseBody
+    public String removeSelfFund(@PathVariable int fin_id) {
+        finDtlsOfStudentRepo.removeSelfFunded(fin_id);
+        return "";
+    }
+
+    @GetMapping("/findetails/insertSibling/{siblingIds}/{siblingNum}/{fin_id}")
+    @ResponseBody
+    public String inseertSibling(@PathVariable String siblingIds,@PathVariable int siblingNum,@PathVariable int fin_id) {
+        finDtlsOfStudentRepo.insertSibling(siblingIds,siblingNum,fin_id);
+        return "";
+    }
+
+    @GetMapping("/findetails/mandFees/{mandFees}/{fin_id}")
+    @ResponseBody
+    public String inseertMandFees(@PathVariable double mandFees,@PathVariable int fin_id) {
+        finDtlsOfStudentRepo.insertSibling(mandFees,fin_id);
+        return "";
+    }
 }

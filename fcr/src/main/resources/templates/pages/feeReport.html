@@ -31,11 +31,9 @@
             <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                 <div class="card" style="padding: 20px">
                     <h5 class="text-center">Financial Details</h5>
-                    <table class="table table-striped">
+                    <table class="table">
                         <tbody id="finDtlsTbl">
 
-
-<!--                        Below are fin details-->
 
                         </tbody>
                     </table>
@@ -73,10 +71,10 @@
                                     <label class="form-label">Student Type</label>
                                     <br>
                                     <br>
-                                    <input type="radio" name="admisnFee" id="male" value="200"/>
-                                    <label for="male">New Student</label>
-                                    <input type="radio" name="admisnFee" id="female" value="100"/>
-                                    <label for="female">Returning Student</label>
+                                    <input type="radio" name="admisnFee" id="newSt" value="200"/>
+                                    <label for="newSt">New Student</label>
+                                    <input type="radio" name="admisnFee" id="returningSt" value="100"/>
+                                    <label for="returningSt">Returning Student</label>
                                 </div>
                             </div>
 
@@ -403,7 +401,45 @@
                                                                 class="btn btn-primary waves-effect">
                                                             Add
                                                         </button>
+                                                        <span id="collAddSts" style="margin-left: 30px"></span>
                                                     </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-float" id="staffDiv">
+                                        <div class="form-line">
+
+                                            <div class="row" style="padding: 0px 100px 20px 100px">
+                                                <div class="col-6 offset-l12">
+                                                        <button type="button" id="confirmStaff"
+                                                                class="btn btn-primary waves-effect">
+                                                            Confirm
+                                                        </button>
+                                                        <button type="button" id="removeStaff"
+                                                                class="btn btn-primary waves-effect">
+                                                            Remove
+                                                        </button>
+                                                        <span id="staffAddSts" style="margin-left: 30px"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-float" id="selfFundedDiv">
+                                        <div class="form-line">
+
+                                            <div class="row" style="padding: 0px 100px 20px 100px">
+                                                <div class="col-6 offset-l12">
+                                                        <button type="button" id="confirmSelfFunded"
+                                                                class="btn btn-primary waves-effect">
+                                                            Confirm
+                                                        </button>
+                                                        <button type="button" id="removeSelfFunded"
+                                                                class="btn btn-primary waves-effect">
+                                                            Remove
+                                                        </button>
+
+                                                        <span id="selfFundAddSts" style="margin-left: 30px"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -539,7 +575,7 @@
                                     <td>Academic</td>
                                     <td><input id="courseFee" disabled class="form-control text-right" type="text"></td>
                                 </tr>
-                                <tr>
+                                <tr id="bookFeeRow">
                                     <td>Book</td>
                                     <td><input id="bookFeeField" disabled class="form-control text-right" type="text">
                                     </td>
@@ -609,10 +645,14 @@
                                     <td>Grand Total</td>
                                     <td id="grandTotalFee" class="text-right "></td>
                                 </tr>
+                                <tr class="bg-info">
+                                    <td>Monthly Tuition Fee</td>
+                                    <td id="monthlyTuition" class="text-right "></td>
+                                </tr>
                                 <tr>
                                     <td></td>
                                     <td class="align-right">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="button" id="admit" class="btn btn-primary">Admit</button>
                                     </td>
                                 </tr>
                             </table>

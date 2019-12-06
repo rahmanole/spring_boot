@@ -41,7 +41,7 @@ public class StudentController {
 
 
         student.setFinDtlsOfStudent(new FinDtlsOfStudent());
-    //        student.setStudentId("111");
+        //        student.setStudentId("111");
 //        student.setApplicationId(1000);
         studentRepo.save(student);
         return "redirect:/student/registration";
@@ -57,6 +57,13 @@ public class StudentController {
     @ResponseBody
     public Student getStudentById(@PathVariable long id) {
         return studentRepo.getOne(id);
+    }
+
+    @GetMapping("/student/admit/{id}")
+    @ResponseBody
+    public String admitStudent(@PathVariable long id) {
+        studentRepo.admitStudent(id);
+        return "";
     }
 
     @GetMapping("/student/json/{studentId}")

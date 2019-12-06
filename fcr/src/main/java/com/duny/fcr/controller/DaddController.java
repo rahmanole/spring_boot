@@ -48,7 +48,7 @@ public class DaddController {
                              @PathVariable("dadd_id") int dadd_id,
                              @PathVariable("st_id") int st_id) {
         System.out.println("at dadd remove url" + daddRepo.getTotalDaddsOfSt(st_id));
-        if (daddRepo.getTotalDaddsOfSt(st_id) == 0) {
+        if (daddRepo.getTotalDaddsOfSt(st_id) == 1) {
             daddRepo.removeDaddFromFinDtl(fin_id);
         }
         daddRepo.removeStudentFromDadd(dadd_id);

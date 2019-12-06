@@ -56,6 +56,7 @@ $(document).ready(function () {
 
         if (course == 'Alim' || course == 'Alima' || course == 'na') {
             $('#bookFeeDiv').show();
+            $('#bookFeeRow').show();
 
             acFee = (course == 'Alim') ? 755 : 240;
             if (course == 'na') {
@@ -63,6 +64,8 @@ $(document).ready(function () {
             }
         } else {
             $('#bookFeeDiv').hide();
+            $('#bookFeeRow').hide();
+
         }
         if (course == 'Select a course') {
             acFee = 0;
@@ -174,18 +177,10 @@ $(document).ready(function () {
         $('#staff').change(function () {
             var isChcked = $(this).is(':checked');
             if (isChcked) {
-                $('#staffFeeRow').show();
-                staff = $('#staffFeeAmt').val();
-                console.log(otp);
-                $('#staffFeeAmt').val(staff);
-                grandTotalFee = total - staff;
-                $('#gradnTotalFee').html(grandTotalFee.toFixed(2));
+                $('#staffDiv').slideDown();
             }
             if (!isChcked) {
-                var grandTotalFee = total;
-                staff = 0;
-                $('#gradnTotalFee').html(grandTotalFee.toFixed(2));
-                $('#staffFeeRow').hide();
+                $('#staffDiv').slideUp();
             }
         });
 
@@ -201,11 +196,13 @@ $(document).ready(function () {
 
                 grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
                 $('#grandTotalFee').html(grandTotalFee.toFixed(2));
+                $('#monthlyTuition').html((grandTotalFee / 10).toFixed(2));
             }
             if (!isChcked) {
-                var grandTotalFee = total;
                 otp = 0;
+                grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
                 $('#grandTotalFee').html(grandTotalFee.toFixed(2));
+                $('#monthlyTuition').html((grandTotalFee / 10).toFixed(2));
                 $('#otpRow').hide();
 
             }
@@ -227,11 +224,14 @@ $(document).ready(function () {
                 $('#sibling').attr('disabled', true);
                 $('#staff').attr('disabled', true);
                 $('#zakat').attr('disabled', true);
+                $('#selfFundedDiv').slideDown();
             }
 
             if (!isChecked) {
                 $('#otp').prop('checked', false);
-
+                otp = 0;
+                grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
+                $('#monthlyTuition').html((grandTotalFee / 10).toFixed(2));
                 otp = 0;
                 $('#grandTotalFee').html(total.toFixed(2));
                 $('#otpDiv').slideUp();
@@ -245,6 +245,7 @@ $(document).ready(function () {
                 $('#sibling').attr('disabled', false);
                 $('#staff').attr('disabled', false);
                 $('#zakat').attr('disabled', false);
+                $('#selfFundedDiv').slideUp();
             }
 
         });
@@ -270,6 +271,8 @@ $(document).ready(function () {
     $('#sibRow').hide();
     $('#zakatFeeRow').hide();
     $('#removeSp').hide();
+    $('#selfFundedDiv').hide();
+    $('#bookFeeRow').hide();
 
     $('#stBtn').click(function () {
         getStudentById();
@@ -322,12 +325,32 @@ $(document).ready(function () {
             assignSp(fin_dtl_Id_of_sp, sp_id, st_id, dadd_id);
         }
         $('#assignSp').attr('disabled', true);
-        $('#spAssignMsgs').append('');
-        $('#spAssignStatus').append('<sapn class="text-success">Successfully assigned sponsor</sapn>');
+        $('#spAssignMsgs').html('');
+        $('#spAssignStatus').html('<sapn class="text-success">Successfully assigned sponsor</sapn>');
+
         sponsor = applySponsorDiscount();
+        $('#spAmnt').val(sponsor);
+        $('#sponsorRow').show();
         grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
         $('#grandTotalFee').html(grandTotalFee.toFixed(2));
 
+    });
+
+// removing a sponsor
+
+    $('#removeSp').click(function () {
+
+        var sp_id = document.getElementById('sp_id').innerHTML;
+        var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
+
+        removingSponsor(fin_dtl_Id, sp_id);
+        $('#spAssignStatus').html('Sponsor Removed')
+        $('#assignSp').attr('disabled', false);
+        $('#daddTBody').remove();
+        sponsor = 0;
+        $('#spAmnt').val('0.00');
+        grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
+        $('#grandTotalFee').html(grandTotalFee.toFixed(2));
     });
 
     //dadd assigning
@@ -343,54 +366,104 @@ $(document).ready(function () {
             assignDadd(fin_dtl_Id_of_sp, sp_id, st_id, dadd_id);
         }
 
-        applyDaddDiscount();
+        dollarADay += applyDaddDiscount();
+
+        $('#daddAmnt').val(dollarADay);
+        $('#daddRow').show();
+        grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
+        $('#grandTotalFee').html(grandTotalFee.toFixed(2));
     });
 
     //removing dadd
 
-    $('#daddRmvBtn_0').on('click',function () {
+    $('#daddRmvBtn_0').on('click', function () {
         console.log('dadd rmv');
     });
 
-    $(document).on('click','#daddRmvBtn_0,#daddRmvBtn_1',function () {
+    $(document).on('click', '#daddRmvBtn_0,#daddRmvBtn_1', function () {
         var st_id = document.getElementById('st_id').innerHTML;
         var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
 
         console.log();
-        if(this.id=='daddRmvBtn_0'){
+        if (this.id == 'daddRmvBtn_0') {
             var dadd_id = document.getElementById('daddId_0').innerText;
-            removingDadd(fin_dtl_Id,dadd_id,st_id);
+            removingDadd(fin_dtl_Id, dadd_id, st_id);
             $('#daddRow_0').fadeOut().delay(1000);
             console.log(this.id);
-        }else if(this.id=='daddRmvBtn_1'){
+        } else if (this.id == 'daddRmvBtn_1') {
             var dadd_id = document.getElementById('daddId_1').innerText;
-             removingDadd(fin_dtl_Id,dadd_id,st_id);
-             $('#daddRow_1').fadeOut().delay(1000);
+            removingDadd(fin_dtl_Id, dadd_id, st_id);
+            $('#daddRow_1').fadeOut().delay(1000);
             console.log(this.id);
         }
     });
-    $('#daddRmvBtn_0').click(function (){
-        console.log('hello');
-    });
+
 
     //collection discount
-
 
     $('#addColl').click(function () {
         applyCollDiscount();
     });
 
+    //adding staff child
+    $('#confirmStaff').click(function () {
+        var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
+        addingStaffChild(fin_dtl_Id);
+        staff = 3800.00;
+        $('#staffFeeAmt').val(staff);
+        $('#staffFeeRow').show();
+        grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
+        $('#grandTotalFee').html(grandTotalFee.toFixed(2));
+    });
+
+    //removing staff child
+    $('#removeStaff').click(function () {
+        var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
+        removingStaffChild(fin_dtl_Id);
+        staff = 0.00;
+        $('#staffFeeAmt').val(staff);
+        grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
+        $('#grandTotalFee').html(grandTotalFee.toFixed(2));
+    });
+
+    //adding self funded
+    $('#confirmSelfFunded').click(function () {
+        var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
+        addingSelfFunded(fin_dtl_Id);
+    });
+
+    //removing self funded
+    $('#removeSelfFunded').click(function () {
+        var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
+        removingSelfFunded(fin_dtl_Id);
+    });
+
+
     //Adding siblings
 
     $('#addSibling').click(function () {
-        applySiblingDiscount();
+        sibling = applySiblingDiscount();
+        grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
+        $('#grandTotalFee').html(grandTotalFee.toFixed(2));
     });
 
-    //Adding zakar
+    //Adding zakat
 
     $('#addZakat').click(function () {
         applyZakatDiscount();
     });
+
+    //admiting student
+
+    $('#admit').click(function () {
+        var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
+        var mandFee = document.getElementById('totalMandatoryFee').innerHTML;
+
+        insertingMandFees(mandFee, fin_dtl_Id);
+        admitStudent(fin_dtl_Id);
+
+    });
+
 
     studentFeeReport(1);
 
@@ -408,10 +481,9 @@ function applySponsorDiscount() {
         sponsor = parseInt(donationAmnt) * 10;
     } else if (interval == 'Annually') {
         sponsor = parseInt(donationAmnt);
+    } else {
+        sponsor = parseInt(donationAmnt);
     }
-
-    $('#spAmnt').val(sponsor);
-    $('#sponsorRow').show();
     return sponsor;
 }
 
@@ -419,24 +491,38 @@ function applyDaddDiscount() {
 
     var donationAmnt = document.getElementById('donationAmnt').innerText;
     dollarADay = parseInt(donationAmnt) * 360;
+    return dollarADay;
 
-    $('#daddAmnt').val(dollarADay);
-    $('#daddRow').show();
 
 }
 
 function applyCollDiscount() {
 
-    var donationAmnt = $('#collectionAmt').val();
-    collection = parseInt(donationAmnt);
+    var collectionAmnt = $('#collectionAmt').val();
+    var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
+
+    collection = parseInt(collectionAmnt);
 
     $('#collAmt').val(collection);
     $('#collRow').show();
+    insertingCollection(collection, fin_dtl_Id);
+}
 
+function applyZakatDiscount() {
+
+    var zakatAmnt = $('#zakatAmount').val();
+    var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
+
+    var zakat = parseInt(zakatAmnt);
+
+    $('#zakatAmnt').val(zakat);
+    $('#zakatFeeRow').show();
+    insertingZakat(zakat, fin_dtl_Id);
 }
 
 
 function applySiblingDiscount() {
+    var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
 
     var val = [];
     var i = 0;
@@ -444,8 +530,8 @@ function applySiblingDiscount() {
         val.push(this.text);
         i++;
     });
-
-    var sibDiscount;
+    console.log(val.toString());
+    var sibDiscount = 0;
 
     if (i == 1) {
         sibDiscount = 600;
@@ -457,19 +543,9 @@ function applySiblingDiscount() {
 
     $('#sibDisAmnt').val(sibDiscount);
     $('#sibRow').show();
-
+    insertingSibling(val, i, fin_dtl_Id);
+    return sibDiscount;
 }
-
-
-function applyZakatDiscount() {
-
-    zakatAmnt = parseInt($('#zakatAmount').val());
-    console.log(zakatAmnt);
-    $('#zakatAmnt').val(zakatAmnt);
-    $('#zakatFeeRow').show();
-
-}
-
 
 function totalMandatoryFee(stType, acFee, mealFee, bookFee) {
     return parseInt(stType) +
@@ -538,7 +614,8 @@ function getSponsorByname(name) {
 
             } else {
                 $('#isAssigned').html("");
-                if (!$('#sp_name').length) {
+                var spId = document.getElementById('sp_id_at_fin_report').innerHTML;
+                if (parseInt(spId) == 0) {
                     $('#assignSp').attr('disabled', false);
                 }
             }
@@ -638,12 +715,13 @@ function studentFeeReport(st_id) {
         url: '/student/json/' + 111,
         success: function (data) {
             data = $.parseJSON(data);
-            console.log(data);
 
             $('#studentDetails').append(
                 "<tr style='display: none'><td>" + "Fin Details ID" + "</td>" + "<td id='fin_dtl_id' >" + data[0].finDtlsOfStudent.id + "</td></tr>"
                 +
                 "<tr style='display: none'><td>" + "Student ID" + "</td>" + "<td id='st_id' >" + data[0].id + "</td></tr>"
+                +
+                "<tr style='display: none'><td>" + "Sponsor ID" + "</td>" + "<td id='sp_id_at_fin_report' >" + data[0].finDtlsOfStudent.sp_id + "</td></tr>"
                 +
                 "<tr><td>" + "Student ID" + "</td>" + "<td>" + data[0].studentId + "</td></tr>"
                 +
@@ -656,16 +734,106 @@ function studentFeeReport(st_id) {
                 "<tr><td>" + "Date of Birth" + "</td>" + "<td>" + data[0].dob + "</td></tr>"
             );
 
+            var total = 3800, discount = 0;
+
+            total += parseInt(data[0].finDtlsOfStudent.mandatoryFees);
+
+            $('#finDtlsTbl').append(
+                "<tr><td>" + "Common Mandatory Fee" + "</td>" + "<td>" + "$" + data[0].finDtlsOfStudent.mandatoryFees + " /year</td></tr>"
+            );
+
+            $('#finDtlsTbl').append(
+                "<tr><td>" + "Tuition Fee" + "</td>" + "<td>" + "$" + 3800.00 + " /year</td></tr>"
+            );
+
+            if (data[0].boarding == 'yes') {
+                total += 2700;
+                $('#finDtlsTbl').append(
+                    "<tr><td>" + "Boarding Fee" + "</td>" + "<td>" + "$" + 2700.00 + " /year</td></tr>"
+                );
+            } else {
+                total += 0;
+                $('#finDtlsTbl').append(
+                    "<tr><td>" + "Boarding Fee" + "</td>" + "<td>" + "- $" + 0.00 + " /year</td></tr>"
+                );
+            }
+
+            $('#finDtlsTbl').append(
+                "<tr class='bg-info'><td>" + "Total Expense" + "</td>" + "<td>" + "$" + total.toFixed(2) + " /year</td></tr>"
+            );
+
+
+            //Below code for showing details on fin details section
             if (data[0].finDtlsOfStudent.sp_id > 0) {
+
+                // $('#finDtlsTbl').append(
+                //     "<tr><td>" + "Sponsor\'s Amount" + "</td>" + "<td id='sponsorDonation'>" + donationAmnt +"</td></tr>"
+                // );
                 reportForSponsor(data[0].id, data[0].finDtlsOfStudent.id);
-                $('#isAssigned').append('<sapn id="spAsssignMsgs" class="text-danger">Sponosred to ' + data.name + '</sapn>');
+                // $('#isAssigned').append('<sapn id="spAsssignMsgs" class="text-danger">Sponosred to ' + data.name + '</sapn>');
+                // $('#spAmnt').val(sponsor);
+                // $('#sponsorRow').show();
+                // grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
+                // $('#grandTotalFee').html(grandTotalFee.toFixed(2));
             }
 
             if (data[0].finDtlsOfStudent.hasDadd) {
-                getAllDaddsForASt(data[0].finDtlsOfStudent.id,data[0].id);
+                getAllDaddsForASt(data[0].finDtlsOfStudent.id, data[0].id);
             }
 
-            console.log(data);
+            if (data[0].finDtlsOfStudent.collection > 0) {
+                discount += parseInt(data[0].finDtlsOfStudent.collection);
+                $('#finDtlsTbl').append(
+                    "<tr><td>" + "Collection Target" + "</td>" + "<td>" + "- $" + data[0].finDtlsOfStudent.collection + " /year</td></tr>"
+                );
+            }
+            if (data[0].finDtlsOfStudent.sibling_num > 0) {
+                var i = data[0].finDtlsOfStudent.sibling_num;
+                var sibDiscount = 0;
+
+                if (i == 1) {
+                    sibDiscount = 600;
+                } else if (i == 2) {
+                    sibDiscount = 800;
+                } else if (i == 3) {
+                    sibDiscount = 1000;
+                }
+                discount += sibDiscount;
+                $('#finDtlsTbl').append(
+                    "<tr><td>" + "Sibling Discount" + "</td>" + "<td>" + "- $" + sibDiscount + " /year</td></tr>"
+                );
+            }
+
+            if (data[0].finDtlsOfStudent.isStaffChild) {
+                discount += 3800;
+                $('#finDtlsTbl').append(
+                    "<tr><td>" + "Staff Discount" + "</td>" + "<td>" + "- $" + 3800.00 + " /year</td></tr>"
+                );
+            }
+
+            if (data[0].finDtlsOfStudent.isSelfFunded) {
+                $('#finDtlsTbl').append(
+                    "<tr><td>" + "Staff Discount" + "</td>" + "<td>" + "- $" + 3800.00 + " /year</td></tr>"
+                );
+            }
+
+            $('#finDtlsTbl').append(
+                "<tr class='bg-info'><td>" + "Grand Total Expense" + "</td>" + "<td>" + "$" + (total-discount) + " /year</td></tr>"
+            );
+
+            console.log(data[0]);
+            console.log(discount);
+
+            //===================ends here===============
+
+            // Below codes for showing fee details on fee generator section
+
+            // if(data[0].status == 'applied'){
+            //     $('#newSt').attr('checked',true);
+            // }else {
+            //     $('#returningSt').attr('checked',true);
+            // }
+            //================ends here==============
 
         },
         error: function () {
@@ -675,12 +843,12 @@ function studentFeeReport(st_id) {
 }
 
 //This function adds sponsor's details of the student on finalcial details table
-function reportForSponsor(st_id, fin_dtls_id) {
+function reportForSponsor(st_id) {
+    var sponsor = 0;
     $.ajax({
         method: 'GET',
         url: '/sponsor/student/' + st_id,
         success: function (data) {
-            var sponsor = 0;
             var interval = data.donationInterval;
             console.log(data);
             if (interval == 'Weekly') {
@@ -690,30 +858,21 @@ function reportForSponsor(st_id, fin_dtls_id) {
             } else if (interval == 'Annually') {
                 sponsor = parseInt(data.donationAmount);
             }
-            $('#finDtlsTbl').append(
-                "<tr><td>" + "Sponsor Name" + "</td>" + "<td id='sp_name'>" + data.name + "</td></tr>"
-                +
-                "<tr><td>" + "Sponsor\'s Amount" + "</td>" + "<td>" + "$"+ sponsor + " /year</td></tr>"
-            );
 
             getSponsorByname(data.name);
+
             //if sponsor is available then assign button willbe disabled and remove buttom
             //will be appeared
             $('#removeSp').show();
             $('#assignSp').attr('disabled', true);
-
-            $('#removeSp').click(function () {
-                removingSponsor(fin_dtls_id, data.id);
-                $('#spAssignStatus').html('Sponsor Removed')
-                $('#assignSp').attr('disabled', false);
-                $('#daddTBody').remove();
-            });
             //ends here
         },
         error: function () {
             console.log('not success');
         }
     })
+
+    return sponsor;
 }
 
 //=====================end================
@@ -738,14 +897,14 @@ function removingSponsor(fin_id, sp_id) {
 }
 
 //This method removes a dadd
-function removingDadd(fin_id,dadd_id,st_id) {
+function removingDadd(fin_id, dadd_id, st_id) {
 
     console.log(fin_id);
     console.log(st_id);
 
     $.ajax({
         method: 'GET',
-        url: '/dadd/remove/' + parseInt(fin_id) + '/' + parseInt(dadd_id)+ '/' + parseInt(st_id),
+        url: '/dadd/remove/' + parseInt(fin_id) + '/' + parseInt(dadd_id) + '/' + parseInt(st_id),
         success: function () {
             console.log('success');
         },
@@ -760,28 +919,26 @@ function removingDadd(fin_id,dadd_id,st_id) {
 var totalDadd = 0;
 var daddsContribution = 0;
 
-function getAllDaddsForASt(fin_id,st_id) {
+function getAllDaddsForASt(fin_id, st_id) {
 
     $.ajax({
         method: 'GET',
         url: '/dadd/all/' + parseInt(st_id),
         success: function (data) {
             totalDadd = data.length;
-            console.log(data[0].id);
             var daddsContribution = 0;
-            for(var i=0;i<data.length;i++){
+            for (var i = 0; i < data.length; i++) {
 
-                daddsContribution += (parseInt(data[i].donationAmount))*360;
+                daddsContribution += (parseInt(data[i].donationAmount)) * 360;
 
                 $('#tblDaddList').append(
-                    "<tr id='daddRow_"+i+"'><td>" + "Name" + "</td>" + "<td>" + data[i].name + "</td>"+"<td id='daddId_"+i+"'>"+data[i].id+"</td>"+"<td><button type='button' class='btn' id='daddRmvBtn_"+i+"'>Remove</button></td></tr>"
+                    "<tr id='daddRow_" + i + "'><td>" + "Name" + "</td>" + "<td>" + data[i].name + "</td>" + "<td id='daddId_" + i + "'>" + data[i].id + "</td>" + "<td><button type='button' class='btn' id='daddRmvBtn_" + i + "'>Remove</button></td></tr>"
                 )
             }
 
             $('#finDtlsTbl').append(
-                "<tr><td>" + "Amount from DADDs" + "</td>" + "<td id='sp_name'>" + daddsContribution + "</td></tr>"
+                "<tr><td>" + "Amount from DADDs" + "</td>" + "<td id='sp_name'>" + '-$' + daddsContribution + '/year' + "</td></tr>"
             );
-
         },
         error: function () {
             console.log('not success');
@@ -789,6 +946,155 @@ function getAllDaddsForASt(fin_id,st_id) {
     })
 
 }
+
+
+//method for adding collection
+
+function insertingCollection(collAmnt, fin_id) {
+
+    $.ajax({
+        method: 'GET',
+        url: '/findetails/' + parseInt(collAmnt) + '/' + parseInt(fin_id),
+        success: function () {
+            console.log('success');
+            $('#collAddSts').append('<span class="text-success">"Successfull"</span>');
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+
+}
+
+//inserting true for staff child
+function addingStaffChild(fin_id) {
+    $.ajax({
+        method: 'GET',
+        url: '/findetails/addStaff/' + parseInt(fin_id),
+        success: function () {
+            console.log('success');
+            $('#staffAddSts').html('');
+            $('#staffAddSts').html('<span class="text-success">"Successful"</span>');
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+}
+
+//removing staff child
+function removingStaffChild(fin_id) {
+    $.ajax({
+        method: 'GET',
+        url: '/findetails/removeStaff/' + parseInt(fin_id),
+        success: function () {
+            console.log('success');
+            $('#staffAddSts').html('');
+            $('#staffAddSts').html('<span class="text-success">"Removed"</span>');
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+}
+
+//inserting true self funded
+function addingSelfFunded(fin_id) {
+    $.ajax({
+        method: 'GET',
+        url: '/findetails/selfFund/' + parseInt(fin_id),
+        success: function () {
+            console.log('success');
+            $('#staffAddSts').append('<span class="text-success">"Successfull"</span>');
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+}
+
+//removing self funded
+function removingSelfFunded(fin_id) {
+    $.ajax({
+        method: 'GET',
+        url: '/findetails/removeSelfFund/' + parseInt(fin_id),
+        success: function () {
+            console.log('success');
+            $('#staffAddSts').append('<span class="text-success">"Successfull"</span>');
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+}
+
+
+//method for adding zakat
+
+function insertingZakat(zakat, fin_id) {
+
+    $.ajax({
+        method: 'GET',
+        url: '/findetails/zakat/' + parseInt(zakat) + '/' + parseInt(fin_id),
+        success: function () {
+            console.log('success');
+            $('#collAddSts').append('<span class="text-success">"Successfull"</span>');
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+
+}
+
+function insertingSibling(val, i, fin_id) {
+
+    $.ajax({
+        method: 'GET',
+        url: '/findetails/insertSibling/' + val + '/' + i + '/' + parseInt(fin_id),
+        success: function () {
+            console.log('success');
+            $('#siblingAddSts').append('<span class="text-success">"Successfull"</span>');
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+
+}
+
+function insertingMandFees(mandFees, fin_id) {
+
+    $.ajax({
+        method: 'GET',
+        url: '/findetails/mandFees/' + parseInt(mandFees) + '/' + parseInt(fin_id),
+        success: function () {
+            console.log('success');
+            // $('#siblingAddSts').append('<span class="text-success">"Successfull"</span>');
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+
+}
+
+function admitStudent(fin_id) {
+
+    $.ajax({
+        method: 'GET',
+        url: '/student/admit/' + parseInt(fin_id),
+        success: function () {
+            console.log('success');
+            // $('#siblingAddSts').append('<span class="text-success">"Successfull"</span>');
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+
+}
+
 
 
 
