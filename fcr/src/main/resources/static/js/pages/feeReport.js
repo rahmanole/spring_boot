@@ -136,8 +136,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#tuitionDue').hide();
-    $('#collectionDue').hide();
+
 
     var sponsor = 0;
     var dollarADay = 0;
@@ -262,6 +261,8 @@ $(document).ready(function () {
 
     // $('#sponsorDiv').hide();
     // $('#sponsorDollarADay').hide();
+    $('#remainingTuitionDue').hide();
+    $('#remainingCollectionDue').hide();
     $('#otpRow').hide();
     $('#staffFeeRow').hide();
     $('#bookFeeDiv').hide();
@@ -273,6 +274,11 @@ $(document).ready(function () {
     $('#removeSp').hide();
     $('#selfFundedDiv').hide();
     $('#bookFeeRow').hide();
+    $('#pdfGenerator').hide();
+    $('#collectionTarget').hide();
+    $('#collectionCollected').hide();
+    $('#collectionDue').hide();
+
 
     $('#stBtn').click(function () {
         getStudentById();
@@ -465,8 +471,123 @@ $(document).ready(function () {
     });
 
 
-    studentFeeReport(1);
+    $('#studentIds').change(function () {
+        var studentID = $('#studentIds option:selected').val();
+         $('#pay_st_d_field').val(studentID);
 
+        if(studentID == '0'){
+            $('#studentDetails').html('');
+            $('#finDtlsTbl').html('');
+            $('#tblDaddList').html('');
+            $('#daddTBody').html('');
+            $('#spAsssignMsgs').html('');
+            $('#assignSp').attr('disabled', false);
+            $('#pdfGenerator').hide();
+            return;
+        }
+
+        $('#pdfGenerator').show();
+        studentFeeReport(studentID);
+    });
+
+    //For generating pdf
+    var specialElementHandlers = {
+        "#editor":function (element,renderer) {
+            return true;
+        }
+    };
+
+    $('#pdfGenerator').click(function () {
+
+        $('#finTbl').printThis({
+            debug: false,               // show the iframe for debugging
+            importCSS: true,            // import parent page css
+            importStyle: false,         // import style tags
+            printContainer: true,       // print outer container/$.selector
+            loadCSS: "http://localhost:8082/css/w3.css",                // path to additional css file - use an array [] for multiple
+            pageTitle: "",              // add title to print page
+            removeInline: false,        // remove inline styles from print elements
+            removeInlineSelector: "*",  // custom selectors to filter inline styles. removeInline must be true
+            printDelay: 333,            // variable print delay
+            header: null,               // prefix to html
+            footer: null,               // postfix to html
+            base: false,                // preserve the BASE tag or accept a string for the URL
+            formValues: true,           // preserve input/form values
+            canvas: false,              // copy canvas content
+            doctypeString: '...',       // enter a different doctype for older markup
+            removeScripts: false,       // remove script tags from print content
+            copyTagClasses: false,      // copy classes from the html & body tag
+            beforePrintEvent: null,     // function for printEvent in iframe
+            beforePrint: null,          // function called before iframe is filled
+            afterPrint: null            // function called before iframe is removed
+        });
+
+        // console.log('pdf');
+        // var doc = new jsPDF();
+        //
+        // doc.fromHTML($('#finDtlsTbl'),15,15,{
+        //     "width":170,
+        //     "elementHandlers":specialElementHandlers
+        // });
+        // doc.output('dataurlnewwindow');
+        // doc.save("fee-statement.pdf");
+    });
+
+    //These code for making payment
+    $('#paymentType').change(function () {
+        var val = $('#paymentType option:selected').val();
+        if(val == "tFee"){
+            $('#monthlyTuition').show();
+            $('#monthlyFeePaid').show();
+            $('#monthlyFeeDue').show();
+
+            $('#collectionTarget').hide();
+            $('#collectionCollected').hide();
+            $('#collectionDue').hide();
+            $('#monthlyFeeDuePay').hide();
+            $('#collectionDuePay').hide();
+
+        }else if(val == 'tFeeDue'){
+
+
+
+            $('#monthlyFee').hide();
+            $('#monthlyFeePaid').hide();
+            $('#collectionDue').hide();
+            $('#collectionDuePay').hide();
+            $('#collectionTarget').hide();
+            $('#collectionCollected').hide();
+
+
+        }else if(val == 'collection'){
+
+            $('#collectionTarget').show();
+            $('#collectionCollected').show();
+            $('#collectionDue').show();
+
+
+            $('#monthlyFee').hide();
+            $('#monthlyFeePaid').hide();
+            $('#monthlyFeeDue').hide();
+            $('#monthlyFeeDuePay').hide();
+            $('#collectionDuePay').hide();
+
+
+        }else {
+            $('#collectionDue').show();
+            $('#collectionDuePay').show();
+
+            $('#monthlyFee').hide();
+            $('#monthlyFeePaid').hide();
+            $('#collectionTarget').hide();
+            $('#collectionCollected').hide();
+            $('#monthlyFeeDue').hide();
+            $('#monthlyFeeDuePay').hide();
+        }
+    });
+    $('#pay').click(function () {
+        console.log($('#cheque').val());
+    });
 });
 
 
@@ -712,11 +833,32 @@ function assignDadd(fin_dtl_id_of_st, sp_id, st_id, dadd_id) {
 function studentFeeReport(st_id) {
     $.ajax({
         method: 'GET',
-        url: '/student/json/' + 111,
+        url: '/student/json/' + parseInt(st_id),
         success: function (data) {
             data = $.parseJSON(data);
 
-            $('#studentDetails').append(
+            // $('#studentDetails').html('');
+            //
+            // $('#studentDetails').html(
+            //
+            //     "<tr><td>" + "Mother Name" + "</td>" + "<td>" + data[0].motherName + "</td></tr>"
+            //     +
+            //     "<tr><td>" + "Date of Birth" + "</td>" + "<td>" + data[0].dob.substr(0,13) +"</td></tr>"
+            // );
+
+            var total = 3800, discount = 0;
+
+            total += parseInt(data[0].finDtlsOfStudent.mandatoryFees);
+            //below codes clean every table and elements before loading another
+            $('#finDtlsTbl').html('');
+            $('#tblDaddList').html('');
+            $('#daddTBody').html('');
+            $('#spAsssignMsgs').html('');
+            $('#assignSp').attr('disabled', false);
+            //==========ends here===========
+
+
+            $('#finDtlsTbl').append(
                 "<tr style='display: none'><td>" + "Fin Details ID" + "</td>" + "<td id='fin_dtl_id' >" + data[0].finDtlsOfStudent.id + "</td></tr>"
                 +
                 "<tr style='display: none'><td>" + "Student ID" + "</td>" + "<td id='st_id' >" + data[0].id + "</td></tr>"
@@ -728,15 +870,8 @@ function studentFeeReport(st_id) {
                 "<tr><td>" + "Student Name" + "</td>" + "<td>" + data[0].name + "</td></tr>"
                 +
                 "<tr><td>" + "Father  Name" + "</td>" + "<td>" + data[0].fatherName + "</td></tr>"
-                +
-                "<tr><td>" + "Mother Name" + "</td>" + "<td>" + data[0].motherName + "</td></tr>"
-                +
-                "<tr><td>" + "Date of Birth" + "</td>" + "<td>" + data[0].dob + "</td></tr>"
             );
 
-            var total = 3800, discount = 0;
-
-            total += parseInt(data[0].finDtlsOfStudent.mandatoryFees);
 
             $('#finDtlsTbl').append(
                 "<tr><td>" + "Common Mandatory Fee" + "</td>" + "<td>" + "$" + data[0].finDtlsOfStudent.mandatoryFees + " /year</td></tr>"
@@ -765,20 +900,11 @@ function studentFeeReport(st_id) {
 
             //Below code for showing details on fin details section
             if (data[0].finDtlsOfStudent.sp_id > 0) {
-
-                // $('#finDtlsTbl').append(
-                //     "<tr><td>" + "Sponsor\'s Amount" + "</td>" + "<td id='sponsorDonation'>" + donationAmnt +"</td></tr>"
-                // );
-                reportForSponsor(data[0].id, data[0].finDtlsOfStudent.id);
-                // $('#isAssigned').append('<sapn id="spAsssignMsgs" class="text-danger">Sponosred to ' + data.name + '</sapn>');
-                // $('#spAmnt').val(sponsor);
-                // $('#sponsorRow').show();
-                // grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
-                // $('#grandTotalFee').html(grandTotalFee.toFixed(2));
+               discount +=  reportForSponsor(data[0].id);
             }
 
             if (data[0].finDtlsOfStudent.hasDadd) {
-                getAllDaddsForASt(data[0].finDtlsOfStudent.id, data[0].id);
+                discount += getAllDaddsForASt(data[0].finDtlsOfStudent.id, data[0].id);
             }
 
             if (data[0].finDtlsOfStudent.collection > 0) {
@@ -805,26 +931,128 @@ function studentFeeReport(st_id) {
             }
 
             if (data[0].finDtlsOfStudent.isStaffChild) {
-                discount += 3800;
+                discount += 3800.00;
+                console.log('hello')
                 $('#finDtlsTbl').append(
                     "<tr><td>" + "Staff Discount" + "</td>" + "<td>" + "- $" + 3800.00 + " /year</td></tr>"
                 );
             }
 
             if (data[0].finDtlsOfStudent.isSelfFunded) {
-                $('#finDtlsTbl').append(
-                    "<tr><td>" + "Staff Discount" + "</td>" + "<td>" + "- $" + 3800.00 + " /year</td></tr>"
-                );
+
             }
 
             $('#finDtlsTbl').append(
                 "<tr class='bg-info'><td>" + "Grand Total Expense" + "</td>" + "<td>" + "$" + (total-discount) + " /year</td></tr>"
             );
 
-            console.log(data[0]);
-            console.log(discount);
+            $('#finDtlsTbl').append(
+                "<tr class='bg-info'><td>" + "Monthly Expense" + "</td>" + "<td>" + "$" + (total-discount)/10 + " /year</td></tr>"
+            );
+
+            $('#finDtlsTbl').append(
+                "<tr class=''><td>" + "Gudian's Signature" + "</td>" + "<td>" + "</td></tr>"
+            );
+
+            $('#finDtlsTbl').append(
+                "<tr class=''><td>" + "Sharif Rafiq" + "</td>" + "<td>" +"</td></tr>"
+            );
+
+            //======================Student's copy===================
+
+            $('#finDtlsTbl').append(
+                "<tr class='text-center' ><td colspan='2'>" + "Student\'s Copy" + "</td></tr>"
+            );
+            $('#finDtlsTbl').append(
+                "<tr><td>" + "Common Mandatory Fee" + "</td>" + "<td>" + "$" + data[0].finDtlsOfStudent.mandatoryFees + " /year</td></tr>"
+            );
+
+            $('#finDtlsTbl').append(
+                "<tr><td>" + "Tuition Fee" + "</td>" + "<td>" + "$" + 3800.00 + " /year</td></tr>"
+            );
+
+            if (data[0].boarding == 'yes') {
+                total += 2700;
+                $('#finDtlsTbl').append(
+                    "<tr><td>" + "Boarding Fee" + "</td>" + "<td>" + "$" + 2700.00 + " /year</td></tr>"
+                );
+            } else {
+                total += 0;
+                $('#finDtlsTbl').append(
+                    "<tr><td>" + "Boarding Fee" + "</td>" + "<td>" + "- $" + 0.00 + " /year</td></tr>"
+                );
+            }
+
+            $('#finDtlsTbl').append(
+                "<tr class='bg-info'><td>" + "Total Expense" + "</td>" + "<td>" + "$" + total.toFixed(2) + " /year</td></tr>"
+            );
+
+
+            //Below code for showing details on fin details section
+            if (data[0].finDtlsOfStudent.sp_id > 0) {
+                discount +=  reportForSponsor(data[0].id);
+            }
+
+            if (data[0].finDtlsOfStudent.hasDadd) {
+
+                discount += getAllDaddsForASt(data[0].finDtlsOfStudent.id, data[0].id);
+            }
+
+            if (data[0].finDtlsOfStudent.collection > 0) {
+                discount += parseInt(data[0].finDtlsOfStudent.collection);
+                $('#finDtlsTbl').append(
+                    "<tr><td>" + "Collection Target" + "</td>" + "<td>" + "- $" + data[0].finDtlsOfStudent.collection + " /year</td></tr>"
+                );
+            }
+            if (data[0].finDtlsOfStudent.sibling_num > 0) {
+                var i = data[0].finDtlsOfStudent.sibling_num;
+                var sibDiscount = 0;
+
+                if (i == 1) {
+                    sibDiscount = 600;
+                } else if (i == 2) {
+                    sibDiscount = 800;
+                } else if (i == 3) {
+                    sibDiscount = 1000;
+                }
+                discount += sibDiscount;
+                $('#finDtlsTbl').append(
+                    "<tr><td>" + "Sibling Discount" + "</td>" + "<td>" + "- $" + sibDiscount + " /year</td></tr>"
+                );
+            }
+
+            if (data[0].finDtlsOfStudent.isStaffChild) {
+                discount += 3800.00;
+                console.log('hello')
+                $('#finDtlsTbl').append(
+                    "<tr><td>" + "Staff Discount" + "</td>" + "<td>" + "- $" + 3800.00 + " /year</td></tr>"
+                );
+            }
+
+            if (data[0].finDtlsOfStudent.isSelfFunded) {
+
+            }
+
+            $('#finDtlsTbl').append(
+                "<tr class='bg-info'><td>" + "Grand Total Expense" + "</td>" + "<td>" + "$" + (total-discount) + " /year</td></tr>"
+            );
+
+            $('#finDtlsTbl').append(
+                "<tr class='bg-info'><td>" + "Monthly Expense" + "</td>" + "<td>" + "$" + (total-discount)/10 + " /year</td></tr>"
+            );
+
+            $('#finDtlsTbl').append(
+                "<tr class=''><td>" + "Gudian's Signature" + "</td>" + "<td>" + "</td></tr>"
+            );
+
+            $('#finDtlsTbl').append(
+                "<tr class=''><td>" + "Sharif Rafiq" + "</td>" + "<td>" +"</td></tr>"
+            );
+
 
             //===================ends here===============
+
+            //================student's copy ==============
 
             // Below codes for showing fee details on fee generator section
 
@@ -844,28 +1072,41 @@ function studentFeeReport(st_id) {
 
 //This function adds sponsor's details of the student on finalcial details table
 function reportForSponsor(st_id) {
+    // return $.ajax({
+    //     url: '/sponsor/student/' + st_id
+    // }).responseText;
+
     var sponsor = 0;
     $.ajax({
         method: 'GET',
         url: '/sponsor/student/' + st_id,
+        async:false,
         success: function (data) {
+
             var interval = data.donationInterval;
-            console.log(data);
             if (interval == 'Weekly') {
                 sponsor = parseInt(data.donationAmount) * 4 * 10;
             } else if (interval == 'Monthly') {
                 sponsor = parseInt(data.donationAmount) * 10;
             } else if (interval == 'Annually') {
                 sponsor = parseInt(data.donationAmount);
+            }else{
+                sponsor = parseInt(data.donationAmount);
             }
 
+            $('#finDtlsTbl').append(
+                "<tr><td>" + "Sponsor\'s Contribution" + "</td>" + "<td id='sponsorDonation'>" +'-$'+ sponsor +' /year'+"</td></tr>"
+            );
             getSponsorByname(data.name);
+
+
 
             //if sponsor is available then assign button willbe disabled and remove buttom
             //will be appeared
             $('#removeSp').show();
             $('#assignSp').attr('disabled', true);
             //ends here
+
         },
         error: function () {
             console.log('not success');
@@ -917,16 +1158,17 @@ function removingDadd(fin_id, dadd_id, st_id) {
 
 //Get all dadds of a student
 var totalDadd = 0;
-var daddsContribution = 0;
 
 function getAllDaddsForASt(fin_id, st_id) {
 
+    var daddsContribution = 0;
     $.ajax({
         method: 'GET',
         url: '/dadd/all/' + parseInt(st_id),
+        async:false,
         success: function (data) {
             totalDadd = data.length;
-            var daddsContribution = 0;
+            $('#tblDaddList').html('');
             for (var i = 0; i < data.length; i++) {
 
                 daddsContribution += (parseInt(data[i].donationAmount)) * 360;
@@ -944,7 +1186,7 @@ function getAllDaddsForASt(fin_id, st_id) {
             console.log('not success');
         }
     })
-
+    return daddsContribution;
 }
 
 
@@ -957,6 +1199,7 @@ function insertingCollection(collAmnt, fin_id) {
         url: '/findetails/' + parseInt(collAmnt) + '/' + parseInt(fin_id),
         success: function () {
             console.log('success');
+            $('#collAddSts').html('');
             $('#collAddSts').append('<span class="text-success">"Successfull"</span>');
         },
         error: function () {

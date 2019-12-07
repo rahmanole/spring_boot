@@ -25,8 +25,8 @@ public class FeeController {
     @Autowired
     FinDtlsOfStudentRepo finDtlsOfStudentRepo;
 
-    @GetMapping("/fee/report/{id}")
-    public String generateFee(Model model, @PathVariable long id) {
+    @GetMapping("/fee/report")
+    public String generateFee(Model model) {
         model.addAttribute("studentIDS", studentRepo.getStudentIds());
         return "pages/feeReport";
     }
