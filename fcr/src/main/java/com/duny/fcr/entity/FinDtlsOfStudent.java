@@ -33,6 +33,9 @@ public class FinDtlsOfStudent {
     private double zakat;
     @Column(nullable = true)
     private boolean isSelfFunded;
+
     @Column(name="mand_fees",nullable = true)
     private double mandatoryFees;
+    @Column(name="mand_fees_paid",nullable = true)
+    private double mandatoryFeesPaid;
 }

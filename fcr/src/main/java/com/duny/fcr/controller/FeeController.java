@@ -25,12 +25,23 @@ public class FeeController {
     @Autowired
     FinDtlsOfStudentRepo finDtlsOfStudentRepo;
 
-    @GetMapping("/fee/report")
+    @GetMapping("/updateFinancialDetails")
     public String generateFee(Model model) {
         model.addAttribute("studentIDS", studentRepo.getStudentIds());
-        return "pages/feeReport";
+        return "/pages/financial/updateFinDetails";
     }
 
+    @GetMapping("/monthlyFee")
+    public String collectMontlyFee(Model model) {
+        model.addAttribute("studentIDS", studentRepo.getStudentIds());
+        return "/pages/financial/monthlyFee";
+    }
+
+    @GetMapping("/admissionFee")
+    public String colectAdmisnFee(Model model) {
+        model.addAttribute("studentIDS", studentRepo.getStudentIds());
+        return "/pages/financial/admissionFee";
+    }
 
     @GetMapping("/findetails/{id}")
     @ResponseBody
