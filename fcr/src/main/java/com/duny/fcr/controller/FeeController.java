@@ -37,11 +37,7 @@ public class FeeController {
         return "/pages/financial/monthlyFee";
     }
 
-    @GetMapping("/admissionFee")
-    public String colectAdmisnFee(Model model) {
-        model.addAttribute("studentIDS", studentRepo.getStudentIds());
-        return "/pages/financial/admissionFee";
-    }
+
 
     @GetMapping("/findetails/{id}")
     @ResponseBody

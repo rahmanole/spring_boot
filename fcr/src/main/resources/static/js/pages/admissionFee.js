@@ -1,15 +1,23 @@
 $(document).ready(function () {
 
+    $('#admissionFeeForm').hide();
+    $('#month').val(getMonthName());
+    $('#admissionFeePaymentID').val(getPaymentId());
+
     $('#studentIdsOnAdmisnFee').change(function () {
         var studentID = $('#studentIdsOnAdmisnFee option:selected').val();
-        $('#admisnFeeStId').val(studentID);
+
 
         if (studentID == '0') {
-            $('#monthlyFeeTblBody').html("<tr><td colspan='2' class='text-center'>" + "Admission Fee Statement" + "</td></tr>");
-            $('#pdfGenerator').hide();
+            $('#admisnFeeTblBody').html("<tr><td colspan='2' class='text-center'>" + "Admission Fee Statement" + "</td></tr>");
+            $('#pdfGeneratorAdmisnFee').hide();
+            $('#admissionFeeForm').hide();
+
             return;
         } else {
-            $('#pdfGenerator').show();
+            $('#admisnFeeStId').val(studentID);
+            $('#pdfGeneratorAdmisnFee').show();
+            $('#admissionFeeForm').show();
             admissionFeeStmt(studentID);
         }
     });
@@ -37,13 +45,19 @@ $(document).ready(function () {
         $('#admisnFeeDue').html(admisnFeeDue);
     });
 
-    $('#admisnFee').click(function () {
+    $('#admCashBtn').click(function () {
         console.log('admisnFeeDue');
+    });
+    
+    
+    $('#admCashBtn').click(function () {
+        var cash = JSON.stringify($('#cashForm').serializeJSON());
+        console.log(cash);
     });
 
 
     //For generating pdf
-    var specialElementHandlers = {
+    var specialElementHandlers ={
         "#editor": function (element, renderer) {
             return true;
         }
@@ -113,7 +127,9 @@ function admissionFeeStmt(st_id) {
                 +
                 "<tr><td>" + "Father  Name" + "</td>" + "<td>" + data[0].fatherName + "</td></tr>"
                 +
-                "<tr><td>" + "Month" + "</td>" + "<td>" + data[0].fatherName + "</td></tr>"
+                "<tr><td>" + "Month" + "</td>" + "<td id='motnhName'></td></tr>"
+                +
+                "<tr><td>" + "Payment ID" + "</td>" + "<td id='paymentIDonStmt'></td></tr>"
                 +
                 "<tr><td>" + "Admission Fee" + "</td>" + "<td >" + data[0].finDtlsOfStudent.mandatoryFees + "</td></tr>"
                 +
@@ -123,6 +139,8 @@ function admissionFeeStmt(st_id) {
 
             )
             $('#admisnFeeToPay').val(data[0].finDtlsOfStudent.mandatoryFees);
+            $('#motnhName').html(getMonthName());
+            $('#paymentIDonStmt').html(getPaymentId());
         },
         error: function () {
             console.log('not success');
@@ -132,6 +150,41 @@ function admissionFeeStmt(st_id) {
 
 //=====================end================
 
+function getPaymentId() {
+    var paymentID = null;
+    $.ajax({
+        method:'GET',
+        url: '/admissionFee/getPaymentId',
+        async:false,
+        success:function (data) {
+            paymentID = data;
+        },
+        error:function () {
+            console.log('not success');
+        }
+    })
+
+    return paymentID;
+}
+
+
+function getMonthName() {
+    var d = new Date();
+    var month = new Array();
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+    return month[d.getMonth()];
+}
 
 
 

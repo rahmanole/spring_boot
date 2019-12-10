@@ -21,7 +21,5 @@ public class MoneyOrder {
     private String moneyOrderNum;
     private double amount;
     private byte[] moneyOrderImg;
-    private String paymentType;
-
 
 }

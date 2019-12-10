@@ -597,13 +597,15 @@ function applySiblingDiscount() {
     });
     console.log(val.toString());
     var sibDiscount = 0;
-
+    console.log(i);
     if (i == 1) {
         sibDiscount = 600;
     } else if (i == 2) {
         sibDiscount = 800;
     } else if (i == 3) {
         sibDiscount = 1000;
+    }else if(i == 0){
+        val = null;
     }
 
     $('#sibDisAmnt').val(sibDiscount);
