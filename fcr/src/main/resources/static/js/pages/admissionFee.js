@@ -2,11 +2,17 @@ $(document).ready(function () {
 
     $('#admissionFeeForm').hide();
     $('#month').val(getMonthName());
-    $('#admissionFeePaymentID').val(getPaymentId());
+
+    var paymentId = getPaymentId();
+    $('#admissionFeePaymentID').val(paymentId);
+    $('#admCashPID').val(paymentId);
+    $('#admChequePID').val(paymentId);
+    $('#admZellePID').val(paymentId);
+    $('#admCCPID').val(paymentId);
+    $('#amdMoneyOrderPID').val(paymentId);
 
     $('#studentIdsOnAdmisnFee').change(function () {
         var studentID = $('#studentIdsOnAdmisnFee option:selected').val();
-
 
         if (studentID == '0') {
             $('#admisnFeeTblBody').html("<tr><td colspan='2' class='text-center'>" + "Admission Fee Statement" + "</td></tr>");
@@ -22,20 +28,17 @@ $(document).ready(function () {
         }
     });
 
-    $('#pay').click(function () {
-        console.log($('#cheque').val());
-    });
+
 
     var admisnFeeDue= 0;
 
     $('#admsnFeePaid').keyup(function () {
-
         var val = parseInt($('#admsnFeePaid').val());
         var admisnFee = parseInt($('#admisnFeeToPay').val());
         admisnFeeDue = admisnFee-val;
         $('#admisnFeePaidFieldOnStmt').html(val);
         $('#admisnFeeDue').html(admisnFeeDue+'$');
-
+        $('#admsnFeeDue').val(admisnFeeDue);
     });
 
 
@@ -45,14 +48,113 @@ $(document).ready(function () {
         $('#admisnFeeDue').html(admisnFeeDue);
     });
 
-    $('#admCashBtn').click(function () {
-        console.log('admisnFeeDue');
+    $('#admisnFee').click(function () {
+        var cash = JSON.stringify($('#admFeeForm').serializeJSON());
+        console.log(cash);
+        $.ajax({
+            method:'post',
+            url:'/admFee/save',
+            data: cash,
+            contentType: "application/json",
+            success:function () {
+                return false;
+            },
+            error: function () {
+                console.log('not success');
+            }
+        })
     });
-    
-    
+
     $('#admCashBtn').click(function () {
         var cash = JSON.stringify($('#cashForm').serializeJSON());
         console.log(cash);
+        $.ajax({
+            method:'post',
+            url:'/cash/save',
+            data: cash,
+            contentType: "application/json",
+            success:function () {
+                return false;
+            },
+            error: function () {
+                console.log('not success');
+            }
+        })
+    });
+
+
+
+
+    $('#chequeForm').submit(function (event) {
+        event.preventDefault();
+        $.ajax({
+            method:'post',
+            url:'/cheque/save',
+            data: new FormData(this),
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            cache:false,
+            success:function (data) {
+                return false;
+            },
+            error: function () {
+                console.log('not success');
+            }
+        })
+    });
+
+    $('#moneyOrderForm').submit(function (event) {
+        event.preventDefault();
+        $.ajax({
+            method:'post',
+            url:'/mo/save',
+            data: new FormData(this),
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            cache:false,
+            success:function (data) {
+                return false;
+            },
+            error: function () {
+                console.log('not success');
+            }
+        })
+    });
+
+    $('#admZellBtn').click(function () {
+        var zelle = JSON.stringify($('#zelleForm').serializeJSON());
+        console.log(zelle);
+        $.ajax({
+            method:'post',
+            url:'/zelle/save',
+            data: zelle,
+            contentType: "application/json",
+            success:function () {
+                return false;
+            },
+            error: function () {
+                console.log('not success');
+            }
+        })
+    });
+
+    $('#admCCBtn').click(function () {
+        var zelle = JSON.stringify($('#ccForm').serializeJSON());
+        console.log(zelle);
+        $.ajax({
+            method:'post',
+            url:'/cc/save',
+            data: zelle,
+            contentType: "application/json",
+            success:function () {
+                return false;
+            },
+            error: function () {
+                console.log('not success');
+            }
+        })
     });
 
 

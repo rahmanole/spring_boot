@@ -14,6 +14,6 @@ public class AdmissionPaymentServiceImp implements AdmissionPaymentService {
 
     @Override
     public String getAdmissionPaymentId() {
-        return "ADM"+(admissionPaymentRepo.getMaxId()+1);
+        return "AF"+(admissionPaymentRepo.getMaxId()+1);
     }
 }

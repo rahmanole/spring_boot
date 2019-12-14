@@ -23,6 +23,7 @@ public class Cheque {
     private String chequeNum;
     private double amount;
     private byte[] chequeImg;
+    @Column(name = "payment_id",length = 10)
     private String paymentId;
 
 

@@ -15,9 +15,9 @@ public class Cash {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private Date date = new Date();
-    private double amount;
     @Column(name="payment_id")
     private String paymentId;
+    private double amount;
+    private Date date = new Date();
 
 }
