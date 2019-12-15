@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "cash")
+@Table(name = "zelle")
 @Getter
 @Setter
 public class Zelle {
@@ -16,6 +16,7 @@ public class Zelle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private Date date = new Date();
+    @Column(name="payment_id",unique = true,length = 10)
     private String paymentID;
     private double amount;
     @Column(length = 15,nullable = true)

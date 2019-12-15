@@ -72,7 +72,7 @@
                                         <td>
                                             <div class="form-group form-float" style="margin-bottom: 0">
                                                 <div class="form-line">
-                                                    <input type="text" name="paymentId" id="admissionFeePaymentID"
+                                                    <input type="text" name="afPaymentId" id="admissionFeePaymentID"
                                                             class="form-control text-right">
                                                 </div>
                                             </div>
@@ -140,7 +140,7 @@
                                             <div class="tab-content">
                                                 <div class="tab-pane fade hide">
                                                     <form >
-                                                        <div class="form-group form-float" style="margin-bottom: 10px">
+                                                        <div class="hide form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
                                                                 <input type="text" name="paymentId" class="form-control" placeholder="Payment ID">
                                                             </div>
@@ -158,7 +158,7 @@
 
                                                 <div id="cash" class="tab-pane active in">
                                                     <form id="cashForm">
-                                                        <div class="form-group form-float" style="margin-bottom: 10px">
+                                                        <div class="hide form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
                                                                 <input type="text" name="paymentId" id="admCashPID" class="form-control" placeholder="Payment ID">
                                                             </div>
@@ -171,16 +171,19 @@
                                                         </div>
 
                                                         <button type="button" id="admCashBtn" class="btn btn-primary waves-effect">SUBMIT</button>
+                                                        <span style="margin-left:30px" id="afCashSavingStatus"></span>
                                                     </form>
                                                 </div>
 
                                                 <div id="cheque" class="tab-pane fade">
                                                     <form id="chequeForm" enctype="multipart/form-data">
-                                                        <div class="form-group form-float" style="margin-bottom: 10px">
+
+                                                        <div class="hide form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
                                                                 <input  type="text" name="paymentId" id="admChequePID" class="hide form-control" placeholder="Payment ID">
                                                             </div>
                                                         </div>
+
                                                         <div class="form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
                                                                 <input type="text" name="accountNum" class="form-control" placeholder="Account Number">
@@ -206,18 +209,20 @@
 
                                                         <div class="form-group form-float">
                                                             <div class="form-line">
-                                                                <input type="file" name="chequeImg" style="margin-right:30px;float: left">
+                                                                <input type="file" id="chequeImg" name="chequeImg" style="margin-right:30px;float: left">
                                                                 <input type="button" id="chequeTakePhoto" class="btn" value="Take Photo" style="margin-right:30px;">
                                                             </div>
                                                         </div>
 
                                                         <button type="submit" id="admChequeBtn" class="btn btn-primary waves-effect">SUBMIT</button>
+                                                        <span style="margin-left:30px" id="mfChequeSavingStatus"></span>
+
                                                     </form>
                                                 </div>
 
                                                 <div id="moneyOrder" class="tab-pane fade">
                                                     <form id="moneyOrderForm" enctype="multipart/form-data">
-                                                        <div class="form-group form-float" style="margin-bottom: 10px">
+                                                        <div class="hide form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
                                                                 <input type="text" name="paymentID" id="amdMoneyOrderPID" class="form-control" placeholder="Payment ID">
                                                             </div>
@@ -249,12 +254,13 @@
                                                         </div>
 
                                                         <button type="submit" id="admMoneyOrderBtn" class="btn btn-primary waves-effect">SUBMIT</button>
+                                                        <span style="margin-left:30px" id="afMOSavingStatus"></span>
                                                     </form>
                                                 </div>
 
                                                 <div id="cc" class="tab-pane fade">
                                                     <form id="ccForm">
-                                                        <div class="form-group form-float" style="margin-bottom: 10px">
+                                                        <div class="hide form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
                                                                 <input type="text" name="paymentId" id="admCCPID" class="form-control" placeholder="Payment ID">
                                                             </div>
@@ -275,12 +281,13 @@
                                                             </div>
                                                         </div>
                                                         <button type="button" id="admCCBtn" class="btn btn-primary waves-effect">SUBMIT</button>
+                                                        <span style="margin-left:30px" id="afCCSavingStatus"></span>
                                                     </form>
                                                 </div>
 
                                                 <div id="zelle" class="tab-pane fade">
                                                     <form id="zelleForm">
-                                                        <div class="form-group form-float" style="margin-bottom: 10px">
+                                                        <div class="hide form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
                                                                 <input type="text" name="paymentId" id="admZellePID" class="form-control" placeholder="Payment ID">
                                                             </div>
@@ -306,6 +313,7 @@
                                                             </div>
                                                         </div>
                                                         <button type="button" id="admZellBtn" class="btn btn-primary waves-effect">SUBMIT</button>
+                                                        <span style="margin-left:30px" id="afZelleSavingStatus"></span>
                                                     </form>
                                                 </div>
                                             </div>
@@ -313,7 +321,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td></td>
+                                        <td id="afPayStatus" style="padding-top: 5px"></td>
                                         <td class="align-right">
                                             <button type="button" id="admisnFee"
                                                     class="btn btn-block btn-primary waves-effect">Pay

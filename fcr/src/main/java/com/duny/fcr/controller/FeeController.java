@@ -109,7 +109,16 @@ public class FeeController {
     @GetMapping("/findetails/mandFees/{mandFees}/{fin_id}")
     @ResponseBody
     public String inseertMandFees(@PathVariable double mandFees,@PathVariable int fin_id) {
-        finDtlsOfStudentRepo.insertSibling(mandFees,fin_id);
+        finDtlsOfStudentRepo.insertMandFees(mandFees,fin_id);
         return "";
     }
+
+    @GetMapping("/findetails/mandFeesDue/{mandFeesDue}/{fin_id}")
+    @ResponseBody
+    public String inseertMandFeesDue(@PathVariable double mandFeesDue,@PathVariable int fin_id) {
+        finDtlsOfStudentRepo.insertMandFeesDue(mandFeesDue,fin_id);
+        return "";
+    }
+
+
 }

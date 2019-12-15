@@ -15,7 +15,7 @@ public class AdmissionPayment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(length = 10,nullable = false)
-    private String paymentId;
+    private String afPaymentId;
     @Column(length = 10,nullable = false)
     private String studentId;
     @Column(length = 10,nullable = false)

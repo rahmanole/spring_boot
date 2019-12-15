@@ -1,68 +1,62 @@
 $(document).ready(function () {
 
-    // $('#admissionFeeForm').hide();
+    //$('#admissionFeeForm').hide();
     $('#month').val(getMonthName());
 
-    var afPaymentId = getAfPaymentId();
-    $('#admissionFeePaymentID').val(afPaymentId);
-    $('#admCashPID').val(afPaymentId);
-    $('#admChequePID').val(afPaymentId);
-    $('#admZellePID').val(afPaymentId);
-    $('#admCCPID').val(afPaymentId);
-    $('#amdMoneyOrderPID').val(afPaymentId);
-    var studentID;
-    $('#studentIdsOnAdmisnFee').change(function () {
-        studentID = $('#studentIdsOnAdmisnFee option:selected').val();
+    var paymentId = getPaymentId();
+    $('#tFeePaymentID').val(paymentId);
+    $('#tfCashPID').val(paymentId);
+    $('#tfChequePID').val(paymentId);
+    $('#tfZellePID').val(paymentId);
+    $('#tfCCPID').val(paymentId);
+    $('#tfMoneyOrderPID').val(paymentId);
+
+    $('#studentIdsOnTuitionFee').change(function () {
+        var studentID = $('#studentIdsOnTuitionFee option:selected').val();
 
         if (studentID == '0') {
-            $('#admisnFeeTblBody').html("<tr><td colspan='2' class='text-center'>" + "Admission Fee Statement" + "</td></tr>");
+            $('#tuitionFeeTblBody').html("<tr><td colspan='2' class='text-center'>" + "Tuition Fee Statement" + "</td></tr>");
             $('#pdfGeneratorAdmisnFee').hide();
-            $('#admissionFeeForm').hide();
+            $('#tuitionFeeForm').hide();
 
             return;
         } else {
-            $('#admisnFeeStId').val(studentID);
+            $('#tFeeStId').val(studentID);
             $('#pdfGeneratorAdmisnFee').show();
-            $('#admissionFeeForm').show();
-            admissionFeeStmt(studentID);
+            $('#tuitionFeeForm').show();
+            tuitonFeeStmt(studentID);
         }
     });
 
 
-    var admisnFeeDue = 0;
 
-    $('#admsnFeePaid').keyup(function () {
-        var val = parseInt($('#admsnFeePaid').val());
-        var admisnFee = parseInt($('#admisnFeeToPay').val());
-        admisnFeeDue = admisnFee - val;
-        $('#admisnFeePaidFieldOnStmt').html(val);
-        $('#admisnFeeDue').html(admisnFeeDue + '$');
-        $('#admsnFeeDue').val(admisnFeeDue);
+    var tuitionFeeDue= 0;
+
+    $('#tuitionFeePaid').keyup(function () {
+        var val = parseInt($('#tuitionFeePaid').val());
+        var tuitionFee = parseInt($('#tuitionFeeToPay').val());
+        tuitionFeeDue = tuitionFee-val;
+        $('#tuitionFeePaidFieldOnStmt').html(val);
+        $('#tuitionFeeDueOnStmt').html(tuitionFeeDue+'$');
+        $('#tuitionFeeDue').val(tuitionFeeDue);
     });
 
 
-    $('#admsnFeeDue').keyup(function () {
-        admisnFeeDue = $('#admsnFeeDue').val();
-        $('#admisnFeeDue').html(admisnFeeDue);
+
+    $('#tuitionFeeDue').keyup(function () {
+        tuitionFeeDue = $('#tuitionFeeDue').val();
+        $('#tuitionFeeDue').html(tuitionFeeDue);
     });
 
-    $('#admisnFee').click(function () {
-        var cash = JSON.stringify($('#admFeeForm').serializeJSON());
-        $('#afPayStatus').html('<p class="text-danger"></p>');
-        if (studentID == undefined || studentID == 0) {
-            $('#afPayStatus').append('<p class="text-danger">Select Student ID</p>');
-            return "";
-        }
-        var fin_id = document.getElementById('fin_dtl_id').innerText;
-        insertingAdmissionFeeDue(admisnFeeDue, fin_id)
-        console.log(fin_id);
+    $('#tuitionFee').click(function () {
+        var cash = JSON.stringify($('#tFeeForm').serializeJSON());
         console.log(cash);
         $.ajax({
-            method: 'post',
-            url: '/admFee/save',
+            method:'post',
+            url:'/tuitionFee/save',
             data: cash,
             contentType: "application/json",
-            success: function () {
+            success:function () {
                 return false;
             },
             error: function () {
@@ -71,20 +65,15 @@ $(document).ready(function () {
         })
     });
 
-    $('#admCashBtn').click(function () {
-        var cash = JSON.stringify($('#cashForm').serializeJSON());
-        $('#afCashSavingStatus').html('');
-        if (JSON.parse(cash).amount <= 0 || JSON.parse(cash).amount == '') {
-            $('#afCashSavingStatus').append('<span class="text-danger">Enter valid amount</span>');
-            return '';
-        }
+    $('#tfCashBtn').click(function () {
+        var cash = JSON.stringify($('#tfCashForm').serializeJSON());
+        console.log(cash);
         $.ajax({
-            method: 'post',
-            url: '/cash/save',
+            method:'post',
+            url:'/cash/save',
             data: cash,
             contentType: "application/json",
-            success: function () {
-                $('#afCashSavingStatus').append('<span class="text-success">Success</span>');
+            success:function () {
                 return false;
             },
             error: function () {
@@ -94,32 +83,19 @@ $(document).ready(function () {
     });
 
 
-    $('#chequeForm').submit(function (event) {
+
+
+    $('#tfChequeForm').submit(function (event) {
         event.preventDefault();
-        console.log(cheque);
-        $('#mfChequeSavingStatus').html('');
-
-        if(JSON.parse(cheque).accountNum == '' ||
-            JSON.parse(cheque).chequeNum == '' ||
-            JSON.parse(cheque).chequeDate == ''){
-            $('#mfChequeSavingStatus').append('<span class="text-danger">Fill out all the fields</span>');
-            return '';
-        }
-
-        if ($('#chequeImg').val() == '') {
-            $('#mfChequeSavingStatus').append('<span class="text-danger">Select image</span>');
-            return '';
-        }
-
         $.ajax({
-            method: 'post',
-            url: '/cheque/save',
+            method:'post',
+            url:'/cheque/save',
             data: new FormData(this),
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
-            cache: false,
-            success: function (data) {
+            cache:false,
+            success:function () {
                 return false;
             },
             error: function () {
@@ -128,17 +104,17 @@ $(document).ready(function () {
         })
     });
 
-    $('#moneyOrderForm').submit(function (event) {
+    $('#tfMoneyOrderForm').submit(function (event) {
         event.preventDefault();
         $.ajax({
-            method: 'post',
-            url: '/mo/save',
+            method:'post',
+            url:'/mo/save',
             data: new FormData(this),
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
-            cache: false,
-            success: function (data) {
+            cache:false,
+            success:function () {
                 return false;
             },
             error: function () {
@@ -147,15 +123,15 @@ $(document).ready(function () {
         })
     });
 
-    $('#admZellBtn').click(function () {
-        var zelle = JSON.stringify($('#zelleForm').serializeJSON());
+    $('#tfZellBtn').click(function () {
+        var zelle = JSON.stringify($('#tfZelleForm').serializeJSON());
         console.log(zelle);
         $.ajax({
-            method: 'post',
-            url: '/zelle/save',
+            method:'post',
+            url:'/zelle/save',
             data: zelle,
             contentType: "application/json",
-            success: function () {
+            success:function () {
                 return false;
             },
             error: function () {
@@ -164,15 +140,15 @@ $(document).ready(function () {
         })
     });
 
-    $('#admCCBtn').click(function () {
-        var zelle = JSON.stringify($('#ccForm').serializeJSON());
+    $('#tfCCBtn').click(function () {
+        var zelle = JSON.stringify($('#tfCCForm').serializeJSON());
         console.log(zelle);
         $.ajax({
-            method: 'post',
-            url: '/cc/save',
+            method:'post',
+            url:'/cc/save',
             data: zelle,
             contentType: "application/json",
-            success: function () {
+            success:function () {
                 return false;
             },
             error: function () {
@@ -183,15 +159,15 @@ $(document).ready(function () {
 
 
     //For generating pdf
-    var specialElementHandlers = {
+    var specialElementHandlers ={
         "#editor": function (element, renderer) {
             return true;
         }
     };
 
-    $('#pdfGeneratorAdmisnFee').click(function () {
+    $('#pdfGeneratorTuitionFee').click(function () {
 
-        $('#admisnFeeTbl').printThis({
+        $('#tuitionFeeTbl').printThis({
             debug: false,               // show the iframe for debugging
             importCSS: true,            // import parent page css
             importStyle: false,         // import style tags
@@ -226,7 +202,7 @@ $(document).ready(function () {
     });
 });
 
-function admissionFeeStmt(st_id) {
+function tuitonFeeStmt(st_id) {
     $.ajax({
         method: 'GET',
         url: '/student/json/' + parseInt(st_id),
@@ -237,8 +213,8 @@ function admissionFeeStmt(st_id) {
 
             //==========ends here===========
 
-            $('#admisnFeeTblBody').html('');
-            $('#admisnFeeTblBody').append(
+            $('#tuitionFeeTblBody').html('');
+            $('#tuitionFeeTblBody').append(
                 "<tr><td colspan='2' class='text-center'>" + "Admission Fee Statement" + "</td></tr>"
                 +
                 "<tr style='display: none'><td>" + "Fin Details ID" + "</td>" + "<td id='fin_dtl_id' >" + data[0].finDtlsOfStudent.id + "</td></tr>"
@@ -259,53 +235,38 @@ function admissionFeeStmt(st_id) {
                 +
                 "<tr><td>" + "Admission Fee" + "</td>" + "<td >" + data[0].finDtlsOfStudent.mandatoryFees + "</td></tr>"
                 +
-                "<tr><td>" + "Admission Fee Paid" + "</td>" + "<td id='admisnFeePaidFieldOnStmt'></td></tr>"
+                "<tr><td>" + "Admission Fee Paid" + "</td>" + "<td id='tuitionFeePaidFieldOnStmt'></td></tr>"
                 +
-                "<tr><td>" + "Admission Fee Due" + "</td>" + "<td id='admisnFeeDue'></td></tr>"
+                "<tr><td>" + "Admission Fee Due" + "</td>" + "<td id='tuitionFeeDueOnStmt'></td></tr>"
+
             )
             $('#admisnFeeToPay').val(data[0].finDtlsOfStudent.mandatoryFees);
             $('#motnhName').html(getMonthName());
-            $('#paymentIDonStmt').html(getAfPaymentId());
-        },
-        error: function () {
-            console.log('not success');
-        }
-    });
-}
-
-//=====================end================
-
-function getAfPaymentId() {
-    var paymentID = null;
-    $.ajax({
-        method: 'GET',
-        url: '/admissionFee/getPaymentId',
-        async: false,
-        success: function (data) {
-            paymentID = data;
-        },
-        error: function () {
-            console.log('not success');
-        }
-    });
-
-    return paymentID;
-}
-
-
-function insertingAdmissionFeeDue(afDue, fin_id) {
-
-    $.ajax({
-        method: 'GET',
-        url: '/findetails/mandFeesDue/' + parseInt(afDue) + '/' + parseInt(fin_id),
-        success: function () {
-            console.log('success');
+            $('#paymentIDonStmt').html(getPaymentId());
         },
         error: function () {
             console.log('not success');
         }
     })
+}
 
+//=====================end================
+
+function getPaymentId() {
+    var paymentID = null;
+    $.ajax({
+        method:'GET',
+        url: '/tuitionFee/getPaymentId',
+        async:false,
+        success:function (data) {
+            paymentID = data;
+        },
+        error:function () {
+            console.log('not success');
+        }
+    })
+
+    return paymentID;
 }
 
 

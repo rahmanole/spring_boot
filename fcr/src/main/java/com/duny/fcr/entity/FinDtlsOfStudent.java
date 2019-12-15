@@ -36,6 +36,6 @@ public class FinDtlsOfStudent {
 
     @Column(name="mand_fees",nullable = true)
     private double mandatoryFees;
-    @Column(name="mand_fees_paid",nullable = true)
-    private double mandatoryFeesPaid;
+    @Column(name="mand_fees_due",nullable = true)
+    private double mandatoryFeesDue;
 }

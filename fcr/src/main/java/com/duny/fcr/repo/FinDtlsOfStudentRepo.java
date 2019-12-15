@@ -17,6 +17,7 @@ public interface FinDtlsOfStudentRepo extends JpaRepository<FinDtlsOfStudent,Lon
     String REMOVE_SELF_FUNDED = "update fin_details set is_self_funded = false where id=?";
     String INSERT_SIBLING = "update fin_details set sibling_ids=?,sibling_num=? where id=?";
     String INSERT_MAND_FEES = "update fin_details set mand_fees=? where id=?";
+    String INSERT_MAND_FEES_DUE = "update fin_details set mand_fees_due=? where id=?";
 
     @Query(value = FIN_DETAILS_OF_ST,nativeQuery = true)
     FinDtlsOfStudent getFinDetails(long id);
@@ -64,7 +65,12 @@ public interface FinDtlsOfStudentRepo extends JpaRepository<FinDtlsOfStudent,Lon
     @Modifying
     @Transactional
     @Query(value = INSERT_MAND_FEES,nativeQuery = true)
-    void insertSibling(double mandFees,long id);
+    void insertMandFees(double mandFees,long id);
+    
+    @Modifying
+    @Transactional
+    @Query(value = INSERT_MAND_FEES_DUE,nativeQuery = true)
+    void insertMandFeesDue(double mandFees,long id);
 
 
 

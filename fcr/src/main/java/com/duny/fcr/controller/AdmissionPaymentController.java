@@ -2,6 +2,7 @@ package com.duny.fcr.controller;
 
 import com.duny.fcr.entity.AdmissionPayment;
 import com.duny.fcr.entity.Cash;
+import com.duny.fcr.repo.AdmissionPaymentRepo;
 import com.duny.fcr.repo.StudentRepo;
 import com.duny.fcr.service.AdmissionPaymentService;
 import com.google.gson.Gson;
@@ -21,6 +22,8 @@ public class AdmissionPaymentController {
 
     @Autowired
     AdmissionPaymentService admissionPaymentService;
+    @Autowired
+    AdmissionPaymentRepo admissionPaymentRepo;
 
     @GetMapping("/admissionFee")
     public String colectAdmisnFee(Model model) {
@@ -31,7 +34,7 @@ public class AdmissionPaymentController {
     @GetMapping("/admissionFee/getPaymentId")
     @ResponseBody
     public String getPaymentId() {
-        return admissionPaymentService.getAdmissionPaymentId();
+        return admissionPaymentService.getAdmissionFeePaymentId();
     }
 
     @PostMapping(value = "/admFee/save", consumes = "application/json", produces = "application/json")
@@ -40,7 +43,7 @@ public class AdmissionPaymentController {
         builder.setPrettyPrinting();
         Gson gson = new Gson();
         AdmissionPayment admissionPayment = gson.fromJson(admPaymentJson, AdmissionPayment.class);
-        System.out.println(admissionPayment.getAdmissionFeeDue());
+        //admissionPaymentRepo.save(admissionPayment);
         return "redirect:/admissionFee";
     }
 

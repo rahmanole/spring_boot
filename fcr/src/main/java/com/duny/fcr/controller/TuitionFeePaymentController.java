@@ -18,9 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TuitionFeePaymentController {
     @Autowired
     StudentRepo studentRepo;
-
     @Autowired
     TuitionFeePaymentService tuitionFeePaymentService;
+
+
 
     @GetMapping("/tuitionFee")
     public String colectTuitnFee(Model model) {
