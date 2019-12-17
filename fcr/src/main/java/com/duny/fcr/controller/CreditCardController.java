@@ -16,8 +16,8 @@ public class CreditCardController {
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         Gson gson = new Gson();
-        CreditCard cash = gson.fromJson(cCard,CreditCard.class);
-        System.out.println(cash.getAmount());
+        CreditCard creditCard = gson.fromJson(cCard,CreditCard.class);
+        System.out.println(creditCard.getAmount());
         return "redirect:/admissionFee";
     }
 }

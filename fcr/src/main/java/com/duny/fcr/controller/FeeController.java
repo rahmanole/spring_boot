@@ -16,12 +16,10 @@ public class FeeController {
     SponsorRepo sponsorRepo;
     @Autowired
     StudentRepo studentRepo;
-
     @Autowired
     FeeRepo feeRepo;
     @Autowired
     DaddRepo daddRepo;
-
     @Autowired
     FinDtlsOfStudentRepo finDtlsOfStudentRepo;
 

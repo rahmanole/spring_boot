@@ -59,7 +59,7 @@
                                         <td>
                                             <div class="form-group form-float" style="margin-bottom: 0">
                                                 <div class="form-line">
-                                                    <input type="text" name="studentId" id="admisnFeeStId"
+                                                    <input readonly type="text" name="studentId" id="admisnFeeStId"
                                                            class="form-control text-right">
                                                 </div>
                                             </div>
@@ -72,7 +72,7 @@
                                         <td>
                                             <div class="form-group form-float" style="margin-bottom: 0">
                                                 <div class="form-line">
-                                                    <input type="text" name="afPaymentId" id="admissionFeePaymentID"
+                                                    <input readonly type="text" name="afPaymentId" id="admissionFeePaymentID"
                                                             class="form-control text-right">
                                                 </div>
                                             </div>
@@ -96,7 +96,7 @@
                                         <td>
                                             <div class="form-group form-float" style="margin-bottom: 0">
                                                 <div class="form-line">
-                                                    <input type="text" name="admissionFee"
+                                                    <input readonly type="text" name="admissionFee"
                                                            id='admisnFeeToPay' class="form-control text-right">
                                                 </div>
                                             </div>
@@ -199,6 +199,7 @@
                                                         <div class="form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
                                                                 <input type="date" name="chequeDate" class="form-control" placeholder="Cheque Date">
+                                                                <label class="form-label">Cheque Date</label>
                                                             </div>
                                                         </div>
                                                         <div class="form-group form-float" style="margin-bottom: 10px">
@@ -231,6 +232,7 @@
                                                         <div class="form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
                                                                 <input type="date" name="moneyOrderDate" class="form-control" placeholder="Money Order Date">
+                                                                <label class="form-label">Money Order Date</label>
                                                             </div>
                                                         </div>
 
@@ -248,7 +250,7 @@
 
                                                         <div class="form-group form-float">
                                                             <div class="form-line">
-                                                                <input type="file" name="moneyOrderImg" style="margin-right:30px;float: left">
+                                                                <input type="file" id="moImage" name="moneyOrderImg" style="margin-right:30px;float: left">
                                                                 <input type="button" id="takePhotoMO" class="btn" value="Take Photo" style="margin-right:30px;">
                                                             </div>
                                                         </div>
@@ -294,7 +296,7 @@
                                                         </div>
                                                         <div class="form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
-                                                                <input type="text" name="cardNum" class="form-control" placeholder="Card Number">
+                                                                <input type="text" name="amount" class="form-control" placeholder="Enter amount">
                                                             </div>
                                                         </div>
                                                         <div class="form-group form-float" style="margin-bottom: 10px">
@@ -305,11 +307,6 @@
                                                         <div class="form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
                                                                 <input type="text" name="email" class="form-control" placeholder="Phone Number">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group form-float" style="margin-bottom: 10px">
-                                                            <div class="form-line">
-                                                                <input type="text" name="amount" class="form-control" placeholder="Amount">
                                                             </div>
                                                         </div>
                                                         <button type="button" id="admZellBtn" class="btn btn-primary waves-effect">SUBMIT</button>

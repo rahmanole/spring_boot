@@ -4,12 +4,14 @@ import com.duny.fcr.HibernateProxyTypeAdapter;
 import com.duny.fcr.entity.FinDtlsOfStudent;
 import com.duny.fcr.entity.Student;
 import com.duny.fcr.repo.StudentRepo;
+import com.duny.fcr.service.StudentService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,6 +21,9 @@ import java.util.List;
 public class StudentController {
     @Autowired
     StudentRepo studentRepo;
+
+    @Autowired
+    StudentService studentService;
 
     @GetMapping("/student/registration")
     public String registrationForm(Model model) {
@@ -33,16 +38,18 @@ public class StudentController {
         System.out.println(date);
         student.setDob(sf.parse(d));
         student.setStatus("applied");
+
         int application_id = studentRepo.getMaxApplicationId() + 1;
         student.setApplicationId(application_id);
 
         int student_id = Integer.parseInt(studentRepo.getMaxStudentId()) + 1;
         student.setStudentId(student_id + "");
 
-
         student.setFinDtlsOfStudent(new FinDtlsOfStudent());
-        //        student.setStudentId("111");
+//
+//        student.setStudentId("111");
 //        student.setApplicationId(1000);
+
         studentRepo.save(student);
         return "redirect:/student/registration";
     }
@@ -73,6 +80,23 @@ public class StudentController {
         b.registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY);
         Gson gson = b.create();
         return gson.toJson(studentRepo.getStudentByStudentId(studentId));
+    }
+
+    @GetMapping("/student/excel")
+    public String studentExcel(Model model) {
+        return "/pages/forms/excel";
+    }
+
+    @PostMapping("/student/excel/upload")
+    public String studentExcelUpload(@RequestParam("excel") MultipartFile file){
+        studentService.uploadExcel(file,studentRepo);
+        return "redirect:/student/excel";
+    }
+
+    @PostMapping("/student/updateCourse/{course}/{id}")
+    public String updateCourse(@PathVariable String course,@PathVariable long id){
+        studentRepo.updateCourse(course,id);
+        return "";
     }
 
 

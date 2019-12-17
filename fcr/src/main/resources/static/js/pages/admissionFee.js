@@ -18,7 +18,8 @@ $(document).ready(function () {
             $('#admisnFeeTblBody').html("<tr><td colspan='2' class='text-center'>" + "Admission Fee Statement" + "</td></tr>");
             $('#pdfGeneratorAdmisnFee').hide();
             $('#admissionFeeForm').hide();
-
+            $('#admisnFeeStId').val('');
+            $('#admisnFeeToPay').val('');
             return;
         } else {
             $('#admisnFeeStId').val(studentID);
@@ -33,6 +34,13 @@ $(document).ready(function () {
 
     $('#admsnFeePaid').keyup(function () {
         var val = parseInt($('#admsnFeePaid').val());
+        if(isNaN(val)){
+            $('#admisnFeePaidFieldOnStmt').html('');
+            $('#admisnFeeDue').html('');
+            $('#admsnFeeDue').val('');
+            return '';
+        }
+
         var admisnFee = parseInt($('#admisnFeeToPay').val());
         admisnFeeDue = admisnFee - val;
         $('#admisnFeePaidFieldOnStmt').html(val);
@@ -43,16 +51,27 @@ $(document).ready(function () {
 
     $('#admsnFeeDue').keyup(function () {
         admisnFeeDue = $('#admsnFeeDue').val();
+        if(isNaN(admisnFeeDue)){
+            return '';
+        }
         $('#admisnFeeDue').html(admisnFeeDue);
     });
 
     $('#admisnFee').click(function () {
+        var admsnFeePaid = parseInt($('#admsnFeePaid').val());
         var cash = JSON.stringify($('#admFeeForm').serializeJSON());
-        $('#afPayStatus').html('<p class="text-danger"></p>');
+
+        $('#afPayStatus').html('');
         if (studentID == undefined || studentID == 0) {
             $('#afPayStatus').append('<p class="text-danger">Select Student ID</p>');
             return "";
         }
+
+        if (isNaN(admsnFeePaid)) {
+            $('#afPayStatus').append('<p class="text-danger">Enter admission fee paid</p>');
+            return "";
+        }
+
         var fin_id = document.getElementById('fin_dtl_id').innerText;
         insertingAdmissionFeeDue(admisnFeeDue, fin_id)
         console.log(fin_id);
@@ -96,6 +115,7 @@ $(document).ready(function () {
 
     $('#chequeForm').submit(function (event) {
         event.preventDefault();
+        var cheque = JSON.stringify($('#chequeForm').serializeJSON());
         console.log(cheque);
         $('#mfChequeSavingStatus').html('');
 
@@ -130,6 +150,21 @@ $(document).ready(function () {
 
     $('#moneyOrderForm').submit(function (event) {
         event.preventDefault();
+        var mo = JSON.stringify($('#moneyOrderForm').serializeJSON());
+        console.log(mo);
+        $('#afMOSavingStatus').html('');
+
+        if(JSON.parse(mo).moneyOrderDate == '' ||
+            JSON.parse(mo).moneyOrderNum == '' ||
+            isNaN(JSON.parse(mo).amount)){
+            $('#afMOSavingStatus').append('<span class="text-danger">Enter valid data</span>');
+            return '';
+        }
+
+        if ($('#moImage').val() == '') {
+            $('#afMOSavingStatus').append('<span class="text-danger">Select image</span>');
+            return '';
+        }
         $.ajax({
             method: 'post',
             url: '/mo/save',
@@ -138,7 +173,7 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             cache: false,
-            success: function (data) {
+            success: function () {
                 return false;
             },
             error: function () {
@@ -150,6 +185,18 @@ $(document).ready(function () {
     $('#admZellBtn').click(function () {
         var zelle = JSON.stringify($('#zelleForm').serializeJSON());
         console.log(zelle);
+        $('#afZelleSavingStatus').html('');
+
+        if(JSON.parse(zelle).amount == '' || JSON.parse(zelle).amount <= 0){
+            $('#afZelleSavingStatus').append('<span class="text-danger">Enter amount</span>');
+            return '';
+        }
+
+        if(JSON.parse(zelle).phoneNum == '' && JSON.parse(zelle).email == 0){
+            $('#afZelleSavingStatus').append('<span class="text-danger">Enter email or phone</span>');
+            return '';
+        }
+
         $.ajax({
             method: 'post',
             url: '/zelle/save',
@@ -165,12 +212,20 @@ $(document).ready(function () {
     });
 
     $('#admCCBtn').click(function () {
-        var zelle = JSON.stringify($('#ccForm').serializeJSON());
+        var cc = JSON.stringify($('#ccForm').serializeJSON());
+        $('#afCCSavingStatus').html('');
+        if (JSON.parse(cc).amount <= 0 ||
+            isNaN(JSON.parse(cc).amount) ||
+            JSON.parse(cc).tnxId == '' ||
+            JSON.parse(cc).cardNum == '') {
+            $('#afCCSavingStatus').append('<span class="text-danger">Enter valid data</span>');
+            return '';
+        }
         console.log(zelle);
         $.ajax({
             method: 'post',
             url: '/cc/save',
-            data: zelle,
+            data: cc,
             contentType: "application/json",
             success: function () {
                 return false;

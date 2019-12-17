@@ -21,28 +21,30 @@ public class Student {
     private int applicationId;
     @Column(length = 30,nullable = false)
     private String name;
-    @Column(length = 30,nullable = false)
+    @Column(length = 30)
     private String email;
     @Column(name="parent_email",length = 30,nullable = false)
     private String parentEmail;
     @Column(length = 6,nullable = false)
     private String gender;
-    @Column(name="course_name")
+    @Column(name="course_name",length = 20)
     private String courseName;
     @Column(length = 5,nullable = false)
     private String boarding;
     private Date dob;
+    @Column(length = 15,nullable = true)
+    private String homePhone;
     @Column(length = 30,nullable = false)
     private String motherName;
-    @Column(length = 15,nullable = false)
+    @Column(length = 15,nullable = true)
     private String motherCell;
     @Column(length = 30,nullable = false)
     private String fatherName;
-    @Column(length = 15,nullable = false)
+    @Column(length = 15,nullable = true)
     private String fatherCell;
     @Column(nullable = false)
     private String address;
-    @Column(length = 10,nullable = false)
+    @Column(length = 10,nullable = true)
     private String aptNo;
     @Column(length = 30,nullable = false)
     private String city;
@@ -52,7 +54,7 @@ public class Student {
     private String zip;
     @Column(length = 50,nullable = false)
     private String currentSchool;
-    @Column(length = 30,nullable = false)
+    @Column(nullable = false)
     private String currentGrade;
     private Date dateOfAdmission;
     @Column(length = 15,nullable = false)

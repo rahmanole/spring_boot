@@ -50,7 +50,23 @@ $(document).ready(function () {
 
 
     $('#course').change(function () {
-        acFee = parseInt($('#course option:selected').val());
+        var course = $('#course option:selected').val();
+
+        if(course == 'Academy'){
+            acFee = 240;
+        }else if(course == "Boy's Nazira"){
+            acFee = 755;
+        }else if(course == "Banaat Nazira"){
+            acFee = 240;
+        }else if(course == "Boy's Hifz"){
+            acFee = 755;
+        }else if(course == "Banaat Hifz"){
+            acFee = 240;
+        }else if(course == "Standardized Test"){
+            acFee = 50;
+        }
+
+        acFee = parseInt(acFee);
 
         var course = $('#course option:selected').val();
 
@@ -464,8 +480,12 @@ $(document).ready(function () {
         var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
         var mandFee = document.getElementById('totalMandatoryFee').innerHTML;
 
+        var course = $('#course option:selected').val();
+        var st_id = document.getElementById('st_id').innerHTML;
+
         insertingMandFees(mandFee, fin_dtl_Id);
         admitStudent(fin_dtl_Id);
+        updateCourse(course,st_id);
 
     });
 
@@ -864,6 +884,7 @@ function studentFeeReport(st_id) {
                     "<tr><td>" + "Collection Target" + "</td>" + "<td>" + "- $" + data[0].finDtlsOfStudent.collection + " /year</td></tr>"
                 );
             }
+
             if (data[0].finDtlsOfStudent.sibling_num > 0) {
                 var i = data[0].finDtlsOfStudent.sibling_num;
                 var sibDiscount = 0;
@@ -883,7 +904,6 @@ function studentFeeReport(st_id) {
 
             if (data[0].finDtlsOfStudent.isStaffChild) {
                 discount += 3800.00;
-                console.log('hello')
                 $('#finDtlsTbl').append(
                     "<tr><td>" + "Staff Discount" + "</td>" + "<td>" + "- $" + 3800.00 + " /year</td></tr>"
                 );
@@ -1160,6 +1180,22 @@ function insertingMandFees(mandFees, fin_id) {
 }
 
 function admitStudent(fin_id) {
+
+    $.ajax({
+        method: 'GET',
+        url: '/student/admit/' + parseInt(fin_id),
+        success: function () {
+            console.log('success');
+            // $('#siblingAddSts').append('<span class="text-success">"Successfull"</span>');
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+
+}
+
+function updateCourse(course,st_id) {
 
     $.ajax({
         method: 'GET',
