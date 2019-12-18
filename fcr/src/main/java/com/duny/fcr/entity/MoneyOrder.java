@@ -22,6 +22,7 @@ public class MoneyOrder {
     @Column(length = 30,nullable = true)
     private String moneyOrderNum;
     private double amount;
+    @Column(columnDefinition = "blob")
     private byte[] moneyOrderImg;
 
 }

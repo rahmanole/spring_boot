@@ -41,6 +41,13 @@
                         <form method="POST" th:object="${student}" th:action="@{/student/save}">
                             <div class="form-group form-float">
                                 <div class="form-line">
+                                    <input type="text" th:field="*{id}" id="id" class="form-control">
+                                    <label class="form-label">Id</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-float">
+                                <div class="form-line">
                                     <input type="text" th:field="*{name}" id="name" class="form-control">
                                     <label class="form-label">Name</label>
                                 </div>
@@ -65,9 +72,9 @@
                                     <label class="form-label">Gender</label>
                                     <br>
                                     <br>
-                                    <input type="radio" th:field="*{gender}" id="male" th:value="Male" checked/>
+                                    <input type="radio" th:field="*{gender}" id="male" th:value="Boy" checked/>
                                     <label for="male">Boy</label>
-                                    <input type="radio" th:field="*{gender}" id="female" th:value="Female"/>
+                                    <input type="radio" th:field="*{gender}" id="female" th:value="Girl"/>
                                     <label for="female">Girl</label>
                                 </div>
                             </div>
@@ -177,6 +184,7 @@
                                         <option th:value="Florida">Florida</option>
                                         <option th:value="Texas">Texas</option>
                                         <option th:value="California">California</option>
+                                        <option th:value="Pennsylvania">Pennsylvania</option>
                                     </select>
                                 </div>
                             </div>
@@ -207,7 +215,7 @@
                             <div>
                                 <video class="" id="photo" width="250" height="200"></video>
                             </div>
-                            <button type="submit" class="btn btn-primary waves-effect">SUBMIT</button>
+                            <button type="submit" class="btn btn-primary waves-effect">Update</button>
                         </form>
                     </div>
 

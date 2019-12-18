@@ -46,7 +46,7 @@ public class AdmissionPaymentController {
         builder.setPrettyPrinting();
         Gson gson = new Gson();
         AdmissionPayment admissionPayment = gson.fromJson(admPaymentJson, AdmissionPayment.class);
-        //admissionPaymentRepo.save(admissionPayment);
+        admissionPaymentRepo.save(admissionPayment);
         return "redirect:/admissionFee";
     }
 

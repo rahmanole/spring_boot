@@ -152,7 +152,7 @@ $(document).ready(function () {
     $('#tfMoneyOrderForm').submit(function (event) {
         event.preventDefault();
         var mo = JSON.stringify($('#tfMoneyOrderForm').serializeJSON());
-        console.log(mo);
+
         $('#tfMOSavingStatus').html('');
 
         if(JSON.parse(mo).moneyOrderDate == '' ||
@@ -165,7 +165,9 @@ $(document).ready(function () {
         if ($('#tfMOImg').val() == '') {
             $('#tfMOSavingStatus').append('<span class="text-danger">Select image</span>');
             return '';
-        }        $.ajax({
+        }
+        console.log(mo);
+        $.ajax({
             method:'post',
             url:'/mo/save',
             data: new FormData(this),

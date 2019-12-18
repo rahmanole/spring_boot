@@ -54,10 +54,16 @@ public class StudentController {
         return "redirect:/student/registration";
     }
 
-    @GetMapping("/student/pending")
+    @GetMapping("/student/all")
     public String pendingApplications(Model model) {
-        model.addAttribute("appliesStList", studentRepo.findAll());
-        return "/pages/tables/pending";
+        model.addAttribute("students", studentRepo.findAll());
+        return "/pages/tables/student";
+    }
+
+    @GetMapping("/student/update/{id}")
+    public String updateStudent(Model model,@PathVariable long id) {
+        model.addAttribute("student",studentRepo.getOne(id));
+        return "/pages/forms/updateForm";
     }
 
     @GetMapping("/student/details/{id}")

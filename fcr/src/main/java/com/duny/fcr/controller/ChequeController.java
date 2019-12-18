@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
 
 @Controller
@@ -25,7 +26,7 @@ public class ChequeController {
                              @RequestParam("chequeNum") String cNum,
                              @RequestParam("chequeDate") String cDate,
                              @RequestParam("amount") String amnt,
-                             @RequestParam("chequeImg") MultipartFile file) throws IOException {
+                             @RequestParam("chequeImg") MultipartFile file) throws Exception {
         if(file.isEmpty()){
 
             return "";
@@ -36,9 +37,12 @@ public class ChequeController {
         cheque.setAccountNum(cNum);
         cheque.setAmount(Double.parseDouble(amnt));
         cheque.setChequeImg(file.getBytes());
+        cheque.setChequeDate(new SimpleDateFormat("yyyy-mm-dd").parse(cDate));
         chequeRepo.save(cheque);
-        System.out.println(pid+acNum+cNum+cDate+amnt);
-        System.out.println(Base64.getEncoder().encodeToString(file.getBytes()));
+
+//        System.out.println(pid+acNum+cNum+cDate+amnt);
+//        System.out.println(Base64.getEncoder().encodeToString(file.getBytes()));
+
         return "redirect:/admissionFee";
     }
 }

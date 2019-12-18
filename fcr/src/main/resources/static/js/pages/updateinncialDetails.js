@@ -871,7 +871,7 @@ function studentFeeReport(st_id) {
             } else {
                 total += 0;
                 $('#finDtlsTbl').append(
-                    "<tr><td>" + "Boarding Fee" + "</td>" + "<td>" + "- $" + 0.00 + " /year</td></tr>"
+                    "<tr><td>" + "Boarding Fee" + "</td>" + "<td>" + "$" + 0.00 + " /year</td></tr>"
                 );
             }
 
