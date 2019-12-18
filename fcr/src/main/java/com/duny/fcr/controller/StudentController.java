@@ -93,10 +93,16 @@ public class StudentController {
         return "redirect:/student/excel";
     }
 
-    @PostMapping("/student/updateCourse/{course}/{id}")
+    @GetMapping("/student/updateCourse/{course}/{id}")
     public String updateCourse(@PathVariable String course,@PathVariable long id){
         studentRepo.updateCourse(course,id);
-        return "";
+        return "redirect:/updateFinancialDetails";
+    }
+
+    @GetMapping("/student/updateBoarding/{boarding}/{id}")
+    public String updateBoarding(@PathVariable String boarding,@PathVariable long id){
+        studentRepo.updateBoarding(boarding,id);
+        return "redirect:/updateFinancialDetails";
     }
 
 

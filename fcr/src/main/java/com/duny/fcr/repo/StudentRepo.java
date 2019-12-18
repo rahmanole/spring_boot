@@ -17,7 +17,8 @@ public interface StudentRepo extends JpaRepository<Student,Long> {
     String GET_ALL_PENDING_ST = "select * from student where status='applied'";
     String GET_STUDENT_BY_ST_ID = "select * from student where student_id=?";
     String INSERT_ADMITTED = "update student set status='admitted' where id=?";
-    String UPDATE_COURSE= "update student set course=? where id=?";
+    String UPDATE_COURSE= "update student set course_name=? where id=?";
+    String UPDATE_RESIDENCE= "update student set boarding=? where id=?";
 
     @Query(nativeQuery = true,value = query_for_application_id)
     int getMaxApplicationId();
@@ -43,4 +44,9 @@ public interface StudentRepo extends JpaRepository<Student,Long> {
     @Transactional
     @Query(value = UPDATE_COURSE,nativeQuery = true)
     void updateCourse(String course,long id);
+
+    @Modifying
+    @Transactional
+    @Query(value = UPDATE_RESIDENCE,nativeQuery = true)
+    void updateBoarding(String boarding,long id);
 }

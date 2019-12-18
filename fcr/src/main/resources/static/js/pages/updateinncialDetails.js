@@ -10,6 +10,8 @@ $(document).ready(function () {
     var mandatoryFee = 0;
     var total = 3900;
 
+    var boardingSts = '';
+
     $('#residentialFee').val(0.00);
 
     mealFee = $('#mealFee').val();
@@ -137,9 +139,17 @@ $(document).ready(function () {
     });
 
 
+
     $('input[type=radio][name="boarding"]').change(function () {
         if ($(this).is(":checked")) { // check if the radio is checked
-            resFee = parseInt($(this).val()); // retrieve the value
+            //resFee = parseInt($(this).val()); // retrieve the value
+            boardingSts = $(this).val();
+            if(boardingSts == 'yes'){
+                resFee = 2700;
+            }else{
+                resFee = 0;
+            }
+
             tuitionFee = 3800;
 
             $('#residentialFee').val(resFee.toFixed(2));
@@ -486,6 +496,7 @@ $(document).ready(function () {
         insertingMandFees(mandFee, fin_dtl_Id);
         admitStudent(fin_dtl_Id);
         updateCourse(course,st_id);
+        updateBoarding(boardingSts,st_id);
 
     });
 
@@ -1199,10 +1210,25 @@ function updateCourse(course,st_id) {
 
     $.ajax({
         method: 'GET',
-        url: '/student/admit/' + parseInt(fin_id),
+        url: '/student/updateCourse/'+course+'/' + parseInt(st_id),
         success: function () {
             console.log('success');
-            // $('#siblingAddSts').append('<span class="text-success">"Successfull"</span>');
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+
+}
+
+
+function updateBoarding(boarding,st_id) {
+
+    $.ajax({
+        method: 'GET',
+        url: '/student/updateBoarding/'+boarding+'/' + parseInt(st_id),
+        success: function () {
+            console.log('success');
         },
         error: function () {
             console.log('not success');

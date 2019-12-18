@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Controller
 public class FeeController {
@@ -25,14 +27,9 @@ public class FeeController {
 
     @GetMapping("/updateFinancialDetails")
     public String generateFee(Model model) {
-        model.addAttribute("studentIDS", studentRepo.getStudentIds());
+        List<String> idlist = studentRepo.getStudentIds();
+        model.addAttribute("studentIDS",idlist);
         return "/pages/financial/updateFinDetails";
-    }
-
-    @GetMapping("/monthlyFee")
-    public String collectMontlyFee(Model model) {
-        model.addAttribute("studentIDS", studentRepo.getStudentIds());
-        return "/pages/financial/monthlyFee";
     }
 
 

@@ -5,6 +5,7 @@ import com.duny.fcr.entity.Student;
 import com.duny.fcr.repo.StudentRepo;
 import com.duny.fcr.service.StudentService;
 import org.apache.poi.ss.usermodel.*;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,7 +19,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Service
+@Component
 public class StudentServiceImp implements StudentService {
 
     @Override
@@ -44,11 +45,16 @@ public class StudentServiceImp implements StudentService {
 
             Sheet sheet = workbook.getSheetAt(0);
             long startTime = System.currentTimeMillis();
-            outer:
+
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Student student = new Student();
 
                 Row row = sheet.getRow(i);
+                if (cellToString(row.getCell(0)).equals("")) {
+                    System.out.println("breaking");
+                    break;
+                }
+
 
                 student.setName(cellToString(row.getCell(0)));
                 student.setGender(cellToString(row.getCell(1)));
@@ -73,22 +79,35 @@ public class StudentServiceImp implements StudentService {
                 student.setFinDtlsOfStudent(new FinDtlsOfStudent());
 
                 student.setStatus("applied");
+                int appId = 0;
+                String stId = null;
 
-                int application_id = studentRepo.getMaxApplicationId() + 1;
-                student.setApplicationId(application_id);
+                try {
+                    appId = studentRepo.getMaxApplicationId();
+                    stId = studentRepo.getMaxStudentId();
+                }catch (Exception ex){
 
-                int student_id = Integer.parseInt(studentRepo.getMaxStudentId()) + 1;
-                student.setStudentId(student_id + "");
+                }
+                if(appId>0){
+                    int application_id = studentRepo.getMaxApplicationId() + 1;
+                    student.setApplicationId(application_id);
+                }else {
+                    student.setApplicationId(1000);
+                }
 
-//                student.setStudentId("111");
-//                student.setApplicationId(1000);
+                if( stId!= null){
+                    int student_id = Integer.parseInt(studentRepo.getMaxStudentId()) + 1;
+                    student.setStudentId(student_id + "");
+                }else {
+                    student.setStudentId("101");
+                }
 
                 studentRepo.save(student);
             }
 
             System.out.println(System.currentTimeMillis() - startTime);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             Path fileToDelete = Paths.get(filePath);
@@ -101,20 +120,20 @@ public class StudentServiceImp implements StudentService {
         }
     }
 
-    String cellToString(Cell cell){
-        if(cell == null){
+    String cellToString(Cell cell) {
+        if (cell == null) {
             return "NA";
         }
         return cell.toString().trim();
     }
 
-    Date cellToDate(Cell cell){
+    Date cellToDate(Cell cell) throws Exception {
         Date date = null;
-        try {
-             date = new SimpleDateFormat("DD-MMM-YYYY").parse(cell.toString().trim());
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(cellToString(cell).equals("")){
+            return null;
         }
+        date = new SimpleDateFormat("dd-MMM-yyyy").parse(cell.toString().trim());
+        //date = new SimpleDateFormat("dd/mm/yyyy").parse(cell.toString().trim());
 
         return date;
     }

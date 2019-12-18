@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 public class AdmissionPaymentController {
     @Autowired
@@ -27,7 +29,8 @@ public class AdmissionPaymentController {
 
     @GetMapping("/admissionFee")
     public String colectAdmisnFee(Model model) {
-        model.addAttribute("studentIDS", studentRepo.getStudentIds());
+        List<String> idlist = studentRepo.getStudentIds();
+        model.addAttribute("studentIDS",idlist);
         return "/pages/financial/admissionFee";
     }
 
