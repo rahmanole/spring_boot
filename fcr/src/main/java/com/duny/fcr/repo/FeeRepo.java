@@ -12,9 +12,4 @@ public interface FeeRepo extends JpaRepository<Fee,Long> {
 
 
 
-
-
-
-
-
 }

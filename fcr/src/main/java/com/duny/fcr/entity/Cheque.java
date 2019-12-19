@@ -22,7 +22,7 @@ public class Cheque {
     @Column(length = 30,nullable = true)
     private String chequeNum;
     private double amount;
-    @Column(columnDefinition = "blob")
+    @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] chequeImg;
     @Column(name = "payment_id",length = 10,unique = true)
     private String paymentId;

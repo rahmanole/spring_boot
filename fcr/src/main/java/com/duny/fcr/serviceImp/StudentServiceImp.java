@@ -89,14 +89,14 @@ public class StudentServiceImp implements StudentService {
 
                 }
                 if(appId>0){
-                    int application_id = studentRepo.getMaxApplicationId() + 1;
+                    int application_id = appId + 1;
                     student.setApplicationId(application_id);
                 }else {
                     student.setApplicationId(1000);
                 }
 
                 if( stId!= null){
-                    int student_id = Integer.parseInt(studentRepo.getMaxStudentId()) + 1;
+                    int student_id = Integer.parseInt(stId) + 1;
                     student.setStudentId(student_id + "");
                 }else {
                     student.setStudentId("101");

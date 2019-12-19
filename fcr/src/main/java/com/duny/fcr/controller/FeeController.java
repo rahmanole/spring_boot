@@ -115,5 +115,13 @@ public class FeeController {
         return "";
     }
 
+    @GetMapping("/due/all}")
+    public String showAllDues(Model model) {
+        List<String> idlist = studentRepo.getStudentIds();
+        model.addAttribute("studentIDS",idlist);
+        return "/pages/financial/dues";
+    }
+
+
 
 }

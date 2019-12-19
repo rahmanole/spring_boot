@@ -47,6 +47,7 @@ public class TuitionFeePaymentController {
         builder.setPrettyPrinting();
         Gson gson = new Gson();
         TuitionFeePayment tuitionFeePayment = gson.fromJson(tuitionFeePaymentJson, TuitionFeePayment.class);
+        System.out.println(tuitionFeePayment.getTuitionFeeDue());
         tuitionFeePaymentRepo.save(tuitionFeePayment);
         return "redirect:/tuitionFee";
     }

@@ -21,6 +21,7 @@ $(document).ready(function () {
             $('#tuitionFeeForm').hide();
             $('#tFeeStId').val('');
             $('#tFeeToPay').val('');
+            $('#tuitionFeeToPay').val('');
 
             return;
         } else {
@@ -76,15 +77,18 @@ $(document).ready(function () {
             $('#tfPayStatus').append('<p class="text-danger">Enter admission fee paid</p>');
             return "";
         }
+
         $.ajax({
             method:'post',
             url:'/tuitionFee/save',
             data: tFee,
             contentType: "application/json",
             success:function () {
+                $('#tfPayStatus').append('<p class="text-danger">Payment Successful</p>');
                 return false;
             },
             error: function () {
+                $('#tfPayStatus').append('<p class="text-danger">Payment is not successful</p>');
                 console.log('not success');
             }
         })
@@ -104,9 +108,11 @@ $(document).ready(function () {
             data: cash,
             contentType: "application/json",
             success:function () {
+                $('#tfCashSavingStatus').append('<span class="text-success">Cash Saved</span>');
                 return false;
             },
             error: function () {
+                $('#tfCashSavingStatus').append('<span class="text-danger">Cash not saved</span>');
                 console.log('not success');
             }
         })
@@ -141,9 +147,11 @@ $(document).ready(function () {
             contentType: false,
             cache:false,
             success:function () {
+                $('#tfChequeSavingStatus').append('<span class="text-success">Cheque saved</span>');
                 return false;
             },
             error: function () {
+                $('#tfChequeSavingStatus').append('<span class="text-danger">Cheque is not saved</span>');
                 console.log('not success');
             }
         })
@@ -176,9 +184,11 @@ $(document).ready(function () {
             contentType: false,
             cache:false,
             success:function () {
+                $('#tfMOSavingStatus').append('<span class="text-success">Money Order saved</span>');
                 return false;
             },
             error: function () {
+                $('#tfMOSavingStatus').append('<span class="text-danger">Money Order is not saved</span>');
                 console.log('not success');
             }
         })
@@ -205,9 +215,11 @@ $(document).ready(function () {
             data: zelle,
             contentType: "application/json",
             success:function () {
+                $('#tfZelleSavingStatus').append('<span class="text-success">Zelle Saved</span>');
                 return false;
             },
             error: function () {
+                $('#tfZelleSavingStatus').append('<span class="text-danger">Zelle is not saved</span>');
                 console.log('not success');
             }
         })
@@ -231,9 +243,11 @@ $(document).ready(function () {
             data: cc,
             contentType: "application/json",
             success:function () {
+                $('#tfCCSavingStatus').append('<span class="text-success">Credit card amount saved</span>');
                 return false;
             },
             error: function () {
+                $('#tfCCSavingStatus').append('<span class="text-danger">Credit card amount not saved</span>');
                 console.log('not success');
             }
         })
