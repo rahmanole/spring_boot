@@ -310,37 +310,7 @@ $(document).ready(function () {
     });
 
 
-    $.ajax({
-        method: "GET",
-        url: '/sponsor/list',
-        success: function (data) {
-            $("#spNameForAssign").autocomplete({
-                source: data,
-                select: function (event, ui) {
-                    getSponsorByname(ui.item.value);
-                }
-            });
-        },
-        error: function () {
-            console.log('Could not load sponsor list ');
-        }
-    });
 
-    $.ajax({
-        method: "GET",
-        url: '/dadd/list',
-        success: function (data) {
-            $("#daddNames").autocomplete({
-                source: data,
-                select: function (event, ui) {
-                    getDaddByname(ui.item.value);
-                }
-            });
-        },
-        error: function () {
-            console.log('Could not load sponsor list ');
-        }
-    });
 
 
     //sponsor assigning
@@ -500,6 +470,7 @@ $(document).ready(function () {
 
     });
 
+    var flagToCallThisSpFunction = true;
 
     $('#studentIds').change(function () {
         var studentID = $('#studentIds option:selected').val();
@@ -515,6 +486,15 @@ $(document).ready(function () {
             $('#pdfGenerator').hide();
             return;
         }
+
+        if(flagToCallThisSpFunction){
+            flagToCallThisSpFunction = false;
+            setSpNamesOnAutoCompleteField();
+            setDADDNamesOnAutoCompleteField();
+        }
+
+        console.log(flagToCallThisSpFunction);
+
 
         $('#pdfGenerator').show();
         studentFeeReport(studentID);
@@ -564,6 +544,42 @@ $(document).ready(function () {
     });
 
 });
+
+function setSpNamesOnAutoCompleteField(){
+    $.ajax({
+        method: "GET",
+        url: '/sponsor/list',
+        success: function (data) {
+            $("#spNameForAssign").autocomplete({
+                source: data,
+                select: function (event, ui) {
+                    getSponsorByname(ui.item.value);
+                }
+            });
+        },
+        error: function () {
+            console.log('Could not load sponsor list ');
+        }
+    });
+}
+
+function setDADDNamesOnAutoCompleteField(){
+    $.ajax({
+        method: "GET",
+        url: '/dadd/list',
+        success: function (data) {
+            $("#daddNames").autocomplete({
+                source: data,
+                select: function (event, ui) {
+                    getDaddByname(ui.item.value);
+                }
+            });
+        },
+        error: function () {
+            console.log('Could not load sponsor list ');
+        }
+    });
+}
 
 
 function applySponsorDiscount() {
