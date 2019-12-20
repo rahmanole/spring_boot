@@ -3,13 +3,6 @@ $(document).ready(function () {
     //$('#admissionFeeForm').hide();
     $('#month').val(getMonthName());
 
-    var paymentId = getPaymentId();
-    $('#tFeePaymentID').val(paymentId);
-    $('#tfCashPID').val(paymentId);
-    $('#tfChequePID').val(paymentId);
-    $('#tfZellePID').val(paymentId);
-    $('#tfCCPID').val(paymentId);
-    $('#tfMoneyOrderPID').val(paymentId);
 
     var studentID;
     $('#studentIdsOnTuitionFee').change(function () {
@@ -25,7 +18,17 @@ $(document).ready(function () {
 
             return;
         } else {
+            //This codes for get and setting tuition fee payment
+            var paymentId = getPaymentId();
+            $('#tFeePaymentID').val(paymentId);
+            $('#tfCashPID').val(paymentId);
+            $('#tfChequePID').val(paymentId);
+            $('#tfZellePID').val(paymentId);
+            $('#tfCCPID').val(paymentId);
+            $('#tfMoneyOrderPID').val(paymentId);
             $('#tFeeStId').val(studentID);
+            //============ends here========
+
             $('#pdfGeneratorAdmisnFee').show();
             $('#tuitionFeeForm').show();
             tuitonFeeStmt(studentID);

@@ -3,13 +3,6 @@ $(document).ready(function () {
     // $('#admissionFeeForm').hide();
     $('#month').val(getMonthName());
 
-    var afPaymentId = getAfPaymentId();
-    $('#admissionFeePaymentID').val(afPaymentId);
-    $('#admCashPID').val(afPaymentId);
-    $('#admChequePID').val(afPaymentId);
-    $('#admZellePID').val(afPaymentId);
-    $('#admCCPID').val(afPaymentId);
-    $('#amdMoneyOrderPID').val(afPaymentId);
     var studentID;
 
     $('#studentIdsOnAdmisnFee').change(function () {
@@ -23,6 +16,16 @@ $(document).ready(function () {
             $('#admisnFeeToPay').val('');
             return;
         } else {
+
+            //This codes for admission fee payment id
+            var afPaymentId = getAfPaymentId();
+            $('#admissionFeePaymentID').val(afPaymentId);
+            $('#admCashPID').val(afPaymentId);
+            $('#admChequePID').val(afPaymentId);
+            $('#admZellePID').val(afPaymentId);
+            $('#admCCPID').val(afPaymentId);
+            $('#amdMoneyOrderPID').val(afPaymentId);
+
             $('#admisnFeeStId').val(studentID);
             $('#pdfGeneratorAdmisnFee').show();
             $('#admissionFeeForm').show();
