@@ -403,7 +403,10 @@ $(document).ready(function () {
     //collection discount
 
     $('#addColl').click(function () {
-        applyCollDiscount();
+        collection = applyCollDiscount();
+        grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
+        $('#grandTotalFee').html(grandTotalFee.toFixed(2));
+        $('#monthlyTuition').html((grandTotalFee / 10).toFixed(2));
     });
 
     //adding staff child
@@ -446,6 +449,8 @@ $(document).ready(function () {
         sibling = applySiblingDiscount();
         grandTotalFee = grandTotal(total, sponsor, dollarADay, collection, sibling, staff, otp, zakat);
         $('#grandTotalFee').html(grandTotalFee.toFixed(2));
+        $('#monthlyTuition').html((grandTotalFee / 10).toFixed(2));
+
     });
 
     //Adding zakat
@@ -613,11 +618,14 @@ function applyCollDiscount() {
     var collectionAmnt = $('#collectionAmt').val();
     var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
 
-    collection = parseInt(collectionAmnt);
+    var collection = parseInt(collectionAmnt);
 
     $('#collAmt').val(collection);
     $('#collRow').show();
     insertingCollection(collection, fin_dtl_Id);
+
+    return collection;
+
 }
 
 function applyZakatDiscount() {
@@ -867,7 +875,7 @@ function studentFeeReport(st_id) {
                 +
                 "<tr><td>" + "Father  Name" + "</td>" + "<td>" + data[0].motherName + "</td></tr>"
                 +
-                "<tr><td>" + "Date of Birth" + "</td>" + "<td>" + data[0].dob.substr(0,13) + "</td></tr>"
+                "<tr><td>" + "Date of Birth" + "</td>" + "<td>" + data[0].dob.substr(0,12) + "</td></tr>"
             );
 
 
@@ -876,7 +884,7 @@ function studentFeeReport(st_id) {
             );
 
             $('#finDtlsTbl').append(
-                "<tr><td>" + "Tuition Fee" + "</td>" + "<td>" + "$" + 3800.00 + " /year</td></tr>"
+                "<tr><td>" + "Regular Tuition Fee" + "</td>" + "<td>" + "$" + 3800.00 + " /year</td></tr>"
             );
 
             if (data[0].boarding == 'yes') {
@@ -884,16 +892,7 @@ function studentFeeReport(st_id) {
                 $('#finDtlsTbl').append(
                     "<tr><td>" + "Boarding Fee" + "</td>" + "<td>" + "$" + 2700.00 + " /year</td></tr>"
                 );
-            } else {
-                total += 0;
-                $('#finDtlsTbl').append(
-                    "<tr><td>" + "Boarding Fee" + "</td>" + "<td>" + "$" + 0.00 + " /year</td></tr>"
-                );
             }
-
-            $('#finDtlsTbl').append(
-                "<tr class='bg-info'><td>" + "Total Expense" + "</td>" + "<td>" + "$" + total.toFixed(2) + " /year</td></tr>"
-            );
 
 
             //Below code for showing details on fin details section
@@ -940,13 +939,13 @@ function studentFeeReport(st_id) {
 
             }
 
-            $('#finDtlsTbl').append(
-                "<tr class='bg-info'><td>" + "Grand Total Expense" + "</td>" + "<td>" + "$" + (total - discount) + " /year</td></tr>"
-            );
+
 
             $('#finDtlsTbl').append(
-                "<tr class='bg-info'><td>" + "Monthly Expense" + "</td>" + "<td>" + "$" + (total - discount) / 10 + " /year</td></tr>"
+                "<tr class='bg-info'><td>" + "Total Payable At The Time Of Admission" + "</td>" + "<td>" + "$" + (total - discount) + " /year</td></tr>"
             );
+
+
         },
 
         error: function () {
