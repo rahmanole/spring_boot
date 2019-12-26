@@ -942,7 +942,11 @@ function studentFeeReport(st_id) {
 
 
             $('#finDtlsTbl').append(
-                "<tr class='bg-info'><td>" + "Total Payable At The Time Of Admission" + "</td>" + "<td>" + "$" + (total - discount) + " /year</td></tr>"
+                "<tr class='bg-info'><td>" + "Total Payable At The Time Of Admission" + "</td>" + "<td>" + "$" + data[0].finDtlsOfStudent.mandatoryFees + " /year</td></tr>"
+            );
+
+            $('#finDtlsTbl').append(
+                "<tr class='bg-info'><td>" + "Total Payable Tuition Fee" + "</td>" + "<td>" + "$" + (total - discount-data[0].finDtlsOfStudent.mandatoryFees) + " /year</td></tr>"
             );
 
 
