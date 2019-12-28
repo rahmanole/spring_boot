@@ -27,6 +27,7 @@ $(document).ready(function () {
             $('#tfCCPID').val(paymentId);
             $('#tfMoneyOrderPID').val(paymentId);
             $('#tFeeStId').val(studentID);
+            $('#tfFromSalPID').val(studentID);
             //============ends here========
 
             $('#pdfGeneratorAdmisnFee').show();
@@ -123,6 +124,42 @@ $(document).ready(function () {
 
 
 
+    $('#tfFromSal').submit(function (event) {
+        event.preventDefault();
+        var cheque = JSON.stringify($('#tfFromSalForm').serializeJSON());
+        console.log(cheque);
+        $('#tfFromSalChequeSavingStatus').html('');
+
+        if(JSON.parse(cheque).chequeNum == '' ||
+            JSON.parse(cheque).amount == '' ||
+            JSON.parse(cheque).payPeriod == ''){
+            $('#tfFromSalChequeSavingStatus').append('<span class="text-danger">Fill out all the fields</span>');
+            return '';
+        }
+
+        if ($('#fromSalChequeImg').val() == '') {
+            $('#tfFromSalChequeSavingStatus').append('<span class="text-danger">Select image</span>');
+            return '';
+        }
+
+        var frm = $('#tfFromSalForm')[0];
+        $.ajax({
+            method: 'post',
+            url: '/fromSal/save',
+            data: new FormData(frm),
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function () {
+                return false;
+            },
+
+            error: function () {
+                console.log('not success');
+            }
+        })
+    });
 
     $('#tfChequeForm').submit(function (event) {
         event.preventDefault();

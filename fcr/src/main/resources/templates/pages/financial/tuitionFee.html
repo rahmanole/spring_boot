@@ -134,6 +134,7 @@
                                                 <li><a data-toggle="tab" href="#cc">Credit Card</a></li>
                                                 <li><a data-toggle="tab" href="#moneyOrder">Money Order</a></li>
                                                 <li><a data-toggle="tab" href="#zelle">Zelle</a></li>
+                                                <li><a data-toggle="tab" href="#tfFromSal">Salary Deduction</a></li>
                                             </ul>
 
                                             <div class="tab-content">
@@ -217,6 +218,45 @@
                                                         <span style="margin-left:30px" id="tfChequeSavingStatus"></span>
                                                     </form>
                                                 </div>
+
+                                                <div id="tfFromSal" class="tab-pane fade">
+                                                    <form id="tfFromSalForm" enctype="multipart/form-data">
+
+                                                        <div class="hide form-group form-float" style="margin-bottom: 10px">
+                                                            <div class="form-line">
+                                                                <input  type="text" name="paymentId" id="tfFromSalPID" class="hide form-control" placeholder="Payment ID">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group form-float" style="margin-bottom: 10px">
+                                                            <div class="form-line">
+                                                                <input type="text" name="chequeNum" class="form-control" placeholder="Cheque Number">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group form-float" style="margin-bottom: 10px">
+                                                            <div class="form-line">
+                                                                <input type="date" name="payPeriod" class="form-control" placeholder="Cheque Date">
+                                                                <label class="form-label">Pay Period</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group form-float" style="margin-bottom: 10px">
+                                                            <div class="form-line">
+                                                                <input type="text" name="amount" class="form-control" placeholder="Amount">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group form-float" style="padding-bottom:16px">
+                                                            <input type="file" id="fromSalChequeImg" name="fromSalChequeImg" style="margin-right:30px;float: left;margin-top: 4px;">
+
+                                                        </div>
+
+                                                        <button type="submit" id="tfFromSalBtn" class="btn btn-primary waves-effect">SUBMIT</button>
+                                                        <span style="margin-left:30px" id="tfFromSalChequeSavingStatus"></span>
+
+                                                    </form>
+                                                </div>
+
 
                                                 <div id="moneyOrder" class="tab-pane fade">
                                                     <form id="tfMoneyOrderForm" enctype="multipart/form-data">

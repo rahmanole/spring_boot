@@ -25,6 +25,7 @@ $(document).ready(function () {
             $('#admZellePID').val(afPaymentId);
             $('#admCCPID').val(afPaymentId);
             $('#amdMoneyOrderPID').val(afPaymentId);
+            $('#admFromSalPID').val(afPaymentId);
 
             $('#admisnFeeStId').val(studentID);
             $('#pdfGeneratorAdmisnFee').show();
@@ -119,6 +120,43 @@ $(document).ready(function () {
     });
 
 
+    $('#fromSal').submit(function (event) {
+        event.preventDefault();
+        var cheque = JSON.stringify($('#fromSalForm').serializeJSON());
+        console.log(cheque);
+        $('#afFromSalChequeSavingStatus').html('');
+
+        if(JSON.parse(cheque).chequeNum == '' ||
+            JSON.parse(cheque).amount == '' ||
+            JSON.parse(cheque).payPeriod == ''){
+            $('#afFromSalChequeSavingStatus').append('<span class="text-danger">Fill out all the fields</span>');
+            return '';
+        }
+
+        if ($('#fromSalChequeImg').val() == '') {
+            $('#afFromSalChequeSavingStatus').append('<span class="text-danger">Select image</span>');
+            return '';
+        }
+
+        var frm = $('#fromSalForm')[0];
+        $.ajax({
+            method: 'post',
+            url: '/fromSal/save',
+            data: new FormData(frm),
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function () {
+                return false;
+            },
+
+            error: function () {
+                console.log('not success');
+            }
+        })
+    });
+
     $('#chequeForm').submit(function (event) {
         event.preventDefault();
         var cheque = JSON.stringify($('#chequeForm').serializeJSON());
@@ -188,6 +226,43 @@ $(document).ready(function () {
         })
     });
 
+    // $('#admFromSalBtn').submit(function (e) {
+    //     e.stopPropagation();
+    //     e();
+    //     var chequeFromSal = JSON.stringify($('#fromSalForm').serializeJSON());
+    //     console.log(chequeFromSal);
+    //     $('#afFromSalChequeSavingStatus').html('');
+    //
+    //     if(JSON.parse(chequeFromSal).accountNum == '' ||
+    //         JSON.parse(chequeFromSal).chequeNum == '' ||
+    //         JSON.parse(chequeFromSal).chequeDate == ''){
+    //         $('#afFromSalChequeSavingStatus').append('<span class="text-danger">Fill out all the fields</span>');
+    //         return '';
+    //     }
+    //
+    //     if ($('#fromSalChequeImg').val() == '') {
+    //         $('#afFromSalChequeSavingStatus').append('<span class="text-danger">Select image</span>');
+    //         return '';
+    //     }
+    //
+    //     $.ajax({
+    //         method: 'post',
+    //         url: '/fromSal/save',
+    //         data: new FormData(this),
+    //         enctype: 'multipart/form-data',
+    //         processData: false,
+    //         contentType: false,
+    //         cache: false,
+    //         success: function (data) {
+    //             return false;
+    //         },
+    //         error: function () {
+    //             console.log('not success');
+    //             return false;
+    //         }
+    //     })
+    // });
+
     $('#admZellBtn').click(function () {
         var zelle = JSON.stringify($('#zelleForm').serializeJSON());
         console.log(zelle);
@@ -243,6 +318,9 @@ $(document).ready(function () {
             }
         })
     });
+
+
+
 
 
     //For generating pdf
