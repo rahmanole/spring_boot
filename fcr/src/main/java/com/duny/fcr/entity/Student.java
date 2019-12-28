@@ -56,6 +56,9 @@ public class Student {
     private String currentSchool;
     @Column(nullable = false)
     private String currentGrade;
+
+    @Column(nullable = true)
+    private double initialDue = 0;
     private Date dateOfAdmission;
     @Column(nullable = false)
     private String status  = "applied";
