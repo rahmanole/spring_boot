@@ -4,6 +4,7 @@
       layout:decorate="~{layoutForm.html}">
 
 <head>
+
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>Form Examples | Bootstrap Based Admin Template - Material Design</title>
@@ -17,7 +18,7 @@
         <div class="row clearfix">
             <div class="col-lg-6 col-lg-offset-3 col-md-12 col-sm-12 col-xs-12">
                 <div class="card" style="padding: 20px">
-                    <select id="studentIdsOnTuitionFee" class="form-control show-tick"
+                    <select id="studentIdsOnOpeningDueFee" class="form-control show-tick"
                             data-live-search="true">
                         <option value="0">Search with student ID</option>
                         <option th:each="st_id:${studentIDS}"
@@ -48,18 +49,18 @@
                             </li>
                         </ul>
                     </div>
+
                     <div class="">
-                        <table class="table table-striped" id="tuitionFeeForm">
-                            <tbody id="paymentTblBody">
+                        <table class="table table-striped" id="openingDueFeeForm">
+                            <tbody id="odfPaymentTblBody">
                             <form id="tFeeForm">
                                 <table class="table">
-
                                     <tr>
                                         <td style="width: 30%;padding-top: 17px">Student ID</td>
                                         <td>
                                             <div class="form-group form-float" style="margin-bottom: 0">
                                                 <div class="form-line">
-                                                    <input readonly type="text" name="studentId" id="tFeeStId"
+                                                    <input readonly type="text" name="studentId" id="odfFeeStId"
                                                            class="form-control text-right">
                                                 </div>
                                             </div>
@@ -72,7 +73,7 @@
                                         <td>
                                             <div class="form-group form-float" style="margin-bottom: 10px">
                                                 <div class="form-line">
-                                                    <input type="text" name="tfPaymentId" id="tFeePaymentID" class="form-control text-right" readonly placeholder="Payment ID">
+                                                    <input type="text" name="tfPaymentId" id="openingDueFeePaymentID" class="form-control text-right" readonly placeholder="Payment ID">
                                                 </div>
                                             </div>
                                         </td>
@@ -91,36 +92,36 @@
                                     </tr>
 
                                     <tr >
-                                        <td style="width: 70%;padding-top: 20px">Tuition Fee</td>
+                                        <td style="width: 70%;padding-top: 20px">Existing Opening Due</td>
                                         <td>
                                             <div class="form-group form-float" style="margin-bottom: 0">
                                                 <div class="form-line">
                                                     <input readonly type="text" name="admissionFee"
-                                                           id='tuitionFeeToPay' class="form-control text-right">
+                                                           id='existingODF' class="form-control text-right">
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="width: 70%;padding-top: 20px">Tuition Fee Paid</td>
+                                        <td style="width: 70%;padding-top: 20px">Opening Due Paid</td>
                                         <td>
                                             <div class="form-group form-float" style="margin-bottom: 0">
                                                 <div class="form-line">
                                                     <input type="text" name="admissionFeePaid"
-                                                           id='tuitionFeePaid' class="form-control text-right">
+                                                           id='odfFeePaid' class="form-control text-right">
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
 
                                     <tr id="beforePaymentModes">
-                                        <td style="width: 70%;padding-top: 20px">Tuition Fee Due</td>
+                                        <td style="width: 70%;padding-top: 20px">Remaining Opening Due</td>
                                         <td>
                                             <div class="form-group form-float" style="margin-bottom: 0">
                                                 <div class="form-line">
                                                     <input type="text" name="admissionFeeDue"
-                                                           id='tuitionFeeDue' class="form-control text-right">
+                                                           id='odfDue' class="form-control text-right">
                                                 </div>
                                             </div>
                                         </td>
@@ -130,11 +131,11 @@
                                         <td colspan="2">
                                             <ul class="nav nav-tabs">
                                                 <li class="active"><a data-toggle="tab" href="#cash">Cash</a></li>
-                                                <li><a data-toggle="tab" href="#cheque">Cheque</a></li>
-                                                <li><a data-toggle="tab" href="#cc">Credit Card</a></li>
-                                                <li><a data-toggle="tab" href="#moneyOrder">Money Order</a></li>
-                                                <li><a data-toggle="tab" href="#zelle">Zelle</a></li>
-                                                <li><a data-toggle="tab" href="#tfFromSal">Salary Deduction</a></li>
+                                                <li><a data-toggle="tab" href="#odfCheque">Cheque</a></li>
+                                                <li><a data-toggle="tab" href="#odfCC">Credit Card</a></li>
+                                                <li><a data-toggle="tab" href="#odfMoneyOrder">Money Order</a></li>
+                                                <li><a data-toggle="tab" href="#odfZelle">Zelle</a></li>
+                                                <li><a data-toggle="tab" href="#odfFromSal">Salary Deduction</a></li>
                                             </ul>
 
                                             <div class="tab-content">
@@ -156,11 +157,11 @@
                                                     </form>
                                                 </div>
 
-                                                <div id="cash" class="tab-pane active in">
-                                                    <form id="tfCashForm">
+                                                <div id="odfCash" class="tab-pane active in">
+                                                    <form id="odfCashForm">
                                                         <div class="hide form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
-                                                                <input type="text" name="paymentId" id="tfCashPID" class="form-control" placeholder="Payment ID">
+                                                                <input type="text" name="paymentId" id="odfCashPID" class="form-control" placeholder="Payment ID">
                                                             </div>
                                                         </div>
 
@@ -170,17 +171,17 @@
                                                             </div>
                                                         </div>
 
-                                                        <button type="button" id="tfCashBtn" class="btn btn-primary waves-effect">SUBMIT</button>
-                                                        <span style="margin-left:30px" id="tfCashSavingStatus"></span>
+                                                        <button type="button" id="odfCashBtn" class="btn btn-primary waves-effect">SUBMIT</button>
+                                                        <span style="margin-left:30px" id="odfCashSavingStatus"></span>
 
                                                     </form>
                                                 </div>
 
-                                                <div id="cheque" class="tab-pane fade">
-                                                    <form id="tfChequeForm" enctype="multipart/form-data">
+                                                <div id="odfCheque" class="tab-pane fade">
+                                                    <form id="odfChequeForm" enctype="multipart/form-data">
                                                         <div class="hide form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
-                                                                <input  type="text" name="paymentId" id="tfChequePID" class="hide form-control" placeholder="Payment ID">
+                                                                <input  type="text" name="paymentId" id="odfChequePID" class="hide form-control" placeholder="Payment ID">
                                                             </div>
                                                         </div>
                                                         <div class="form-group form-float" style="margin-bottom: 10px">
@@ -209,22 +210,22 @@
 
                                                         <div class="form-group form-float">
                                                             <div class="form-line">
-                                                                <input type="file" id="tfChequeImg" name="chequeImg" style="margin-right:30px;float: left">
+                                                                <input type="file" id="odfChequeImg" name="chequeImg" style="margin-right:30px;float: left">
                                                                 <input type="button" id="chequeTakePhoto" class="btn" value="Take Photo" style="margin-right:30px;">
                                                             </div>
                                                         </div>
 
-                                                        <button type="submit" id="tfChequeBtn" class="btn btn-primary waves-effect">SUBMIT</button>
-                                                        <span style="margin-left:30px" id="tfChequeSavingStatus"></span>
+                                                        <button type="submit" id="odfChequeBtn" class="btn btn-primary waves-effect">SUBMIT</button>
+                                                        <span style="margin-left:30px" id="odfChequeSavingStatus"></span>
                                                     </form>
                                                 </div>
 
-                                                <div id="tfFromSal" class="tab-pane fade">
-                                                    <form id="tfFromSalForm" enctype="multipart/form-data">
+                                                <div id="odfFromSal" class="tab-pane fade">
+                                                    <form id="odfFromSalForm" enctype="multipart/form-data">
 
                                                         <div class="hide form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
-                                                                <input  type="text" name="paymentId" id="tfFromSalPID" class="hide form-control" placeholder="Payment ID">
+                                                                <input  type="text" name="paymentId" id="odfFromSalPID" class="hide form-control" placeholder="Payment ID">
                                                             </div>
                                                         </div>
 
@@ -251,18 +252,17 @@
 
                                                         </div>
 
-                                                        <button type="submit" id="tfFromSalBtn" class="btn btn-primary waves-effect">SUBMIT</button>
-                                                        <span style="margin-left:30px" id="tfFromSalChequeSavingStatus"></span>
+                                                        <button type="submit" id="odfFromSalBtn" class="btn btn-primary waves-effect">SUBMIT</button>
+                                                        <span style="margin-left:30px" id="odfFromSalChequeSavingStatus"></span>
 
                                                     </form>
                                                 </div>
 
-
-                                                <div id="moneyOrder" class="tab-pane fade">
-                                                    <form id="tfMoneyOrderForm" enctype="multipart/form-data">
+                                                <div id="odfMoneyOrder" class="tab-pane fade">
+                                                    <form id="odfMoneyOrderForm" enctype="multipart/form-data">
                                                         <div class="hide form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
-                                                                <input type="text" name="paymentID" id="tfZellePID" class="form-control" placeholder="Payment ID">
+                                                                <input type="text" name="paymentID" id="odfMoneyOrderPID" class="form-control" placeholder="Payment ID">
                                                             </div>
                                                         </div>
 
@@ -293,15 +293,15 @@
                                                         </div>
 
                                                         <button type="submit" id="tfMoneyOrderBtn" class="btn btn-primary waves-effect">SUBMIT</button>
-                                                        <span style="margin-left:30px" id="tfMOSavingStatus"></span>
+                                                        <span style="margin-left:30px" id="odfMOSavingStatus"></span>
                                                     </form>
                                                 </div>
 
-                                                <div id="cc" class="tab-pane fade">
-                                                    <form id="tfCCForm">
+                                                <div id="odfCC" class="tab-pane fade">
+                                                    <form id="odfCCForm">
                                                         <div class="hide form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
-                                                                <input type="text" name="paymentId" id="tfCCPID" class="form-control" placeholder="Payment ID">
+                                                                <input type="text" name="paymentId" id="odfCCPID" class="form-control" placeholder="Payment ID">
                                                             </div>
                                                         </div>
                                                         <div class="form-group form-float" style="margin-bottom: 10px">
@@ -319,18 +319,20 @@
                                                                 <input type="text" name="amount" class="form-control" placeholder="Amount">
                                                             </div>
                                                         </div>
-                                                        <button type="button" id="tfCCBtn" class="btn btn-primary waves-effect">SUBMIT</button>
-                                                        <span style="margin-left:30px" id="tfCCSavingStatus"></span>
+                                                        <button type="button" id="odfCCBtn" class="btn btn-primary waves-effect">SUBMIT</button>
+                                                        <span style="margin-left:30px" id="odfCCSavingStatus"></span>
                                                     </form>
                                                 </div>
 
-                                                <div id="zelle" class="tab-pane fade">
-                                                    <form id="tfZelleForm">
+                                                <div id="odfZelle" class="tab-pane fade">
+                                                    <form id="odfZelleForm">
+
                                                         <div class="hide form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
-                                                                <input type="text" name="paymentId" id="tfMoneyOrderPID" class="form-control" placeholder="Payment ID">
+                                                                <input type="text" name="paymentId" id="odfZellePID" class="form-control" placeholder="Payment ID">
                                                             </div>
                                                         </div>
+
                                                         <div class="form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
                                                                 <input type="text" name="amount" class="form-control" placeholder="Enter amount">
@@ -346,8 +348,8 @@
                                                                 <input type="text" name="email" class="form-control" placeholder="Email">
                                                             </div>
                                                         </div>
-                                                        <button type="button" id="tfZellBtn" class="btn btn-primary waves-effect">SUBMIT</button>
-                                                        <span style="margin-left:30px" id="tfZelleSavingStatus"></span>
+                                                        <button type="button" id="odfZellBtn" class="btn btn-primary waves-effect">SUBMIT</button>
+                                                        <span style="margin-left:30px" id="odfZelleSavingStatus"></span>
                                                     </form>
                                                 </div>
                                             </div>
@@ -390,12 +392,13 @@
                             </li>
                         </ul>
                     </div>
+
                     <div>
-                        <table class="table table-bordered" id='tuitionFeeTbl'>
-                            <tbody id="tuitionFeeTblBody">
+                        <table class="table table-bordered" id='odfFeeTbl'>
+                            <tbody id="openingDueFeeTblBody">
                             </tbody>
                         </table>
-                        <button type="button" class="btn" id="pdfGeneratorTuitionFee">Print Satement</button>
+                        <button type="button" class="btn" id="pdfGeneratorOpeningDueFee">Print Satement</button>
                     </div>
                 </div>
 

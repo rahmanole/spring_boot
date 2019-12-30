@@ -37,7 +37,7 @@ $(document).ready(function () {
     });
 
 
-
+    var tuitionFeePaid = 0;
     var tuitionFeeDue= 0;
 
     $('#tuitionFeePaid').keyup(function () {
@@ -48,8 +48,10 @@ $(document).ready(function () {
             $('#tuitionFeeDue').val('');
             return '';
         }
+
         var tuitionFee = parseInt($('#tuitionFeeToPay').val());
         tuitionFeeDue = tuitionFee-val;
+
         $('#tuitionFeePaidFieldOnStmt').html(val);
         $('#tuitionFeeDueOnStmt').html(tuitionFeeDue+'$');
         $('#tuitionFeeDue').val(tuitionFeeDue);
@@ -100,11 +102,13 @@ $(document).ready(function () {
 
     $('#tfCashBtn').click(function () {
         var cash = JSON.stringify($('#tfCashForm').serializeJSON());
+
         $('#tfCashSavingStatus').html('');
         if (JSON.parse(cash).amount <= 0 || JSON.parse(cash).amount == '') {
             $('#tfCashSavingStatus').append('<span class="text-danger">Enter valid amount</span>');
             return '';
         }
+
         console.log(cash);
         $.ajax({
             method:'post',
@@ -112,6 +116,7 @@ $(document).ready(function () {
             data: cash,
             contentType: "application/json",
             success:function () {
+                calculateDues(tuitionFeeDue,parseInt(JSON.parse(cash).amount));
                 $('#tfCashSavingStatus').append('<span class="text-success">Cash Saved</span>');
                 return false;
             },
@@ -137,12 +142,18 @@ $(document).ready(function () {
             return '';
         }
 
+        if(JSON.parse(cheque).paymentId == ''){
+            $('#tfFromSalChequeSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
+
         if ($('#fromSalChequeImg').val() == '') {
             $('#tfFromSalChequeSavingStatus').append('<span class="text-danger">Select image</span>');
             return '';
         }
 
         var frm = $('#tfFromSalForm')[0];
+
         $.ajax({
             method: 'post',
             url: '/fromSal/save',
@@ -152,6 +163,9 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function () {
+                calculateDues(tuitionFeeDue,parseInt(JSON.parse(cheque).amount));
+
+                $('#odfFromSalChequeSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
 
@@ -174,10 +188,12 @@ $(document).ready(function () {
             return '';
         }
 
+
         if ($('#tfChequeImg').val() == '') {
             $('#tfChequeSavingStatus').append('<span class="text-danger">Select image</span>');
             return '';
         }
+
         $.ajax({
             method:'post',
             url:'/cheque/save',
@@ -187,6 +203,7 @@ $(document).ready(function () {
             contentType: false,
             cache:false,
             success:function () {
+                calculateDues(tuitionFeeDue,parseInt(JSON.parse(cheque).amount));
                 $('#tfChequeSavingStatus').append('<span class="text-success">Cheque saved</span>');
                 return false;
             },
@@ -210,6 +227,7 @@ $(document).ready(function () {
             return '';
         }
 
+
         if ($('#tfMOImg').val() == '') {
             $('#tfMOSavingStatus').append('<span class="text-danger">Select image</span>');
             return '';
@@ -224,6 +242,7 @@ $(document).ready(function () {
             contentType: false,
             cache:false,
             success:function () {
+                calculateDues(tuitionFeeDue,parseInt(JSON.parse(mo).amount));
                 $('#tfMOSavingStatus').append('<span class="text-success">Money Order saved</span>');
                 return false;
             },
@@ -244,6 +263,7 @@ $(document).ready(function () {
             return '';
         }
 
+
         if(JSON.parse(zelle).phoneNum == '' && JSON.parse(zelle).email == 0){
             $('#tfZelleSavingStatus').append('<span class="text-danger">Enter email or phone</span>');
             return '';
@@ -255,6 +275,7 @@ $(document).ready(function () {
             data: zelle,
             contentType: "application/json",
             success:function () {
+                calculateDues(tuitionFeeDue,parseInt(JSON.parse(zelle).amount));
                 $('#tfZelleSavingStatus').append('<span class="text-success">Zelle Saved</span>');
                 return false;
             },
@@ -276,6 +297,7 @@ $(document).ready(function () {
             $('#tfCCSavingStatus').append('<span class="text-danger">Enter valid data</span>');
             return '';
         }
+
         console.log(cc);
         $.ajax({
             method:'post',
@@ -283,6 +305,7 @@ $(document).ready(function () {
             data: cc,
             contentType: "application/json",
             success:function () {
+                calculateDues(tuitionFeeDue,parseInt(JSON.parse(cc).amount));
                 $('#tfCCSavingStatus').append('<span class="text-success">Credit card amount saved</span>');
                 return false;
             },
@@ -337,6 +360,17 @@ $(document).ready(function () {
         // doc.save("fee-statement.pdf");
     });
 });
+
+function calculateDues(tuitionFeePaid,amount) {
+
+    tuitionFeePaid += parseInt(amount);
+    $('#tuitionFeePaid').val(tuitionFeePaid);
+    var val = parseInt($('#tuitionFeeToPay').val());
+
+    $('#tuitionFeePaidFieldOnStmt').html(tuitionFeePaid);
+    $('#tuitionFeeDueOnStmt').html(val - tuitionFeePaid);
+    $('#tuitionFeeDue').val(val - tuitionFeePaid);
+}
 
 function tuitonFeeStmt(st_id) {
     $.ajax({

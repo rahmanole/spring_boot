@@ -14,6 +14,7 @@ $(document).ready(function () {
 
     $('#residentialFee').val(0.00);
 
+
     mealFee = $('#mealFee').val();
 
     mandatoryFee = totalMandatoryFee(stType, acFee, mealFee, bookFee);
@@ -303,6 +304,8 @@ $(document).ready(function () {
     $('#collectionTarget').hide();
     $('#collectionCollected').hide();
     $('#collectionDue').hide();
+    $('#dueAlert').hide();
+
 
 
     $('#stBtn').click(function () {
@@ -948,6 +951,16 @@ function studentFeeReport(st_id) {
             $('#finDtlsTbl').append(
                 "<tr class='bg-info'><td>" + "Total Payable Tuition Fee" + "</td>" + "<td>" + "$" + (total - discount-data[0].finDtlsOfStudent.mandatoryFees) + " /year</td></tr>"
             );
+
+            if(data[0].initialDue>0){
+                $('#dueAlert').show();
+                $('#dueMessage').html('');
+                $('#dueMessage').html('<span class="text-danger padding-0">This student has account opening due</span>');
+
+            }else {
+                $('#dueMessage').html('');
+                $('#dueAlert').hide();
+            }
 
 
         },

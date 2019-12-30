@@ -4,6 +4,7 @@ import com.duny.fcr.entity.AdmissionPayment;
 import com.duny.fcr.repo.AdmissionPaymentRepo;
 import com.duny.fcr.repo.StudentRepo;
 import com.duny.fcr.service.AdmissionPaymentService;
+import com.duny.fcr.service.OpeningDueFeePaymentService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class OpeningDueFeePaymentController {
     StudentRepo studentRepo;
 
     @Autowired
-    AdmissionPaymentService admissionPaymentService;
+    OpeningDueFeePaymentService openingDueFeePaymentService;
     @Autowired
     AdmissionPaymentRepo admissionPaymentRepo;
 
@@ -36,7 +37,7 @@ public class OpeningDueFeePaymentController {
     @GetMapping("/openingDueFee/getPaymentId")
     @ResponseBody
     public String getPaymentId() {
-        return admissionPaymentService.getAdmissionFeePaymentId();
+        return openingDueFeePaymentService.getOpeningDueFeePaymentId();
     }
 
     @PostMapping(value = "/openingDueFee/save", consumes = "application/json", produces = "application/json")

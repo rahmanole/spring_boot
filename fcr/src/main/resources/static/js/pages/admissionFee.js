@@ -62,6 +62,7 @@ $(document).ready(function () {
         $('#admisnFeeDue').html(admisnFeeDue);
     });
 
+
     $('#admisnFee').click(function () {
         var admsnFeePaid = parseInt($('#admsnFeePaid').val());
 

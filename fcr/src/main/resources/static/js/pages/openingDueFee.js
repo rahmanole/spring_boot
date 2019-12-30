@@ -5,66 +5,72 @@ $(document).ready(function () {
 
     var studentID;
 
-    $('#studentIdsOnAdmisnFee').change(function () {
-        studentID = $('#studentIdsOnAdmisnFee option:selected').val();
+    $('#studentIdsOnOpeningDueFee').change(function () {
+
+        studentID = $('#studentIdsOnOpeningDueFee option:selected').val();
 
         if (studentID == '0') {
-            $('#admisnFeeTblBody').html("<tr><td colspan='2' class='text-center'>" + "Admission Fee Statement" + "</td></tr>");
-            $('#pdfGeneratorAdmisnFee').hide();
-            $('#admissionFeeForm').hide();
-            $('#admisnFeeStId').val('');
-            $('#admisnFeeToPay').val('');
+
+            $('#openingDueFeeTblBody').html("<tr><td colspan='2' class='text-center'>" + "Opening Due Fee Statement" + "</td></tr>");
+            $('#pdfGeneratorOpeningDueFee').hide();
+            $('#openingDueFeeForm').hide();
+            $('#openingDueFeePaymentID').val('');
+            $('#existingODF').val('');
+            $('#odfFeeStId').val('');
             return;
+
         } else {
+            console.log(studentID);
 
             //This codes for admission fee payment id
-            var afPaymentId = getAfPaymentId();
-            $('#admissionFeePaymentID').val(afPaymentId);
-            $('#admCashPID').val(afPaymentId);
-            $('#admChequePID').val(afPaymentId);
-            $('#admZellePID').val(afPaymentId);
-            $('#admCCPID').val(afPaymentId);
-            $('#amdMoneyOrderPID').val(afPaymentId);
-            $('#admFromSalPID').val(afPaymentId);
+            var odfPaymentId = getODFPaymentId();
+            console.log(odfPaymentId);
 
-            $('#admisnFeeStId').val(studentID);
-            $('#pdfGeneratorAdmisnFee').show();
-            $('#admissionFeeForm').show();
-            admissionFeeStmt(studentID);
+            $('#openingDueFeePaymentID').val(odfPaymentId);
+            $('#odfCashPID').val(odfPaymentId);
+            $('#odfChequePID').val(odfPaymentId);
+            $('#odfZellePID').val(odfPaymentId);
+            $('#odfCCPID').val(odfPaymentId);
+            $('#odfMoneyOrderPID').val(odfPaymentId);
+            $('#odfFromSalPID').val(odfPaymentId);
+            $('#odfPaymentIDonStmt').html(odfPaymentId);
+
+            $('#odfFeeStId').val(studentID);
+            $('#pdfGeneratorOpeningDueFee').show();
+            $('#openingDueFeeForm').show();
+            openingDueFeeStmt(studentID);
         }
     });
 
+    var odfDue = 0;
 
-    var admisnFeeDue = 0;
-
-    $('#admsnFeePaid').keyup(function () {
-        var val = parseInt($('#admsnFeePaid').val());
+    $('#odfFeePaid').keyup(function () {
+        var val = parseInt($('#odfFeePaid').val());
         if(isNaN(val)){
-            $('#admisnFeePaidFieldOnStmt').html('');
-            $('#admisnFeeDue').html('');
-            $('#admsnFeeDue').val('');
+            $('#odfFeePaidFieldOnStmt').html('');
+            $('#odfDueOnStmt').html('');
+            $('#odfDue').val('');
             return '';
         }
 
-        var admisnFee = parseInt($('#admisnFeeToPay').val());
-        admisnFeeDue = admisnFee - val;
-        $('#admisnFeePaidFieldOnStmt').html(val);
-        $('#admisnFeeDue').html(admisnFeeDue + '$');
-        $('#admsnFeeDue').val(admisnFeeDue);
+        var odf = parseInt($('#existingODF').val());
+        odfDue = odf - val;
+        $('#odfFeePaidFieldOnStmt').html(val);
+        $('#odfDueOnStmt').html(odfDue + '$');
+        $('#odfDue').val(odfDue);
     });
 
 
-    $('#admsnFeeDue').keyup(function () {
-        admisnFeeDue = $('#admsnFeeDue').val();
+    $('#odfDue').keyup(function () {
+       var admisnFeeDue = $('#odfDue').val();
         if(isNaN(admisnFeeDue)){
             return '';
         }
-        $('#admisnFeeDue').html(admisnFeeDue);
+        $('#odfDueOnStmt').html(admisnFeeDue);
     });
 
     $('#admisnFee').click(function () {
         var admsnFeePaid = parseInt($('#admsnFeePaid').val());
-
 
         $('#afPayStatus').html('');
         if (studentID == undefined || studentID == 0) {
@@ -97,20 +103,23 @@ $(document).ready(function () {
         })
     });
 
-    $('#admCashBtn').click(function () {
-        var cash = JSON.stringify($('#cashForm').serializeJSON());
-        $('#afCashSavingStatus').html('');
+
+    $('#odfCashBtn').click(function () {
+        var cash = JSON.stringify($('#odfCashForm').serializeJSON());
+
+        $('#odfCashSavingStatus').html('');
         if (JSON.parse(cash).amount <= 0 || JSON.parse(cash).amount == '') {
-            $('#afCashSavingStatus').append('<span class="text-danger">Enter valid amount</span>');
+            $('#odfCashSavingStatus').append('<span class="text-danger">Enter valid amount</span>');
             return '';
         }
+
         $.ajax({
             method: 'post',
             url: '/cash/save',
             data: cash,
             contentType: "application/json",
             success: function () {
-                $('#afCashSavingStatus').append('<span class="text-success">Success</span>');
+                $('#odfCashSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
             error: function () {
@@ -119,22 +128,21 @@ $(document).ready(function () {
         })
     });
 
-
-    $('#fromSal').submit(function (event) {
+    $('#odfFromSalForm').submit(function (event) {
         event.preventDefault();
-        var cheque = JSON.stringify($('#fromSalForm').serializeJSON());
+        var cheque = JSON.stringify($('#odfFromSalForm').serializeJSON());
         console.log(cheque);
         $('#afFromSalChequeSavingStatus').html('');
 
         if(JSON.parse(cheque).chequeNum == '' ||
             JSON.parse(cheque).amount == '' ||
             JSON.parse(cheque).payPeriod == ''){
-            $('#afFromSalChequeSavingStatus').append('<span class="text-danger">Fill out all the fields</span>');
+            $('#odfFromSalChequeSavingStatus').append('<span class="text-danger">Fill out all the fields</span>');
             return '';
         }
 
         if ($('#fromSalChequeImg').val() == '') {
-            $('#afFromSalChequeSavingStatus').append('<span class="text-danger">Select image</span>');
+            $('#odfFromSalChequeSavingStatus').append('<span class="text-danger">Select image</span>');
             return '';
         }
 
@@ -157,21 +165,21 @@ $(document).ready(function () {
         })
     });
 
-    $('#chequeForm').submit(function (event) {
+    $('#odfChequeForm').submit(function (event) {
         event.preventDefault();
-        var cheque = JSON.stringify($('#chequeForm').serializeJSON());
+        var cheque = JSON.stringify($('#odfChequeForm').serializeJSON());
         console.log(cheque);
-        $('#mfChequeSavingStatus').html('');
+        $('#odfChequeSavingStatus').html('');
 
         if(JSON.parse(cheque).accountNum == '' ||
             JSON.parse(cheque).chequeNum == '' ||
             JSON.parse(cheque).chequeDate == ''){
-            $('#mfChequeSavingStatus').append('<span class="text-danger">Fill out all the fields</span>');
+            $('#odfChequeSavingStatus').append('<span class="text-danger">Fill out all the fields</span>');
             return '';
         }
 
         if ($('#chequeImg').val() == '') {
-            $('#mfChequeSavingStatus').append('<span class="text-danger">Select image</span>');
+            $('#odfChequeSavingStatus').append('<span class="text-danger">Select image</span>');
             return '';
         }
 
@@ -183,7 +191,7 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             cache: false,
-            success: function (data) {
+            success: function () {
                 return false;
             },
             error: function () {
@@ -192,21 +200,21 @@ $(document).ready(function () {
         })
     });
 
-    $('#moneyOrderForm').submit(function (event) {
+    $('#odfMoneyOrderForm').submit(function (event) {
         event.preventDefault();
-        var mo = JSON.stringify($('#moneyOrderForm').serializeJSON());
+        var mo = JSON.stringify($('#odfMoneyOrderForm').serializeJSON());
         console.log(mo);
-        $('#afMOSavingStatus').html('');
+        $('#odfMOSavingStatus').html('');
 
         if(JSON.parse(mo).moneyOrderDate == '' ||
             JSON.parse(mo).moneyOrderNum == '' ||
             isNaN(JSON.parse(mo).amount)){
-            $('#afMOSavingStatus').append('<span class="text-danger">Enter valid data</span>');
+            $('#odfMOSavingStatus').append('<span class="text-danger">Enter valid data</span>');
             return '';
         }
 
         if ($('#moImage').val() == '') {
-            $('#afMOSavingStatus').append('<span class="text-danger">Select image</span>');
+            $('#odfMOSavingStatus').append('<span class="text-danger">Select image</span>');
             return '';
         }
         $.ajax({
@@ -226,55 +234,18 @@ $(document).ready(function () {
         })
     });
 
-    // $('#admFromSalBtn').submit(function (e) {
-    //     e.stopPropagation();
-    //     e();
-    //     var chequeFromSal = JSON.stringify($('#fromSalForm').serializeJSON());
-    //     console.log(chequeFromSal);
-    //     $('#afFromSalChequeSavingStatus').html('');
-    //
-    //     if(JSON.parse(chequeFromSal).accountNum == '' ||
-    //         JSON.parse(chequeFromSal).chequeNum == '' ||
-    //         JSON.parse(chequeFromSal).chequeDate == ''){
-    //         $('#afFromSalChequeSavingStatus').append('<span class="text-danger">Fill out all the fields</span>');
-    //         return '';
-    //     }
-    //
-    //     if ($('#fromSalChequeImg').val() == '') {
-    //         $('#afFromSalChequeSavingStatus').append('<span class="text-danger">Select image</span>');
-    //         return '';
-    //     }
-    //
-    //     $.ajax({
-    //         method: 'post',
-    //         url: '/fromSal/save',
-    //         data: new FormData(this),
-    //         enctype: 'multipart/form-data',
-    //         processData: false,
-    //         contentType: false,
-    //         cache: false,
-    //         success: function (data) {
-    //             return false;
-    //         },
-    //         error: function () {
-    //             console.log('not success');
-    //             return false;
-    //         }
-    //     })
-    // });
-
-    $('#admZellBtn').click(function () {
-        var zelle = JSON.stringify($('#zelleForm').serializeJSON());
+    $('#odfZellBtn').click(function () {
+        var zelle = JSON.stringify($('#odfZelleForm').serializeJSON());
         console.log(zelle);
-        $('#afZelleSavingStatus').html('');
+        $('#odfZelleSavingStatus').html('');
 
         if(JSON.parse(zelle).amount == '' || JSON.parse(zelle).amount <= 0){
-            $('#afZelleSavingStatus').append('<span class="text-danger">Enter amount</span>');
+            $('#odfZelleSavingStatus').append('<span class="text-danger">Enter amount</span>');
             return '';
         }
 
         if(JSON.parse(zelle).phoneNum == '' && JSON.parse(zelle).email == 0){
-            $('#afZelleSavingStatus').append('<span class="text-danger">Enter email or phone</span>');
+            $('#odfZelleSavingStatus').append('<span class="text-danger">Enter email or phone</span>');
             return '';
         }
 
@@ -292,16 +263,16 @@ $(document).ready(function () {
         })
     });
 
-    $('#admCCBtn').click(function () {
+    $('#odfCCBtn').click(function () {
 
-        var cc = JSON.stringify($('#ccForm').serializeJSON());
-        $('#afCCSavingStatus').html('');
+        var cc = JSON.stringify($('#odfCCForm').serializeJSON());
+        $('#odfCCSavingStatus').html('');
 
         if (JSON.parse(cc).amount <= 0 ||
             isNaN(JSON.parse(cc).amount) ||
             JSON.parse(cc).tnxId == '' ||
             JSON.parse(cc).cardNum == '') {
-            $('#afCCSavingStatus').append('<span class="text-danger">Enter valid data</span>');
+            $('#odfCCSavingStatus').append('<span class="text-danger">Enter valid data</span>');
             return '';
         }
 
@@ -330,9 +301,9 @@ $(document).ready(function () {
         }
     };
 
-    $('#pdfGeneratorAdmisnFee').click(function () {
+    $('#pdfGeneratorOpeningDueFee').click(function () {
 
-        $('#admisnFeeTbl').printThis({
+        $('#odfFeeTbl').printThis({
             debug: false,               // show the iframe for debugging
             importCSS: true,            // import parent page css
             importStyle: false,         // import style tags
@@ -367,7 +338,7 @@ $(document).ready(function () {
     });
 });
 
-function admissionFeeStmt(st_id) {
+function openingDueFeeStmt(st_id) {
     $.ajax({
         method: 'GET',
         url: '/student/json/' + parseInt(st_id),
@@ -378,8 +349,8 @@ function admissionFeeStmt(st_id) {
 
             //==========ends here===========
 
-            $('#admisnFeeTblBody').html('');
-            $('#admisnFeeTblBody').append(
+            $('#openingDueFeeTblBody').html('');
+            $('#openingDueFeeTblBody').append(
                 "<tr><td colspan='2' class='text-center'>" + "Admission Fee Statement" + "</td></tr>"
                 +
                 "<tr style='display: none'><td>" + "Fin Details ID" + "</td>" + "<td id='fin_dtl_id' >" + data[0].finDtlsOfStudent.id + "</td></tr>"
@@ -396,17 +367,18 @@ function admissionFeeStmt(st_id) {
                 +
                 "<tr><td>" + "Month" + "</td>" + "<td id='motnhName'></td></tr>"
                 +
-                "<tr><td>" + "Payment ID" + "</td>" + "<td id='paymentIDonStmt'></td></tr>"
+                "<tr><td>" + "Payment ID" + "</td>" + "<td id='odfPaymentIDonStmt'></td></tr>"
                 +
-                "<tr><td>" + "Admission Fee" + "</td>" + "<td >" + data[0].finDtlsOfStudent.mandatoryFees + "</td></tr>"
+                "<tr><td>" + "Existing Opening Due" + "</td>" + "<td >" + data[0].initialDue + "</td></tr>"
                 +
-                "<tr><td>" + "Admission Fee Paid" + "</td>" + "<td id='admisnFeePaidFieldOnStmt'></td></tr>"
+                "<tr><td>" + "Opening Due Paid" + "</td>" + "<td id='odfFeePaidFieldOnStmt'></td></tr>"
                 +
-                "<tr><td>" + "Admission Fee Due" + "</td>" + "<td id='admisnFeeDue'></td></tr>"
-            )
-            $('#admisnFeeToPay').val(data[0].finDtlsOfStudent.mandatoryFees);
+                "<tr><td>" + "Remaining Opening Due" + "</td>" + "<td id='odfDueOnStmt'></td></tr>"
+            );
+
+            $('#existingODF').val(data[0].initialDue);
             $('#motnhName').html(getMonthName());
-            $('#paymentIDonStmt').html(getAfPaymentId());
+            $('#odfPaymentIDonStmt').html(getODFPaymentId());
         },
         error: function () {
             console.log('not success');
@@ -416,11 +388,11 @@ function admissionFeeStmt(st_id) {
 
 //=====================end================
 
-function getAfPaymentId() {
+function getODFPaymentId() {
     var paymentID = null;
     $.ajax({
         method: 'GET',
-        url: '/admissionFee/getPaymentId',
+        url: '/openingDueFee/getPaymentId',
         async: false,
         success: function (data) {
             paymentID = data;

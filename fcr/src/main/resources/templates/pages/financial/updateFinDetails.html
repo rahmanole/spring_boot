@@ -23,9 +23,18 @@
                         <option th:each="st_id:${studentIDS}"
                                 th:text="${st_id}"></option>
                     </select>
+
                 </div>
             </div>
         </div>
+        <div class="row clearfix" id="dueAlert">
+            <div class="col-lg-6 col-lg-offset-3 col-md-12 col-sm-12 col-xs-12">
+                <div class="card" style="padding: 20px">
+                    <p id="dueMessage" style="margin-bottom: 0px"></p>
+                </div>
+            </div>
+        </div>
+
         <div class="row clearfix center-align">
             <div class="col-lg-6  col-md-12 col-sm-12 col-xs-12">
                 <div class="card" style="padding: 20px">
