@@ -43,22 +43,23 @@ $(document).ready(function () {
     });
 
     var odfDue = 0;
+    var odfFeePaid= 0;
 
-    $('#odfFeePaid').keyup(function () {
-        var val = parseInt($('#odfFeePaid').val());
-        if(isNaN(val)){
-            $('#odfFeePaidFieldOnStmt').html('');
-            $('#odfDueOnStmt').html('');
-            $('#odfDue').val('');
-            return '';
-        }
-
-        var odf = parseInt($('#existingODF').val());
-        odfDue = odf - val;
-        $('#odfFeePaidFieldOnStmt').html(val);
-        $('#odfDueOnStmt').html(odfDue + '$');
-        $('#odfDue').val(odfDue);
-    });
+    // $('#odfFeePaid').keyup(function () {
+    //     var val = parseInt($('#odfFeePaid').val());
+    //     if(isNaN(val)){
+    //         $('#odfFeePaidFieldOnStmt').html('');
+    //         $('#odfDueOnStmt').html('');
+    //         $('#odfDue').val('');
+    //         return '';
+    //     }
+    //
+    //     var odf = parseInt($('#existingODF').val());
+    //     odfDue = odf - val;
+    //     $('#odfFeePaidFieldOnStmt').html(val);
+    //     $('#odfDueOnStmt').html(odfDue + '$');
+    //     $('#odfDue').val(odfDue);
+    // });
 
 
     $('#odfDue').keyup(function () {
@@ -108,6 +109,12 @@ $(document).ready(function () {
         var cash = JSON.stringify($('#odfCashForm').serializeJSON());
 
         $('#odfCashSavingStatus').html('');
+
+        if(JSON.parse(cash).paymentId == ''){
+            $('#odfCashSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
+
         if (JSON.parse(cash).amount <= 0 || JSON.parse(cash).amount == '') {
             $('#odfCashSavingStatus').append('<span class="text-danger">Enter valid amount</span>');
             return '';
@@ -119,6 +126,7 @@ $(document).ready(function () {
             data: cash,
             contentType: "application/json",
             success: function () {
+                calculateDuesOnOpeningDue(odfFeePaid,parseInt(JSON.parse(cash).amount));
                 $('#odfCashSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -132,7 +140,12 @@ $(document).ready(function () {
         event.preventDefault();
         var cheque = JSON.stringify($('#odfFromSalForm').serializeJSON());
         console.log(cheque);
-        $('#afFromSalChequeSavingStatus').html('');
+        $('#odfFromSalChequeSavingStatus').html('');
+
+        if(JSON.parse(cheque).paymentId == ''){
+            $('#odfFromSalChequeSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
 
         if(JSON.parse(cheque).chequeNum == '' ||
             JSON.parse(cheque).amount == '' ||
@@ -142,20 +155,21 @@ $(document).ready(function () {
         }
 
         if ($('#fromSalChequeImg').val() == '') {
-            $('#odfFromSalChequeSavingStatus').append('<span class="text-danger">Select image</span>');
+            $('#odfFromSalChequeSavingStatuss').append('<span class="text-danger">Select image</span>');
             return '';
         }
 
-        var frm = $('#fromSalForm')[0];
         $.ajax({
             method: 'post',
             url: '/fromSal/save',
-            data: new FormData(frm),
+            data: new FormData(this),
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
             cache: false,
             success: function () {
+                calculateDuesOnOpeningDue(odfFeePaid,parseInt(JSON.parse(cheque).amount));
+                $('#odfFromSalChequeSavingStatuss').append('<span class="text-success">Success</span>');
                 return false;
             },
 
@@ -170,6 +184,11 @@ $(document).ready(function () {
         var cheque = JSON.stringify($('#odfChequeForm').serializeJSON());
         console.log(cheque);
         $('#odfChequeSavingStatus').html('');
+
+        if(JSON.parse(cheque).paymentId == ''){
+            $('#odfChequeSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
 
         if(JSON.parse(cheque).accountNum == '' ||
             JSON.parse(cheque).chequeNum == '' ||
@@ -192,6 +211,8 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function () {
+                calculateDuesOnOpeningDue(odfFeePaid,parseInt(JSON.parse(cheque).amount));
+                $('#odfChequeSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
             error: function () {
@@ -205,6 +226,11 @@ $(document).ready(function () {
         var mo = JSON.stringify($('#odfMoneyOrderForm').serializeJSON());
         console.log(mo);
         $('#odfMOSavingStatus').html('');
+
+        if(JSON.parse(mo).paymentId == ''){
+            $('#odfMOSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
 
         if(JSON.parse(mo).moneyOrderDate == '' ||
             JSON.parse(mo).moneyOrderNum == '' ||
@@ -226,6 +252,8 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function () {
+                calculateDuesOnOpeningDue(odfFeePaid,parseInt(JSON.parse(mo).amount));
+                $('#odfMOSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
             error: function () {
@@ -238,6 +266,11 @@ $(document).ready(function () {
         var zelle = JSON.stringify($('#odfZelleForm').serializeJSON());
         console.log(zelle);
         $('#odfZelleSavingStatus').html('');
+
+        if(JSON.parse(zelle).paymentId == ''){
+            $('#odfZelleSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
 
         if(JSON.parse(zelle).amount == '' || JSON.parse(zelle).amount <= 0){
             $('#odfZelleSavingStatus').append('<span class="text-danger">Enter amount</span>');
@@ -255,6 +288,8 @@ $(document).ready(function () {
             data: zelle,
             contentType: "application/json",
             success: function () {
+                calculateDuesOnOpeningDue(odfFeePaid,parseInt(JSON.parse(zelle).amount));
+                $('#odfZelleSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
             error: function () {
@@ -267,6 +302,11 @@ $(document).ready(function () {
 
         var cc = JSON.stringify($('#odfCCForm').serializeJSON());
         $('#odfCCSavingStatus').html('');
+
+        if(JSON.parse(cc).paymentId == ''){
+            $('#odfCCSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
 
         if (JSON.parse(cc).amount <= 0 ||
             isNaN(JSON.parse(cc).amount) ||
@@ -282,6 +322,8 @@ $(document).ready(function () {
             data: cc,
             contentType: "application/json",
             success: function () {
+                calculateDuesOnOpeningDue(odfFeePaid,parseInt(JSON.parse(cc).amount));
+                $('#odfCCSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
             error: function () {
@@ -384,6 +426,18 @@ function openingDueFeeStmt(st_id) {
             console.log('not success');
         }
     });
+}
+
+function calculateDuesOnOpeningDue(odfFeePaid,amount) {
+
+    odfFeePaid += parseInt(amount);
+    $('#odfFeePaid').val(odfFeePaid);
+    var val = parseInt($('#existingODF').val());
+
+    $('#odfFeePaidFieldOnStmt').html(odfFeePaid);
+    $('#odfDueOnStmt').html(val - odfFeePaid);
+    $('#odfDue').val(val - odfFeePaid);
+
 }
 
 //=====================end================

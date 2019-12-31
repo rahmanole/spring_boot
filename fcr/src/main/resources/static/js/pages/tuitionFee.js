@@ -104,6 +104,12 @@ $(document).ready(function () {
         var cash = JSON.stringify($('#tfCashForm').serializeJSON());
 
         $('#tfCashSavingStatus').html('');
+
+        if(JSON.parse(cash).paymentId == ''){
+            $('#tfCashSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
+
         if (JSON.parse(cash).amount <= 0 || JSON.parse(cash).amount == '') {
             $('#tfCashSavingStatus').append('<span class="text-danger">Enter valid amount</span>');
             return '';
@@ -127,13 +133,16 @@ $(document).ready(function () {
         })
     });
 
-
-
     $('#tfFromSal').submit(function (event) {
         event.preventDefault();
         var cheque = JSON.stringify($('#tfFromSalForm').serializeJSON());
         console.log(cheque);
         $('#tfFromSalChequeSavingStatus').html('');
+
+        if(JSON.parse(cheque).paymentId == ''){
+            $('#tfFromSalChequeSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
 
         if(JSON.parse(cheque).chequeNum == '' ||
             JSON.parse(cheque).amount == '' ||
@@ -142,10 +151,6 @@ $(document).ready(function () {
             return '';
         }
 
-        if(JSON.parse(cheque).paymentId == ''){
-            $('#tfFromSalChequeSavingStatus').append('<span class="text-danger">Select a student</span>');
-            return '';
-        }
 
         if ($('#fromSalChequeImg').val() == '') {
             $('#tfFromSalChequeSavingStatus').append('<span class="text-danger">Select image</span>');
@@ -164,7 +169,6 @@ $(document).ready(function () {
             cache: false,
             success: function () {
                 calculateDues(tuitionFeeDue,parseInt(JSON.parse(cheque).amount));
-
                 $('#odfFromSalChequeSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -180,6 +184,11 @@ $(document).ready(function () {
         var cheque = JSON.stringify($('#tfChequeForm').serializeJSON());
         console.log(cheque);
         $('#tfChequeSavingStatus').html('');
+
+        if(JSON.parse(cheque).paymentId == ''){
+            $('#tfChequeSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
 
         if(JSON.parse(cheque).accountNum == '' ||
             JSON.parse(cheque).chequeNum == '' ||
@@ -220,13 +229,17 @@ $(document).ready(function () {
 
         $('#tfMOSavingStatus').html('');
 
+        if(JSON.parse(mo).paymentId == ''){
+            $('#tfMOSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
+
         if(JSON.parse(mo).moneyOrderDate == '' ||
             JSON.parse(mo).moneyOrderNum == '' ||
             isNaN(JSON.parse(mo).amount)){
             $('#tfMOSavingStatus').append('<span class="text-danger">Enter valid data</span>');
             return '';
         }
-
 
         if ($('#tfMOImg').val() == '') {
             $('#tfMOSavingStatus').append('<span class="text-danger">Select image</span>');
@@ -257,6 +270,11 @@ $(document).ready(function () {
         var zelle = JSON.stringify($('#tfZelleForm').serializeJSON());
         console.log(zelle);
         $('#tfZelleSavingStatus').html('');
+
+        if(JSON.parse(zelle).paymentId == ''){
+            $('#tfZelleSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
 
         if(JSON.parse(zelle).amount == '' || JSON.parse(zelle).amount <= 0){
             $('#tfZelleSavingStatus').append('<span class="text-danger">Enter amount</span>');
@@ -290,6 +308,12 @@ $(document).ready(function () {
         var cc = JSON.stringify($('#tfCCForm').serializeJSON());
         console.log(cc);
         $('#tfCCSavingStatus').html('');
+
+        if(JSON.parse(zelle).paymentId == ''){
+            $('#tfCCSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
+
         if (JSON.parse(cc).amount <= 0 ||
             isNaN(JSON.parse(cc).amount) ||
             JSON.parse(cc).tnxId == '' ||

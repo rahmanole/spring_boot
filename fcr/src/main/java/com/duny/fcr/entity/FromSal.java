@@ -24,6 +24,4 @@ public class FromSal {
     private byte[] fromSalChequeImg;
     @Column(name = "payment_id",length = 10,unique = true)
     private String paymentId;
-
-
 }

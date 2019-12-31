@@ -101,6 +101,12 @@ $(document).ready(function () {
     $('#admCashBtn').click(function () {
         var cash = JSON.stringify($('#cashForm').serializeJSON());
         $('#afCashSavingStatus').html('');
+
+        if(JSON.parse(cash).paymentId == ''){
+            $('#afCashSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
+
         if (JSON.parse(cash).amount <= 0 || JSON.parse(cash).amount == '') {
             $('#afCashSavingStatus').append('<span class="text-danger">Enter valid amount</span>');
             return '';
@@ -121,21 +127,26 @@ $(document).ready(function () {
     });
 
 
-    $('#fromSal').submit(function (event) {
+    $('#fromSalForm').submit(function (event) {
         event.preventDefault();
         var cheque = JSON.stringify($('#fromSalForm').serializeJSON());
         console.log(cheque);
-        $('#afFromSalChequeSavingStatus').html('');
+        $('#fromSalChequeSavingStatus').html('');
+
+        if(JSON.parse(cheque).paymentId == ''){
+            $('#fromSalChequeSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
 
         if(JSON.parse(cheque).chequeNum == '' ||
             JSON.parse(cheque).amount == '' ||
             JSON.parse(cheque).payPeriod == ''){
-            $('#afFromSalChequeSavingStatus').append('<span class="text-danger">Fill out all the fields</span>');
+            $('#fromSalChequeSavingStatus').append('<span class="text-danger">Fill out all the fields</span>');
             return '';
         }
 
         if ($('#fromSalChequeImg').val() == '') {
-            $('#afFromSalChequeSavingStatus').append('<span class="text-danger">Select image</span>');
+            $('#fromSalChequeSavingStatus').append('<span class="text-danger">Select image</span>');
             return '';
         }
 
@@ -163,6 +174,11 @@ $(document).ready(function () {
         var cheque = JSON.stringify($('#chequeForm').serializeJSON());
         console.log(cheque);
         $('#mfChequeSavingStatus').html('');
+
+        if(JSON.parse(cheque).paymentId == ''){
+            $('#mfChequeSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
 
         if(JSON.parse(cheque).accountNum == '' ||
             JSON.parse(cheque).chequeNum == '' ||
@@ -199,6 +215,11 @@ $(document).ready(function () {
         console.log(mo);
         $('#afMOSavingStatus').html('');
 
+        if(JSON.parse(mo).paymentId == ''){
+            $('#afMOSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
+
         if(JSON.parse(mo).moneyOrderDate == '' ||
             JSON.parse(mo).moneyOrderNum == '' ||
             isNaN(JSON.parse(mo).amount)){
@@ -227,47 +248,16 @@ $(document).ready(function () {
         })
     });
 
-    // $('#admFromSalBtn').submit(function (e) {
-    //     e.stopPropagation();
-    //     e();
-    //     var chequeFromSal = JSON.stringify($('#fromSalForm').serializeJSON());
-    //     console.log(chequeFromSal);
-    //     $('#afFromSalChequeSavingStatus').html('');
-    //
-    //     if(JSON.parse(chequeFromSal).accountNum == '' ||
-    //         JSON.parse(chequeFromSal).chequeNum == '' ||
-    //         JSON.parse(chequeFromSal).chequeDate == ''){
-    //         $('#afFromSalChequeSavingStatus').append('<span class="text-danger">Fill out all the fields</span>');
-    //         return '';
-    //     }
-    //
-    //     if ($('#fromSalChequeImg').val() == '') {
-    //         $('#afFromSalChequeSavingStatus').append('<span class="text-danger">Select image</span>');
-    //         return '';
-    //     }
-    //
-    //     $.ajax({
-    //         method: 'post',
-    //         url: '/fromSal/save',
-    //         data: new FormData(this),
-    //         enctype: 'multipart/form-data',
-    //         processData: false,
-    //         contentType: false,
-    //         cache: false,
-    //         success: function (data) {
-    //             return false;
-    //         },
-    //         error: function () {
-    //             console.log('not success');
-    //             return false;
-    //         }
-    //     })
-    // });
 
     $('#admZellBtn').click(function () {
         var zelle = JSON.stringify($('#zelleForm').serializeJSON());
         console.log(zelle);
         $('#afZelleSavingStatus').html('');
+
+        if(JSON.parse(zelle).paymentId == ''){
+            $('#afZelleSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
 
         if(JSON.parse(zelle).amount == '' || JSON.parse(zelle).amount <= 0){
             $('#afZelleSavingStatus').append('<span class="text-danger">Enter amount</span>');
@@ -297,6 +287,16 @@ $(document).ready(function () {
 
         var cc = JSON.stringify($('#ccForm').serializeJSON());
         $('#afCCSavingStatus').html('');
+
+        if(JSON.parse(cc).paymentId == ''){
+            $('#afCCSavingStatus').append('<span class="text-danger">Select a student</span>');
+            return '';
+        }
+
+        if(JSON.parse(cc).amount == '' || JSON.parse(zelle).amount <= 0){
+            $('#afCCSavingStatus').append('<span class="text-danger">Enter amount</span>');
+            return '';
+        }
 
         if (JSON.parse(cc).amount <= 0 ||
             isNaN(JSON.parse(cc).amount) ||
