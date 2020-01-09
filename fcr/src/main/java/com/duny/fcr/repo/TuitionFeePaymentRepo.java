@@ -1,7 +1,6 @@
 package com.duny.fcr.repo;
 
 import com.duny.fcr.dto.TuitionFeeDueReport;
-import com.duny.fcr.entity.AdmissionPayment;
 import com.duny.fcr.entity.TuitionFeePayment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

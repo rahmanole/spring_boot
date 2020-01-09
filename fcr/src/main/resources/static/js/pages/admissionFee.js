@@ -294,7 +294,7 @@ $(document).ready(function () {
             return '';
         }
 
-        if (JSON.parse(cc).amount == '' || JSON.parse(zelle).amount <= 0) {
+        if (JSON.parse(cc).amount == '' || JSON.parse(cc).amount <= 0) {
             $('#afCCSavingStatus').append('<span class="text-danger">Enter amount</span>');
             return '';
         }
