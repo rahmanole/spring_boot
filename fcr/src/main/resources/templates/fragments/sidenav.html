@@ -70,6 +70,7 @@
                         <i class="material-icons">pie_chart</i>
                         <span>Financial</span>
                     </a>
+
                     <ul class="ml-menu">
                         <li>
                             <a th:href="@{/tuitionFee}">Tuition Fee</a>
@@ -77,15 +78,24 @@
                         <li>
                             <a th:href="@{/admissionFee}">Admission Fee</a>
                         </li>
-
                         <li>
-                            <a th:href="@{/due/all}">All Dues</a>
+                            <a th:href="@{/updateFinancialDetails}">Update Financial Details</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="material-icons">pie_chart</i>
+                        <span>Due</span>
+                    </a>
+
+                    <ul class="ml-menu">
+                        <li>
+                            <a th:href="@{/due/all}">Tuition Due</a>
                         </li>
                         <li>
                             <a th:href="@{/openingDueFee}">Account Opening Due</a>
-                        </li>
-                        <li>
-                            <a th:href="@{/updateFinancialDetails}">Update Financial Details</a>
                         </li>
                     </ul>
                 </li>

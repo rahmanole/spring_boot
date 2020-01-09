@@ -4,6 +4,8 @@ $(document).ready(function () {
     $('#month').val(getMonthName());
 
     var studentID;
+    var afToPay;
+    var afPID ;
 
     $('#studentIdsOnAdmisnFee').change(function () {
         studentID = $('#studentIdsOnAdmisnFee option:selected').val();
@@ -14,6 +16,11 @@ $(document).ready(function () {
             $('#admissionFeeForm').hide();
             $('#admisnFeeStId').val('');
             $('#admisnFeeToPay').val('');
+            $('#admsnFeePaid').val('');
+            $('#admisnFeePaidFieldOnStmt').html('');
+            $('#admsnFeeDue').val('');
+
+
             return;
         } else {
 
@@ -30,33 +37,16 @@ $(document).ready(function () {
             $('#admisnFeeStId').val(studentID);
             $('#pdfGeneratorAdmisnFee').show();
             $('#admissionFeeForm').show();
-            admissionFeeStmt(studentID);
+            admissionFeeStmt(studentID,afPaymentId);
+            afToPay = $('#admisnFeeToPay').val();
+            afPID = $('#admissionFeePaymentID').val();
+            calculateAF(afPID,afToPay);
         }
     });
-
-
-    var admisnFeeDue = 0;
-
-    $('#admsnFeePaid').keyup(function () {
-        var val = parseInt($('#admsnFeePaid').val());
-        if(isNaN(val)){
-            $('#admisnFeePaidFieldOnStmt').html('');
-            $('#admisnFeeDue').html('');
-            $('#admsnFeeDue').val('');
-            return '';
-        }
-
-        var admisnFee = parseInt($('#admisnFeeToPay').val());
-        admisnFeeDue = admisnFee - val;
-        $('#admisnFeePaidFieldOnStmt').html(val);
-        $('#admisnFeeDue').html(admisnFeeDue + '$');
-        $('#admsnFeeDue').val(admisnFeeDue);
-    });
-
 
     $('#admsnFeeDue').keyup(function () {
         admisnFeeDue = $('#admsnFeeDue').val();
-        if(isNaN(admisnFeeDue)){
+        if (isNaN(admisnFeeDue)) {
             return '';
         }
         $('#admisnFeeDue').html(admisnFeeDue);
@@ -102,7 +92,7 @@ $(document).ready(function () {
         var cash = JSON.stringify($('#cashForm').serializeJSON());
         $('#afCashSavingStatus').html('');
 
-        if(JSON.parse(cash).paymentId == ''){
+        if (JSON.parse(cash).paymentId == '') {
             $('#afCashSavingStatus').append('<span class="text-danger">Select a student</span>');
             return '';
         }
@@ -111,12 +101,14 @@ $(document).ready(function () {
             $('#afCashSavingStatus').append('<span class="text-danger">Enter valid amount</span>');
             return '';
         }
+
         $.ajax({
             method: 'post',
             url: '/cash/save',
             data: cash,
             contentType: "application/json",
             success: function () {
+                calculateAF(afPID,afToPay);
                 $('#afCashSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -133,14 +125,14 @@ $(document).ready(function () {
         console.log(cheque);
         $('#fromSalChequeSavingStatus').html('');
 
-        if(JSON.parse(cheque).paymentId == ''){
+        if (JSON.parse(cheque).paymentId == '') {
             $('#fromSalChequeSavingStatus').append('<span class="text-danger">Select a student</span>');
             return '';
         }
 
-        if(JSON.parse(cheque).chequeNum == '' ||
+        if (JSON.parse(cheque).chequeNum == '' ||
             JSON.parse(cheque).amount == '' ||
-            JSON.parse(cheque).payPeriod == ''){
+            JSON.parse(cheque).payPeriod == '') {
             $('#fromSalChequeSavingStatus').append('<span class="text-danger">Fill out all the fields</span>');
             return '';
         }
@@ -160,6 +152,8 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function () {
+                calculateAF(afPID,afToPay);
+                $('#fromSalChequeSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
 
@@ -175,14 +169,14 @@ $(document).ready(function () {
         console.log(cheque);
         $('#mfChequeSavingStatus').html('');
 
-        if(JSON.parse(cheque).paymentId == ''){
+        if (JSON.parse(cheque).paymentId == '') {
             $('#mfChequeSavingStatus').append('<span class="text-danger">Select a student</span>');
             return '';
         }
 
-        if(JSON.parse(cheque).accountNum == '' ||
+        if (JSON.parse(cheque).accountNum == '' ||
             JSON.parse(cheque).chequeNum == '' ||
-            JSON.parse(cheque).chequeDate == ''){
+            JSON.parse(cheque).chequeDate == '') {
             $('#mfChequeSavingStatus').append('<span class="text-danger">Fill out all the fields</span>');
             return '';
         }
@@ -201,6 +195,8 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function (data) {
+                calculateAF(afPID,afToPay);
+                $('#mfChequeSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
             error: function () {
@@ -209,20 +205,21 @@ $(document).ready(function () {
         })
     });
 
+
     $('#moneyOrderForm').submit(function (event) {
         event.preventDefault();
         var mo = JSON.stringify($('#moneyOrderForm').serializeJSON());
         console.log(mo);
         $('#afMOSavingStatus').html('');
 
-        if(JSON.parse(mo).paymentId == ''){
+        if (JSON.parse(mo).paymentId == '') {
             $('#afMOSavingStatus').append('<span class="text-danger">Select a student</span>');
             return '';
         }
 
-        if(JSON.parse(mo).moneyOrderDate == '' ||
+        if (JSON.parse(mo).moneyOrderDate == '' ||
             JSON.parse(mo).moneyOrderNum == '' ||
-            isNaN(JSON.parse(mo).amount)){
+            isNaN(JSON.parse(mo).amount)) {
             $('#afMOSavingStatus').append('<span class="text-danger">Enter valid data</span>');
             return '';
         }
@@ -240,6 +237,8 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function () {
+                calculateAF(afPID,afToPay);
+                $('#afMOSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
             error: function () {
@@ -254,17 +253,17 @@ $(document).ready(function () {
         console.log(zelle);
         $('#afZelleSavingStatus').html('');
 
-        if(JSON.parse(zelle).paymentId == ''){
+        if (JSON.parse(zelle).paymentId == '') {
             $('#afZelleSavingStatus').append('<span class="text-danger">Select a student</span>');
             return '';
         }
 
-        if(JSON.parse(zelle).amount == '' || JSON.parse(zelle).amount <= 0){
+        if (JSON.parse(zelle).amount == '' || JSON.parse(zelle).amount <= 0) {
             $('#afZelleSavingStatus').append('<span class="text-danger">Enter amount</span>');
             return '';
         }
 
-        if(JSON.parse(zelle).phoneNum == '' && JSON.parse(zelle).email == 0){
+        if (JSON.parse(zelle).phoneNum == '' && JSON.parse(zelle).email == 0) {
             $('#afZelleSavingStatus').append('<span class="text-danger">Enter email or phone</span>');
             return '';
         }
@@ -275,6 +274,8 @@ $(document).ready(function () {
             data: zelle,
             contentType: "application/json",
             success: function () {
+                calculateAF(afPID,afToPay);
+                $('#afZelleSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
             error: function () {
@@ -288,12 +289,12 @@ $(document).ready(function () {
         var cc = JSON.stringify($('#ccForm').serializeJSON());
         $('#afCCSavingStatus').html('');
 
-        if(JSON.parse(cc).paymentId == ''){
+        if (JSON.parse(cc).paymentId == '') {
             $('#afCCSavingStatus').append('<span class="text-danger">Select a student</span>');
             return '';
         }
 
-        if(JSON.parse(cc).amount == '' || JSON.parse(zelle).amount <= 0){
+        if (JSON.parse(cc).amount == '' || JSON.parse(zelle).amount <= 0) {
             $('#afCCSavingStatus').append('<span class="text-danger">Enter amount</span>');
             return '';
         }
@@ -312,6 +313,8 @@ $(document).ready(function () {
             data: cc,
             contentType: "application/json",
             success: function () {
+                calculateAF(afPID,afToPay);
+                $('#afCCSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
             error: function () {
@@ -320,16 +323,6 @@ $(document).ready(function () {
         })
     });
 
-
-
-
-
-    //For generating pdf
-    var specialElementHandlers = {
-        "#editor": function (element, renderer) {
-            return true;
-        }
-    };
 
     $('#pdfGeneratorAdmisnFee').click(function () {
 
@@ -368,10 +361,11 @@ $(document).ready(function () {
     });
 });
 
-function admissionFeeStmt(st_id) {
+function admissionFeeStmt(st_id,afPaymentId) {
     $.ajax({
         method: 'GET',
         url: '/student/json/' + parseInt(st_id),
+        async:false,
         success: function (data) {
             data = $.parseJSON(data);
 
@@ -404,10 +398,13 @@ function admissionFeeStmt(st_id) {
                 "<tr><td>" + "Admission Fee Paid" + "</td>" + "<td id='admisnFeePaidFieldOnStmt'></td></tr>"
                 +
                 "<tr><td>" + "Admission Fee Due" + "</td>" + "<td id='admisnFeeDue'></td></tr>"
-            )
+            );
             $('#admisnFeeToPay').val(data[0].finDtlsOfStudent.mandatoryFees);
             $('#motnhName').html(getMonthName());
             $('#paymentIDonStmt').html(getAfPaymentId());
+
+            calculateAF(afPaymentId,parseInt(data[0].finDtlsOfStudent.mandatoryFees));
+
         },
         error: function () {
             console.log('not success');
@@ -448,6 +445,30 @@ function insertingAdmissionFeeDue(afDue, fin_id) {
         }
     })
 
+}
+
+function getAFPaid(pid) {
+    var amount = 0;
+    $.ajax({
+        method: 'GET',
+        url: '/fee/' + pid,
+        async: false,
+        success: function (data) {
+            amount = data;
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+    return amount;
+}
+
+function calculateAF(afPaymentId,afToPay) {
+    var feePaid = getAFPaid(afPaymentId);
+    $('#admsnFeePaid').val(feePaid);
+    $('#admsnFeeDue').val(afToPay - feePaid);
+    $('#admisnFeeDue').html(afToPay-feePaid);
+    $('#admisnFeePaidFieldOnStmt').html(feePaid);
 }
 
 

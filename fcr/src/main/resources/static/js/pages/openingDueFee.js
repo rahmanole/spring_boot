@@ -4,6 +4,8 @@ $(document).ready(function () {
     $('#month').val(getMonthName());
 
     var studentID;
+    var odfToPay;
+    var odfPID ;
 
     $('#studentIdsOnOpeningDueFee').change(function () {
 
@@ -39,27 +41,12 @@ $(document).ready(function () {
             $('#pdfGeneratorOpeningDueFee').show();
             $('#openingDueFeeForm').show();
             openingDueFeeStmt(studentID);
+
+            odfToPay = $('#existingODF').val();
+            odfPID = $('#openingDueFeePaymentID').val();
+            calculateODF(odfPID,odfToPay);
         }
     });
-
-    var odfDue = 0;
-    var odfFeePaid= 0;
-
-    // $('#odfFeePaid').keyup(function () {
-    //     var val = parseInt($('#odfFeePaid').val());
-    //     if(isNaN(val)){
-    //         $('#odfFeePaidFieldOnStmt').html('');
-    //         $('#odfDueOnStmt').html('');
-    //         $('#odfDue').val('');
-    //         return '';
-    //     }
-    //
-    //     var odf = parseInt($('#existingODF').val());
-    //     odfDue = odf - val;
-    //     $('#odfFeePaidFieldOnStmt').html(val);
-    //     $('#odfDueOnStmt').html(odfDue + '$');
-    //     $('#odfDue').val(odfDue);
-    // });
 
 
     $('#odfDue').keyup(function () {
@@ -69,6 +56,7 @@ $(document).ready(function () {
         }
         $('#odfDueOnStmt').html(admisnFeeDue);
     });
+
 
     $('#admisnFee').click(function () {
         var admsnFeePaid = parseInt($('#admsnFeePaid').val());
@@ -126,7 +114,7 @@ $(document).ready(function () {
             data: cash,
             contentType: "application/json",
             success: function () {
-                calculateDuesOnOpeningDue(odfFeePaid,parseInt(JSON.parse(cash).amount));
+                calculateODF(odfPID,odfToPay);
                 $('#odfCashSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -168,7 +156,7 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function () {
-                calculateDuesOnOpeningDue(odfFeePaid,parseInt(JSON.parse(cheque).amount));
+                calculateODF(odfPID,odfToPay);
                 $('#odfFromSalChequeSavingStatuss').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -211,7 +199,7 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function () {
-                calculateDuesOnOpeningDue(odfFeePaid,parseInt(JSON.parse(cheque).amount));
+                calculateODF(odfPID,odfToPay);
                 $('#odfChequeSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -252,7 +240,7 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function () {
-                calculateDuesOnOpeningDue(odfFeePaid,parseInt(JSON.parse(mo).amount));
+                calculateODF(odfPID,odfToPay);
                 $('#odfMOSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -288,7 +276,7 @@ $(document).ready(function () {
             data: zelle,
             contentType: "application/json",
             success: function () {
-                calculateDuesOnOpeningDue(odfFeePaid,parseInt(JSON.parse(zelle).amount));
+                calculateODF(odfPID,odfToPay);
                 $('#odfZelleSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -322,7 +310,7 @@ $(document).ready(function () {
             data: cc,
             contentType: "application/json",
             success: function () {
-                calculateDuesOnOpeningDue(odfFeePaid,parseInt(JSON.parse(cc).amount));
+                calculateODF(odfPID,odfToPay);
                 $('#odfCCSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -384,6 +372,7 @@ function openingDueFeeStmt(st_id) {
     $.ajax({
         method: 'GET',
         url: '/student/json/' + parseInt(st_id),
+        async:false,
         success: function (data) {
             data = $.parseJSON(data);
 
@@ -458,6 +447,16 @@ function getODFPaymentId() {
 
     return paymentID;
 }
+
+
+function calculateODF(odfPaymentId,odfToPay) {
+    var feePaid = getAFPaid(odfPaymentId);
+    $('#odfFeePaid').val(feePaid);
+    $('#odfDue').val(odfToPay - feePaid);
+    $('#odfFeePaidFieldOnStmt').html(feePaid);
+    $('#odfDueOnStmt').html(odfToPay-feePaid);
+}
+
 
 
 function insertingAdmissionFeeDue(afDue, fin_id) {

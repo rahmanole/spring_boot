@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.OptionalDouble;
 
 
 @Controller
@@ -24,6 +25,18 @@ public class FeeController {
     DaddRepo daddRepo;
     @Autowired
     FinDtlsOfStudentRepo finDtlsOfStudentRepo;
+    @Autowired
+    CashRepo cashRepo;
+    @Autowired
+    ChequeRepo chequeRepo;
+    @Autowired
+    CreditCardRepo creditCardRepo;
+    @Autowired
+    MoneyOrderRepo moneyOrderRepo;
+    @Autowired
+    FromSalRepo fromSalRepo;
+    @Autowired
+    ZelleReo zelleReo;
 
     @GetMapping("/updateFinancialDetails")
     public String generateFee(Model model) {
@@ -115,13 +128,38 @@ public class FeeController {
         return "";
     }
 
-    @GetMapping("/due/all}")
+    @GetMapping("/due/all")
     public String showAllDues(Model model) {
         List<String> idlist = studentRepo.getStudentIds();
         model.addAttribute("studentIDS",idlist);
         return "/pages/financial/dues";
     }
 
+    @GetMapping("/fee/{pid}")
+    @ResponseBody
+    public double getAmount(@PathVariable String pid) {
+        double totalAmount;
 
+        Object amount = cashRepo.getAmount(pid);
+        double cash = (amount != null? Double.parseDouble(amount.toString()):0);
 
+        amount = chequeRepo.getAmount(pid);
+        double cheque = (amount != null? Double.parseDouble(amount.toString()):0);
+
+        amount = creditCardRepo.getAmount(pid);
+        double cc = (amount != null? Double.parseDouble(amount.toString()):0);
+
+        amount = fromSalRepo.getAmount(pid);
+        double fromSal = (amount !=null? Double.parseDouble(amount.toString()):0);
+
+        amount = moneyOrderRepo.getAmount(pid);
+        double mo = (amount !=null? Double.parseDouble(amount.toString()):0);
+
+        amount = zelleReo.getAmount(pid);
+        double zelle = ( amount !=null? Double.parseDouble(amount.toString()):0);
+
+        totalAmount = cash+cheque+cc+fromSal+mo+zelle;
+
+        return totalAmount;
+    }
 }

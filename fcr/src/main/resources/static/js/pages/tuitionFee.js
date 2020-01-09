@@ -5,6 +5,9 @@ $(document).ready(function () {
 
 
     var studentID;
+    var tfToPay;
+    var tfPID ;
+
     $('#studentIdsOnTuitionFee').change(function () {
         studentID = $('#studentIdsOnTuitionFee option:selected').val();
 
@@ -15,6 +18,9 @@ $(document).ready(function () {
             $('#tFeeStId').val('');
             $('#tFeeToPay').val('');
             $('#tuitionFeeToPay').val('');
+            $('#admsnFeePaid').val('');
+            $('#admisnFeePaidFieldOnStmt').html('');
+            $('#admsnFeeDue').val('');
 
             return;
         } else {
@@ -33,30 +39,15 @@ $(document).ready(function () {
             $('#pdfGeneratorAdmisnFee').show();
             $('#tuitionFeeForm').show();
             tuitonFeeStmt(studentID);
+
+            tfToPay = $('#tuitionFeeToPay').val();
+            tfPID = $('#tFeePaymentID').val();
+            calculateTF(tfPID,tfToPay);
         }
     });
 
 
-    var tuitionFeePaid = 0;
     var tuitionFeeDue= 0;
-
-    $('#tuitionFeePaid').keyup(function () {
-        var val = parseInt($('#tuitionFeePaid').val());
-        if(isNaN(val)){
-            $('#tuitionFeePaidFieldOnStmt').html('');
-            $('#tuitionFeeDueOnStmt').html('');
-            $('#tuitionFeeDue').val('');
-            return '';
-        }
-
-        var tuitionFee = parseInt($('#tuitionFeeToPay').val());
-        tuitionFeeDue = tuitionFee-val;
-
-        $('#tuitionFeePaidFieldOnStmt').html(val);
-        $('#tuitionFeeDueOnStmt').html(tuitionFeeDue+'$');
-        $('#tuitionFeeDue').val(tuitionFeeDue);
-    });
-
 
 
     $('#tuitionFeeDue').keyup(function () {
@@ -116,13 +107,14 @@ $(document).ready(function () {
         }
 
         console.log(cash);
+
         $.ajax({
             method:'post',
             url:'/cash/save',
             data: cash,
             contentType: "application/json",
             success:function () {
-                calculateDues(tuitionFeeDue,parseInt(JSON.parse(cash).amount));
+                calculateTF(tfPID,tfToPay);
                 $('#tfCashSavingStatus').append('<span class="text-success">Cash Saved</span>');
                 return false;
             },
@@ -168,7 +160,7 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function () {
-                calculateDues(tuitionFeeDue,parseInt(JSON.parse(cheque).amount));
+                calculateTF(tfPID,tfToPay);
                 $('#odfFromSalChequeSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -212,7 +204,7 @@ $(document).ready(function () {
             contentType: false,
             cache:false,
             success:function () {
-                calculateDues(tuitionFeeDue,parseInt(JSON.parse(cheque).amount));
+                calculateTF(tfPID,tfToPay);
                 $('#tfChequeSavingStatus').append('<span class="text-success">Cheque saved</span>');
                 return false;
             },
@@ -255,7 +247,7 @@ $(document).ready(function () {
             contentType: false,
             cache:false,
             success:function () {
-                calculateDues(tuitionFeeDue,parseInt(JSON.parse(mo).amount));
+                calculateTF(tfPID,tfToPay);
                 $('#tfMOSavingStatus').append('<span class="text-success">Money Order saved</span>');
                 return false;
             },
@@ -293,7 +285,7 @@ $(document).ready(function () {
             data: zelle,
             contentType: "application/json",
             success:function () {
-                calculateDues(tuitionFeeDue,parseInt(JSON.parse(zelle).amount));
+                calculateTF(tfPID,tfToPay);
                 $('#tfZelleSavingStatus').append('<span class="text-success">Zelle Saved</span>');
                 return false;
             },
@@ -329,7 +321,7 @@ $(document).ready(function () {
             data: cc,
             contentType: "application/json",
             success:function () {
-                calculateDues(tuitionFeeDue,parseInt(JSON.parse(cc).amount));
+                calculateTF(tfPID,tfToPay);
                 $('#tfCCSavingStatus').append('<span class="text-success">Credit card amount saved</span>');
                 return false;
             },
@@ -385,21 +377,12 @@ $(document).ready(function () {
     });
 });
 
-function calculateDues(tuitionFeePaid,amount) {
-
-    tuitionFeePaid += parseInt(amount);
-    $('#tuitionFeePaid').val(tuitionFeePaid);
-    var val = parseInt($('#tuitionFeeToPay').val());
-
-    $('#tuitionFeePaidFieldOnStmt').html(tuitionFeePaid);
-    $('#tuitionFeeDueOnStmt').html(val - tuitionFeePaid);
-    $('#tuitionFeeDue').val(val - tuitionFeePaid);
-}
 
 function tuitonFeeStmt(st_id) {
     $.ajax({
         method: 'GET',
         url: '/student/json/' + parseInt(st_id),
+        async:false,
         success: function (data) {
             data = $.parseJSON(data);
             var manFeesDue = parseInt(data[0].finDtlsOfStudent.mandatoryFeesDue);
@@ -552,6 +535,14 @@ function getDaddCont(fin_id, st_id) {
     return daddsContribution;
 }
 
+function calculateTF(tfPaymentId,tfToPay) {
+    var feePaid = getAFPaid(tfPaymentId);
+    $('#tuitionFeePaid').val(feePaid);
+    $('#tuitionFeeDue').val(tfToPay - feePaid);
+    $('#tuitionFeePaidFieldOnStmt').html(feePaid);
+    $('#tuitionFeeDueOnStmt').html(tfToPay-feePaid);
+}
+
 function getMonthName() {
     var d = new Date();
     var month = new Array();
@@ -569,25 +560,3 @@ function getMonthName() {
     month[11] = "December";
     return month[d.getMonth()];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
