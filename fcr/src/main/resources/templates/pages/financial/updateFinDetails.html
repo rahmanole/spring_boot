@@ -158,7 +158,7 @@
                                 <div class="form-line">
                                     <label class="form-label">Course</label>
                                     <br>
-                                    <select id="course" class="form-control show-tick">
+                                    <select id="course" name="course" class="form-control show-tick">
                                         <option selected>Select a course</option>
                                         <option value="Academy">Academy</option>
                                         <option value="Boy's Nazira">Boy's Nazira</option>
@@ -650,7 +650,7 @@
                                     <td id="totalMandatoryFee" class="text-right "></td>
                                 </tr>
 
-                                <tr>
+                                <tr id="resFeeOnStmt">
                                     <td>Residential</td>
                                     <td><input id="residentialFee" disabled class="form-control text-right" type="text">
                                     </td>
@@ -714,7 +714,7 @@
                                     <td id="monthlyTuition" class="text-right "></td>
                                 </tr>
                                 <tr>
-                                    <td></td>
+                                    <td id="paymentPlanUpdateSts"></td>
                                     <td class="align-right">
                                         <button type="button" id="admit" class="btn btn-primary waves-effect">Create Payment Plan</button>
                                     </td>

@@ -29,6 +29,8 @@ public class Student {
     private String gender;
     @Column(name="course_name")
     private String courseName;
+    @Column(name="year",length = 20)
+    private String year;
     @Column(nullable = false)
     private String boarding;
     private Date dob;

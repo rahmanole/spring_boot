@@ -9,7 +9,6 @@ $(document).ready(function () {
     var bookFee = 0;
     var mandatoryFee = 0;
     var total = 3900;
-
     var boardingSts = '';
 
     $('#residentialFee').val(0.00);
@@ -328,6 +327,7 @@ $(document).ready(function () {
         if (sp_id > 0 && fin_dtl_Id_of_sp > 0) {
             assignSp(fin_dtl_Id_of_sp, sp_id, st_id, dadd_id);
         }
+
         $('#assignSp').attr('disabled', true);
         $('#spAssignMsgs').html('');
         $('#spAssignStatus').html('<sapn class="text-success">Successfully assigned sponsor</sapn>');
@@ -956,11 +956,12 @@ function studentFeeReport(st_id) {
                 $('#dueAlert').show();
                 $('#dueMessage').html('');
                 $('#dueMessage').html('<span class="text-danger padding-0">This student has account opening due</span>');
-
             }else {
                 $('#dueMessage').html('');
                 $('#dueAlert').hide();
             }
+
+            currentConditions(data[0]);
 
 
         },
@@ -1228,11 +1229,10 @@ function admitStudent(fin_id) {
         method: 'GET',
         url: '/student/admit/' + parseInt(fin_id),
         success: function () {
-            console.log('success');
-            // $('#siblingAddSts').append('<span class="text-success">"Successfull"</span>');
+            $('#paymentPlanUpdateSts').html('<span class="text-success">"Successful"</span>');
         },
         error: function () {
-            console.log('not success');
+            $('#paymentPlanUpdateSts').html('<span class="text-success">"Not Successful"</span>');
         }
     })
 
@@ -1268,6 +1268,32 @@ function updateBoarding(boarding,st_id) {
     })
 
 }
+
+function currentConditions(student){
+
+    if(student.status == 'admitted'){
+        $('#returningSt').attr('checked',true).change();
+        $('#admsnFee').val('100');
+    }else {
+        $('#newSt').attr('checked',true).change();
+        $('#admsnFee').val('200');
+    }
+
+    $('#course').val(student.courseName).change();
+
+    if(student.boarding.toLowerCase() == 'yes'){
+        $('#yes').attr('checked',true).change();
+        $('#resFeeOnStmt').show();
+        $('#residentialFee').val('2700');
+    }else{
+        $('#no').attr('checked',true).change();
+        $('#resFeeOnStmt').hide();
+        $('#residentialFee').val('0.0');
+    }
+
+}
+
+
 
 
 
