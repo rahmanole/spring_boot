@@ -1307,6 +1307,9 @@ function currentConditions(student){
         $('#resFeeOnStmt').hide();
     }
 
+    console.log(student.year);
+    $('#bookFee').val(student.year).change();
+
 }
 
 
