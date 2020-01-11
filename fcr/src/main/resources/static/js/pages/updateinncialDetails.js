@@ -503,6 +503,16 @@ $(document).ready(function () {
 
         console.log(flagToCallThisSpFunction);
 
+        $('#collection').prop('checked', false);
+        $('#collectionAmt').val('');
+        $('#collectionDiv').slideUp();
+
+
+        $('#sponsor').prop('checked', false);
+        $('#sponsorDiv').slideUp();
+
+        $('#dollarADay').prop('checked', false);
+        $('#dollarADayDiv').slideUp();
 
         $('#pdfGenerator').show();
         studentFeeReport(studentID);
@@ -901,10 +911,14 @@ function studentFeeReport(st_id) {
             //Below code for showing details on fin details section
             if (data[0].finDtlsOfStudent.sp_id > 0) {
                 discount += reportForSponsor(data[0].id);
+                $('#sponsor').prop('checked', true);
+                $('#sponsorDiv').slideDown();
             }
 
             if (data[0].finDtlsOfStudent.hasDadd) {
                 discount += getAllDaddsForASt(data[0].finDtlsOfStudent.id, data[0].id);
+                $('#dollarADay').prop('checked', true);
+                $('#dollarADayDiv').slideDown();
             }
 
             if (data[0].finDtlsOfStudent.collection > 0) {
@@ -912,6 +926,9 @@ function studentFeeReport(st_id) {
                 $('#finDtlsTbl').append(
                     "<tr><td>" + "Collection Target" + "</td>" + "<td>" + "- $" + data[0].finDtlsOfStudent.collection + " /year</td></tr>"
                 );
+                $('#collection').prop('checked', true);
+                $('#collectionAmt').val(data[0].finDtlsOfStudent.collection);
+                $('#collectionDiv').slideDown();
             }
 
             if (data[0].finDtlsOfStudent.sibling_num > 0) {
@@ -1149,10 +1166,13 @@ function addingSelfFunded(fin_id) {
         url: '/findetails/selfFund/' + parseInt(fin_id),
         success: function () {
             console.log('success');
+            $('#staffAddSts').append('');
             $('#staffAddSts').append('<span class="text-success">"Successfull"</span>');
         },
         error: function () {
             console.log('not success');
+            $('#staffAddSts').append('');
+            $('#staffAddSts').append('<span class="text-success">"Not Successfull"</span>');
         }
     })
 }
@@ -1273,10 +1293,8 @@ function currentConditions(student){
 
     if(student.status == 'admitted'){
         $('#returningSt').attr('checked',true).change();
-        $('#admsnFee').val('100');
     }else {
         $('#newSt').attr('checked',true).change();
-        $('#admsnFee').val('200');
     }
 
     $('#course').val(student.courseName).change();
@@ -1284,11 +1302,9 @@ function currentConditions(student){
     if(student.boarding.toLowerCase() == 'yes'){
         $('#yes').attr('checked',true).change();
         $('#resFeeOnStmt').show();
-        $('#residentialFee').val('2700');
     }else{
         $('#no').attr('checked',true).change();
         $('#resFeeOnStmt').hide();
-        $('#residentialFee').val('0.0');
     }
 
 }

@@ -395,7 +395,23 @@ function admissionFeeStmt(st_id, afPaymentId) {
             );
 
             $('#admisnFeeTblBody').append(
-                "<tr><td>" + "Admission Fee" + "</td>" + "<td ><span>" + data[0].finDtlsOfStudent.mandatoryFees + "</span><button class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
+                "<tr><td>" + "Admission Fee" + "</td>" + "<td ><span>" + (data[0].status=='admitted'?100:200) + "</span><button id='mealPlan' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
+            );
+
+            $('#admisnFeeTblBody').append(
+                "<tr><td>" + "Meal Plan" + "</td>" + "<td ><span>" + 100.0 + "</span><button id='mealPlan' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
+            );
+
+            $('#admisnFeeTblBody').append(
+                "<tr><td>" + "Academic Fee" + "</td>" + "<td ><span>" + getAcademicFee(data[0].courseName) + "</span><button id='academicFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
+            );
+
+            $('#admisnFeeTblBody').append(
+                "<tr><td>" + "Book Fee" + "</td>" + "<td ><span>" + getBookFee(data[0].year) + "</span><button id='academicFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
+            );
+
+            $('#admisnFeeTblBody').append(
+                "<tr><td>" + "Total Common Mandatory Fee" + "</td>" + "<td >" + getTotalCommonMandatoryFee(data[0].status,data[0].courseName) + "</td></tr>"
                 +
                 "<tr><td>" + "Admission Fee Paid" + "</td>" + "<td id='admisnFeePaidFieldOnStmt'></td></tr>"
                 +
@@ -415,6 +431,63 @@ function admissionFeeStmt(st_id, afPaymentId) {
 }
 
 //=====================end================
+
+function  getAcademicFee(course) {
+
+    if(course == 'Academy'){
+        return 240;
+    }else if(course == "Alim"){
+        return  755;
+    }else if(course == "Boy's Nazira"){
+        return  755;
+    }else if(course == "Banaat Nazira"){
+        return 240;
+    }else if(course == "Boy's Hifz"){
+        return  755;
+    }else if(course == "Banaat Hifz"){
+        return  240;
+    }else if(course == "Standardized Test"){
+        return  50;
+    }
+}
+
+function getTotalCommonMandatoryFee(status,course){
+    return (status=='admitted'?100:200)+getAcademicFee(course)+100;
+}
+
+function getBookFee(year){
+
+    switch (year) {
+        case 'Oola':
+            bookFee = 80;
+            console.log(bookFee);
+            break;
+        case 'Thania' :
+            bookFee = (gender == 'male') ? 75.00 : 70.00;
+            console.log(bookFee);
+            break;
+        case 'Thalitha' :
+            bookFee = (gender == 'male') ? 80.00 : 70.00;
+            console.log(bookFee);
+            break;
+        case 'Rabiya' :
+            bookFee = (gender == 'male') ? 60.00 : 75.00;
+            console.log(bookFee);
+            break;
+        case 'Khamisa' :
+            bookFee = (gender == 'male') ? 80.00 : 90.00;
+            console.log(bookFee);
+            break
+        case 'Saadisa' :
+            bookFee = (gender == 'male') ? 100.00 : 95.00;
+            console.log(bookFee);
+            break
+        case 'Darua' :
+            bookFee = (gender == 'male') ? 200.00 : 150.00;
+            console.log(bookFee);
+            break;
+    }
+}
 
 function getAfPaymentId() {
     var paymentID = null;
