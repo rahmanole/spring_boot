@@ -1,6 +1,6 @@
 package com.duny.fcr.repo;
 
-import com.duny.fcr.dto.TuitionFeeDueReport;
+import com.duny.fcr.dto.ITuitionFeeDueReport;
 import com.duny.fcr.entity.TuitionFeePayment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +19,7 @@ public interface TuitionFeePaymentRepo extends JpaRepository<TuitionFeePayment,L
     int getMaxId();
 
     @Query(value = GET_STUDENT_WITH_DUE,nativeQuery = true)
-    List<TuitionFeeDueReport> getTuitionFeeDueReport();
+    List<ITuitionFeeDueReport> getTuitionFeeDueReport();
 
 
 }

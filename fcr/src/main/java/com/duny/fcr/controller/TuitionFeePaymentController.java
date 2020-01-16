@@ -1,5 +1,6 @@
 package com.duny.fcr.controller;
 
+import com.duny.fcr.dto.ITuitionFeeDueReport;
 import com.duny.fcr.dto.TuitionFeeDueReport;
 import com.duny.fcr.entity.TuitionFeePayment;
 import com.duny.fcr.repo.StudentRepo;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -36,6 +38,11 @@ public class TuitionFeePaymentController {
         return "/pages/financial/tuitionFee";
     }
 
+    @GetMapping("/tuitionFee/due")
+    public String tuitnFeeDue() {
+        return "/pages/financial/StWithTuitionDue";
+    }
+
     @GetMapping("/tuitionFee/getPaymentId")
     @ResponseBody
     public String getPaymentId() {
@@ -54,12 +61,23 @@ public class TuitionFeePaymentController {
     }
 
 
-    @GetMapping("/tfDue")
-    public String getStudentsWtihTuionDue(Model model) {
-        List<TuitionFeeDueReport>  p = tuitionFeePaymentRepo.getTuitionFeeDueReport();
-        model.addAttribute("","");
-        System.out.println(p.get(0).getName());
-        return "";
+    @GetMapping("/tuitionFee/tfDue")
+    @ResponseBody
+    public List<TuitionFeeDueReport> getStudentsWtihTuionDue(Model model) {
+        List<ITuitionFeeDueReport>  p = tuitionFeePaymentRepo.getTuitionFeeDueReport();
+        List<TuitionFeeDueReport> studentListWithDue = new ArrayList<>();
+        for (ITuitionFeeDueReport s:p) {
+            TuitionFeeDueReport tfp = new TuitionFeeDueReport();
+            tfp.setName(s.getName());
+            tfp.setStID(s.getStudentId());
+            tfp.setDob(s.getDob());
+            tfp.setDue(s.getDue());
+            studentListWithDue.add(tfp);
+        }
+        model.addAttribute("studentListWithDues","studentListWithDue");
+
+        System.out.println(studentListWithDue.size());
+        return studentListWithDue;
     }
 
 }

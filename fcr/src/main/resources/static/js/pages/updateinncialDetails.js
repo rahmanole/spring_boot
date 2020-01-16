@@ -56,15 +56,15 @@ $(document).ready(function () {
 
         if(course == 'Academy'){
             acFee = 240;
-        }else if(course == "Boy's Nazira"){
+        }else if(course == "Boy_Nazira"){
             acFee = 755;
-        }else if(course == "Banaat Nazira"){
+        }else if(course == "Banaat_Nazira"){
             acFee = 240;
-        }else if(course == "Boy's Hifz"){
+        }else if(course == "Boy_Hifz"){
             acFee = 755;
-        }else if(course == "Banaat Hifz"){
+        }else if(course == "Banaat_Hifz"){
             acFee = 240;
-        }else if(course == "Standardized Test"){
+        }else if(course == "Standardized_Test"){
             acFee = 50;
         }
 
@@ -472,7 +472,6 @@ $(document).ready(function () {
         var st_id = document.getElementById('st_id').innerHTML;
 
         insertingMandFees(mandFee, fin_dtl_Id);
-        admitStudent(fin_dtl_Id);
         updateCourse(course,st_id);
         updateBoarding(boardingSts,st_id);
 
@@ -871,7 +870,7 @@ function studentFeeReport(st_id) {
             $('#spAsssignMsgs').html('');
             $('#assignSp').attr('disabled', false);
             //==========ends here===========
-
+            currentConditions(data[0]);
 
             $('#basicInfoTblBody').append(
                 "<tr style='display: none'><td>" + "Fin Details ID" + "</td>" + "<td id='fin_dtl_id' >" + data[0].finDtlsOfStudent.id + "</td></tr>"
@@ -893,7 +892,7 @@ function studentFeeReport(st_id) {
 
 
             $('#finDtlsTbl').append(
-                "<tr><td>" + "Common Mandatory Fee" + "</td>" + "<td>" + "$" + data[0].finDtlsOfStudent.mandatoryFees + " /year</td></tr>"
+                "<tr><td>" + "Common Mandatory Fee" + "</td>" + "<td>" + "$" + $('#totalMandatoryFee').html() + " /year</td></tr>"
             );
 
             $('#finDtlsTbl').append(
@@ -962,7 +961,7 @@ function studentFeeReport(st_id) {
 
 
             $('#finDtlsTbl').append(
-                "<tr class='bg-info'><td>" + "Total Payable At The Time Of Admission" + "</td>" + "<td>" + "$" + data[0].finDtlsOfStudent.mandatoryFees + " /year</td></tr>"
+                "<tr class='bg-info'><td>" + "Total Payable At The Time Of Admission" + "</td>" + "<td>" + "$" + $('#totalMandatoryFee').html() + " /year</td></tr>"
             );
 
             $('#finDtlsTbl').append(
@@ -977,10 +976,6 @@ function studentFeeReport(st_id) {
                 $('#dueMessage').html('');
                 $('#dueAlert').hide();
             }
-
-            currentConditions(data[0]);
-
-
         },
 
         error: function () {
@@ -1243,20 +1238,7 @@ function insertingMandFees(mandFees, fin_id) {
 
 }
 
-function admitStudent(fin_id) {
 
-    $.ajax({
-        method: 'GET',
-        url: '/student/admit/' + parseInt(fin_id),
-        success: function () {
-            $('#paymentPlanUpdateSts').html('<span class="text-success">"Successful"</span>');
-        },
-        error: function () {
-            $('#paymentPlanUpdateSts').html('<span class="text-success">"Not Successful"</span>');
-        }
-    })
-
-}
 
 function updateCourse(course,st_id) {
 

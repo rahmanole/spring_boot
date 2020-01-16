@@ -37,10 +37,13 @@ $(document).ready(function () {
             $('#admisnFeeStId').val(studentID);
             $('#pdfGeneratorAdmisnFee').show();
             $('#admissionFeeForm').show();
+
             admissionFeeStmt(studentID, afPaymentId);
             afToPay = $('#admisnFeeToPay').val();
             afPID = $('#admissionFeePaymentID').val();
             calculateAF(afPID, afToPay);
+
+            console.log($('#st_id').html());
         }
     });
 
@@ -80,6 +83,8 @@ $(document).ready(function () {
             data: admissionFee,
             contentType: "application/json",
             success: function () {
+                var id = $('#st_id').html();
+                admitStudent(id);
                 return false;
             },
             error: function () {
@@ -395,7 +400,7 @@ function admissionFeeStmt(st_id, afPaymentId) {
             );
 
             $('#admisnFeeTblBody').append(
-                "<tr><td>" + "Admission Fee" + "</td>" + "<td ><span>" + (data[0].status=='admitted'?100:200) + "</span><button id='mealPlan' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
+                "<tr><td>" + "Admission Fee" + "</td>" + "<td ><span>" + (data[0].status=='admitted'?100:200) + "</span><button id='admissionFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
             );
 
             $('#admisnFeeTblBody').append(
@@ -406,9 +411,11 @@ function admissionFeeStmt(st_id, afPaymentId) {
                 "<tr><td>" + "Academic Fee" + "</td>" + "<td ><span>" + getAcademicFee(data[0].courseName) + "</span><button id='academicFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
             );
 
-            $('#admisnFeeTblBody').append(
-                "<tr><td>" + "Book Fee" + "</td>" + "<td ><span>" + getBookFee(data[0].year) + "</span><button id='academicFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
-            );
+            if(data[0].year != null){
+                $('#admisnFeeTblBody').append(
+                    "<tr><td>" + "Book Fee" + "</td>" + "<td ><span>" + getBookFee(data[0].year,data[0].gender.toLowerCase()) + "</span><button id='bookFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
+                );
+            }
 
             $('#admisnFeeTblBody').append(
                 "<tr><td>" + "Total Common Mandatory Fee" + "</td>" + "<td >" + getTotalCommonMandatoryFee(data[0].status,data[0].courseName) + "</td></tr>"
@@ -438,16 +445,20 @@ function  getAcademicFee(course) {
         return 240;
     }else if(course == "Alim"){
         return  755;
-    }else if(course == "Boy's Nazira"){
-        return  755;
-    }else if(course == "Banaat Nazira"){
-        return 240;
-    }else if(course == "Boy's Hifz"){
-        return  755;
-    }else if(course == "Banaat Hifz"){
+    }else if(course == "Alima"){
         return  240;
-    }else if(course == "Standardized Test"){
+    }else if(course == "Boy_Nazira"){
+        return  755;
+    }else if(course == "Banaat_Nazira"){
+        return 240;
+    }else if(course == "Boy_Hifz"){
+        return  755;
+    }else if(course == "Banaat_Hifz"){
+        return  240;
+    }else if(course == "Standardized_Test"){
         return  50;
+    }else if(course == "na"){
+        return  0.0;
     }
 }
 
@@ -455,8 +466,8 @@ function getTotalCommonMandatoryFee(status,course){
     return (status=='admitted'?100:200)+getAcademicFee(course)+100;
 }
 
-function getBookFee(year){
-
+function getBookFee(year,gender){
+    var bookFee = 0;
     switch (year) {
         case 'Oola':
             bookFee = 80;
@@ -487,6 +498,8 @@ function getBookFee(year){
             console.log(bookFee);
             break;
     }
+
+    return bookFee;
 }
 
 function getAfPaymentId() {
@@ -544,6 +557,21 @@ function calculateAF(afPaymentId, afToPay) {
     $('#admsnFeeDue').val(afToPay - feePaid);
     $('#admisnFeeDue').html(afToPay - feePaid);
     $('#admisnFeePaidFieldOnStmt').html(feePaid);
+}
+
+function admitStudent(id) {
+
+    $.ajax({
+        method: 'GET',
+        url: '/student/admit/' + parseInt(id),
+        success: function () {
+            $('#paymentPlanUpdateSts').html('<span class="text-success">"Successful"</span>');
+        },
+        error: function () {
+            $('#paymentPlanUpdateSts').html('<span class="text-success">"Not Successful"</span>');
+        }
+    })
+
 }
 
 

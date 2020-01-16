@@ -10,6 +10,7 @@
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
+
 </head>
 
 <body class="theme-red">
@@ -22,7 +23,7 @@
                 <div class="card">
                     <div class="header">
                         <h2 class="text-center">
-                            All Students
+                            Students with Tuition Due
                         </h2>
                         <ul class="header-dropdown m-r--5">
                             <li class="dropdown">
@@ -40,30 +41,16 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                            <table id="tuitionDueTable" class="table table-bordered table-striped table-hover dataTable js-exportable">
                                 <thead>
                                 <tr>
                                     <th>Student ID</th>
                                     <th>Name</th>
-                                    <th>Course</th>
-                                    <th>Father Name</th>
-                                    <th>Date of Birth</th>
-                                    <th>Details</th>
-                                    <th>Update</th>
-                                    <th>Delete</th>
+                                    <th>DOB</th>
+                                    <th>DUE</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="student:${students}">
-                                        <td class="text-center" th:text="${stusent.studentId}"></td>
-                                        <td class="text-center" th:text="${student.name}"></td>
-                                        <td class="text-center" th:text="${student.courseName}"></td>
-                                        <td class="text-center" th:text="${student.fatherName}"></td>
-                                        <td class="text-center" th:text="${student.dob != null?student.dob.toString().substring(0,10):'Not Found'}"></td>
-                                        <td class="text-center btn-link"><a th:href="@{'/student/update/'+${student.id}}">Details</a></td>
-                                        <td class="text-center btn-link"><a th:href="@{'/student/update/'+${student.id}}"><i class="material-icons">edit</i></a></td>
-                                        <td class="text-center btn-link"><a th:href="@{'/student/update/'+${student.id}}"><i class="material-icons">delete</i></a></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -74,8 +61,5 @@
         <!-- #END# Exportable Table -->
     </div>
 </section>
-
-
 </body>
-
 </html>

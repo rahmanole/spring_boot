@@ -33,10 +33,9 @@ public class StudentController {
 
     @PostMapping("/student/save")
     public String save(Student student, @RequestParam("d") String d) throws Exception {
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = sf.parse(d);
-        System.out.println(date);
-        student.setDob(sf.parse(d));
+        student.setDob(date);
         student.setStatus("applied");
 
         int application_id = studentRepo.getMaxApplicationId() + 1;

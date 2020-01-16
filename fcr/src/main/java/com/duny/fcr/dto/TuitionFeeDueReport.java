@@ -1,10 +1,14 @@
 package com.duny.fcr.dto;
 
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
-public interface TuitionFeeDueReport {
-    String getName();
-    String getStudentId();
-    Date getDob();
-    double getDue();
+import java.util.Date;
+@Getter
+@Setter
+public class TuitionFeeDueReport {
+    private String name;
+    private String stID;
+    private Date dob;
+    private double due;
 }
