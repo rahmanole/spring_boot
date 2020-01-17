@@ -7,7 +7,7 @@ $(document).ready(function () {
     var afToPay;
     var afPID;
     var afPaymentId;
-
+    var student;
 
     $('#studentIdsOnAdmisnFee').change(function () {
         studentID = $('#studentIdsOnAdmisnFee option:selected').val();
@@ -40,7 +40,8 @@ $(document).ready(function () {
             $('#pdfGeneratorAdmisnFee').show();
             $('#admissionFeeForm').show();
 
-            afToPay = admissionFeeStmt(studentID, afPaymentId);
+            student = admissionFeeStmt(studentID, afPaymentId);
+            afToPay = (getTotalCommonMandatoryFee(student.status, student.courseName) + getBookFee(student.year, student.gender));
 
             console.log(afToPay);
         }
@@ -330,17 +331,24 @@ $(document).ready(function () {
 
     $('body').on('click', '#mealPlan', function () {
         $('#mealPlanFeeRow').fadeOut(300);
-        calculateAF(afPaymentId,(afToPay-100));
+        afToPay -= 100;
+        calculateAF(afPaymentId,afToPay);
     });
 
     $('body').on('click', '#academicFee', function () {
         $('#academicFeeRow').fadeOut(300);
-        console.log($('#academicFeeRow').is(':visible'));
+        var af = getAcademicFee(student.courseName);
+        afToPay = afToPay - af;
+        calculateAF(afPaymentId,afToPay);
+
     });
 
     $('body').on('click', '#bookFee', function () {
         $('#bookFeeRow').fadeOut(300);
-        console.log($('#bookFeeRow').is(':visible'));
+        var bookFee = getBookFee(student.year,student.gender);
+        console.log(bookFee);
+        afToPay = afToPay - bookFee;
+        calculateAF(afPaymentId,afToPay);
     });
 
 
@@ -350,13 +358,16 @@ $(document).ready(function () {
 });
 
 function admissionFeeStmt(st_id, afPaymentId) {
+    var student;
     var afToPay;
     $.ajax({
         method: 'GET',
         url: '/student/json/' + parseInt(st_id),
         async: false,
         success: function (data) {
+
             data = $.parseJSON(data);
+            student = data[0];
             afToPay = (getTotalCommonMandatoryFee(data[0].status, data[0].courseName) + getBookFee(data[0].year, data[0].gender));
 
             //$('#monthlyFeeTblBody').html('');
@@ -417,7 +428,7 @@ function admissionFeeStmt(st_id, afPaymentId) {
         }
     });
 
-    return afToPay;
+    return student;
 }
 
 //=====================end================
@@ -538,6 +549,8 @@ function calculateAF(afPaymentId,afToPay) {
     var feePaid = getAFPaid(afPaymentId);
 
     $('#admisnFeeToPay').val(afToPay);
+    $('#afToPayOnStmt').html('');
+    $('#afToPayOnStmt').html(afToPay);
     $('#admsnFeePaid').val(feePaid);
     $('#admsnFeeDue').val(afToPay - feePaid);
     $('#admisnFeeDue').html(afToPay - feePaid);
