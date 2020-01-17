@@ -6,6 +6,8 @@ $(document).ready(function () {
     var studentID;
     var afToPay;
     var afPID;
+    var afPaymentId;
+
 
     $('#studentIdsOnAdmisnFee').change(function () {
         studentID = $('#studentIdsOnAdmisnFee option:selected').val();
@@ -25,7 +27,7 @@ $(document).ready(function () {
         } else {
 
             //This codes for admission fee payment id
-            var afPaymentId = getAfPaymentId();
+            afPaymentId = getAfPaymentId();
             $('#admissionFeePaymentID').val(afPaymentId);
             $('#admCashPID').val(afPaymentId);
             $('#admChequePID').val(afPaymentId);
@@ -38,22 +40,19 @@ $(document).ready(function () {
             $('#pdfGeneratorAdmisnFee').show();
             $('#admissionFeeForm').show();
 
-            admissionFeeStmt(studentID, afPaymentId);
-            afToPay = $('#admisnFeeToPay').val();
-            afPID = $('#admissionFeePaymentID').val();
-            calculateAF(afPID, afToPay);
+            afToPay = admissionFeeStmt(studentID, afPaymentId);
 
-            console.log($('#st_id').html());
+            console.log(afToPay);
         }
     });
 
-    $('#admsnFeeDue').keyup(function () {
-        admisnFeeDue = $('#admsnFeeDue').val();
-        if (isNaN(admisnFeeDue)) {
-            return '';
-        }
-        $('#admisnFeeDue').html(admisnFeeDue);
-    });
+    // $('#admsnFeeDue').keyup(function () {
+    //     admisnFeeDue = $('#admsnFeeDue').val();
+    //     if (isNaN(admisnFeeDue)) {
+    //         return '';
+    //     }
+    //     $('#admisnFeeDue').html(admisnFeeDue);
+    // });
 
 
     $('#admisnFee').click(function () {
@@ -72,7 +71,8 @@ $(document).ready(function () {
         }
 
         var fin_id = document.getElementById('fin_dtl_id').innerText;
-        insertingAdmissionFeeDue(admisnFeeDue, fin_id);
+
+        // insertingAdmissionFeeDue(admisnFeeDue, fin_id);
 
         var admissionFee = JSON.stringify($('#admFeeForm').serializeJSON());
         console.log(fin_id);
@@ -328,51 +328,37 @@ $(document).ready(function () {
         })
     });
 
+    $('body').on('click', '#mealPlan', function () {
+        $('#mealPlanFeeRow').fadeOut(300);
+        calculateAF(afPaymentId,(afToPay-100));
+    });
+
+    $('body').on('click', '#academicFee', function () {
+        $('#academicFeeRow').fadeOut(300);
+        calculateAF(afPaymentId,(afToPay-100));
+    });
+
+    $('body').on('click', '#bookFee', function () {
+        $('#bookFeeRow').fadeOut(300);
+        var fee = $('')
+        calculateAF(afPaymentId,(afToPay-100));
+    });
+
 
     $('#pdfGeneratorAdmisnFee').click(function () {
-
-        $('#admisnFeeTbl').printThis({
-            debug: false,               // show the iframe for debugging
-            importCSS: true,            // import parent page css
-            importStyle: false,         // import style tags
-            printContainer: true,       // print outer container/$.selector
-            loadCSS: "http://localhost:8082/css/w3.css",                // path to additional css file - use an array [] for multiple
-            pageTitle: "",              // add title to print page
-            removeInline: false,        // remove inline styles from print elements
-            removeInlineSelector: "*",  // custom selectors to filter inline styles. removeInline must be true
-            printDelay: 333,            // variable print delay
-            header: null,               // prefix to html
-            footer: null,               // postfix to html
-            base: false,                // preserve the BASE tag or accept a string for the URL
-            formValues: true,           // preserve input/form values
-            canvas: false,              // copy canvas content
-            doctypeString: '...',       // enter a different doctype for older markup
-            removeScripts: false,       // remove script tags from print content
-            copyTagClasses: false,      // copy classes from the html & body tag
-            beforePrintEvent: null,     // function for printEvent in iframe
-            beforePrint: null,          // function called before iframe is filled
-            afterPrint: null            // function called before iframe is removed
-        });
-
-        // console.log('pdf');
-        // var doc = new jsPDF();
-        //
-        // doc.fromHTML($('#finDtlsTbl'),15,15,{
-        //     "width":170,
-        //     "elementHandlers":specialElementHandlers
-        // });
-        // doc.output('dataurlnewwindow');
-        // doc.save("fee-statement.pdf");
+        makePdf();
     });
 });
 
 function admissionFeeStmt(st_id, afPaymentId) {
+    var afToPay;
     $.ajax({
         method: 'GET',
         url: '/student/json/' + parseInt(st_id),
         async: false,
         success: function (data) {
             data = $.parseJSON(data);
+            afToPay = (getTotalCommonMandatoryFee(data[0].status, data[0].courseName) + getBookFee(data[0].year, data[0].gender));
 
             //$('#monthlyFeeTblBody').html('');
 
@@ -400,73 +386,71 @@ function admissionFeeStmt(st_id, afPaymentId) {
             );
 
             $('#admisnFeeTblBody').append(
-                "<tr><td>" + "Admission Fee" + "</td>" + "<td ><span>" + (data[0].status=='admitted'?100:200) + "</span><button id='admissionFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
+                "<tr ><td>" + "Admission Fee" + "</td>" + "<td ><span>" + (data[0].status == 'admitted' ? 100 : 200) + "</span><button id='admissionFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
             );
 
             $('#admisnFeeTblBody').append(
-                "<tr><td>" + "Meal Plan" + "</td>" + "<td ><span>" + 100.0 + "</span><button id='mealPlan' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
+                "<tr id='mealPlanFeeRow'><td>" + "Meal Plan" + "</td>" + "<td ><span>" + 100.0 + "</span><button id='mealPlan' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
             );
 
             $('#admisnFeeTblBody').append(
-                "<tr><td>" + "Academic Fee" + "</td>" + "<td ><span>" + getAcademicFee(data[0].courseName) + "</span><button id='academicFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
+                "<tr id='academicFeeRow'><td>" + "Academic Fee" + "</td>" + "<td ><span>" + getAcademicFee(data[0].courseName) + "</span><button id='academicFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
             );
 
-            if(data[0].year != null){
+            if (data[0].year != null) {
                 $('#admisnFeeTblBody').append(
-                    "<tr><td>" + "Book Fee" + "</td>" + "<td ><span>" + getBookFee(data[0].year,data[0].gender.toLowerCase()) + "</span><button id='bookFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
+                    "<tr id='bookFeeRow'><td>" + "Book Fee" + "</td>" + "<td ><span>" + getBookFee(data[0].year, data[0].gender.toLowerCase()) + "</span><button id='bookFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
                 );
             }
 
             $('#admisnFeeTblBody').append(
-                "<tr><td>" + "Total Common Mandatory Fee" + "</td>" + "<td >" + getTotalCommonMandatoryFee(data[0].status,data[0].courseName) + "</td></tr>"
+                "<tr><td>" + "Total Common Mandatory Fee" + "</td>" + "<td id='afToPayOnStmt'>"+afToPay+"</td></tr>"
                 +
                 "<tr><td>" + "Admission Fee Paid" + "</td>" + "<td id='admisnFeePaidFieldOnStmt'></td></tr>"
                 +
                 "<tr><td>" + "Admission Fee Due" + "</td>" + "<td id='admisnFeeDue'></td></tr>"
             );
-
-            $('#admisnFeeToPay').val(data[0].finDtlsOfStudent.mandatoryFees);
-
-
-            calculateAF(afPaymentId, parseInt(data[0].finDtlsOfStudent.mandatoryFees));
+            calculateAF(afPaymentId, afToPay);
 
         },
         error: function () {
             console.log('not success');
         }
     });
+
+    return afToPay;
 }
 
 //=====================end================
 
-function  getAcademicFee(course) {
+function getAcademicFee(course) {
 
-    if(course == 'Academy'){
+    if (course == 'Academy') {
         return 240;
-    }else if(course == "Alim"){
-        return  755;
-    }else if(course == "Alima"){
-        return  240;
-    }else if(course == "Boy_Nazira"){
-        return  755;
-    }else if(course == "Banaat_Nazira"){
+    } else if (course == "Alim") {
+        return 755;
+    } else if (course == "Alima") {
         return 240;
-    }else if(course == "Boy_Hifz"){
-        return  755;
-    }else if(course == "Banaat_Hifz"){
-        return  240;
-    }else if(course == "Standardized_Test"){
-        return  50;
-    }else if(course == "na"){
-        return  0.0;
+    } else if (course == "Boy_Nazira") {
+        return 755;
+    } else if (course == "Banaat_Nazira") {
+        return 240;
+    } else if (course == "Boy_Hifz") {
+        return 755;
+    } else if (course == "Banaat_Hifz") {
+        return 240;
+    } else if (course == "Standardized_Test") {
+        return 50;
+    } else if (course == "na") {
+        return 0.0;
     }
 }
 
-function getTotalCommonMandatoryFee(status,course){
-    return (status=='admitted'?100:200)+getAcademicFee(course)+100;
+function getTotalCommonMandatoryFee(status, course) {
+    return (status == 'admitted' ? 100 : 200) + getAcademicFee(course) + 100;
 }
 
-function getBookFee(year,gender){
+function getBookFee(year, gender) {
     var bookFee = 0;
     switch (year) {
         case 'Oola':
@@ -551,16 +535,28 @@ function getAFPaid(pid) {
     return amount;
 }
 
-function calculateAF(afPaymentId, afToPay) {
+function calculateAF(afPaymentId,afToPay) {
     var feePaid = getAFPaid(afPaymentId);
+
+    $('#admisnFeeToPay').val(afToPay);
+    $('#afToPayOnStmt').val(afToPay);
     $('#admsnFeePaid').val(feePaid);
     $('#admsnFeeDue').val(afToPay - feePaid);
     $('#admisnFeeDue').html(afToPay - feePaid);
     $('#admisnFeePaidFieldOnStmt').html(feePaid);
 }
 
-function admitStudent(id) {
+function updateAF(afToPay) {
+    //var feePaid = getAFPaid(afPaymentId);
 
+    $('#admisnFeeToPay').val(afToPay);
+    // $('#admsnFeePaid').val(feePaid);
+    // $('#admsnFeeDue').val(afToPay - feePaid);
+    // $('#admisnFeeDue').html(afToPay - feePaid);
+    // $('#admisnFeePaidFieldOnStmt').html(feePaid);
+}
+
+function admitStudent(id) {
     $.ajax({
         method: 'GET',
         url: '/student/admit/' + parseInt(id),
@@ -570,8 +566,7 @@ function admitStudent(id) {
         error: function () {
             $('#paymentPlanUpdateSts').html('<span class="text-success">"Not Successful"</span>');
         }
-    })
-
+    });
 }
 
 
@@ -591,6 +586,42 @@ function getMonthName() {
     month[10] = "November";
     month[11] = "December";
     return month[d.getMonth()];
+}
+
+function makePdf() {
+    $('#admisnFeeTbl').printThis({
+        debug: false,               // show the iframe for debugging
+        importCSS: true,            // import parent page css
+        importStyle: false,         // import style tags
+        printContainer: true,       // print outer container/$.selector
+        loadCSS: "http://localhost:8082/css/w3.css",                // path to additional css file - use an array [] for multiple
+        pageTitle: "",              // add title to print page
+        removeInline: false,        // remove inline styles from print elements
+        removeInlineSelector: "*",  // custom selectors to filter inline styles. removeInline must be true
+        printDelay: 333,            // variable print delay
+        header: null,               // prefix to html
+        footer: null,               // postfix to html
+        base: false,                // preserve the BASE tag or accept a string for the URL
+        formValues: true,           // preserve input/form values
+        canvas: false,              // copy canvas content
+        doctypeString: '...',       // enter a different doctype for older markup
+        removeScripts: false,       // remove script tags from print content
+        copyTagClasses: false,      // copy classes from the html & body tag
+        beforePrintEvent: null,     // function for printEvent in iframe
+        beforePrint: null,          // function called before iframe is filled
+        afterPrint: null            // function called before iframe is removed
+    });
+
+    // console.log('pdf');
+    // var doc = new jsPDF();
+    //
+    // doc.fromHTML($('#finDtlsTbl'),15,15,{
+    //     "width":170,
+    //     "elementHandlers":specialElementHandlers
+    // });
+    // doc.output('dataurlnewwindow');
+    // doc.save("fee-statement.pdf");
+
 }
 
 
