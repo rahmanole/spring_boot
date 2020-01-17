@@ -335,13 +335,12 @@ $(document).ready(function () {
 
     $('body').on('click', '#academicFee', function () {
         $('#academicFeeRow').fadeOut(300);
-        calculateAF(afPaymentId,(afToPay-100));
+        console.log($('#academicFeeRow').is(':visible'));
     });
 
     $('body').on('click', '#bookFee', function () {
         $('#bookFeeRow').fadeOut(300);
-        var fee = $('')
-        calculateAF(afPaymentId,(afToPay-100));
+        console.log($('#bookFeeRow').is(':visible'));
     });
 
 
@@ -386,7 +385,7 @@ function admissionFeeStmt(st_id, afPaymentId) {
             );
 
             $('#admisnFeeTblBody').append(
-                "<tr ><td>" + "Admission Fee" + "</td>" + "<td ><span>" + (data[0].status == 'admitted' ? 100 : 200) + "</span><button id='admissionFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
+                "<tr ><td>" + "Admission Fee" + "</td>" + "<td >" + (data[0].status == 'admitted' ? 100 : 200) + "</td></tr>"
             );
 
             $('#admisnFeeTblBody').append(
@@ -458,27 +457,27 @@ function getBookFee(year, gender) {
             console.log(bookFee);
             break;
         case 'Thania' :
-            bookFee = (gender == 'male') ? 75.00 : 70.00;
+            bookFee = (gender.toLowerCase() == 'male') ? 75.00 : 70.00;
             console.log(bookFee);
             break;
         case 'Thalitha' :
-            bookFee = (gender == 'male') ? 80.00 : 70.00;
+            bookFee = (gender.toLowerCase() == 'male') ? 80.00 : 70.00;
             console.log(bookFee);
             break;
         case 'Rabiya' :
-            bookFee = (gender == 'male') ? 60.00 : 75.00;
+            bookFee = (gender.toLowerCase() == 'male') ? 60.00 : 75.00;
             console.log(bookFee);
             break;
         case 'Khamisa' :
-            bookFee = (gender == 'male') ? 80.00 : 90.00;
+            bookFee = (gender.toLowerCase() == 'male') ? 80.00 : 90.00;
             console.log(bookFee);
             break
         case 'Saadisa' :
-            bookFee = (gender == 'male') ? 100.00 : 95.00;
+            bookFee = (gender.toLowerCase() == 'male') ? 100.00 : 95.00;
             console.log(bookFee);
             break
         case 'Darua' :
-            bookFee = (gender == 'male') ? 200.00 : 150.00;
+            bookFee = (gender.toLowerCase() == 'male') ? 200.00 : 150.00;
             console.log(bookFee);
             break;
     }
@@ -539,7 +538,6 @@ function calculateAF(afPaymentId,afToPay) {
     var feePaid = getAFPaid(afPaymentId);
 
     $('#admisnFeeToPay').val(afToPay);
-    $('#afToPayOnStmt').val(afToPay);
     $('#admsnFeePaid').val(feePaid);
     $('#admsnFeeDue').val(afToPay - feePaid);
     $('#admisnFeeDue').html(afToPay - feePaid);
