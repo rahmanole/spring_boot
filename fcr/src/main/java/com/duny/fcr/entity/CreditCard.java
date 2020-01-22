@@ -21,7 +21,7 @@ public class CreditCard {
     @Column(length = 30,nullable = true)
     private String tnxId;
     private double amount;
-    @Column(name="payment_id",unique = true,length = 10)
+    @Column(name="payment_id",length = 10)
     private String paymentId;
 
 }

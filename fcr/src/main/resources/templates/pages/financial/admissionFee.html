@@ -52,7 +52,7 @@
                         <table class="table table-striped" id="admissionFeeForm">
                             <tbody id="paymentTblBody">
                             <form id="admFeeForm">
-                                <table class="table">
+                                <table class="table" id="admFeeFormTBody">
 
 
                                     <tr>
@@ -81,12 +81,12 @@
                                     </tr>
 
                                     <tr class="hide">
-                                        <td style="width: 30%;padding-top: 17px">Month</td>
+                                        <td style="width: 30%;padding-top: 17px">Year</td>
                                         <td>
                                             <div class="form-group form-float" style="margin-bottom: 0">
                                                 <div class="form-line">
-                                                    <input type="text" name="month"
-                                                           id="month" class="form-control text-right">
+                                                    <input type="text" name="year"
+                                                           id="year" class="form-control text-right">
                                                 </div>
                                             </div>
                                         </td>
@@ -132,7 +132,7 @@
                                         <td colspan="2">
                                             <ul class="nav nav-tabs">
                                                 <li class="active"><a data-toggle="tab" href="#cash">Cash</a></li>
-                                                <li><a data-toggle="tab" href="#cheque">Cheque</a></li>
+                                                <li><a data-toggle="tab" href="#cheque">Check</a></li>
                                                 <li><a data-toggle="tab" href="#cc">Credit Card</a></li>
                                                 <li><a data-toggle="tab" href="#moneyOrder">Money Order</a></li>
                                                 <li><a data-toggle="tab" href="#zelle">Zelle</a></li>
@@ -200,8 +200,8 @@
 
                                                         <div class="form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
-                                                                <input type="date" name="chequeDate" class="form-control" placeholder="Cheque Date">
-                                                                <label class="form-label">Cheque Date</label>
+                                                                <input type="date" name="chequeDate" class="form-control" placeholder="Check Date">
+                                                                <label class="form-label">Check Date</label>
                                                             </div>
                                                         </div>
                                                         <div class="form-group form-float" style="margin-bottom: 10px">

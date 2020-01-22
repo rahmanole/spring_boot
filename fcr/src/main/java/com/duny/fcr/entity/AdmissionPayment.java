@@ -23,7 +23,7 @@ public class AdmissionPayment {
     @Column(length = 10,nullable = false)
     private String studentId;
     @Column(length = 10,nullable = false)
-    private String month;
+    private String year;
     private double admissionFee;
     private double admissionFeePaid;
     private double admissionFeeDue;

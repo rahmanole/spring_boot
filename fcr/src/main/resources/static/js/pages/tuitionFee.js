@@ -481,8 +481,7 @@ function getPaymentId() {
         error:function () {
             console.log('not success');
         }
-    })
-
+    });
     return paymentID;
 }
 
@@ -509,8 +508,7 @@ function getSponsorCont(st_id) {
         error: function () {
             console.log('not success');
         }
-    })
-
+    });
     return sponsor;
 }
 
@@ -537,6 +535,7 @@ function getDaddCont(fin_id, st_id) {
 
 function calculateTF(tfPaymentId,tfToPay) {
     var feePaid = getAFPaid(tfPaymentId);
+    console.log(feePaid);
     $('#tuitionFeePaid').val(feePaid);
     $('#tuitionFeeDue').val(tfToPay - feePaid);
     $('#tuitionFeePaidFieldOnStmt').html(feePaid);

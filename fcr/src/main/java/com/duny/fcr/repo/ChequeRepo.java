@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChequeRepo extends JpaRepository<Cheque,Long> {
-    String GET_AMOUNT_BY_PID = "select amount from cheque where payment_id=?";
+    String GET_AMOUNT_BY_PID = "select sum(amount) from cheque where payment_id=?";
 
     @Query(nativeQuery = true,value = GET_AMOUNT_BY_PID)
     Object getAmount(String pid);

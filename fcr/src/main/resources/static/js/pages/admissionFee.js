@@ -1,11 +1,11 @@
 $(document).ready(function () {
 
     // $('#admissionFeeForm').hide();
-    $('#month').val(getMonthName());
+    var admissionYear = new Date().getFullYear();
+    $('#year').val(admissionYear);
 
     var studentID;
     var afToPay;
-    var afPID;
     var afPaymentId;
     var student;
 
@@ -21,13 +21,20 @@ $(document).ready(function () {
             $('#admsnFeePaid').val('');
             $('#admisnFeePaidFieldOnStmt').html('');
             $('#admsnFeeDue').val('');
-
-
+            $('#paymentIDonStmt').html('');
+            $('#yearName').html('');
             return;
         } else {
-
             //This codes for admission fee payment id
             afPaymentId = getAfPaymentId();
+            student = admissionFeeStmt(studentID, afPaymentId);
+            $('#yearName').html(admissionYear);
+            var af = getAFPaymentId(studentID, admissionYear);
+            console.log(af);
+            if (af.year == admissionYear.toString()) {
+                afPaymentId = af.afPaymentId;
+            }
+
             $('#admissionFeePaymentID').val(afPaymentId);
             $('#admCashPID').val(afPaymentId);
             $('#admChequePID').val(afPaymentId);
@@ -35,15 +42,13 @@ $(document).ready(function () {
             $('#admCCPID').val(afPaymentId);
             $('#amdMoneyOrderPID').val(afPaymentId);
             $('#admFromSalPID').val(afPaymentId);
-
+            $('#paymentIDonStmt').html(afPaymentId);
             $('#admisnFeeStId').val(studentID);
             $('#pdfGeneratorAdmisnFee').show();
             $('#admissionFeeForm').show();
 
-            student = admissionFeeStmt(studentID, afPaymentId);
-            afToPay = (getTotalCommonMandatoryFee(student.status, student.courseName) + getBookFee(student.year, student.gender));
-
-            console.log(afToPay);
+            afToPay = getTotalCommonMandatoryFee(student);
+            calculateAF(afPaymentId, afToPay);
         }
     });
 
@@ -59,8 +64,8 @@ $(document).ready(function () {
     $('#admisnFee').click(function () {
         var admsnFeePaid = parseInt($('#admsnFeePaid').val());
 
-
         $('#afPayStatus').html('');
+
         if (studentID == undefined || studentID == 0) {
             $('#afPayStatus').append('<p class="text-danger">Select Student ID</p>');
             return "";
@@ -76,8 +81,7 @@ $(document).ready(function () {
         // insertingAdmissionFeeDue(admisnFeeDue, fin_id);
 
         var admissionFee = JSON.stringify($('#admFeeForm').serializeJSON());
-        console.log(fin_id);
-        console.log(admissionFee);
+
         $.ajax({
             method: 'post',
             url: '/admFee/save',
@@ -85,7 +89,10 @@ $(document).ready(function () {
             contentType: "application/json",
             success: function () {
                 var id = $('#st_id').html();
-                admitStudent(id);
+                if (student.status == 'applied' && parseInt($('#admsnFeeDue').val()) == 0) {
+                    admitStudent(id);
+                }
+                saveAdmissionFeeDetails(student);
                 return false;
             },
             error: function () {
@@ -114,11 +121,13 @@ $(document).ready(function () {
             data: cash,
             contentType: "application/json",
             success: function () {
-                calculateAF(afPID, afToPay);
+                calculateAF(afPaymentId, afToPay);
+                $('#admsnFeePaid').val();
                 $('#afCashSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
             error: function () {
+                $('#afCashSavingStatus').append('<span class="text-success">Not Success</span>');
                 console.log('not success');
             }
         })
@@ -158,7 +167,7 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function () {
-                calculateAF(afPID, afToPay);
+                calculateAF(afPaymentId, afToPay);
                 $('#fromSalChequeSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -201,11 +210,12 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function (data) {
-                calculateAF(afPID, afToPay);
-                $('#mfChequeSavingStatus').append('<span class="text-success">Success</span>');
+                calculateAF(afPaymentId, afToPay);
+                $('#afCashSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
             error: function () {
+                $('#afCashSavingStatus').append('<span class="text-success">Not Success</span>');
                 console.log('not success');
             }
         })
@@ -234,6 +244,7 @@ $(document).ready(function () {
             $('#afMOSavingStatus').append('<span class="text-danger">Select image</span>');
             return '';
         }
+
         $.ajax({
             method: 'post',
             url: '/mo/save',
@@ -243,7 +254,7 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function () {
-                calculateAF(afPID, afToPay);
+                calculateAF(afPaymentId, afToPay);
                 $('#afMOSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -280,7 +291,7 @@ $(document).ready(function () {
             data: zelle,
             contentType: "application/json",
             success: function () {
-                calculateAF(afPID, afToPay);
+                calculateAF(afPaymentId, afToPay);
                 $('#afZelleSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -319,7 +330,7 @@ $(document).ready(function () {
             data: cc,
             contentType: "application/json",
             success: function () {
-                calculateAF(afPID, afToPay);
+                calculateAF(afPaymentId, afToPay);
                 $('#afCCSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -331,24 +342,23 @@ $(document).ready(function () {
 
     $('body').on('click', '#mealPlan', function () {
         $('#mealPlanFeeRow').fadeOut(300);
-        afToPay -= 100;
-        calculateAF(afPaymentId,afToPay);
+        afToPay = afToPay - 100;
+        calculateAF(afPaymentId, afToPay);
     });
 
     $('body').on('click', '#academicFee', function () {
         $('#academicFeeRow').fadeOut(300);
         var af = getAcademicFee(student.courseName);
         afToPay = afToPay - af;
-        calculateAF(afPaymentId,afToPay);
+        calculateAF(afPaymentId, afToPay);
 
     });
 
     $('body').on('click', '#bookFee', function () {
         $('#bookFeeRow').fadeOut(300);
-        var bookFee = getBookFee(student.year,student.gender);
-        console.log(bookFee);
+        var bookFee = getBookFee(student.year, student.gender);
         afToPay = afToPay - bookFee;
-        calculateAF(afPaymentId,afToPay);
+        calculateAF(afPaymentId, afToPay);
     });
 
 
@@ -368,7 +378,8 @@ function admissionFeeStmt(st_id, afPaymentId) {
 
             data = $.parseJSON(data);
             student = data[0];
-            afToPay = (getTotalCommonMandatoryFee(data[0].status, data[0].courseName) + getBookFee(data[0].year, data[0].gender));
+            afToPay = getTotalCommonMandatoryFee(data[0]);
+
 
             //$('#monthlyFeeTblBody').html('');
 
@@ -390,37 +401,41 @@ function admissionFeeStmt(st_id, afPaymentId) {
                 +
                 "<tr><td>" + "Father  Name" + "</td>" + "<td>" + data[0].fatherName + "</td></tr>"
                 +
-                "<tr><td>" + "Month" + "</td>" + "<td id='motnhName'>" + getMonthName() + "</td></tr>"
+                "<tr><td>" + "Year" + "</td>" + "<td id='yearName'></td></tr>"
                 +
-                "<tr><td>" + "Payment ID" + "</td>" + "<td id='paymentIDonStmt'>" + getAfPaymentId() + "</td></tr>"
+                "<tr><td>" + "Payment ID" + "</td>" + "<td id='paymentIDonStmt'></td></tr>"
             );
 
             $('#admisnFeeTblBody').append(
                 "<tr ><td>" + "Admission Fee" + "</td>" + "<td >" + (data[0].status == 'admitted' ? 100 : 200) + "</td></tr>"
             );
 
-            $('#admisnFeeTblBody').append(
-                "<tr id='mealPlanFeeRow'><td>" + "Meal Plan" + "</td>" + "<td ><span>" + 100.0 + "</span><button id='mealPlan' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
-            );
+            if (data[0].finDtlsOfStudent.mealFee != 'NA') {
+                $('#admisnFeeTblBody').append(
+                    "<tr id='mealPlanFeeRow'><td>" + "Meal Plan" + "</td>" + "<td ><span>" + 100.0 + "</span><button id='mealPlan' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
+                );
+            }
 
-            $('#admisnFeeTblBody').append(
-                "<tr id='academicFeeRow'><td>" + "Academic Fee" + "</td>" + "<td ><span>" + getAcademicFee(data[0].courseName) + "</span><button id='academicFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
-            );
+            if (data[0].finDtlsOfStudent.academicFee != 'NA') {
+                $('#admisnFeeTblBody').append(
+                    "<tr id='academicFeeRow'><td>" + "Academic Fee" + "</td>" + "<td ><span>" + getAcademicFee(data[0].courseName) + "</span><button id='academicFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
+                );
+            }
 
-            if (data[0].year != null) {
+
+            if (data[0].year != null && data[0].finDtlsOfStudent.bookFee != 'NA') {
                 $('#admisnFeeTblBody').append(
                     "<tr id='bookFeeRow'><td>" + "Book Fee" + "</td>" + "<td ><span>" + getBookFee(data[0].year, data[0].gender.toLowerCase()) + "</span><button id='bookFee' class='btn btn-danger waves-effect' style='float:right;height: 18px;padding: 0px 5px'>X</button></td></tr>"
                 );
             }
 
             $('#admisnFeeTblBody').append(
-                "<tr><td>" + "Total Common Mandatory Fee" + "</td>" + "<td id='afToPayOnStmt'>"+afToPay+"</td></tr>"
+                "<tr><td>" + "Total Common Mandatory Fee" + "</td>" + "<td id='afToPayOnStmt'>" + afToPay + "</td></tr>"
                 +
                 "<tr><td>" + "Admission Fee Paid" + "</td>" + "<td id='admisnFeePaidFieldOnStmt'></td></tr>"
                 +
                 "<tr><td>" + "Admission Fee Due" + "</td>" + "<td id='admisnFeeDue'></td></tr>"
             );
-            calculateAF(afPaymentId, afToPay);
 
         },
         error: function () {
@@ -456,8 +471,23 @@ function getAcademicFee(course) {
     }
 }
 
-function getTotalCommonMandatoryFee(status, course) {
-    return (status == 'admitted' ? 100 : 200) + getAcademicFee(course) + 100;
+function getTotalCommonMandatoryFee(student) {
+    var totalFee = (student.status == 'admitted' ? 100 : 200);
+
+    if (student.finDtlsOfStudent.academicFee != 'NA') {
+        totalFee += getAcademicFee(student.courseName);
+    }
+
+    if (student.finDtlsOfStudent.bookFee != 'NA') {
+        totalFee += getBookFee(student.year, student.gender);
+    }
+
+    if (student.finDtlsOfStudent.mealFee != 'NA') {
+        totalFee += 100;
+    }
+
+    return totalFee;
+    ;
 }
 
 function getBookFee(year, gender) {
@@ -481,7 +511,6 @@ function getBookFee(year, gender) {
             break;
         case 'Khamisa' :
             bookFee = (gender.toLowerCase() == 'male') ? 80.00 : 90.00;
-            console.log(bookFee);
             break
         case 'Saadisa' :
             bookFee = (gender.toLowerCase() == 'male') ? 100.00 : 95.00;
@@ -526,7 +555,17 @@ function insertingAdmissionFeeDue(afDue, fin_id) {
             console.log('not success');
         }
     })
+}
 
+function calculateAF(afPaymentId, afToPay) {
+    var feePaid = getAFPaid(afPaymentId);
+    $('#admisnFeeToPay').val(afToPay);
+    $('#afToPayOnStmt').html('');
+    $('#afToPayOnStmt').html(afToPay);
+    $('#admsnFeePaid').val(feePaid);
+    $('#admsnFeeDue').val(afToPay - feePaid);
+    $('#admisnFeeDue').html(afToPay - feePaid);
+    $('#admisnFeePaidFieldOnStmt').html(feePaid);
 }
 
 function getAFPaid(pid) {
@@ -541,30 +580,8 @@ function getAFPaid(pid) {
         error: function () {
             console.log('not success');
         }
-    })
+    });
     return amount;
-}
-
-function calculateAF(afPaymentId,afToPay) {
-    var feePaid = getAFPaid(afPaymentId);
-
-    $('#admisnFeeToPay').val(afToPay);
-    $('#afToPayOnStmt').html('');
-    $('#afToPayOnStmt').html(afToPay);
-    $('#admsnFeePaid').val(feePaid);
-    $('#admsnFeeDue').val(afToPay - feePaid);
-    $('#admisnFeeDue').html(afToPay - feePaid);
-    $('#admisnFeePaidFieldOnStmt').html(feePaid);
-}
-
-function updateAF(afToPay) {
-    //var feePaid = getAFPaid(afPaymentId);
-
-    $('#admisnFeeToPay').val(afToPay);
-    // $('#admsnFeePaid').val(feePaid);
-    // $('#admsnFeeDue').val(afToPay - feePaid);
-    // $('#admisnFeeDue').html(afToPay - feePaid);
-    // $('#admisnFeePaidFieldOnStmt').html(feePaid);
 }
 
 function admitStudent(id) {
@@ -578,6 +595,58 @@ function admitStudent(id) {
             $('#paymentPlanUpdateSts').html('<span class="text-success">"Not Successful"</span>');
         }
     });
+}
+
+function saveAdmissionFeeDetails(student) {
+    console.log('success');
+    if (!$('#mealPlanFeeRow').is(':visible')) {
+        $.ajax({
+            method: 'GET',
+            url: '/af/mealFee/' + parseInt(student.finDtlsOfStudent.id),
+            success: function () {
+            },
+            error: function () {
+            }
+        });
+    }
+
+    if (!$('#academicFeeRow').is(':visible')) {
+        $.ajax({
+            method: 'GET',
+            url: '/af/acFee/' + parseInt(student.finDtlsOfStudent.id),
+            success: function () {
+            },
+            error: function () {
+            }
+        });
+    }
+
+    if (!$('#bookFeeRow').is(':visible')) {
+        $.ajax({
+            method: 'GET',
+            url: '/af/bookFee/' + parseInt(student.finDtlsOfStudent.id),
+            success: function () {
+            },
+            error: function () {
+            }
+        });
+    }
+}
+
+function getAFPaymentId(stId, year) {
+    var af;
+    $.ajax({
+        method: 'GET',
+        url: '/af/' + stId + '/' + year,
+        async: false,
+        success: function (data) {
+            af = data;
+        },
+        error: function () {
+        }
+    });
+
+    return af;
 }
 
 

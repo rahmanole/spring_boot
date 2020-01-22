@@ -38,4 +38,9 @@ public class FinDtlsOfStudent {
     private double mandatoryFees;
     @Column(name="mand_fees_due",nullable = true)
     private double mandatoryFeesDue;
+
+    //as students may not pay below bills or may pay 0 money.thats why they are made as string
+    private String mealFee = "0";
+    private String academicFee = "0";
+    private String bookFee = "0";
 }

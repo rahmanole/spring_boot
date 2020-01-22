@@ -10,10 +10,7 @@ import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,13 +39,30 @@ public class AdmissionPaymentController {
 
     @PostMapping(value = "/admFee/save", consumes = "application/json", produces = "application/json")
     public String saveCash(@RequestBody String admPaymentJson){
+        System.out.println(admPaymentJson);
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         Gson gson = new Gson();
         AdmissionPayment admissionPayment = gson.fromJson(admPaymentJson, AdmissionPayment.class);
-        admissionPaymentRepo.save(admissionPayment);
+        //admissionPaymentRepo.save(admissionPayment);
         return "redirect:/admissionFee";
     }
 
+    @GetMapping(value = "/af/acFee/{id}")
+    public String insertAcademicFee(@PathVariable long id){
+        admissionPaymentRepo.updatingAcademicee(id);
+        return "redirect:/admissionFee";
+    }
 
+    @GetMapping(value = "/af/mealFee/{id}")
+    public String insertMealFee(@PathVariable long id){
+        admissionPaymentRepo.updatingMealFee(id);
+        return "redirect:/admissionFee";
+    }
+
+    @GetMapping(value = "/af/{stId}/{year}")
+    @ResponseBody
+    public AdmissionPayment getAFPayemntID(@PathVariable String stId,@PathVariable String year){
+        return admissionPaymentRepo.getAdmissionPaymentByStudentIdAndYear(stId,year);
+    }
 }

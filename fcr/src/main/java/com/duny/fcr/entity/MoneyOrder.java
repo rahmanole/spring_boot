@@ -16,7 +16,7 @@ public class MoneyOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private Date date = new Date();
-    @Column(name = "payment_id",length = 10,unique = true)
+    @Column(name = "payment_id",length = 10)
     private String paymentID;
     private Date moneyOrderDate;
     @Column(length = 30,nullable = true)
