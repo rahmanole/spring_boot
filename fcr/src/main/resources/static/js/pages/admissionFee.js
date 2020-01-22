@@ -1,13 +1,14 @@
 $(document).ready(function () {
 
     // $('#admissionFeeForm').hide();
-    var admissionYear = new Date().getFullYear();
+    var admissionYear = new Date().getFullYear().toString();
     $('#year').val(admissionYear);
 
     var studentID;
     var afToPay;
     var afPaymentId;
     var student;
+    var paymentDBId = 0;
 
     $('#studentIdsOnAdmisnFee').change(function () {
         studentID = $('#studentIdsOnAdmisnFee option:selected').val();
@@ -29,11 +30,17 @@ $(document).ready(function () {
             afPaymentId = getAfPaymentId();
             student = admissionFeeStmt(studentID, afPaymentId);
             $('#yearName').html(admissionYear);
-            var af = getAFPaymentId(studentID, admissionYear);
-            console.log(af);
-            if (af.year == admissionYear.toString()) {
+            console.log(admissionYear);
+            console.log(studentID);
+            var af = getAFPaymentId(studentID,admissionYear);
+            afToPay = getTotalCommonMandatoryFee(student);
+            if (af != undefined && af.year == admissionYear.toString()) {
+                afToPay = af.admissionFee;
                 afPaymentId = af.afPaymentId;
+                paymentDBId = af.id;
             }
+
+            calculateAF(afPaymentId, afToPay);
 
             $('#admissionFeePaymentID').val(afPaymentId);
             $('#admCashPID').val(afPaymentId);
@@ -47,8 +54,7 @@ $(document).ready(function () {
             $('#pdfGeneratorAdmisnFee').show();
             $('#admissionFeeForm').show();
 
-            afToPay = getTotalCommonMandatoryFee(student);
-            calculateAF(afPaymentId, afToPay);
+
         }
     });
 
@@ -82,6 +88,13 @@ $(document).ready(function () {
 
         var admissionFee = JSON.stringify($('#admFeeForm').serializeJSON());
 
+        if(paymentDBId>0){
+            var adm = admissionFee.replace("}","");
+            var str = ',"id":"'+paymentDBId+'"}';
+            var adm2 = adm.concat(str);
+            admissionFee = adm2;
+        }
+        console.log(admissionFee);
         $.ajax({
             method: 'post',
             url: '/admFee/save',
