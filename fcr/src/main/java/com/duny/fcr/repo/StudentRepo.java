@@ -20,6 +20,7 @@ public interface StudentRepo extends JpaRepository<Student,Long> {
     String UPDATE_COURSE= "update student set course_name=? where id=?";
     String UPDATE_RESIDENCE= "update student set boarding=? where id=?";
     String STUDENT_WITH_DUE= "select student_id from student where initial_due > 0";
+    String UPDATE_YEAR= "update student set year=? where id=?";
 
     @Query(nativeQuery = true,value = query_for_application_id)
     int getMaxApplicationId();
@@ -53,4 +54,9 @@ public interface StudentRepo extends JpaRepository<Student,Long> {
     @Transactional
     @Query(value = UPDATE_RESIDENCE,nativeQuery = true)
     void updateBoarding(String boarding,long id);
+
+    @Modifying
+    @Transactional
+    @Query(value = UPDATE_YEAR,nativeQuery = true)
+    void updateYear(String year,long id);
 }

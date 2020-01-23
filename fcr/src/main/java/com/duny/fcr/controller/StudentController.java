@@ -110,5 +110,11 @@ public class StudentController {
         return "redirect:/updateFinancialDetails";
     }
 
+    @GetMapping("/student/updateYear/{year}/{id}")
+    public String updateYear(@PathVariable String year,@PathVariable long id){
+        studentRepo.updateYear(year,id);
+        return "redirect:/updateFinancialDetails";
+    }
+
 
 }

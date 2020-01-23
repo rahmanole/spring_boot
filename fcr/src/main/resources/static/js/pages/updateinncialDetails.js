@@ -471,10 +471,17 @@ $(document).ready(function () {
         var course = $('#course option:selected').val();
         var st_id = document.getElementById('st_id').innerHTML;
 
-        insertingMandFees(mandFee, fin_dtl_Id);
+        //insertingMandFees(mandFee, fin_dtl_Id);
         updateCourse(course,st_id);
         updateBoarding(boardingSts,st_id);
+        console.log($('#bookFeeDiv').is(':visible'));
+        if($('#bookFeeDiv').is(':visible')){
+            var year = $('#bookFee').val() ;
+            updateYear(year,st_id);
+        }
 
+        $('#paymentPlanUpdateSts').html('');
+        $('#paymentPlanUpdateSts').html('<span class="text-success text-center" style="margin-top: 10px;">Plane Updated</span>').fadeIn(1000);
     });
 
     var flagToCallThisSpFunction = true;
@@ -1251,7 +1258,7 @@ function updateCourse(course,st_id) {
         error: function () {
             console.log('not success');
         }
-    })
+    });
 
 }
 
@@ -1261,6 +1268,21 @@ function updateBoarding(boarding,st_id) {
     $.ajax({
         method: 'GET',
         url: '/student/updateBoarding/'+boarding+'/' + parseInt(st_id),
+        success: function () {
+            console.log('success');
+        },
+        error: function () {
+            console.log('not success');
+        }
+    })
+
+}
+
+function updateYear(year,id) {
+
+    $.ajax({
+        method: 'GET',
+        url: '/student/updateYear/'+year+'/' + parseInt(id),
         success: function () {
             console.log('success');
         },
@@ -1293,6 +1315,8 @@ function currentConditions(student){
     $('#bookFee').val(student.year).change();
 
 }
+
+
 
 
 
