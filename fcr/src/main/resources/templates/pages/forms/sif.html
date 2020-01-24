@@ -17,222 +17,276 @@
 <section class="content" layout:fragment="custom-content">
     <div class="container-fluid">
         <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="card">
-                    <div class="header">
-                        <h2 class="text-center">
-                            Student Registration Form
-                        </h2>
-                        <ul class="header-dropdown m-r--5">
-                            <li class="dropdown">
-                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
-                                   role="button" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">more_vert</i>
-                                </a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="javascript:void(0);">Action</a></li>
-                                    <li><a href="javascript:void(0);">Another action</a></li>
-                                    <li><a href="javascript:void(0);">Something else here</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+            <form method="POST" th:object="${student}" th:action="@{/student/save}">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 100px">
+                    <div class="card">
+                        <div class="header">
+                            <h2 class="text-center">
+                                Student Registration Form
+                            </h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
+                                       role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="javascript:void(0);">Action</a></li>
+                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                        <li><a href="javascript:void(0);">Something else here</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="body">
-                        <form method="POST" th:object="${student}" th:action="@{/student/save}">
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" th:field="*{name}" id="name" class="form-control">
-                                    <label class="form-label">Name</label>
+                    <div class="row">
+                        <div class="body">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="card">
+                                            <div class="body">
+                                                <h5 class="text-center"> Student's Info</h5>
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{name}" id="name"
+                                                               class="form-control">
+                                                        <label class="form-label">Name</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{email}" id="email"
+                                                               class="form-control">
+                                                        <label class="form-label">Email</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{parentEmail}" id="parentEmail"
+                                                               class="form-control">
+                                                        <label class="form-label">Parent's Email</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <label class="form-label">Gender</label>
+                                                        <br>
+                                                        <br>
+                                                        <input type="radio" th:field="*{gender}" id="male"
+                                                               th:value="Boy" checked/>
+                                                        <label for="male">Boy</label>
+                                                        <input type="radio" th:field="*{gender}" id="female"
+                                                               th:value="Girl"/>
+                                                        <label for="female">Girl</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <label class="form-label">Course</label>
+                                                        <br>
+
+                                                        <select id="courseOnSIF" th:field="*{courseName}"
+                                                                class="form-control show-tick">
+                                                            <option selected th:value="Select_a_course">Select a
+                                                                course
+                                                            </option>
+                                                            <option th:value="Academy">Academy</option>
+                                                            <option th:value="Boy_Nazira">Boy's Nazira</option>
+                                                            <option th:value="Banaat_Nazira">Banaat Nazira</option>
+                                                            <option th:value="Boy_Hifz">Boy's Hifz</option>
+                                                            <option th:value="Banaat_Hifz">Banaat Hifz</option>
+                                                            <option th:value="Alim">Alim</option>
+                                                            <option th:value="Alima">Alima</option>
+                                                            <option th:value="Standardized_Test">Standardized Test
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float" id="bookFeeDivOnSIF">
+                                                    <div class="form-line">
+
+                                                        <label class="form-label">Book Fee</label>
+                                                        <br>
+                                                        <select id="bookFeeOnSIF" th:field="*{year}"
+                                                                class="form-control show-tick">
+                                                            <option th:value="Select_a_course " selected>Select a
+                                                                course
+                                                            </option>
+                                                            <option th:value="Oola">Oola</option>
+                                                            <option th:value="Thania">Thania</option>
+                                                            <option th:value="Thalitha">Thalitha</option>
+                                                            <option th:value="Rabiya">Rabiya</option>
+                                                            <option th:value="Khamisa">Khamisa</option>
+                                                            <option th:value="Saadisa">Saadisa</option>
+                                                            <option th:value="Darua">Darua</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <label class="form-label">Need Boarding?</label>
+                                                        <br>
+                                                        <br>
+                                                        <input type="radio" th:field="*{boarding}" id="radio_1"
+                                                               th:value="Yes"/>
+                                                        <label for="radio_1">Yes</label>
+                                                        <input type="radio" th:field="*{boarding}" id="radio_2"
+                                                               th:value="No"
+                                                               checked/>
+                                                        <label for="radio_2">NO</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="date" name="d" id="dob" class="form-control">
+                                                        <label class="form-label">Date Of Birth</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="card">
+                                            <div class="body">
+                                                <h5 class="text-center"> Personal Info</h5>
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{homePhone}" id="hPhone"
+                                                               class="form-control">
+                                                        <label class="form-label">Home Phone</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{motherName}" id="mName"
+                                                               class="form-control">
+                                                        <label class="form-label">Mother's Name</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{motherCell}" id="mCell"
+                                                               class="form-control">
+                                                        <label class="form-label">Mother Cell</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{fatherName}"
+                                                               class="form-control">
+                                                        <label class="form-label">Father's Name</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{fatherCell}"
+                                                               class="form-control">
+                                                        <label class="form-label">Father's Cell</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" th:field="*{email}" id="email" class="form-control">
-                                    <label class="form-label">Email</label>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="card">
+                                            <div class="body">
+                                                <h5 class="text-center">Address</h5>
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{address}" class="form-control">
+                                                        <label class="form-label">Address</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{aptNo}" class="form-control">
+                                                        <label class="form-label">Apt/Floor/Suit</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{city}" class="form-control">
+                                                        <label class="form-label">City</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <label class="form-label">State</label>
+                                                        <br>
+
+                                                        <select th:field="*{state}" class="form-control show-tick">
+                                                            <option th:value="state" selected>Select State</option>
+                                                            <option th:value="New_York">New York</option>
+                                                            <option th:value="Florida">Florida</option>
+                                                            <option th:value="Texas">Texas</option>
+                                                            <option th:value="California">California</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{zip}" class="form-control">
+                                                        <label class="form-label">Zip</label>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{currentSchool}"
+                                                               class="form-control">
+                                                        <label class="form-label">Current School</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{currentGrade}"
+                                                               class="form-control">
+                                                        <label class="form-label">Current Grade</label>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <video class="" id="photo" width="250" height="200"></video>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" th:field="*{parentEmail}" id="parentEmail" class="form-control">
-                                    <label class="form-label">Parent's Email</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Gender</label>
-                                    <br>
-                                    <br>
-                                    <input type="radio" th:field="*{gender}" id="male" th:value="Male" checked/>
-                                    <label for="male">Boy</label>
-                                    <input type="radio" th:field="*{gender}" id="female" th:value="Female"/>
-                                    <label for="female">Girl</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Course</label>
-                                    <br>
-
-                                    <select id="courseOnSIF" th:field="*{courseName}" class="form-control show-tick">
-                                        <option selected th:value="Select_a_course">Select a course</option>
-                                        <option th:value="Academy">Academy</option>
-                                        <option th:value="Boy_Nazira">Boy's Nazira</option>
-                                        <option th:value="Banaat_Nazira">Banaat Nazira</option>
-                                        <option th:value="Boy_Hifz">Boy's Hifz</option>
-                                        <option th:value="Banaat_Hifz">Banaat Hifz</option>
-                                        <option th:value="Alim">Alim</option>
-                                        <option th:value="Alima">Alima</option>
-                                        <option th:value="Standardized_Test">Standardized Test</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float" id="bookFeeDivOnSIF">
-                                <div class="form-line">
-
-                                    <label class="form-label">Book Fee</label>
-                                    <br>
-                                    <select id="bookFeeOnSIF" th:field="*{year}" class="form-control show-tick">
-                                        <option th:value="Select_a_course " selected>Select a course</option>
-                                        <option th:value="Oola">Oola</option>
-                                        <option th:value="Thania">Thania</option>
-                                        <option th:value="Thalitha">Thalitha</option>
-                                        <option th:value="Rabiya">Rabiya</option>
-                                        <option th:value="Khamisa">Khamisa</option>
-                                        <option th:value="Saadisa">Saadisa</option>
-                                        <option th:value="Darua">Darua</option>
-                                    </select>
-
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">Need Boarding?</label>
-                                    <br>
-                                    <br>
-                                    <input type="radio" th:field="*{boarding}" id="radio_1" th:value="Yes"/>
-                                    <label for="radio_1">Yes</label>
-                                    <input type="radio" th:field="*{boarding}" id="radio_2" th:value="No" checked/>
-                                    <label for="radio_2">NO</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="date" name="d" id="dob" class="form-control">
-                                    <label class="form-label">Date Of Birth</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" th:field="*{homePhone}" id="hPhone" class="form-control">
-                                    <label class="form-label">Home Phone</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" th:field="*{motherName}" id="mName" class="form-control">
-                                    <label class="form-label">Mother's Name</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" th:field="*{motherCell}" id="mCell" class="form-control">
-                                    <label class="form-label">Mother Cell</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" th:field="*{fatherName}" class="form-control">
-                                    <label class="form-label">Father's Name</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" th:field="*{fatherCell}" class="form-control">
-                                    <label class="form-label">Father's Cell</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <textarea rows="2" th:field="*{address}" class="form-control no-resize"
-                                              placeholder="Address"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" th:field="*{aptNo}" class="form-control">
-                                    <label class="form-label">Apt/Floor/Suit</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" th:field="*{city}" class="form-control">
-                                    <label class="form-label">City</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <label class="form-label">State</label>
-                                    <br>
-
-                                    <select th:field="*{state}" class="form-control show-tick">
-                                        <option th:value="state" selected>Select State</option>
-                                        <option th:value="New_York">New York</option>
-                                        <option th:value="Florida">Florida</option>
-                                        <option th:value="Texas">Texas</option>
-                                        <option th:value="California">California</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" th:field="*{zip}" class="form-control">
-                                    <label class="form-label">Zip</label>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" th:field="*{currentSchool}" class="form-control">
-                                    <label class="form-label">Current School</label>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" th:field="*{currentGrade}" class="form-control">
-                                    <label class="form-label">Current Grade</label>
-                                </div>
-                            </div>
-
-                            <div>
-                                <video class="" id="photo" width="250" height="200"></video>
-                            </div>
-                            <button type="submit" class="btn btn-primary waves-effect">SUBMIT</button>
-                        </form>
+                        </div>
                     </div>
 
+                    <button type="submit" class="btn btn-block btn-primary waves-effect">SUBMIT</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <script>

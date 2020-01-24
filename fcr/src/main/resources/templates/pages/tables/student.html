@@ -60,7 +60,7 @@
                                         <td class="text-center" th:text="${student.courseName}"></td>
                                         <td class="text-center" th:text="${student.fatherName}"></td>
                                         <td class="text-center" th:text="${student.dob != null?student.dob.toString().substring(0,10):'Not Found'}"></td>
-                                        <td class="text-center btn-link"><a th:href="@{'/student/update/'+${student.id}}">Details</a></td>
+                                        <td class="text-center btn-link"><a th:href="@{'/student/studentDetails/'+${student.id}}">Details</a></td>
                                         <td class="text-center btn-link"><a th:href="@{'/student/update/'+${student.id}}"><i class="material-icons">edit</i></a></td>
                                         <td class="text-center btn-link"><a th:href="@{'/student/update/'+${student.id}}"><i class="material-icons">delete</i></a></td>
                                     </tr>

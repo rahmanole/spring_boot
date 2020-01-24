@@ -116,5 +116,11 @@ public class StudentController {
         return "redirect:/updateFinancialDetails";
     }
 
+    @GetMapping("/student/studentDetails/{id}")
+    public String studentDetails(Model model,@PathVariable long id) {
+        model.addAttribute("student",studentRepo.getOne(id));
+        return "/pages/forms/student_details";
+    }
+
 
 }

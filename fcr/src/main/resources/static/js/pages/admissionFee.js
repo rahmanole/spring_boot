@@ -136,7 +136,7 @@ $(document).ready(function () {
             success: function () {
                 calculateAF(afPaymentId, afToPay);
                 $('#admsnFeePaid').val();
-                $('#afCashSavingStatus').append('<span class="text-success">Success</span>');
+                $('#afCashSavingStatus').append('<span class="text-success">Cash Payment Entered</span>');
                 return false;
             },
             error: function () {
@@ -181,7 +181,7 @@ $(document).ready(function () {
             cache: false,
             success: function () {
                 calculateAF(afPaymentId, afToPay);
-                $('#fromSalChequeSavingStatus').append('<span class="text-success">Success</span>');
+                $('#fromSalChequeSavingStatus').append('<span class="text-success">Check Payment Entered</span>');
                 return false;
             },
 
@@ -209,10 +209,10 @@ $(document).ready(function () {
             return '';
         }
 
-        if ($('#chequeImg').val() == '') {
-            $('#mfChequeSavingStatus').append('<span class="text-danger">Select image</span>');
-            return '';
-        }
+        // if ($('#chequeImg').val() == '') {
+        //     $('#mfChequeSavingStatus').append('<span class="text-danger">Select image</span>');
+        //     return '';
+        // }
 
         $.ajax({
             method: 'post',
@@ -224,11 +224,11 @@ $(document).ready(function () {
             cache: false,
             success: function (data) {
                 calculateAF(afPaymentId, afToPay);
-                $('#afCashSavingStatus').append('<span class="text-success">Success</span>');
+                $('#mfChequeSavingStatus').append('<span class="text-success">Cash Payment Entered</span>');
                 return false;
             },
             error: function () {
-                $('#afCashSavingStatus').append('<span class="text-success">Not Success</span>');
+                $('#mfChequeSavingStatus').append('<span class="text-success">Not Success</span>');
                 console.log('not success');
             }
         })

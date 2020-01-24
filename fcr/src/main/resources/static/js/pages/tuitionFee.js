@@ -115,7 +115,7 @@ $(document).ready(function () {
             contentType: "application/json",
             success:function () {
                 calculateTF(tfPID,tfToPay);
-                $('#tfCashSavingStatus').append('<span class="text-success">Cash Saved</span>');
+                $('#tfCashSavingStatus').append('<span class="text-success">Cash Payment Entered</span>');
                 return false;
             },
             error: function () {
@@ -144,10 +144,10 @@ $(document).ready(function () {
         }
 
 
-        if ($('#fromSalChequeImg').val() == '') {
-            $('#tfFromSalChequeSavingStatus').append('<span class="text-danger">Select image</span>');
-            return '';
-        }
+        // if ($('#fromSalChequeImg').val() == '') {
+        //     $('#tfFromSalChequeSavingStatus').append('<span class="text-danger">Select image</span>');
+        //     return '';
+        // }
 
         var frm = $('#tfFromSalForm')[0];
 
@@ -161,7 +161,7 @@ $(document).ready(function () {
             cache: false,
             success: function () {
                 calculateTF(tfPID,tfToPay);
-                $('#odfFromSalChequeSavingStatus').append('<span class="text-success">Success</span>');
+                $('#odfFromSalChequeSavingStatus').append('<span class="text-success">Salary Deducted</span>');
                 return false;
             },
 
@@ -190,10 +190,10 @@ $(document).ready(function () {
         }
 
 
-        if ($('#tfChequeImg').val() == '') {
-            $('#tfChequeSavingStatus').append('<span class="text-danger">Select image</span>');
-            return '';
-        }
+        // if ($('#tfChequeImg').val() == '') {
+        //     $('#tfChequeSavingStatus').append('<span class="text-danger">Select image</span>');
+        //     return '';
+        // }
 
         $.ajax({
             method:'post',
@@ -205,7 +205,7 @@ $(document).ready(function () {
             cache:false,
             success:function () {
                 calculateTF(tfPID,tfToPay);
-                $('#tfChequeSavingStatus').append('<span class="text-success">Cheque saved</span>');
+                $('#tfChequeSavingStatus').append('<span class="text-success">Cheque payment saved</span>');
                 return false;
             },
             error: function () {
@@ -286,7 +286,7 @@ $(document).ready(function () {
             contentType: "application/json",
             success:function () {
                 calculateTF(tfPID,tfToPay);
-                $('#tfZelleSavingStatus').append('<span class="text-success">Zelle Saved</span>');
+                $('#tfZelleSavingStatus').append('<span class="text-success">Zelle payment Saved</span>');
                 return false;
             },
             error: function () {

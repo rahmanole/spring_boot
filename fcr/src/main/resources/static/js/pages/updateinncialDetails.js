@@ -892,7 +892,7 @@ function studentFeeReport(st_id) {
                 +
                 "<tr><td>" + "Father  Name" + "</td>" + "<td>" + data[0].fatherName + "</td></tr>"
                 +
-                "<tr><td>" + "Father  Name" + "</td>" + "<td>" + data[0].motherName + "</td></tr>"
+                "<tr><td>" + "Mother  Name" + "</td>" + "<td>" + data[0].motherName + "</td></tr>"
                 +
                 "<tr><td>" + "Date of Birth" + "</td>" + "<td>" + data[0].dob.substr(0,12) + "</td></tr>"
             );

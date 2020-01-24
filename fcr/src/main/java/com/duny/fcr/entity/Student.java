@@ -30,7 +30,7 @@ public class Student {
     @Column(name="course_name")
     private String courseName;
     @Column(name="year",length = 20)
-    private String year;
+    private String year="NA";
     @Column(nullable = false)
     private String boarding;
     private Date dob;
@@ -66,7 +66,5 @@ public class Student {
     private String status  = "applied";
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name="fin_details_id")
-
     private FinDtlsOfStudent finDtlsOfStudent;
-
 }
