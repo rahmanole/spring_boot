@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Jquery DataTable | Bootstrap Based Admin Template - Material Design</title>
+    <title>All Students</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -60,21 +60,46 @@
                                         <td class="text-center" th:text="${student.courseName}"></td>
                                         <td class="text-center" th:text="${student.fatherName}"></td>
                                         <td class="text-center" th:text="${student.dob != null?student.dob.toString().substring(0,10):'Not Found'}"></td>
-                                        <td class="text-center btn-link"><a th:href="@{'/student/studentDetails/'+${student.id}}">Details</a></td>
+                                        <td class="text-center" >
+                                            <button type="button" th:data-id="${student.id}" id="details" class="btn btn-default waves-effect" data-toggle="modal" data-target="#defaultModal">DETAILS</button>
+                                        </td>
                                         <td class="text-center btn-link"><a th:href="@{'/student/update/'+${student.id}}"><i class="material-icons">edit</i></a></td>
                                         <td class="text-center btn-link"><a th:href="@{'/student/update/'+${student.id}}"><i class="material-icons">delete</i></a></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
+
+
+                        <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" id="modalContent">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="defaultModalLabel">Modal title</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sodales orci ante, sed ornare eros vestibulum ut. Ut accumsan
+                                        vitae eros sit amet tristique. Nullam scelerisque nunc enim, non dignissim nibh faucibus ullamcorper.
+                                        Fusce pulvinar libero vel ligula iaculis ullamcorper. Integer dapibus, mi ac tempor varius, purus
+                                        nibh mattis erat, vitae porta nunc nisi non tellus. Vivamus mollis ante non massa egestas fringilla.
+                                        Vestibulum egestas consectetur nunc at ultricies. Morbi quis consectetur nunc.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>
+                                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
         <!-- #END# Exportable Table -->
+
     </div>
 </section>
-
 
 </body>
 
