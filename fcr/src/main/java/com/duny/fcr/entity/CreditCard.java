@@ -23,5 +23,6 @@ public class CreditCard {
     private double amount;
     @Column(name="payment_id",length = 10)
     private String paymentId;
+    private String studentId;
 
 }

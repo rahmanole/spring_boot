@@ -9,8 +9,8 @@ import java.util.OptionalDouble;
 
 @Repository
 public interface CashRepo extends JpaRepository<Cash,Long> {
-    String GET_AMOUNT_BY_PID = "select sum(amount) from cash where payment_id=?";
+    String GET_AMOUNT_BY_ST_ID = "select sum(amount) from cash where student_id=?";
 
-    @Query(nativeQuery = true,value = GET_AMOUNT_BY_PID)
+    @Query(nativeQuery = true,value = GET_AMOUNT_BY_ST_ID)
     Object getAmount(String pid);
 }

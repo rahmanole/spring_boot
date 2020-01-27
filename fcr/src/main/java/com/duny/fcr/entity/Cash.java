@@ -17,6 +17,7 @@ public class Cash {
     private long id;
     @Column(name="payment_id",length = 10)
     private String paymentId;
+    private String studentId;
     private double amount;
     private Date date = new Date();
 

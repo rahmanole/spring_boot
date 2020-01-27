@@ -20,6 +20,7 @@ public class MoneyOrderController {
 
     @PostMapping("/mo/save")
     public String saveCheque(@RequestParam("paymentID")String pid,
+                             @RequestParam("studentId") String stId,
                              @RequestParam("moneyOrderDate") String date,
                              @RequestParam("moneyOrderNum") String mOnum,
                              @RequestParam("amount") String amnt,
@@ -29,6 +30,7 @@ public class MoneyOrderController {
 
         moneyOrder.setAmount(Double.parseDouble(amnt));
         moneyOrder.setPaymentID(pid);
+        moneyOrder.setStudentId(stId);
         moneyOrder.setMoneyOrderNum(mOnum);
         moneyOrder.setMoneyOrderImg(file.getBytes());
         moneyOrder.setMoneyOrderDate(new SimpleDateFormat("yyyy-mm-dd").parse(date));

@@ -18,6 +18,7 @@ public class MoneyOrder {
     private Date date = new Date();
     @Column(name = "payment_id",length = 10)
     private String paymentID;
+    private String studentId;
     private Date moneyOrderDate;
     @Column(length = 30,nullable = true)
     private String moneyOrderNum;

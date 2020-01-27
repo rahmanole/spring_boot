@@ -18,6 +18,7 @@ public class Zelle {
     private Date date = new Date();
     @Column(name="payment_id",length = 10)
     private String paymentId;
+    private String studentId;
     private double amount;
     @Column(length = 15,nullable = true)
     private String phoneNum;

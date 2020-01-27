@@ -26,6 +26,7 @@ public class Cheque {
     private byte[] chequeImg;
     @Column(name = "payment_id",length = 10)
     private String paymentId;
+    private String studentId;
 
 
 }

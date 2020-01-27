@@ -21,6 +21,7 @@ public class FromSalController {
 
     @PostMapping("/fromSal/save")
     public String saveCheque(@RequestParam("paymentId")String pid,
+                             @RequestParam("studentId") String stId,
                              @RequestParam("chequeNum") String cNum,
                              @RequestParam("payPeriod") String payPeriod,
                              @RequestParam("amount") String amount,
@@ -31,6 +32,7 @@ public class FromSalController {
 
         FromSal fromSal = new FromSal();
         fromSal.setPaymentId(pid);
+        fromSal.setStudentId(stId);
         fromSal.setChequeNum(cNum);
         fromSal.setAmount(Double.parseDouble(amount));
         fromSal.setFromSalChequeImg(file.getBytes());

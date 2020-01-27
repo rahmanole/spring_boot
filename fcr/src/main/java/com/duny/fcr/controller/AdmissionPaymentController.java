@@ -1,7 +1,6 @@
 package com.duny.fcr.controller;
 
 import com.duny.fcr.entity.AdmissionPayment;
-import com.duny.fcr.entity.Cash;
 import com.duny.fcr.repo.AdmissionPaymentRepo;
 import com.duny.fcr.repo.StudentRepo;
 import com.duny.fcr.service.AdmissionPaymentService;
@@ -18,7 +17,6 @@ import java.util.List;
 public class AdmissionPaymentController {
     @Autowired
     StudentRepo studentRepo;
-
     @Autowired
     AdmissionPaymentService admissionPaymentService;
     @Autowired
@@ -43,7 +41,8 @@ public class AdmissionPaymentController {
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         Gson gson = new Gson();
-        AdmissionPayment admissionPayment = gson.fromJson(admPaymentJson, AdmissionPayment.class);
+        AdmissionPayment admissionPayment;
+        admissionPayment = gson.fromJson(admPaymentJson, AdmissionPayment.class);
         admissionPaymentRepo.save(admissionPayment);
         return "redirect:/admissionFee";
     }

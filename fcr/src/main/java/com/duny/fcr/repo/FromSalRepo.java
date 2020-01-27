@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FromSalRepo extends JpaRepository<FromSal,Long> {
-    String GET_AMOUNT_BY_PID = "select sum(amount) from from_sal where payment_id=?";
+    String GET_AMOUNT_BY_ST_ID = "select sum(amount) from from_sal where student_id=?";
 
-    @Query(nativeQuery = true,value = GET_AMOUNT_BY_PID)
+    @Query(nativeQuery = true,value = GET_AMOUNT_BY_ST_ID)
     Object getAmount(String pid);
 }

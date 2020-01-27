@@ -22,6 +22,7 @@ public class ChequeController {
 
     @PostMapping("/cheque/save")
     public String saveCheque(@RequestParam("paymentId")String pid,
+                             @RequestParam("studentId") String stId,
                              @RequestParam("accountNum") String acNum,
                              @RequestParam("chequeNum") String cNum,
                              @RequestParam("chequeDate") String cDate,
@@ -33,6 +34,7 @@ public class ChequeController {
         }
         Cheque cheque = new Cheque();
         cheque.setPaymentId(pid);
+        cheque.setStudentId(stId);
         cheque.setAccountNum(acNum);
         cheque.setAccountNum(cNum);
         cheque.setAmount(Double.parseDouble(amnt));
