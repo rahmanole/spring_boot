@@ -12,6 +12,7 @@ $(document).ready(function () {
 
     $('#studentIdsOnAdmisnFee').change(function () {
         studentID = $('#studentIdsOnAdmisnFee option:selected').val();
+        paymentDBId = 0;
 
         if (studentID == '0') {
             $('#admisnFeeTblBody').html("<tr><td colspan='2' class='text-center'>" + "Admission Fee Statement" + "</td></tr>");
@@ -32,11 +33,11 @@ $(document).ready(function () {
             student = admissionFeeStmt(studentID, afPaymentId);
             $('#yearName').html(admissionYear);
             console.log(admissionYear);
-            console.log(studentID);
             var af = getAFPaymentId(studentID,admissionYear);
+
             afToPay = getTotalCommonMandatoryFee(student);
+            console.log(afToPay);
             if (af != undefined && af.year == admissionYear.toString()) {
-                afToPay = af.admissionFee;
                 afPaymentId = af.afPaymentId;
                 paymentDBId = af.id;
             }
@@ -50,7 +51,6 @@ $(document).ready(function () {
             $('#admCCPID').val(afPaymentId);
             $('#amdMoneyOrderPID').val(afPaymentId);
             $('#admFromSalPID').val(afPaymentId);
-
 
             $('#admCashStID').val(studentID);
             $('#admChequeStID').val(studentID);
@@ -124,7 +124,6 @@ $(document).ready(function () {
             error: function () {
                 $('#afPayStatus').append('');
                 $('#afPayStatus').append('<span class="text-danger">Payment Not Saved</span>');
-
                 console.log('not success');
             }
         })
@@ -388,6 +387,15 @@ $(document).ready(function () {
         var bookFee = getBookFee(student.year, student.gender);
         afToPay = afToPay - bookFee;
         calculateAF(afPaymentId, afToPay);
+    });
+
+    $('body').on('click', '#deleteBtnOnModal', function (e) {
+        var id = $(this).attr("data-id");
+        console.log('sucess');
+    });
+
+    $('#deleteBtnOnModal').click(function () {
+        console.log('sucess');
     });
 
 
@@ -662,6 +670,18 @@ function getAFPaymentId(stId, year) {
     });
 
     return af;
+}
+
+function deleteAFPayment(stId) {
+    $.ajax({
+        method: 'GET',
+        url: '/af/delete/' + stId,
+        async: false,
+        success: function () {
+        },
+        error: function () {
+        }
+    });
 }
 
 

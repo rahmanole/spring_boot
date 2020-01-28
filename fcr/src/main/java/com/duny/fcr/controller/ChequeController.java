@@ -38,7 +38,7 @@ public class ChequeController {
         cheque.setAccountNum(acNum);
         cheque.setAccountNum(cNum);
         cheque.setAmount(Double.parseDouble(amnt));
-        cheque.setChequeImg(file.getBytes());
+        cheque.setChequeImg("data:image/jpg;base64,"+Base64.getEncoder().encodeToString(file.getBytes()));
         cheque.setChequeDate(new SimpleDateFormat("yyyy-mm-dd").parse(cDate));
         chequeRepo.save(cheque);
 

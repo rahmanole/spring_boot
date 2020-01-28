@@ -14,6 +14,8 @@ public interface AdmissionPaymentRepo extends JpaRepository<AdmissionPayment,Lon
     String INSERT_BOOK_FEE = "update fin_details set book_fee='NA' where id=?";
     String INSERT_MEAL_FEE = "update fin_details set meal_fee='NA' where id=?";
     String GET_PAYMENT_ID = "select * from admission_payment where student_id=? and year=?";
+    String GET_ALL_PAYMENTS = "select * from admission_payment";
+    String DELETE_PAYMENTS = "delete from admission_payment where student_id=?";
 
     @Query(value = GET_MAX_ID,nativeQuery = true)
     int getMaxId();
@@ -28,13 +30,19 @@ public interface AdmissionPaymentRepo extends JpaRepository<AdmissionPayment,Lon
     @Query(value = INSERT_MEAL_FEE,nativeQuery = true)
     void updatingMealFee(long id);
 
-    @Modifying
-    @Transactional
-    @Query(value = INSERT_BOOK_FEE,nativeQuery = true)
-    void updatingBookFee(long id);
-
-    @Query(value = GET_PAYMENT_ID,nativeQuery = true)
-    String getAFPaymentID(String studentId);
+//    @Modifying
+//    @Transactional
+//    @Query(value = INSERT_BOOK_FEE,nativeQuery = true)
+//    void updatingBookFee(long id);
+//
+//    @Query(value = GET_PAYMENT_ID,nativeQuery = true)
+//    String getAFPaymentID(String studentId);
 
     AdmissionPayment getAdmissionPaymentByStudentIdAndYear(String stId,String year);
+
+    @Modifying
+    @Transactional
+    @Query(value = DELETE_PAYMENTS,nativeQuery = true)
+    void deleteAFPaymentByStudentId(String stId);
+
 }

@@ -22,8 +22,8 @@ public class Cheque {
     @Column(length = 30,nullable = true)
     private String chequeNum;
     private double amount;
-    @Column(columnDefinition = "MEDIUMBLOB")
-    private byte[] chequeImg;
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String chequeImg;
     @Column(name = "payment_id",length = 10)
     private String paymentId;
     private String studentId;

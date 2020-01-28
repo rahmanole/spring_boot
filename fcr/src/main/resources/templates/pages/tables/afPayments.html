@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layoutTable.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title> Admission Fees</title>
+    <!-- Favicon-->
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+
+</head>
+
+<body class="theme-red">
+
+<section class="content" layout:fragment="custom-content">
+    <div class="container-fluid">
+        <!-- Exportable Table -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2 class="text-center">
+                            Admission Fees
+                        </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
+                                   role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    <li><a href="javascript:void(0);">Another action</a></li>
+                                    <li><a href="javascript:void(0);">Something else here</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Payment ID</th>
+                                    <th>Admission Fee</th>
+                                    <th>Fee Paid</th>
+                                    <th>Due</th>
+                                    <th>Year</th>
+                                    <th>Details</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="af:${afPaymentList}">
+                                        <td class="text-center" th:text="${af.studentId}"></td>
+                                        <td class="text-center" th:text="${af.afPaymentId}"></td>
+                                        <td class="text-center" th:text="${af.admissionFee}"></td>
+                                        <td class="text-center" th:text="${af.admissionFeePaid}"></td>
+                                        <td class="text-center" th:text="${af.admissionFeeDue}"></td>
+                                        <td class="text-center" th:text="${af.year}"></td>
+                                        <td class="text-center"><a th:href="@{'/af/details/'+${af.studentId}}" target="_blank" class="btn btn-default waves-effect" >Details</a></td>
+                                        <td class="text-center"><button th:data-id="${af.studentId}" class="btn btn-default waves-effect" data-toggle="modal" data-target="#smallModal" ><i class="material-icons">delete</i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <div class="modal fade" id="smallModal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title text-center" id="smallModalLabel">Are You sure to delete??</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <button type="button" id="deleteBtnOnModal" class="btn btn-danger btn-link waves-effect">Yes</button>
+                                        <button type="button" class="btn btn-danger btn-link waves-effect" style="float: right;" data-dismiss="modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Exportable Table -->
+
+    </div>
+</section>
+
+</body>
+
+</html>
