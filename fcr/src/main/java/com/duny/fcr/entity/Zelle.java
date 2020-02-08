@@ -24,4 +24,7 @@ public class Zelle {
     private String phoneNum;
     @Column(length = 30,nullable = true)
     private String email;
+    @Column(length = 10)
+    private String year;
+    private String month;
 }

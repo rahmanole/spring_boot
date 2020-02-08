@@ -43,26 +43,20 @@
                             <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                                 <thead>
                                 <tr>
-                                    <th>Student ID</th>
-                                    <th>Payment ID</th>
-                                    <th>Admission Fee</th>
-                                    <th>Fee Paid</th>
-                                    <th>Due</th>
-                                    <th>Year</th>
-                                    <th>Details</th>
-                                    <th>Delete</th>
+                                    <th class="text-center">Teacher Name</th>
+                                    <th class="text-center">Course Name</th>
+                                    <th class="text-center">Class Name</th>
+                                    <th class="text-center">Update</th>
+                                    <th class="text-center">Delete</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="af:${afPaymentList}">
-                                        <td class="text-center" th:text="${af.studentId}"></td>
-                                        <td class="text-center" th:text="${af.afPaymentId}"></td>
-                                        <td class="text-center" th:text="${af.admissionFee}"></td>
-                                        <td class="text-center" th:text="${af.admissionFeePaid}"></td>
-                                        <td class="text-center" th:text="${af.admissionFeeDue}"></td>
-                                        <td class="text-center" th:text="${af.year}"></td>
-                                        <td class="text-center"><a th:href="@{'/af/details/'+${af.studentId}+'/'+${af.year}}" target="_blank" class="btn btn-default waves-effect" >Details</a></td>
-                                        <td class="text-center"><button th:data-id="${af.studentId}" class="btn btn-default waves-effect" data-toggle="modal" data-target="#smallModal" ><i class="material-icons">delete</i></button></td>
+                                    <tr th:each="teacher:${teachers}">
+                                        <td class="text-center" th:text="${teacher.teacherName}"></td>
+                                        <td class="text-center" th:text="${teacher.courseName}"></td>
+                                        <td class="text-center" th:text="${teacher.className}"></td>
+                                        <td class="text-center"><a th:href="@{'/teacher/update/'+${teacher.id}}" target="_blank" class="btn btn-default waves-effect" ><i class="material-icons">edit</i></a></td>
+                                        <td class="text-center"><button th:data-id="${teacher.id}" class="btn btn-default waves-effect" data-toggle="modal" data-target="#smallModal" ><i class="material-icons">delete</i></button></td>
                                     </tr>
                                 </tbody>
                             </table>

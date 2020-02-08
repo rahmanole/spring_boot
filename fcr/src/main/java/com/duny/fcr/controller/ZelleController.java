@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Calendar;
+import java.util.Date;
+
 @Controller
 public class ZelleController {
     @Autowired
@@ -21,6 +24,10 @@ public class ZelleController {
         builder.setPrettyPrinting();
         Gson gson = new Gson();
         Zelle zelle = gson.fromJson(zelleJson,Zelle.class);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        zelle.setYear(calendar.get(Calendar.YEAR)+"");
         zelleReo.save(zelle);
         return "redirect:/admissionFee";
     }

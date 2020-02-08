@@ -172,7 +172,14 @@ $(document).ready(function () {
     var zakat = 0;
     var grandTotalFee = 0;
 
+    var isStaffChecked=false,isCollChecked=false,isZakatChecked=false;
+
     $('#discount').click(function () {
+
+        isStaffChecked = $('#collection').is(":checked");
+        isCollChecked = $('#staff').is(":checked");
+        isZakatChecked = $('#zakat').is(":checked");
+
 
         if ($('#sponsor').is(':checked')) {
             $('#sponsorDiv').slideDown();
@@ -186,11 +193,17 @@ $(document).ready(function () {
             $('#dollarADayDiv').slideUp();
         }
 
-        if ($('#collection').is(':checked')) {
-            $('#collectionDiv').slideDown();
-        } else {
-            $('#collectionDiv').slideUp();
-        }
+        $('#collection').change(function () {
+            isCollChecked = $(this).is(':checked');
+
+            if (isCollChecked) {
+                $('#otp').attr('disabled', true);
+                $('#collectionDiv').slideDown();
+            }
+            if (!isCollChecked) {
+                $('#collectionDiv').slideUp();
+            }
+        });
 
         if ($('#sibling').is(':checked')) {
             $('#siblingDiv').slideDown();
@@ -199,14 +212,28 @@ $(document).ready(function () {
         }
 
         $('#staff').change(function () {
-            var isChcked = $(this).is(':checked');
-            if (isChcked) {
+            isStaffChecked = $(this).is(':checked');
+            if (isStaffChecked) {
+                $('#otp').attr('disabled', true);
                 $('#staffDiv').slideDown();
             }
-            if (!isChcked) {
+            if (!isStaffChecked) {
                 $('#staffDiv').slideUp();
             }
         });
+
+        console.log(isStaffChecked);
+        console.log(isCollChecked);
+        console.log(isZakatChecked);
+
+        if(isStaffChecked || isCollChecked || isZakatChecked){
+            $('#otp').attr('disabled', true);
+            console.log('hi');
+        }
+
+        if( !isStaffChecked && !isCollChecked && !isZakatChecked){
+            $('#otp').attr('disabled', false);
+        }
 
 
         $('#otp').change(function () {
@@ -232,11 +259,17 @@ $(document).ready(function () {
             }
         });
 
-        if ($('#zakat').is(':checked')) {
-            $('#zakatDiv').slideDown();
-        } else {
-            $('#zakatDiv').slideUp();
-        }
+
+        $('#zakat').change(function () {
+            isZakatChecked = $(this).is(':checked');
+            if (isZakatChecked) {
+                $('#otp').attr('disabled', true);
+                $('#zakatDiv').slideDown();
+            }
+            if (!isZakatChecked) {
+                $('#zakatDiv').slideUp();
+            }
+        });
 
         $('#selfFunded').change(function () {
             var isChecked = $(this).is(':checked');
@@ -465,8 +498,8 @@ $(document).ready(function () {
     //admiting student
 
     $('#admit').click(function () {
-        var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
-        var mandFee = document.getElementById('totalMandatoryFee').innerHTML;
+        // var fin_dtl_Id = document.getElementById('fin_dtl_id').innerHTML;
+        // var mandFee = document.getElementById('totalMandatoryFee').innerHTML;
 
         var course = $('#course option:selected').val();
         var st_id = document.getElementById('st_id').innerHTML;
@@ -519,8 +552,10 @@ $(document).ready(function () {
 
         $('#dollarADay').prop('checked', false);
         $('#dollarADayDiv').slideUp();
+        $('#otp').attr('disabled', false);
 
         $('#pdfGenerator').show();
+
         studentFeeReport(studentID);
     });
 
@@ -898,6 +933,7 @@ function studentFeeReport(st_id) {
             );
 
 
+
             $('#finDtlsTbl').append(
                 "<tr><td>" + "Common Mandatory Fee" + "</td>" + "<td>" + "$" + $('#totalMandatoryFee').html() + " /year</td></tr>"
             );
@@ -932,7 +968,11 @@ function studentFeeReport(st_id) {
                 $('#finDtlsTbl').append(
                     "<tr><td>" + "Collection Target" + "</td>" + "<td>" + "- $" + data[0].finDtlsOfStudent.collection + " /year</td></tr>"
                 );
+
                 $('#collection').prop('checked', true);
+                $('#otp').attr('disabled', true);
+
+                $('#collection').change();
                 $('#collectionAmt').val(data[0].finDtlsOfStudent.collection);
                 $('#collectionDiv').slideDown();
             }
@@ -959,10 +999,12 @@ function studentFeeReport(st_id) {
                 $('#finDtlsTbl').append(
                     "<tr><td>" + "Staff Discount" + "</td>" + "<td>" + "- $" + 3800.00 + " /year</td></tr>"
                 );
+
+                $('#otp').attr('disabled', true);
             }
 
-            if (data[0].finDtlsOfStudent.isSelfFunded) {
-
+            if (data[0].finDtlsOfStudent.zakat>0) {
+                $('#otp').attr('disabled', true);
             }
 
 

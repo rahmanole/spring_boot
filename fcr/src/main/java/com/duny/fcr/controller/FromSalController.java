@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Calendar;
+import java.util.Date;
 
 @Controller
 public class FromSalController {
@@ -37,6 +39,9 @@ public class FromSalController {
         fromSal.setAmount(Double.parseDouble(amount));
         fromSal.setFromSalChequeImg(file.getBytes());
         fromSal.setDate(new SimpleDateFormat("yyyy-mm-dd").parse(payPeriod));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        fromSal.setYear(calendar.get(Calendar.YEAR)+"");
         fromSalRepo.save(fromSal);
 
 //        System.out.println(pid+cNum+payPeriod+amount);

@@ -1,7 +1,6 @@
 $(document).ready(function () {
 
-    // $('#admissionFeeForm').hide();
-    var admissionYear = new Date().getFullYear().toString();
+    var admissionYear = (new Date().getFullYear()).toString();
     $('#year').val(admissionYear);
 
     var studentID;
@@ -33,16 +32,19 @@ $(document).ready(function () {
             student = admissionFeeStmt(studentID, afPaymentId);
             $('#yearName').html(admissionYear);
             console.log(admissionYear);
-            var af = getAFPaymentId(studentID,admissionYear);
+            var af = getAFPayment(studentID,admissionYear);
 
             afToPay = getTotalCommonMandatoryFee(student);
-            console.log(afToPay);
+            console.log(af.year);
+            console.log(af);
+
             if (af != undefined && af.year == admissionYear.toString()) {
                 afPaymentId = af.afPaymentId;
                 paymentDBId = af.id;
+                console.log('hi');
             }
 
-            calculateAF(studentID,afToPay);
+            calculateAF(studentID,afToPay,admissionYear);
 
             $('#admissionFeePaymentID').val(afPaymentId);
             $('#admCashPID').val(afPaymentId);
@@ -118,7 +120,7 @@ $(document).ready(function () {
                 saveAdmissionFeeDetails(student);
                 $('#afPayStatus').append('');
                 $('#afPayStatus').append('<span class="text-success">Payment Saved</span>');
-                paymentDBId = getAFPaymentId(studentID,admissionYear).id;
+                paymentDBId = getAFPayment(studentID,admissionYear).id;
                 return false;
             },
             error: function () {
@@ -142,14 +144,15 @@ $(document).ready(function () {
             $('#afCashSavingStatus').append('<span class="text-danger">Enter valid amount</span>');
             return '';
         }
-
+      //  cash = addElement(cash,"year",admissionYear);
+        console.log(cash);
         $.ajax({
             method: 'post',
             url: '/cash/save',
             data: cash,
             contentType: "application/json",
             success: function () {
-                calculateAF(studentID, afToPay);
+                calculateAF(studentID, afToPay,admissionYear);
                 $('#admsnFeePaid').val();
                 $('#afCashSavingStatus').append('<span class="text-success">Cash Payment Entered</span>');
                 return false;
@@ -195,7 +198,7 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function () {
-                calculateAF(studentID, afToPay);
+                calculateAF(studentID, afToPay,admissionYear);
                 $('#fromSalChequeSavingStatus').append('<span class="text-success">Check Payment Entered</span>');
                 return false;
             },
@@ -238,7 +241,7 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function (data) {
-                calculateAF(studentID, afToPay);
+                calculateAF(studentID, afToPay,admissionYear);
                 $('#mfChequeSavingStatus').append('<span class="text-success">Cash Payment Entered</span>');
                 return false;
             },
@@ -282,7 +285,7 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             success: function () {
-                calculateAF(studentID, afToPay);
+                calculateAF(studentID, afToPay,admissionYear);
                 $('#afMOSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -319,7 +322,7 @@ $(document).ready(function () {
             data: zelle,
             contentType: "application/json",
             success: function () {
-                calculateAF(studentID, afToPay);
+                calculateAF(studentID, afToPay,admissionYear);
                 $('#afZelleSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -358,7 +361,7 @@ $(document).ready(function () {
             data: cc,
             contentType: "application/json",
             success: function () {
-                calculateAF(studentID, afToPay);
+                calculateAF(studentID, afToPay,admissionYear);
                 $('#afCCSavingStatus').append('<span class="text-success">Success</span>');
                 return false;
             },
@@ -371,14 +374,14 @@ $(document).ready(function () {
     $('body').on('click', '#mealPlan', function () {
         $('#mealPlanFeeRow').fadeOut(300);
         afToPay = afToPay - 100;
-        calculateAF(afPaymentId, afToPay);
+        calculateAF(afPaymentId, afToPay,admissionYear);
     });
 
     $('body').on('click', '#academicFee', function () {
         $('#academicFeeRow').fadeOut(300);
         var af = getAcademicFee(student.courseName);
         afToPay = afToPay - af;
-        calculateAF(afPaymentId, afToPay);
+        calculateAF(afPaymentId, afToPay,admissionYear);
 
     });
 
@@ -386,7 +389,7 @@ $(document).ready(function () {
         $('#bookFeeRow').fadeOut(300);
         var bookFee = getBookFee(student.year, student.gender);
         afToPay = afToPay - bookFee;
-        calculateAF(afPaymentId, afToPay);
+        calculateAF(afPaymentId, afToPay,admissionYear);
     });
 
     $('body').on('click', '#deleteBtnOnModal', function (e) {
@@ -580,8 +583,8 @@ function getAfPaymentId() {
 }
 
 
-function calculateAF(studentID, afToPay) {
-    var feePaid = getAFPaid(studentID);
+function calculateAF(studentID, afToPay,feeYear) {
+    var feePaid = getAFPaid(studentID,feeYear);
     $('#admisnFeeToPay').val(afToPay);
     $('#afToPayOnStmt').html('');
     $('#afToPayOnStmt').html(afToPay);
@@ -591,11 +594,11 @@ function calculateAF(studentID, afToPay) {
     $('#admisnFeePaidFieldOnStmt').html(feePaid);
 }
 
-function getAFPaid(stId) {
+function getAFPaid(stId,feeYear) {
     var amount = 0;
     $.ajax({
         method: 'GET',
-        url: '/fee/' + stId,
+        url: '/fee/' +stId+'/'+feeYear,
         async: false,
         success: function (data) {
             amount = data;
@@ -656,7 +659,7 @@ function saveAdmissionFeeDetails(student) {
     }
 }
 
-function getAFPaymentId(stId, year) {
+function getAFPayment(stId, year) {
     var af;
     $.ajax({
         method: 'GET',
@@ -684,6 +687,14 @@ function deleteAFPayment(stId) {
     });
 }
 
+function addElement(mainStr,name,value) {
+    var adm = mainStr.replace("}","");
+    var str = ',"'+name+'":"'+value+'"}';
+    var adm2 = adm.concat(str);
+    mainStr = adm2;
+
+    return mainStr;
+}
 
 function getMonthName() {
     var d = new Date();

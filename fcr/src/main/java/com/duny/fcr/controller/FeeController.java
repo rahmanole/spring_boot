@@ -135,27 +135,27 @@ public class FeeController {
         return "/pages/financial/dues";
     }
 
-    @GetMapping("/fee/{stId}")
+    @GetMapping("/fee/{stId}/{year}")
     @ResponseBody
-    public double getAmount(@PathVariable String stId) {
+    public double getAmount(@PathVariable String stId,@PathVariable String year) {
         double totalAmount;
 
-        Object amount = cashRepo.getAmount(stId);
+        Object amount = cashRepo.getAmount(stId,year);
         double cash = (amount != null? Double.parseDouble(amount.toString()):0);
         System.out.println(amount);
-        amount = chequeRepo.getAmount(stId);
+        amount = chequeRepo.getAmount(stId,year);
         double cheque = (amount != null? Double.parseDouble(amount.toString()):0);
 
-        amount = creditCardRepo.getAmount(stId);
+        amount = creditCardRepo.getAmount(stId,year);
         double cc = (amount != null? Double.parseDouble(amount.toString()):0);
 
-        amount = fromSalRepo.getAmount(stId);
+        amount = fromSalRepo.getAmount(stId,year);
         double fromSal = (amount !=null? Double.parseDouble(amount.toString()):0);
 
-        amount = moneyOrderRepo.getAmount(stId);
+        amount = moneyOrderRepo.getAmount(stId,year);
         double mo = (amount !=null? Double.parseDouble(amount.toString()):0);
 
-        amount = zelleReo.getAmount(stId);
+        amount = zelleReo.getAmount(stId,year);
         double zelle = ( amount !=null? Double.parseDouble(amount.toString()):0);
 
         totalAmount = cash+cheque+cc+fromSal+mo+zelle;

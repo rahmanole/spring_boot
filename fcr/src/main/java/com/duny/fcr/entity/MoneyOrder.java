@@ -23,6 +23,9 @@ public class MoneyOrder {
     @Column(length = 30,nullable = true)
     private String moneyOrderNum;
     private double amount;
+    @Column(length = 10)
+    private String year;
+    private String month;
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] moneyOrderImg;
 

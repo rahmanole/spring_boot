@@ -87,24 +87,25 @@ public class AdmissionPaymentController {
         return "/pages/tables/afPayments";
     }
 
-    @GetMapping(value = "/af/delete/{stId}")
-    public String deleteAFPayment(@PathVariable String stId){
+    @GetMapping(value = "/af/delete/{stId}/{year}")
+    public String deleteAFPayment(@PathVariable String stId,@PathVariable String year){
         admissionPaymentRepo.deleteAFPaymentByStudentId(stId);
-        cashRepo.deleteCashByStudentId(stId);
-        chequeRepo.deleteChequeByStudentId(stId);
-        chequeRepo.deleteChequeByStudentId(stId);
-        creditCardRepo.deleteCreditCardByStudentId(stId);
-        fromSalRepo.deleteFromSalsByStudentId(stId);
-        moneyOrderRepo.deleteMoneyOrderByStudentId(stId);
-        zelleReo.deleteZelleByStudentId(stId);
+        cashRepo.deleteCashByStudentId(stId,year);
+        chequeRepo.deleteChequeByStudentId(stId,year);
+        chequeRepo.deleteChequeByStudentId(stId,year);
+        creditCardRepo.deleteCreditCardByStudentId(stId,year);
+        fromSalRepo.deleteFromSalsByStudentId(stId,year);
+        moneyOrderRepo.deleteMoneyOrderByStudentId(stId,year);
+        zelleReo.deleteZelleByStudentId(stId,year);
         return "redirect:/af/all";
     }
 
-    @GetMapping(value = "/af/details/{stId}")
-    public String afDetails(Model model,@PathVariable String stId){
-       model.addAttribute("cashes",cashRepo.findCashByStudentId(stId));
-        model.addAttribute("cheques",chequeRepo.findChequeByStudentId(stId));
-        System.out.println(chequeRepo.findChequeByStudentId(stId).get(0).getChequeImg());
+    @GetMapping(value = "/af/details/{stId}/{year}")
+    public String afDetails(Model model,@PathVariable String stId,@PathVariable String year){
+        model.addAttribute("cashes",cashRepo.findCashByStudentId(stId,year));
+        model.addAttribute("cheques",chequeRepo.findChequeByStudentId(stId,year));
+        System.out.println(chequeRepo.findChequeByStudentId(stId,year).get(0).getChequeImg());
         return "/pages/tables/paymentDetails";
     }
+
 }

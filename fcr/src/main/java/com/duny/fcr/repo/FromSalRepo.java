@@ -10,14 +10,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface FromSalRepo extends JpaRepository<FromSal,Long> {
-    String GET_AMOUNT_BY_ST_ID = "select sum(amount) from from_sal where student_id=?";
-    String DELETE_FROM_SAL= "delete from from_sal where student_id=?";
+    String GET_AMOUNT_BY_ST_ID = "select sum(amount) from from_sal where student_id=? and year=?";
+    String GET_TF = "select sum(amount) from from_sal where student_id=? and year=? and month=?";
+    String DELETE_FROM_SAL= "delete from from_sal where student_id=? and year=?";
 
     @Query(nativeQuery = true,value = GET_AMOUNT_BY_ST_ID)
-    Object getAmount(String pid);
+    Object getAmount(String pid,String year);
+
+    @Query(nativeQuery = true,value = GET_TF)
+    Object getAmount(String pid,String year,String month);
 
     @Modifying
     @Transactional
     @Query(value = DELETE_FROM_SAL,nativeQuery = true)
-    void deleteFromSalsByStudentId(String stId);
+    void deleteFromSalsByStudentId(String stId,String year);
 }

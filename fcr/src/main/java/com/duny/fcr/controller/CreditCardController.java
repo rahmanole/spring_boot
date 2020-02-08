@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Calendar;
+import java.util.Date;
+
 @Controller
 public class CreditCardController {
     @Autowired
@@ -21,6 +24,11 @@ public class CreditCardController {
         builder.setPrettyPrinting();
         Gson gson = new Gson();
         CreditCard creditCard = gson.fromJson(cCard,CreditCard.class);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        creditCard.setYear(calendar.get(Calendar.YEAR)+"");
+
         creditCardRepo.save(creditCard);
         return "redirect:/admissionFee";
     }

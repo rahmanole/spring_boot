@@ -24,6 +24,9 @@ public class Cheque {
     private double amount;
     @Column(columnDefinition = "MEDIUMTEXT")
     private String chequeImg;
+    @Column(length = 10)
+    private String year;
+    private String month;
     @Column(name = "payment_id",length = 10)
     private String paymentId;
     private String studentId;

@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Calendar;
+import java.util.Date;
 
 @Controller
 public class MoneyOrderController {
@@ -34,6 +36,10 @@ public class MoneyOrderController {
         moneyOrder.setMoneyOrderNum(mOnum);
         moneyOrder.setMoneyOrderImg(file.getBytes());
         moneyOrder.setMoneyOrderDate(new SimpleDateFormat("yyyy-mm-dd").parse(date));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        moneyOrder.setYear(calendar.get(Calendar.YEAR)+"");
         moneyOrderRepo.save(moneyOrder);
         return "redirect:/admissionFee";
     }

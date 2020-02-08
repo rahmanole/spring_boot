@@ -1,7 +1,9 @@
 $(document).ready(function () {
 
     //$('#admissionFeeForm').hide();
-    $('#month').val(getMonthName());
+    var month = getMonthName();
+    var currentYear = (new Date().getFullYear()).toString();
+    $('#month').val(month);
 
 
     var studentID;
@@ -34,6 +36,7 @@ $(document).ready(function () {
             $('#tfMoneyOrderPID').val(paymentId);
             $('#tFeeStId').val(studentID);
             $('#tfFromSalPID').val(studentID);
+            $('#tfChequeSTId').val(studentID);
             //============ends here========
 
             $('#pdfGeneratorAdmisnFee').show();
@@ -42,7 +45,7 @@ $(document).ready(function () {
 
             tfToPay = $('#tuitionFeeToPay').val();
             tfPID = $('#tFeePaymentID').val();
-            calculateTF(tfPID,tfToPay);
+            calculateTF(studentID,tfToPay,currentYear,month);
         }
     });
 
@@ -106,6 +109,7 @@ $(document).ready(function () {
             return '';
         }
 
+        cash = addElement(cash,"studentId",studentID);
         console.log(cash);
 
         $.ajax({
@@ -114,7 +118,7 @@ $(document).ready(function () {
             data: cash,
             contentType: "application/json",
             success:function () {
-                calculateTF(tfPID,tfToPay);
+                calculateTF(studentID,tfToPay,currentYear,month);
                 $('#tfCashSavingStatus').append('<span class="text-success">Cash Payment Entered</span>');
                 return false;
             },
@@ -189,12 +193,6 @@ $(document).ready(function () {
             return '';
         }
 
-
-        // if ($('#tfChequeImg').val() == '') {
-        //     $('#tfChequeSavingStatus').append('<span class="text-danger">Select image</span>');
-        //     return '';
-        // }
-
         $.ajax({
             method:'post',
             url:'/cheque/save',
@@ -204,7 +202,7 @@ $(document).ready(function () {
             contentType: false,
             cache:false,
             success:function () {
-                calculateTF(tfPID,tfToPay);
+                calculateTF(studentID,tfToPay,currentYear,month);
                 $('#tfChequeSavingStatus').append('<span class="text-success">Cheque payment saved</span>');
                 return false;
             },
@@ -420,7 +418,9 @@ function tuitonFeeStmt(st_id) {
             )
             $('#tuitionFeeToPay').val(tuitionFee);
             $('#motnhName').html(getMonthName());
+            $('#motnhName').append(" "+new Date().getFullYear());
             $('#paymentIDonStmt').html(getPaymentId());
+
 
 
 
@@ -533,13 +533,28 @@ function getDaddCont(fin_id, st_id) {
     return daddsContribution;
 }
 
-function calculateTF(tfPaymentId,tfToPay) {
-    var feePaid = getAFPaid(tfPaymentId);
-    console.log(feePaid);
-    $('#tuitionFeePaid').val(feePaid);
-    $('#tuitionFeeDue').val(tfToPay - feePaid);
-    $('#tuitionFeePaidFieldOnStmt').html(feePaid);
-    $('#tuitionFeeDueOnStmt').html(tfToPay-feePaid);
+function calculateTF(tfPaymentId,tfToPay,year,month) {
+    var tuitionFeePaid = getTFPaid(tfPaymentId,year,month);
+    $('#tuitionFeePaid').val(tuitionFeePaid);
+    $('#tuitionFeeDue').val(tfToPay - tuitionFeePaid);
+    $('#tuitionFeePaidFieldOnStmt').html(tuitionFeePaid);
+    $('#tuitionFeeDueOnStmt').html(tfToPay-tuitionFeePaid);
+}
+
+function getTFPaid(stId,feeYear,month) {
+    var amount = 0;
+    $.ajax({
+        method: 'GET',
+        url: '/tuitionFee/'+stId+'/'+feeYear+'/'+month,
+        async: false,
+        success: function (data) {
+            amount = data;
+        },
+        error: function () {
+            console.log('not success');
+        }
+    });
+    return amount;
 }
 
 function getMonthName() {
