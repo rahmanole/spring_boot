@@ -546,6 +546,15 @@ $(document).ready(function () {
         $('#collectionAmt').val('');
         $('#collectionDiv').slideUp();
 
+        $('#staff').prop('checked', false);
+        $('#staffDiv').slideUp();
+
+        $('#zakar').prop('checked', false);
+        $('#zakatDiv').slideUp();
+
+        $('#sibling').prop('checked', false);
+        $('#siblingDiv').slideUp();
+
 
         $('#sponsor').prop('checked', false);
         $('#sponsorDiv').slideUp();
@@ -1000,7 +1009,11 @@ function studentFeeReport(st_id) {
                     "<tr><td>" + "Staff Discount" + "</td>" + "<td>" + "- $" + 3800.00 + " /year</td></tr>"
                 );
 
+                $('#staff').prop('checked', true);
                 $('#otp').attr('disabled', true);
+
+                $('#staff').change();
+                $('#staffDiv').slideDown();
             }
 
             if (data[0].finDtlsOfStudent.zakat>0) {
