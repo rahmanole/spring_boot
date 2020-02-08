@@ -17,10 +17,9 @@ $(document).ready(function () {
                 }
             },
             error: function () {
-                console.log('Could not load sponsor list ');
+                console.log('error to get teacher');
             }
         });
-
     });
     var course = "";
 
