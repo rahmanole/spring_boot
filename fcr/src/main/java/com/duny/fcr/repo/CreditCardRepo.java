@@ -6,20 +6,24 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface CreditCardRepo extends JpaRepository<CreditCard,Long> {
-    String GET_AMOUNT_BY_ST_ID = "select sum(amount) from credit_card where student_id=? and year=?";
-    String GET_TF= "select sum(amount) from credit_card where student_id=? and year=? and month=?";
-    String DELETE_CC = "delete from credit_card where student_id=? and year=?";
+    String GET_AMOUNT_BY_ST_ID = "select sum(amount) from credit_card where student_id=? and year=? and payment_id like 'AF%'";
+    String GET_TF= "select sum(amount) from credit_card where payment_id=?";
+    String GET_ALL_AF_CC = "select * from credit_card where student_id=? and payment_id like 'AF%'";
+    String GET_ALL_TF_CC = "select * from credit_card where student_id=? and payment_id like 'TF%'";
 
     @Query(nativeQuery = true,value = GET_AMOUNT_BY_ST_ID)
     Object getAmount(String pid,String year);
 
     @Query(nativeQuery = true,value = GET_TF)
-    Object getAmount(String pid,String year,String month);
+    Object getAmount(String pid);
 
-    @Modifying
+
     @Transactional
-    @Query(value = DELETE_CC,nativeQuery = true)
-    void deleteCreditCardByStudentId(String stId,String year);
+    void deleteCreditCardByPaymentId(String pid);
+
+    List<CreditCard> findAllByPaymentId(String pid);
 
 }

@@ -21,7 +21,7 @@ public class FromSal {
     private String chequeNum;
     private double amount;
     @Column(columnDefinition = "MEDIUMBLOB")
-    private byte[] fromSalChequeImg;
+    private String fromSalChequeImg;
     @Column(name = "payment_id",length = 10)
     private String paymentId;
     private String studentId;

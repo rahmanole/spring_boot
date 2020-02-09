@@ -40,9 +40,8 @@ public interface AdmissionPaymentRepo extends JpaRepository<AdmissionPayment,Lon
 
     AdmissionPayment getAdmissionPaymentByStudentIdAndYear(String stId,String year);
 
-    @Modifying
+
     @Transactional
-    @Query(value = DELETE_PAYMENTS,nativeQuery = true)
-    void deleteAFPaymentByStudentId(String stId);
+    void deleteAFPaymentByAfPaymentId(String pid);
 
 }

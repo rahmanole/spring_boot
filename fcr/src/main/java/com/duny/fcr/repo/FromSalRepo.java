@@ -8,20 +8,24 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface FromSalRepo extends JpaRepository<FromSal,Long> {
-    String GET_AMOUNT_BY_ST_ID = "select sum(amount) from from_sal where student_id=? and year=?";
-    String GET_TF = "select sum(amount) from from_sal where student_id=? and year=? and month=?";
+    String GET_AMOUNT_BY_ST_ID = "select sum(amount) from from_sal where student_id=? and year=? and payment_id like 'AF%'";
+    String GET_TF = "select sum(amount) from from_sal where payment_id=?";
     String DELETE_FROM_SAL= "delete from from_sal where student_id=? and year=?";
 
     @Query(nativeQuery = true,value = GET_AMOUNT_BY_ST_ID)
     Object getAmount(String pid,String year);
 
     @Query(nativeQuery = true,value = GET_TF)
-    Object getAmount(String pid,String year,String month);
+    Object getAmount(String pid);
 
-    @Modifying
+
     @Transactional
-    @Query(value = DELETE_FROM_SAL,nativeQuery = true)
-    void deleteFromSalsByStudentId(String stId,String year);
+    void deleteFromSalsByPaymentId(String pid);
+
+    List<FromSal> findAllByPaymentId(String tfPaymentId);
+
 }

@@ -1,7 +1,6 @@
 $(document).ready(function () {
 
     var admissionYear = (new Date().getFullYear()).toString();
-    $('#year').val(admissionYear);
 
     var studentID;
     var afToPay;
@@ -31,17 +30,14 @@ $(document).ready(function () {
             afPaymentId = getAfPaymentId();
             student = admissionFeeStmt(studentID, afPaymentId);
             $('#yearName').html(admissionYear);
-            console.log(admissionYear);
-            var af = getAFPayment(studentID,admissionYear);
 
             afToPay = getTotalCommonMandatoryFee(student);
-            console.log(af.year);
-            console.log(af);
+
+            var af = getAFPayment(studentID,admissionYear);
 
             if (af != undefined && af.year == admissionYear.toString()) {
                 afPaymentId = af.afPaymentId;
                 paymentDBId = af.id;
-                console.log('hi');
             }
 
             calculateAF(studentID,afToPay,admissionYear);

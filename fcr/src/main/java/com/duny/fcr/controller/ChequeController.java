@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,7 +47,7 @@ public class ChequeController {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        cheque.setMonth(UtilityClass.getMonthName(calendar.get(Calendar.MONTH)));
+        cheque.setMonth(LocalDate.now().getMonth().toString());
         cheque.setYear(calendar.get(Calendar.YEAR)+"");
         chequeRepo.save(cheque);
 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +64,7 @@ public class TuitionFeePaymentController {
         Gson gson = new Gson();
         TuitionFeePayment tuitionFeePayment = gson.fromJson(tuitionFeePaymentJson, TuitionFeePayment.class);
         System.out.println(tuitionFeePayment.getTuitionFeeDue());
+        tuitionFeePayment.setYear(LocalDate.now().getYear()+"");
         tuitionFeePaymentRepo.save(tuitionFeePayment);
         return "redirect:/tuitionFee";
     }
@@ -87,35 +89,71 @@ public class TuitionFeePaymentController {
         return studentListWithDue;
     }
 
-    @GetMapping("/tuitionFee/{stId}/{year}/{month}")
+    @GetMapping("/tuitionFee/{pid}")
     @ResponseBody
-    public double getAmount(@PathVariable String stId, @PathVariable String year, @PathVariable String month) {
+    public double getAmount(@PathVariable String pid) {
 
         double totalAmount;
 
-        Object amount = cashRepo.getAmount(stId,year,month);
+        Object amount = cashRepo.getAmount(pid);
         double cash = (amount != null? Double.parseDouble(amount.toString()):0);
         System.out.println(amount);
 
-        amount = chequeRepo.getAmount(stId,year,month);
+        amount = chequeRepo.getAmount(pid);
         double cheque = (amount != null? Double.parseDouble(amount.toString()):0);
         System.out.println(amount);
 
-        amount = creditCardRepo.getAmount(stId,year,month);
+        amount = creditCardRepo.getAmount(pid);
         double cc = (amount != null? Double.parseDouble(amount.toString()):0);
 
-        amount = fromSalRepo.getAmount(stId,year,month);
+        amount = fromSalRepo.getAmount(pid);
         double fromSal = (amount !=null? Double.parseDouble(amount.toString()):0);
 
-        amount = moneyOrderRepo.getAmount(stId,year,month);
+        amount = moneyOrderRepo.getAmount(pid);
         double mo = (amount !=null? Double.parseDouble(amount.toString()):0);
 
-        amount = zelleReo.getAmount(stId,year,month);
+        amount = zelleReo.getAmount(pid);
         double zelle = ( amount !=null? Double.parseDouble(amount.toString()):0);
 
         totalAmount = cash+cheque+cc+fromSal+mo+zelle;
 
         return totalAmount;
+    }
+
+    @GetMapping(value = "/tf/{stId}/{month}/{year}")
+    @ResponseBody
+    public TuitionFeePayment getTFPayemnt(@PathVariable String stId,@PathVariable String month,@PathVariable String year){
+        return tuitionFeePaymentRepo.findTuitionFeePaymentByStudentIdAndMonthAndYear(stId,month,year);
+    }
+
+    @GetMapping(value = "/tf/all")
+    public String getAllAFPayments(Model model){
+        model.addAttribute("tfPaymentList",tuitionFeePaymentRepo.findAll());
+        return "/pages/tables/tfPayments";
+    }
+
+    @GetMapping(value = "/tf/details/{tfPaymentId}")
+    public String afDetails(Model model,@PathVariable String tfPaymentId){
+        model.addAttribute("cashes",cashRepo.findAllByPaymentId(tfPaymentId));
+        model.addAttribute("cheques",chequeRepo.findAllByPaymentId(tfPaymentId));
+        model.addAttribute("ccs",creditCardRepo.findAllByPaymentId(tfPaymentId));
+        model.addAttribute("mOrders",moneyOrderRepo.findAllByPaymentId(tfPaymentId));
+        model.addAttribute("fromSals",fromSalRepo.findAllByPaymentId(tfPaymentId));
+        model.addAttribute("zelles",zelleReo.findAllByPaymentId(tfPaymentId));
+        // System.out.println(chequeRepo.findChequeByStudentId(stId,year).get(0).getChequeImg());
+        return "/pages/tables/tfPaymentDetails";
+    }
+
+    @GetMapping(value = "/tf/delete/{tfPaymentId}")
+    public String deleteAFPayment(@PathVariable String tfPaymentId){
+        tuitionFeePaymentRepo.deleteTuitionFeePaymentByTfPaymentId(tfPaymentId);
+        cashRepo.deleteCashByPaymentId(tfPaymentId);
+        chequeRepo.deleteChequeByPaymentId(tfPaymentId);
+        creditCardRepo.deleteCreditCardByPaymentId(tfPaymentId);
+        fromSalRepo.deleteFromSalsByPaymentId(tfPaymentId);
+        moneyOrderRepo.deleteMoneyOrderByPaymentId(tfPaymentId);
+        zelleReo.deleteZelleByPaymentId(tfPaymentId);
+        return "redirect:/tf/all";
     }
 
 }

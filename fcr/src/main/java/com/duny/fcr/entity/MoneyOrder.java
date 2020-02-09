@@ -17,7 +17,7 @@ public class MoneyOrder {
     private long id;
     private Date date = new Date();
     @Column(name = "payment_id",length = 10)
-    private String paymentID;
+    private String paymentId;
     private String studentId;
     private Date moneyOrderDate;
     @Column(length = 30,nullable = true)
@@ -27,6 +27,6 @@ public class MoneyOrder {
     private String year;
     private String month;
     @Column(columnDefinition = "MEDIUMBLOB")
-    private byte[] moneyOrderImg;
+    private String moneyOrderImg;
 
 }

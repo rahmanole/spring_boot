@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title> Admission Fees</title>
+    <title> Tuition Fees</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -22,7 +22,7 @@
                 <div class="card">
                     <div class="header">
                         <h2 class="text-center">
-                            Admission Fees
+                            Tuition Fees
                         </h2>
                         <ul class="header-dropdown m-r--5">
                             <li class="dropdown">
@@ -45,24 +45,26 @@
                                 <tr>
                                     <th>Student ID</th>
                                     <th>Payment ID</th>
-                                    <th>Admission Fee</th>
+                                    <th>Tuition Fee</th>
                                     <th>Fee Paid</th>
                                     <th>Due</th>
+                                    <th>Month</th>
                                     <th>Year</th>
                                     <th>Details</th>
                                     <th>Delete</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="af:${afPaymentList}">
-                                        <td class="text-center" th:text="${af.studentId}"></td>
-                                        <td class="text-center" th:text="${af.afPaymentId}"></td>
-                                        <td class="text-center" th:text="${af.admissionFee}"></td>
-                                        <td class="text-center" th:text="${af.admissionFeePaid}"></td>
-                                        <td class="text-center" th:text="${af.admissionFeeDue}"></td>
-                                        <td class="text-center" th:text="${af.year}"></td>
-                                        <td class="text-center"><a th:href="@{'/af/details/'+${af.afPaymentId}}" target="_blank" class="btn btn-default waves-effect" >Details</a></td>
-                                        <td class="text-center"><a th:href="@{'/af/delete/'+${af.afPaymentId}}" id="deleteAF" onclick="return confirm('Are you sure you want to delete this item?');" th:data-id="${af.studentId}" class="btn btn-default waves-effect" ><i class="material-icons">delete</i></a></td>
+                                    <tr th:each="tf:${tfPaymentList}">
+                                        <td class="text-center" th:text="${tf.studentId}"></td>
+                                        <td class="text-center" th:text="${tf.tfPaymentId}"></td>
+                                        <td class="text-center" th:text="${tf.tuitionFee}"></td>
+                                        <td class="text-center" th:text="${tf.tuitionFeePaid}"></td>
+                                        <td class="text-center" th:text="${tf.tuitionFeeDue}"></td>
+                                        <td class="text-center" th:text="${tf.month}"></td>
+                                        <td class="text-center" th:text="${tf.year}"></td>
+                                        <td class="text-center"><a th:href="@{'/tf/details/'+${tf.tfPaymentId}}" target="_blank" class="btn btn-default waves-effect" >Details</a></td>
+                                        <td class="text-center"><a th:href="@{'/tf/delete/'+${tf.tfPaymentId}}" id="deleteTF" onclick="return confirm('Are you sure you want to delete this item?');" th:data-id="${tf.studentId}" class="btn btn-default waves-effect" ><i class="material-icons">delete</i></a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -76,7 +78,7 @@
 <!--                                        <h4 class="modal-title text-center" id="smallModalLabel">Are You sure to delete??</h4>-->
 <!--                                    </div>-->
 <!--                                    <div class="modal-body">-->
-<!--                                        <button type="button" id="deleteBtnOnModal" class="btn btn-danger btn-link waves-effect">Yes</button>-->
+<!--                                        <button type="button" id="deleteTFonModal" class="btn btn-danger btn-link waves-effect">Yes</button>-->
 <!--                                        <button type="button" class="btn btn-danger btn-link waves-effect" style="float: right;" data-dismiss="modal">No</button>-->
 <!--                                    </div>-->
 <!--                                </div>-->

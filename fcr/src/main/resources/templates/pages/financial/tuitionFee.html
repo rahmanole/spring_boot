@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Form Examples | Bootstrap Based Admin Template - Material Design</title>
+    <title>Tuition Fee Payment</title>
 </head>
 
 <body class="theme-red">
@@ -61,6 +61,18 @@
                                                 <div class="form-line">
                                                     <input readonly type="text" name="studentId" id="tFeeStId"
                                                            class="form-control text-right">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="hide">
+                                        <td style="width: 30%;padding-top: 17px">Year</td>
+                                        <td>
+                                            <div class="form-group form-float" style="margin-bottom: 0">
+                                                <div class="form-line">
+                                                    <input type="text" name="year"
+                                                           id="yearOfTf" class="form-control text-right">
                                                 </div>
                                             </div>
                                         </td>
@@ -229,6 +241,12 @@
 
                                                         <div class="hide form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
+                                                                <input  type="text" name="studentId" id="tfFromSalSTId" class="hide form-control" placeholder="Payment ID">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="hide form-group form-float" style="margin-bottom: 10px">
+                                                            <div class="form-line">
                                                                 <input  type="text" name="paymentId" id="tfFromSalPID" class="hide form-control" placeholder="Payment ID">
                                                             </div>
                                                         </div>
@@ -264,9 +282,16 @@
 
                                                 <div id="moneyOrder" class="tab-pane fade">
                                                     <form id="tfMoneyOrderForm" enctype="multipart/form-data">
+
                                                         <div class="hide form-group form-float" style="margin-bottom: 10px">
                                                             <div class="form-line">
-                                                                <input type="text" name="paymentID" id="tfZellePID" class="form-control" placeholder="Payment ID">
+                                                                <input  type="text" name="studentId" id="tfMOSTId" class="hide form-control" placeholder="Payment ID">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="hide form-group form-float" style="margin-bottom: 10px">
+                                                            <div class="form-line">
+                                                                <input type="text" name="paymentId" id="tfZellePID" class="form-control" placeholder="Payment ID">
                                                             </div>
                                                         </div>
 

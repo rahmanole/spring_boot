@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -22,6 +23,6 @@ public class Cash {
     private String year;
     private String month;
     private double amount;
-    private Date date = new Date();
+    private LocalDate date = LocalDate.now();
 
 }

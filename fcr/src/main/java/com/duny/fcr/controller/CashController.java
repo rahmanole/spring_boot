@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -28,7 +29,7 @@ public class CashController {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         cash.setYear(calendar.get(Calendar.YEAR)+"");
-        cash.setMonth(UtilityClass.getMonthName(calendar.get(Calendar.MONTH)));
+        cash.setMonth(LocalDate.now().getMonth().toString());
         cashRepo.save(cash);
         return "redirect:/admissionFee";
     }

@@ -23,5 +23,8 @@ public class TuitionFeePayment {
     private double tuitionFee;
     private double tuitionFeePaid;
     private double tuitionFeeDue;
+    @Column(length = 5)
+    private String year;
+
 
 }

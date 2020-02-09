@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class AdmissionPaymentController {
         Gson gson = new Gson();
         AdmissionPayment admissionPayment;
         admissionPayment = gson.fromJson(admPaymentJson, AdmissionPayment.class);
+        admissionPayment.setYear(LocalDate.now().getYear()+"");
         admissionPaymentRepo.save(admissionPayment);
         return "redirect:/admissionFee";
     }
@@ -87,24 +89,23 @@ public class AdmissionPaymentController {
         return "/pages/tables/afPayments";
     }
 
-    @GetMapping(value = "/af/delete/{stId}/{year}")
-    public String deleteAFPayment(@PathVariable String stId,@PathVariable String year){
-        admissionPaymentRepo.deleteAFPaymentByStudentId(stId);
-        cashRepo.deleteCashByStudentId(stId,year);
-        chequeRepo.deleteChequeByStudentId(stId,year);
-        chequeRepo.deleteChequeByStudentId(stId,year);
-        creditCardRepo.deleteCreditCardByStudentId(stId,year);
-        fromSalRepo.deleteFromSalsByStudentId(stId,year);
-        moneyOrderRepo.deleteMoneyOrderByStudentId(stId,year);
-        zelleReo.deleteZelleByStudentId(stId,year);
+    @GetMapping(value = "/af/delete/{paymentId}")
+    public String deleteAFPayment(@PathVariable String paymentId){
+        admissionPaymentRepo.deleteAFPaymentByAfPaymentId(paymentId);
+        cashRepo.deleteCashByPaymentId(paymentId);
+        chequeRepo.deleteChequeByPaymentId(paymentId);
+        creditCardRepo.deleteCreditCardByPaymentId(paymentId);
+        fromSalRepo.deleteFromSalsByPaymentId(paymentId);
+        moneyOrderRepo.deleteMoneyOrderByPaymentId(paymentId);
+        zelleReo.deleteZelleByPaymentId(paymentId);
         return "redirect:/af/all";
     }
 
-    @GetMapping(value = "/af/details/{stId}/{year}")
-    public String afDetails(Model model,@PathVariable String stId,@PathVariable String year){
-        model.addAttribute("cashes",cashRepo.findCashByStudentId(stId,year));
-        model.addAttribute("cheques",chequeRepo.findChequeByStudentId(stId,year));
-        System.out.println(chequeRepo.findChequeByStudentId(stId,year).get(0).getChequeImg());
+    @GetMapping(value = "/af/details/{afPaymentId}")
+    public String afDetails(Model model,@PathVariable String afPaymentId){
+        model.addAttribute("cashes",cashRepo.findAllByPaymentId(afPaymentId));
+        model.addAttribute("cheques",chequeRepo.findAllByPaymentId(afPaymentId));
+       // System.out.println(chequeRepo.findChequeByStudentId(stId,year).get(0).getChequeImg());
         return "/pages/tables/paymentDetails";
     }
 
