@@ -54,7 +54,7 @@ $(document).ready(function () {
             event.preventDefault();
             return;
         }else if(student.gender == 'Boy'){
-            if(student.boarding == undefined){
+            if(student.boarding == undefined && student.courseName != 'Academy'){
                 $('#studentSavingStatus').html('<span class="text-danger">Select your boarding</span>');
                 event.preventDefault();
                 return;
@@ -73,7 +73,7 @@ $(document).ready(function () {
             return;
         }
 
-        event.preventDefault();
+        //event.preventDefault();
         console.log(isStudentExists(name,fName,mName));
     });
 

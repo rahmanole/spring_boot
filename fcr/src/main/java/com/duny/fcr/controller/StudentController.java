@@ -40,10 +40,25 @@ public class StudentController {
 
         student.setDob(LocalDate.parse(dob,DateTimeFormatter.ofPattern("MM/dd/yyyy")));
 
-        int application_id = studentRepo.getMaxApplicationId() + 1;
+        int application_id;
+        try{
+            application_id = studentRepo.getMaxApplicationId() + 1;
+
+        }catch (Exception e){
+            application_id = 1000;
+        }
         student.setApplicationId(application_id);
 
-        int student_id = Integer.parseInt(studentRepo.getMaxStudentId()) + 1;
+        int student_id;
+
+        if(studentRepo.getMaxStudentId() == null){
+            student_id = 111;
+        }else{
+            student_id = Integer.parseInt(studentRepo.getMaxStudentId()) + 1;
+        }
+
+
+
         student.setStudentId(student_id + "");
 
         student.setFinDtlsOfStudent(new FinDtlsOfStudent());
