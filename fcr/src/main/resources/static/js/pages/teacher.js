@@ -3,23 +3,13 @@ $(document).ready(function () {
     $('#alimClassField').hide();
 
     $('#className').focusout(function () {
-        var course = $('#className').val();
+        var className = $('#className').val();
+        if(className == ''){
+            return;
+        }
         console.log(course);
-        $.ajax({
-            method: "GET",
-            url: '/teacher/getTeacherByCourse/'+course,
-            success: function (data) {
-                console.log(data);
-                if(data != ""){
-                    $('#teacherSaveStatus').html('<span class="text-danger">Teacher already assigned</span>');
-                }else{
-                    $('#teacherSaveStatus').html("");
-                }
-            },
-            error: function () {
-                console.log('error to get teacher');
-            }
-        });
+        isTeacherAssigned(className);
+
     });
     var course = "";
 
@@ -46,4 +36,35 @@ $(document).ready(function () {
             });
         }
     });
+
+    $('#addTeacherForm').submit(function (event) {
+        let teacher = $('#addTeacherForm').serializeJSON();
+
+        if(teacher.teacherName == '' || teacher.className=='' || teacher.className == ''){
+            $('#teacherSaveStatus').html('<span class="text-danger">Fill out all the fields</span>');
+            event.preventDefault();
+        }
+    })
+
+
+
 });
+
+function isTeacherAssigned(className) {
+    $.ajax({
+        method: "GET",
+        url: '/teacher/isAssigned/'+className,
+        success: function (data) {
+            console.log(data);
+            if(data == true){
+                $('#teacherSaveStatus').html('<span class="text-danger">Teacher already assigned</span>');
+            }else{
+                $('#teacherSaveStatus').html("");
+            }
+        },
+        error: function () {
+            $('#teacherSaveStatus').html('<span class="text-danger">Could not connect to server</span>');
+            console.log('error to get teacher');
+        }
+    });
+}

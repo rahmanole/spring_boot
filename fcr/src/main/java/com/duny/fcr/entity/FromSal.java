@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -15,7 +16,7 @@ public class FromSal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private Date date = new Date();
+    private LocalDate date = LocalDate.now();
     private Date payPeriod;
     @Column(length = 30,nullable = true)
     private String chequeNum;

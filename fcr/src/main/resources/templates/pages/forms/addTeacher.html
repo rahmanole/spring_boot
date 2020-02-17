@@ -35,12 +35,12 @@
                         </ul>
                     </div>
                     <div class="body">
-                        <form id="addSponsorFrm" th:action="@{/teacher/save}" th:object="${teacher}" th:method="post">
+                        <form id="addTeacherForm" th:action="@{/teacher/save}" th:object="${teacher}" th:method="post">
 
                             <div class="form-group form-float">
                                 <div class="form-line">
                                     <select id="course" th:field="*{courseName}" class="form-control show-tick">
-                                        <option th:value="select" selected>Select Course</option>
+                                        <option th:value="select" selected>-- Select Course --</option>
                                         <option th:value="Academy">Academy</option>
                                         <option th:value="Boy_Nazira">Boy's Nazira</option>
                                         <option th:value="Banaat_Nazira">Banaat Nazira</option>

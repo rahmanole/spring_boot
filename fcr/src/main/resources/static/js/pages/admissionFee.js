@@ -288,7 +288,7 @@ $(document).ready(function () {
             error: function () {
                 console.log('not success');
             }
-        })
+        });
     });
 
 

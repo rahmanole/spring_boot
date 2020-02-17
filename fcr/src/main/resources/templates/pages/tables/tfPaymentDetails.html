@@ -243,6 +243,7 @@
                                     <th>Date</th>
                                     <th>Check Number</th>
                                     <th>Amount</th>
+                                    <th>Check Image</th>
                                     <th>Delete</th>
                                 </tr>
                                 </thead>
@@ -303,7 +304,7 @@
                                     <td class="text-center" th:text="${zelle.month}"></td>
                                     <td class="text-center" th:text="${zelle.date}"></td>
                                     <td class="text-center" th:text="${zelle.email}"></td>
-                                    <td class="text-center" th:text="${zelle.mobile}"></td>
+                                    <td class="text-center" th:text="${zelle.phoneNum}"></td>
                                     <td class="text-center"><button th:data-id="${zelle.id}" class="btn btn-default waves-effect" data-toggle="modal" data-target="#smallModal" ><i class="material-icons">delete</i></button></td>
                                 </tr>
                                 </tbody>

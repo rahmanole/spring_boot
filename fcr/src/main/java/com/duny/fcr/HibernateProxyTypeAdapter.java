@@ -1,8 +1,6 @@
 package com.duny.fcr;
 
-import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -10,6 +8,9 @@ import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class HibernateProxyTypeAdapter extends TypeAdapter<HibernateProxy> {
 
@@ -47,5 +48,9 @@ public class HibernateProxyTypeAdapter extends TypeAdapter<HibernateProxy> {
                 .getImplementation();
         // Serialize the value
         delegate.write(out, unproxiedValue);
+    }
+
+    public JsonElement serialize(LocalDate date, Type typeOfSrc, JsonSerializationContext context) {
+        return new JsonPrimitive(date.format(DateTimeFormatter.ISO_LOCAL_DATE)); // "yyyy-mm-dd"
     }
 }

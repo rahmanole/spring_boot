@@ -39,15 +39,12 @@ public class FromSalController {
         fromSal.setChequeNum(cNum);
         fromSal.setAmount(Double.parseDouble(amount));
         fromSal.setFromSalChequeImg("data:image/jpg;base64,"+Base64.getEncoder().encodeToString(file.getBytes()));
-        fromSal.setDate(new SimpleDateFormat("yyyy-mm-dd").parse(payPeriod));
+        fromSal.setDate(LocalDate.parse(payPeriod));
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         fromSal.setYear(calendar.get(Calendar.YEAR)+"");
         fromSal.setMonth(LocalDate.now().getMonth().toString());
         fromSalRepo.save(fromSal);
-
-//        System.out.println(pid+cNum+payPeriod+amount);
-//        System.out.println(Base64.getEncoder().encodeToString(file.getBytes()));
 
         return "redirect:/admissionFee";
     }

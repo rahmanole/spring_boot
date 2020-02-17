@@ -901,15 +901,6 @@ function studentFeeReport(st_id) {
         success: function (data) {
             data = $.parseJSON(data);
 
-            // $('#studentDetails').html('');
-            //
-            // $('#studentDetails').html(
-            //
-            //     "<tr><td>" + "Mother Name" + "</td>" + "<td>" + data[0].motherName + "</td></tr>"
-            //     +
-            //     "<tr><td>" + "Date of Birth" + "</td>" + "<td>" + data[0].dob.substr(0,13) +"</td></tr>"
-            // );
-
             var total = 3800, discount = 0;
 
             total += parseInt(data[0].finDtlsOfStudent.mandatoryFees);
@@ -938,7 +929,7 @@ function studentFeeReport(st_id) {
                 +
                 "<tr><td>" + "Mother  Name" + "</td>" + "<td>" + data[0].motherName + "</td></tr>"
                 +
-                "<tr><td>" + "Date of Birth" + "</td>" + "<td>" + data[0].dob.substr(0,12) + "</td></tr>"
+                "<tr><td>" + "Date of Birth" + "</td>" + "<td>" + data[0].dob + "</td></tr>"
             );
 
 

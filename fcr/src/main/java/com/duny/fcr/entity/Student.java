@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -21,8 +22,6 @@ public class Student {
     private int applicationId;
     @Column(nullable = false)
     private String name;
-    @Column(length = 30)
-    private String email;
     @Column(name="parent_email",nullable = false)
     private String parentEmail;
     @Column(nullable = false)
@@ -32,8 +31,8 @@ public class Student {
     @Column(name="year",length = 20)
     private String year="NA";
     @Column(nullable = false)
-    private String boarding;
-    private Date dob;
+    private String boarding = "no";
+    private LocalDate dob;
     @Column(nullable = true)
     private String homePhone;
     @Column(length = 30,nullable = false)
@@ -44,6 +43,8 @@ public class Student {
     private String fatherName;
     @Column(length = 15,nullable = true)
     private String fatherCell;
+    @Column(length = 15,nullable = true)
+    private String emgCnt;
     @Column(nullable = false)
     private String address;
     @Column(nullable = true)
@@ -61,7 +62,7 @@ public class Student {
 
     @Column(nullable = true)
     private double initialDue = 0;
-    private Date dateOfAdmission;
+    private LocalDate dateOfAdmission;
     @Column(nullable = false)
     private String status  = "applied";
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)

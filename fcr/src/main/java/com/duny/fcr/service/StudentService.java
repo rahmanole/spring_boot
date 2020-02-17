@@ -8,4 +8,5 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public interface StudentService {
     void uploadExcel(MultipartFile file,StudentRepo studentRepo);
+    boolean isStudentExists(String name,String fName,String mName);
 }

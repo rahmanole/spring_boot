@@ -5,6 +5,7 @@ import com.duny.fcr.entity.Student;
 import com.duny.fcr.repo.StudentRepo;
 import com.duny.fcr.service.StudentService;
 import org.apache.poi.ss.usermodel.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,10 +18,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Component
 public class StudentServiceImp implements StudentService {
+    @Autowired
+    StudentRepo studentRepo;
 
     @Override
     public void uploadExcel(MultipartFile file, StudentRepo studentRepo) {
@@ -64,7 +68,6 @@ public class StudentServiceImp implements StudentService {
                 student.setCourseName(cellToString(row.getCell(5)));
                 student.setBoarding(cellToString(row.getCell(6)));
                 student.setParentEmail(cellToString(row.getCell(7)));
-                student.setEmail(cellToString(row.getCell(8)));
                 student.setHomePhone(cellToString(row.getCell(9)));
                 student.setMotherName(cellToString(row.getCell(10)));
                 student.setMotherCell(cellToString(row.getCell(11)));
@@ -120,6 +123,8 @@ public class StudentServiceImp implements StudentService {
         }
     }
 
+
+
     String cellToString(Cell cell) {
         if (cell == null) {
             return "NA";
@@ -127,14 +132,25 @@ public class StudentServiceImp implements StudentService {
         return cell.toString().trim();
     }
 
-    Date cellToDate(Cell cell) throws Exception {
-        Date date = null;
+    LocalDate cellToDate(Cell cell){
+        LocalDate date;
         if(cellToString(cell).equals("")){
             return null;
         }
-        date = new SimpleDateFormat("dd-MMM-yyyy").parse(cell.toString().trim());
-        //date = new SimpleDateFormat("dd/mm/yyyy").parse(cell.toString().trim());
+        date = LocalDate.parse(cell.toString().trim());
 
         return date;
     }
+
+    @Override
+    public boolean isStudentExists(String name,String fName,String mName) {
+
+        Student st = studentRepo.duplicateStudent(name,fName,mName);
+        if(st.getId()>0){
+            return true;
+        }
+
+        return false;
+    }
+
 }

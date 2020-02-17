@@ -1,6 +1,7 @@
 package com.duny.fcr.controller;
 
 import com.duny.fcr.HibernateProxyTypeAdapter;
+import com.duny.fcr.LocalDateAdapdar;
 import com.duny.fcr.entity.FinDtlsOfStudent;
 import com.duny.fcr.entity.Student;
 import com.duny.fcr.repo.StudentRepo;
@@ -13,9 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 public class StudentController {
@@ -32,11 +34,11 @@ public class StudentController {
     }
 
     @PostMapping("/student/save")
-    public String save(Student student, @RequestParam("d") String d) throws Exception {
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = sf.parse(d);
-        student.setDob(date);
+    public String save(Student student, @RequestParam("d") String dob) throws Exception {
+
         student.setStatus("applied");
+
+        student.setDob(LocalDate.parse(dob,DateTimeFormatter.ofPattern("MM/dd/yyyy")));
 
         int application_id = studentRepo.getMaxApplicationId() + 1;
         student.setApplicationId(application_id);
@@ -45,7 +47,7 @@ public class StudentController {
         student.setStudentId(student_id + "");
 
         student.setFinDtlsOfStudent(new FinDtlsOfStudent());
-//
+
 //        student.setStudentId("111");
 //        student.setApplicationId(1000);
 
@@ -83,6 +85,7 @@ public class StudentController {
     public String getStudentByIdForJson(@PathVariable String studentId) {
         GsonBuilder b = new GsonBuilder();
         b.registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY);
+        b.registerTypeAdapter(LocalDate.class, new LocalDateAdapdar().nullSafe());
         Gson gson = b.create();
         return gson.toJson(studentRepo.getStudentByStudentId(studentId));
     }
@@ -121,6 +124,13 @@ public class StudentController {
         model.addAttribute("student",studentRepo.getOne(id));
         return "/pages/forms/student_details";
     }
+
+    @GetMapping("/student/isExists/{name}/{fName}/{mName}")
+    @ResponseBody
+    public boolean isStudentExists(@PathVariable String name,@PathVariable String fName,@PathVariable String mName) {
+        return studentService.isStudentExists(name,fName,mName);
+    }
+
 
 
 }

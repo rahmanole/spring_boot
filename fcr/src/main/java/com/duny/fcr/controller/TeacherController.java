@@ -45,12 +45,20 @@ public class TeacherController {
         return "redirect:/teacher/add";
     }
 
-    @GetMapping(value = "/teacher/getTeacherByCourse/{courseName}")
+//    @GetMapping(value = "/teacher/isAssigned/{className}")
+//    @ResponseBody
+//    public Teacher getTeacherByCourse(@PathVariable String className){
+//        System.out.println(className);
+//        return teacherRepo.findTeacherByClassName(className);
+//    }
+
+    @GetMapping(value = "/teacher/isAssigned/{courseName}")
     @ResponseBody
-    public Teacher getTeacherByCourse(@PathVariable String courseName){
-        System.out.println(courseName);
-        return teacherRepo.findTeacherByClassName(courseName);
+    public boolean isTeacherAssigned(@PathVariable String courseName){
+        return teacherRepo.isTeacherAssigned(courseName) != null;
     }
+
+
 
 
 

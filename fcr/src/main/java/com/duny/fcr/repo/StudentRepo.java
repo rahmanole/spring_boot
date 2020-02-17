@@ -21,6 +21,7 @@ public interface StudentRepo extends JpaRepository<Student,Long> {
     String UPDATE_RESIDENCE= "update student set boarding=? where id=?";
     String STUDENT_WITH_DUE= "select student_id from student where initial_due > 0";
     String UPDATE_YEAR= "update student set year=? where id=?";
+    String FOR_CHECKING_DULICATE_ENTRY = "select * from student where name=? and father_name=? and mother_name=?";
 
     @Query(nativeQuery = true,value = query_for_application_id)
     int getMaxApplicationId();
@@ -59,4 +60,7 @@ public interface StudentRepo extends JpaRepository<Student,Long> {
     @Transactional
     @Query(value = UPDATE_YEAR,nativeQuery = true)
     void updateYear(String year,long id);
+
+    @Query(nativeQuery = true,value = FOR_CHECKING_DULICATE_ENTRY)
+    Student duplicateStudent(String name,String fName,String mName);
 }

@@ -15,7 +15,7 @@
 <section class="content" layout:fragment="custom-content">
     <div class="container-fluid">
         <div class="row clearfix">
-            <form method="POST" th:object="${student}" th:action="@{/student/save}">
+            <form method="POST" id="sif" th:object="${student}" th:action="@{/student/save}">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 100px">
                     <div class="card">
                         <div class="header">
@@ -45,7 +45,7 @@
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="card">
                                             <div class="body">
-                                                <h5 class="text-center"> Student's Info</h5>
+                                                <h5> Student's Information Bellow</h5>
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
                                                         <input type="text" th:field="*{name}" id="name"
@@ -54,21 +54,13 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <input type="text" th:field="*{email}" id="email"
-                                                               class="form-control">
-                                                        <label class="form-label">Email</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <input type="text" th:field="*{parentEmail}" id="parentEmail"
-                                                               class="form-control">
-                                                        <label class="form-label">Parent's Email</label>
-                                                    </div>
-                                                </div>
+                                                <!--                                                <div class="form-group form-float">-->
+                                                <!--                                                    <div class="form-line">-->
+                                                <!--                                                        <input type="text" th:field="*{email}" id="email"-->
+                                                <!--                                                               class="form-control">-->
+                                                <!--                                                        <label class="form-label">Email</label>-->
+                                                <!--                                                    </div>-->
+                                                <!--                                                </div>-->
 
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
@@ -84,51 +76,42 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group form-float">
+                                                <div id="courseForBoyDiv" class="form-group">
                                                     <div class="form-line">
                                                         <label class="form-label">Course</label>
                                                         <br>
 
-                                                        <select id="courseOnSIF" th:field="*{courseName}"
-                                                                class="form-control show-tick">
-                                                            <option selected th:value="Select_a_course">Select a
-                                                                course
+                                                        <select id="courses" th:field="*{courseName}"
+                                                                class="form-control">
+                                                            <option selected th:value="Select_a_course">
+                                                                -- Select a course --
                                                             </option>
                                                             <option th:value="Academy">Academy</option>
-                                                            <option th:value="Boy_Nazira">Boy's Nazira</option>
-                                                            <option th:value="Banaat_Nazira">Banaat Nazira</option>
-                                                            <option th:value="Boy_Hifz">Boy's Hifz</option>
-                                                            <option th:value="Banaat_Hifz">Banaat Hifz</option>
-                                                            <option th:value="Alim">Alim</option>
-                                                            <option th:value="Alima">Alima</option>
-                                                            <option th:value="Standardized_Test">Standardized Test</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group form-float" id="bookFeeDivOnSIF">
-                                                    <div class="form-line">
-
-                                                        <label class="form-label">Book Fee</label>
-                                                        <br>
-                                                        <select id="bookFeeOnSIF" th:field="*{year}"
-                                                                class="form-control show-tick">
-                                                            <option th:value="Select_a_course " selected>Select a
-                                                                course
+                                                            <option class="boyCourses" th:value="Boy_Nazira">Boy's
+                                                                Nazira
                                                             </option>
-                                                            <option th:value="Oola">Oola</option>
-                                                            <option th:value="Thania">Thania</option>
-                                                            <option th:value="Thalitha">Thalitha</option>
-                                                            <option th:value="Rabiya">Rabiya</option>
-                                                            <option th:value="Khamisa">Khamisa</option>
-                                                            <option th:value="Saadisa">Saadisa</option>
-                                                            <option th:value="Darua">Darua</option>
-                                                        </select>
+                                                            <option class="boyCourses" th:value="Boy_Hifz">Boy's Hifz
+                                                            </option>
+                                                            <option class="boyCourses" th:value="Alim">Alim(7 years)
+                                                            </option>
+                                                            <option class="boyCourses" th:value="Ifta">Ifta(2 years)
+                                                            </option>
 
+                                                            <option class="girlCourses" th:value="Banaat_Nazira">Banaat
+                                                                Nazira
+                                                            </option>
+                                                            <option class="girlCourses" th:value="Banaat_Hifz">Banaat
+                                                                Hifz
+                                                            </option>
+                                                            <option class="girlCourses" th:value="Alim">Alima</option>
+                                                            <option th:value="Standardized_Test">Standardized Test
+                                                            </option>
+
+                                                        </select>
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group form-float">
+                                                <div id="boardingInfo" class="form-group form-float">
                                                     <div class="form-line">
                                                         <label class="form-label">Need Boarding?</label>
                                                         <br>
@@ -143,10 +126,11 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group form-float">
+                                                <label class="customLabel">Date of Birth</label>
+                                                <div class="form-group">
                                                     <div class="form-line">
-                                                        <input type="date" name="d" id="dob" class="form-control">
-                                                        <label class="form-label">Date Of Birth</label>
+                                                        <input type="text" name="d" id="dob" class="form-control"
+                                                               placeholder="Ex: mm/dd/yyyy">
                                                     </div>
                                                 </div>
                                             </div>
@@ -158,12 +142,23 @@
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="card">
                                             <div class="body">
-                                                <h5 class="text-center"> Personal Info</h5>
+                                                <h5> Contact Information</h5>
+
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
+                                                        <input type="text" th:field="*{parentEmail}" id="parentEmail"
+                                                               class="email form-control">
+                                                        <label class="form-label">Parent's Email</label>
+                                                    </div>
+                                                </div>
+
+                                                <label class="customLabel">Home Phone</label>
+                                                <div class="form-group">
+
+                                                    <div class="form-line">
                                                         <input type="text" th:field="*{homePhone}" id="hPhone"
-                                                               class="form-control">
-                                                        <label class="form-label">Home Phone</label>
+                                                               class="phone form-control phone"
+                                                               placeholder="Ex: 000-000-000">
                                                     </div>
                                                 </div>
 
@@ -175,29 +170,41 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group form-float">
+
+                                                <label class="customLabel">Mother Cell</label>
+                                                <div class="form-group">
                                                     <div class="form-line">
                                                         <input type="text" th:field="*{motherCell}" id="mCell"
-                                                               class="form-control">
-                                                        <label class="form-label">Mother Cell</label>
+                                                               class="phone form-control phone"
+                                                               placeholder="Ex: 000-000-000">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
                                                         <input type="text" th:field="*{fatherName}"
-                                                               class="form-control">
+                                                               id="fName" class="form-control">
                                                         <label class="form-label">Father's Name</label>
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group form-float">
+                                                <label class="customLabel">Father's Cell</label>
+                                                <div class="form-group">
                                                     <div class="form-line">
                                                         <input type="text" th:field="*{fatherCell}"
-                                                               class="form-control">
-                                                        <label class="form-label">Father's Cell</label>
+                                                               class="phone form-control phone"
+                                                               placeholder="Ex: 000-000-000">
                                                     </div>
                                                 </div>
+
+                                                <label class="customLabel">Emergency Contact</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="text" th:field="*{emgCnt}"
+                                                               class="form-control phone" placeholder="Ex: 000-000-000">
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -233,11 +240,11 @@
 
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <label class="form-label">State</label>
+                                                        <label class="form-label"> State</label>
                                                         <br>
 
                                                         <select th:field="*{state}" class="form-control show-tick">
-                                                            <option th:value="state" selected>Select State</option>
+                                                            <option th:value="state" selected>-- Select State --</option>
                                                             <option th:value="New_York">New York</option>
                                                             <option th:value="Florida">Florida</option>
                                                             <option th:value="Texas">Texas</option>
@@ -270,9 +277,27 @@
                                                     </div>
                                                 </div>
 
-                                                <div>
-                                                    <video class="" id="photo" width="250" height="200"></video>
+<!--                                                <div class="dz-message">-->
+<!--                                                    <div class="drag-icon-cph">-->
+<!--                                                        <i class="material-icons">touch_app</i>-->
+<!--                                                    </div>-->
+<!--                                                    <h3>Drop files here or click to upload.</h3>-->
+<!--                                                </div>-->
+<!--                                                <div class="fallback">-->
+<!--                                                    <input name="file" type="file" multiple />-->
+<!--                                                </div>-->
+
+                                                <div class="photo">
+                                                    <video id="videoFrame" width="300" height="300"></video>
                                                 </div>
+
+
+                                                <div >
+                                                    <p id="studentSavingStatus" style="margin-bottom:10px;margin-top: 10px"></p>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-block btn-primary waves-effect">SUBMIT</button>
+
                                             </div>
                                         </div>
                                     </div>
@@ -281,7 +306,6 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-block btn-primary waves-effect">SUBMIT</button>
                 </div>
             </form>
         </div>
