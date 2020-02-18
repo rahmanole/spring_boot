@@ -2,6 +2,7 @@ package com.duny.fcr.controller;
 
 import com.duny.fcr.entity.AdmissionPayment;
 import com.duny.fcr.entity.Cheque;
+import com.duny.fcr.entity.TuitionFeePayment;
 import com.duny.fcr.repo.*;
 import com.duny.fcr.service.AdmissionPaymentService;
 import com.duny.fcr.serviceImp.UtilityClass;
@@ -46,11 +47,11 @@ public class AdmissionPaymentController {
         return "/pages/financial/admissionFee";
     }
 
-    @GetMapping("/admissionFee/getPaymentId")
-    @ResponseBody
-    public String getPaymentId() {
-        return admissionPaymentService.getAdmissionFeePaymentId();
-    }
+//    @GetMapping("/admissionFee/getPaymentId")
+//    @ResponseBody
+//    public String getPaymentId() {
+//        return admissionPaymentService.getAdmissionFeePaymentId();
+//    }
 
     @PostMapping(value = "/admFee/save", consumes = "application/json", produces = "application/json")
     public String saveCash(@RequestBody String admPaymentJson){
@@ -77,15 +78,16 @@ public class AdmissionPaymentController {
         return "redirect:/admissionFee";
     }
 
-    @GetMapping(value = "/af/{stId}/{year}")
+    @GetMapping(value = "/af/{pid}")
     @ResponseBody
-    public AdmissionPayment getAFPayemntID(@PathVariable String stId,@PathVariable String year){
-        return admissionPaymentRepo.getAdmissionPaymentByStudentIdAndYear(stId,year);
+    public AdmissionPayment getAFPayemntID(@PathVariable String pid){
+        return admissionPaymentRepo.findAdmissionPaymentByAfPaymentId(pid);
     }
 
     @GetMapping(value = "/af/all")
     public String getAllAFPayments(Model model){
-        model.addAttribute("afPaymentList",admissionPaymentRepo.findAll());
+        List<AdmissionPayment> afPaymentList = admissionPaymentRepo.findAll();
+        model.addAttribute("afPaymentList",afPaymentList);
         return "/pages/tables/afPayments";
     }
 
@@ -105,8 +107,13 @@ public class AdmissionPaymentController {
     public String afDetails(Model model,@PathVariable String afPaymentId){
         model.addAttribute("cashes",cashRepo.findAllByPaymentId(afPaymentId));
         model.addAttribute("cheques",chequeRepo.findAllByPaymentId(afPaymentId));
-       // System.out.println(chequeRepo.findChequeByStudentId(stId,year).get(0).getChequeImg());
-        return "/pages/tables/paymentDetails";
+        model.addAttribute("ccs",creditCardRepo.findAllByPaymentId(afPaymentId));
+        model.addAttribute("mOrders",moneyOrderRepo.findAllByPaymentId(afPaymentId));
+        model.addAttribute("fromSals",fromSalRepo.findAllByPaymentId(afPaymentId));
+        model.addAttribute("zelles",zelleReo.findAllByPaymentId(afPaymentId));
+        model.addAttribute("pid",afPaymentId);
+        // System.out.println(chequeRepo.findChequeByStudentId(stId,year).get(0).getChequeImg());
+        return "/pages/tables/tfPaymentDetails";
     }
 
 }

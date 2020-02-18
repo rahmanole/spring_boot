@@ -4,6 +4,7 @@ import com.duny.fcr.dto.ITuitionFeeDueReport;
 import com.duny.fcr.dto.TuitionFeeDueReport;
 import com.duny.fcr.entity.TuitionFeePayment;
 import com.duny.fcr.repo.*;
+import com.duny.fcr.service.FeeService;
 import com.duny.fcr.service.TuitionFeePaymentService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -36,8 +37,8 @@ public class TuitionFeePaymentController {
     FromSalRepo fromSalRepo;
     @Autowired
     ZelleReo zelleReo;
-
-
+    @Autowired
+    FeeService feeService;
 
     @GetMapping("/tuitionFee")
     public String colectTuitnFee(Model model) {
@@ -51,11 +52,11 @@ public class TuitionFeePaymentController {
         return "/pages/financial/StWithTuitionDue";
     }
 
-    @GetMapping("/tuitionFee/getPaymentId")
-    @ResponseBody
-    public String getPaymentId() {
-        return tuitionFeePaymentService.getTuitionFeePaymentId();
-    }
+//    @GetMapping("/tuitionFee/getPaymentId")
+//    @ResponseBody
+//    public String getPaymentId() {
+//        return tuitionFeePaymentService.getTuitionFeePaymentId();
+//    }
 
     @PostMapping(value = "/tuitionFee/save", consumes = "application/json", produces = "application/json")
     public String saveCash(@RequestBody String tuitionFeePaymentJson){
@@ -92,43 +93,19 @@ public class TuitionFeePaymentController {
     @GetMapping("/tuitionFee/{pid}")
     @ResponseBody
     public double getAmount(@PathVariable String pid) {
-
-        double totalAmount;
-
-        Object amount = cashRepo.getAmount(pid);
-        double cash = (amount != null? Double.parseDouble(amount.toString()):0);
-        System.out.println(amount);
-
-        amount = chequeRepo.getAmount(pid);
-        double cheque = (amount != null? Double.parseDouble(amount.toString()):0);
-        System.out.println(amount);
-
-        amount = creditCardRepo.getAmount(pid);
-        double cc = (amount != null? Double.parseDouble(amount.toString()):0);
-
-        amount = fromSalRepo.getAmount(pid);
-        double fromSal = (amount !=null? Double.parseDouble(amount.toString()):0);
-
-        amount = moneyOrderRepo.getAmount(pid);
-        double mo = (amount !=null? Double.parseDouble(amount.toString()):0);
-
-        amount = zelleReo.getAmount(pid);
-        double zelle = ( amount !=null? Double.parseDouble(amount.toString()):0);
-
-        totalAmount = cash+cheque+cc+fromSal+mo+zelle;
-
-        return totalAmount;
+        return feeService.getTotalFeePaid(pid);
     }
 
-    @GetMapping(value = "/tf/{stId}/{month}/{year}")
+    @GetMapping(value = "/tf/{pid}")
     @ResponseBody
-    public TuitionFeePayment getTFPayemnt(@PathVariable String stId,@PathVariable String month,@PathVariable String year){
-        return tuitionFeePaymentRepo.findTuitionFeePaymentByStudentIdAndMonthAndYear(stId,month,year);
+    public TuitionFeePayment getTFPayemnt(@PathVariable String pid){
+        return tuitionFeePaymentRepo.findTuitionFeePaymentByTfPaymentId(pid);
     }
 
     @GetMapping(value = "/tf/all")
     public String getAllAFPayments(Model model){
-        model.addAttribute("tfPaymentList",tuitionFeePaymentRepo.findAll());
+        List<TuitionFeePayment> tfPaymentList = tuitionFeePaymentRepo.findAll();
+        model.addAttribute("tfPaymentList",tfPaymentList);
         return "/pages/tables/tfPayments";
     }
 
@@ -140,6 +117,7 @@ public class TuitionFeePaymentController {
         model.addAttribute("mOrders",moneyOrderRepo.findAllByPaymentId(tfPaymentId));
         model.addAttribute("fromSals",fromSalRepo.findAllByPaymentId(tfPaymentId));
         model.addAttribute("zelles",zelleReo.findAllByPaymentId(tfPaymentId));
+        model.addAttribute("tfPaymentId",tfPaymentId);
         // System.out.println(chequeRepo.findChequeByStudentId(stId,year).get(0).getChequeImg());
         return "/pages/tables/tfPaymentDetails";
     }

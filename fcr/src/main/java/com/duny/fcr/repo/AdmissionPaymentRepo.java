@@ -44,4 +44,6 @@ public interface AdmissionPaymentRepo extends JpaRepository<AdmissionPayment,Lon
     @Transactional
     void deleteAFPaymentByAfPaymentId(String pid);
 
+    AdmissionPayment findAdmissionPaymentByAfPaymentId(String pid);
+
 }

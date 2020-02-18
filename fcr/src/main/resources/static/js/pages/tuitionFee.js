@@ -31,9 +31,10 @@ $(document).ready(function () {
             return;
         } else {
             //This codes for get and setting tuition fee payment
-            paymentId = getPaymentId();
 
-            tf = getTFPayment(studentID,month,currentYear);
+            paymentId = 'TF'+studentID+(new Date().getMonth()+1)+currentYear.substr(2,2);
+
+            tf = getTFPayment(paymentId);
 
             if(tf.id>0){
                 paymentId = tf.tfPaymentId;
@@ -42,29 +43,29 @@ $(document).ready(function () {
             $('#tFeePaymentID').val(paymentId);
             $('#tfCashPID').val(paymentId);
             $('#tfChequePID').val(paymentId);
+            $('#tfMOPID').val(paymentId);
             $('#tfZellePID').val(paymentId);
             $('#tfCCPID').val(paymentId);
             $('#tfMoneyOrderPID').val(paymentId);
+
             $('#tFeeStId').val(studentID);
+            $('#tfCashSTId').val(studentID);
             $('#tfFromSalPID').val(paymentId);
             $('#tfChequeSTId').val(studentID);
             $('#tfMOSTId').val(studentID);
             $('#tfFromSalSTId').val(studentID);
+            $('#tfZelleSTId').val(studentID);
             //============ends here========
 
             $('#pdfGeneratorAdmisnFee').show();
             $('#tuitionFeeForm').show();
-            tuitonFeeStmt(studentID);
+            tuitonFeeStmt(studentID,paymentId);
 
             tfToPay = $('#tuitionFeeToPay').val();
             tfPID = $('#tFeePaymentID').val();
             calculateTF(paymentId,tfToPay);
         }
     });
-
-
-    var tuitionFeeDue= 0;
-
 
     $('#tuitionFee').click(function () {
         var tFee = JSON.stringify($('#tFeeForm').serializeJSON());
@@ -82,6 +83,8 @@ $(document).ready(function () {
             $('#tfPayStatus').append('<p class="text-danger">Enter admission fee paid</p>');
             return "";
         }
+
+        let tf = getTFPayment(paymentId);
 
         if(tf.id>0){
             var adm = tFee.replace("}","");
@@ -124,7 +127,7 @@ $(document).ready(function () {
             return '';
         }
 
-        cash = addElement(cash,"studentId",studentID);
+        //cash = addElement(cash,"studentId",studentID);
         console.log(cash);
 
         $.ajax({
@@ -398,7 +401,7 @@ $(document).ready(function () {
 });
 
 
-function tuitonFeeStmt(st_id) {
+function tuitonFeeStmt(st_id,pid) {
     $.ajax({
         method: 'GET',
         url: '/student/json/' + parseInt(st_id),
@@ -441,7 +444,7 @@ function tuitonFeeStmt(st_id) {
             $('#tuitionFeeToPay').val(tuitionFee);
             $('#motnhName').html(getMonthName());
             $('#motnhName').append(" "+new Date().getFullYear());
-            $('#paymentIDonStmt').html(getPaymentId());
+            $('#paymentIDonStmt').html(pid);
         },
         error: function () {
             console.log('not success');
@@ -552,17 +555,17 @@ function getDaddCont(fin_id, st_id) {
 }
 
 function calculateTF(tfPaymentId,tfToPay) {
-    var tuitionFeePaid = getTFPaid(tfPaymentId);
+    var tuitionFeePaid = getFeePaid(tfPaymentId);
     $('#tuitionFeePaid').val(tuitionFeePaid);
     $('#tuitionFeeDue').val(tfToPay - tuitionFeePaid);
     $('#tuitionFeePaidFieldOnStmt').html(tuitionFeePaid);
     $('#tuitionFeeDueOnStmt').html(tfToPay-tuitionFeePaid);
 }
-function getTFPayment(stId,month,currentYear) {
+function getTFPayment(pid) {
     var tf;
     $.ajax({
         method: 'GET',
-        url: '/tf/' + stId+'/' +month +'/' + currentYear,
+        url: '/tf/' +pid,
         async: false,
         success: function (data) {
             tf = data;
@@ -575,7 +578,7 @@ function getTFPayment(stId,month,currentYear) {
     return tf;
 }
 
-function getTFPaid(pid) {
+function getFeePaid(pid) {
     var amount = 0;
     $.ajax({
         method: 'GET',

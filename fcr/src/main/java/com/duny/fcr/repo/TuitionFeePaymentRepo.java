@@ -27,4 +27,6 @@ public interface TuitionFeePaymentRepo extends JpaRepository<TuitionFeePayment,L
 
     @Transactional
     void deleteTuitionFeePaymentByTfPaymentId(String pid);
+
+    TuitionFeePayment findTuitionFeePaymentByTfPaymentId(String pid);
 }

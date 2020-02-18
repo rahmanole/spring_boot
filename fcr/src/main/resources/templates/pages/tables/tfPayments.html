@@ -51,7 +51,6 @@
                                     <th>Month</th>
                                     <th>Year</th>
                                     <th>Details</th>
-                                    <th>Delete</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -64,7 +63,6 @@
                                         <td class="text-center" th:text="${tf.month}"></td>
                                         <td class="text-center" th:text="${tf.year}"></td>
                                         <td class="text-center"><a th:href="@{'/tf/details/'+${tf.tfPaymentId}}" target="_blank" class="btn btn-default waves-effect" >Details</a></td>
-                                        <td class="text-center"><a th:href="@{'/tf/delete/'+${tf.tfPaymentId}}" id="deleteTF" onclick="return confirm('Are you sure you want to delete this item?');" th:data-id="${tf.studentId}" class="btn btn-default waves-effect" ><i class="material-icons">delete</i></a></td>
                                     </tr>
                                 </tbody>
                             </table>

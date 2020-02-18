@@ -2,6 +2,7 @@ package com.duny.fcr.controller;
 
 import com.duny.fcr.entity.FinDtlsOfStudent;
 import com.duny.fcr.repo.*;
+import com.duny.fcr.service.FeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +38,9 @@ public class FeeController {
     FromSalRepo fromSalRepo;
     @Autowired
     ZelleReo zelleReo;
+
+    @Autowired
+    FeeService feeService;
 
     @GetMapping("/updateFinancialDetails")
     public String generateFee(Model model) {
@@ -135,31 +139,31 @@ public class FeeController {
         return "/pages/financial/dues";
     }
 
-    @GetMapping("/fee/{stId}/{year}")
+    @GetMapping("/fee/{pid}")
     @ResponseBody
-    public double getAmount(@PathVariable String stId,@PathVariable String year) {
-        double totalAmount;
+    public double getAmount(@PathVariable String pid) {
+//        double totalAmount;
+//
+//        Object amount = cashRepo.getAmount(stId,year);
+//        double cash = (amount != null? Double.parseDouble(amount.toString()):0);
+//        System.out.println(amount);
+//        amount = chequeRepo.getAmount(stId,year);
+//        double cheque = (amount != null? Double.parseDouble(amount.toString()):0);
+//
+//        amount = creditCardRepo.getAmount(stId,year);
+//        double cc = (amount != null? Double.parseDouble(amount.toString()):0);
+//
+//        amount = fromSalRepo.getAmount(stId,year);
+//        double fromSal = (amount !=null? Double.parseDouble(amount.toString()):0);
+//
+//        amount = moneyOrderRepo.getAmount(stId,year);
+//        double mo = (amount !=null? Double.parseDouble(amount.toString()):0);
+//
+//        amount = zelleReo.getAmount(stId,year);
+//        double zelle = ( amount !=null? Double.parseDouble(amount.toString()):0);
+//
+//        totalAmount = cash+cheque+cc+fromSal+mo+zelle;
 
-        Object amount = cashRepo.getAmount(stId,year);
-        double cash = (amount != null? Double.parseDouble(amount.toString()):0);
-        System.out.println(amount);
-        amount = chequeRepo.getAmount(stId,year);
-        double cheque = (amount != null? Double.parseDouble(amount.toString()):0);
-
-        amount = creditCardRepo.getAmount(stId,year);
-        double cc = (amount != null? Double.parseDouble(amount.toString()):0);
-
-        amount = fromSalRepo.getAmount(stId,year);
-        double fromSal = (amount !=null? Double.parseDouble(amount.toString()):0);
-
-        amount = moneyOrderRepo.getAmount(stId,year);
-        double mo = (amount !=null? Double.parseDouble(amount.toString()):0);
-
-        amount = zelleReo.getAmount(stId,year);
-        double zelle = ( amount !=null? Double.parseDouble(amount.toString()):0);
-
-        totalAmount = cash+cheque+cc+fromSal+mo+zelle;
-
-        return totalAmount;
+        return feeService.getTotalFeePaid(pid);
     }
 }

@@ -18,7 +18,7 @@
         <!-- Exportable Table -->
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="card" id="cashDtls">
+                <div th:if="${cashes.size()>0}" class="card" id="cashDtls">
                     <div class="header">
                         <h2 class="text-center">
                            Cash Payments
@@ -56,7 +56,7 @@
                                         <td class="text-center" th:text="${cash.paymentId}"></td>
                                         <td class="text-center" th:text="${cash.date}"></td>
                                         <td class="text-center" th:text="${cash.amount}"></td>
-                                        <td class="text-center"><button th:data-id="${cash.id}" class="btn btn-default waves-effect" data-toggle="modal" data-target="#smallModal" ><i class="material-icons">delete</i></button></td>
+                                        <td class="text-center"><a th:href="@{'/cash/delete/'+${cash.id}}" id="deleteTF" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-default waves-effect" ><i class="material-icons">delete</i></a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
 
-                <div class="card" id="chkDtls">
+                <div th:if="${cheques.size()>0}" class="card" id="chkDtls">
                     <div class="header">
                         <h2 class="text-center">
                             Check Payments
@@ -105,7 +105,7 @@
                                     <td class="text-center" th:text="${cheque.chequeDate}"></td>
                                     <td class="text-center" th:text="${cheque.amount}"></td>
                                     <td class="text-center"><img width="100" height="70" th:src="${cheque.chequeImg}"></td>
-                                    <td class="text-center"><button th:data-id="${cheque.id}" class="btn btn-default waves-effect" data-toggle="modal" data-target="#smallModal" ><i class="material-icons">delete</i></button></td>
+                                    <td class="text-center"><a th:href="@{'/cheque/delete/'+${cheque.id}}" id="deleteTF" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-default waves-effect" ><i class="material-icons">delete</i></a></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -113,7 +113,7 @@
                     </div>
                 </div>
 
-                <div class="card" id="ccDtls">
+                <div th:if="${ccs.size()>0}" class="card" id="ccDtls">
                     <div class="header">
                         <h2 class="text-center">
                             Credit Card Payments
@@ -154,7 +154,7 @@
                                     <td class="text-center" th:text="${cc.date}"></td>
                                     <td class="text-center" th:text="${cc.cardNum}"></td>
                                     <td class="text-center" th:text="${cc.amount}"></td>
-                                    <td class="text-center"><button th:data-id="${cc.id}" class="btn btn-default waves-effect" data-toggle="modal" data-target="#smallModal" ><i class="material-icons">delete</i></button></td>
+                                    <td class="text-center"><a th:href="@{'/cc/delete/'+${cc.id}}" id="deleteTF" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-default waves-effect" ><i class="material-icons">delete</i></a></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -162,7 +162,7 @@
                     </div>
                 </div>
 
-                <div class="card" id="moDtls">
+                <div th:if="${mOrders.size()>0}" class="card" id="moDtls">
                     <div class="header">
                         <h2 class="text-center">
                             Money Order Payments
@@ -205,7 +205,7 @@
                                     <td class="text-center" th:text="${mo.moneyOrderDate}"></td>
                                     <td class="text-center" th:text="${mo.amount}"></td>
                                     <td class="text-center"><img width="100" height="70" th:src="${mo.moneyOrderImg}"></td>
-                                    <td class="text-center"><button th:data-id="${mo.id}" class="btn btn-default waves-effect" data-toggle="modal" data-target="#smallModal" ><i class="material-icons">delete</i></button></td>
+                                    <td class="text-center"><a th:href="@{'/mo/delete/'+${mo.id}}" id="deleteTF" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-default waves-effect" ><i class="material-icons">delete</i></a></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -213,7 +213,7 @@
                     </div>
                 </div>
 
-                <div class="card" id="fromSalDtls">
+                <div th:if="${fromSals.size()>0}" class="card" id="fromSalDtls">
                     <div class="header">
                         <h2 class="text-center">
                             Deduction From Salary
@@ -256,7 +256,7 @@
                                     <td class="text-center" th:text="${fs.chequeNum}"></td>
                                     <td class="text-center" th:text="${fs.amount}"></td>
                                     <td class="text-center"><img width="100" height="70" th:src="${fs.fromSalChequeImg}"></td>
-                                    <td class="text-center"><button th:data-id="${fs.id}" class="btn btn-default waves-effect" data-toggle="modal" data-target="#smallModal" ><i class="material-icons">delete</i></button></td>
+                                    <td class="text-center"><a th:href="@{'/fromSal/delete/'+${fs.id}}" id="deleteTF" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-default waves-effect" ><i class="material-icons">delete</i></a></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -264,7 +264,7 @@
                     </div>
                 </div>
 
-                <div class="card" id="zellesDtl">
+                <div th:if="${zelles.size()>0}" class="card" id="zellesDtl">
                     <div class="header">
                         <h2 class="text-center">
                             Zelle Payment
@@ -305,17 +305,22 @@
                                     <td class="text-center" th:text="${zelle.date}"></td>
                                     <td class="text-center" th:text="${zelle.email}"></td>
                                     <td class="text-center" th:text="${zelle.phoneNum}"></td>
-                                    <td class="text-center"><button th:data-id="${zelle.id}" class="btn btn-default waves-effect" data-toggle="modal" data-target="#smallModal" ><i class="material-icons">delete</i></button></td>
+                                    <td class="text-center"><a th:href="@{'/zelle/delete/'+${zelle.id}}" id="deleteTF" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-default waves-effect" ><i class="material-icons">delete</i></a></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
+
         <!-- #END# Exportable Table -->
+        <div class="row clearfix" >
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 center-align">
+                <a style="margin-bottom:30px" th:href="@{'/af/delete/'+${pid}}" id="deleteTF" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-default waves-effect" ><i class="material-icons">delete</i></a>
+            </div>
+        </div>
 
     </div>
 </section>

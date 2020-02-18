@@ -13,6 +13,7 @@ public class TuitionFeePaymentServiceImp implements TuitionFeePaymentService {
 
     @Override
     public String getTuitionFeePaymentId() {
-        return "TF"+(tuitionFeePaymentRepo.getMaxId()+1);
+        String id = tuitionFeePaymentRepo.getMaxId()+"";
+        return (id != null?(Long.parseLong(id)+1+""):(0+""));
     }
 }

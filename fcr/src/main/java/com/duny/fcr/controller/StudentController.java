@@ -52,7 +52,7 @@ public class StudentController {
         int student_id;
 
         if(studentRepo.getMaxStudentId() == null){
-            student_id = 111;
+            student_id = 101;
         }else{
             student_id = Integer.parseInt(studentRepo.getMaxStudentId()) + 1;
         }

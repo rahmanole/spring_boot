@@ -1,14 +1,14 @@
 package com.duny.fcr.controller;
 
 import com.duny.fcr.entity.Cheque;
+import com.duny.fcr.repo.AdmissionPaymentRepo;
 import com.duny.fcr.repo.ChequeRepo;
+import com.duny.fcr.repo.TuitionFeePaymentRepo;
+import com.duny.fcr.serviceImp.FeeServiceImp;
 import com.duny.fcr.serviceImp.UtilityClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -23,6 +23,12 @@ public class ChequeController {
 
     @Autowired
     ChequeRepo chequeRepo;
+    @Autowired
+    private FeeServiceImp feeService;
+    @Autowired
+    private TuitionFeePaymentRepo tuitionFeePaymentRepo;
+    @Autowired
+    private AdmissionPaymentRepo admissionPaymentRepo;
 
     @PostMapping("/cheque/save")
     public String saveCheque(@RequestParam("paymentId")String pid,
@@ -55,5 +61,20 @@ public class ChequeController {
 //        System.out.println(Base64.getEncoder().encodeToString(file.getBytes()));
 
         return "redirect:/admissionFee";
+    }
+
+    @GetMapping(value = "/cheque/delete/{id}")
+    public String deleteCash(@PathVariable Long id){
+        Cheque cheque = chequeRepo.getOne(id);
+        double deletedAmount = cheque.getAmount();
+        String pid = cheque.getPaymentId();
+
+        String url="redirect:/tf/details/"+pid;
+
+        chequeRepo.deleteById(id);
+
+        feeService.updateTuitionOrAdmissionFee(pid,deletedAmount,tuitionFeePaymentRepo,admissionPaymentRepo);
+
+        return url;
     }
 }
