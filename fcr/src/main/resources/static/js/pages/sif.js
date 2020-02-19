@@ -26,7 +26,7 @@ $(document).ready(function () {
         }
     });
 
-    $('.phone').inputmask('+999-999-999', { placeholder: '___-___-___' });
+    $('.phone').inputmask('999-999-9999', { placeholder: '___-___-___' });
     $('#dob').inputmask('m/d/y', { placeholder: 'mm/dd/yyyy' });
     $('#email').inputmask({ alias: "email" });
 
